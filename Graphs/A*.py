@@ -9,7 +9,6 @@ numberOfElementsVertical = 16
 class Node:
 	def __init__(self, x, y):
 		self.isBorder = False
-		self.bVisited = False
 		self.distanceTillEnd = float("inf")
 		self.distanceFromStart = float("inf")
 		self.x = x
@@ -44,29 +43,30 @@ def solveAStar(screen, width, height):
 	nodeCurrent = nodeStart
 	nodeStart.distanceFromStart = 0
 	nodeStart.distanceTillEnd = distance(nodeStart, nodeEnd)
+	visited = []
 	
-	listNotTestedNodes = []
-	listNotTestedNodes.append(nodeStart)
+	notVisited = []
+	notVisited.append(nodeStart)
 	
-	while listNotTestedNodes and nodeCurrent != nodeEnd:
+	while notVisited and nodeCurrent != nodeEnd:
 
-		listNotTestedNodes = sortByGlobalDistance(listNotTestedNodes)	
+		notVisited = sortByGlobalDistance(notVisited)	
 		
-		while listNotTestedNodes and listNotTestedNodes[0].bVisited:
-			del listNotTestedNodes[0]
+		while notVisited and notVisited[0] in visited:
+			del notVisited[0]
 
-		if not listNotTestedNodes:
+		if not notVisited:
 			break
 
-		nodeCurrent = listNotTestedNodes[0];
-		nodeCurrent.bVisited = True;
-	
+		nodeCurrent = notVisited[0];
+		visited.append(nodeCurrent)
+			
 		if nodeCurrent != nodeStart and nodeCurrent != nodeEnd:
 			drawField(screen, (227,207,87), nodeCurrent.x*width, nodeCurrent.y*height, width -1, height-1)
 				
 		for neighbour in nodeCurrent.neighbours:
-			if not neighbour.bVisited and not neighbour.isBorder:
-				listNotTestedNodes.append(neighbour)
+			if neighbour not in visited and not neighbour.isBorder:
+				notVisited.append(neighbour)
 				if neighbour != nodeStart and neighbour != nodeEnd:
 					drawField(screen, (227,207,87), neighbour.x*width, neighbour.y*height, width -1, height-1)
 
