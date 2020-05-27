@@ -3,6 +3,7 @@ from copy import deepcopy
 N = 3
 Human = "X"
 Computer = "O"
+EmptySpot = " "
 
 def drawBoard(board):
 	for i in range(N):
@@ -110,39 +111,44 @@ def findAllAvailableSpots(board):
 	return spots
 
 def computerMove(board):
-	return miniMax(board, N, Computer)
+
+    bestVal = -1000; 
+	betMove = (-1, -1)
+  
+   	for spot in findAllAvailableSpots(board):
+		x, y = spot
+
+    	board[y][x] = Computer; 
+
+    	moveVal = minimax(board, N, Computer); 
+
+    	board[y][x] = EmptySpot; 
+
+   		if moveVal > bestVal:
+        	betMove = (x, y) 
+        	bestVal = moveVal
+ 
+	return betMove
 
 def otherPlayer(player):
 	if player == Human:
 		return Computer
 	return Human
 
-def findTheBest(results):
-	best = -2
-	position = None
-	
-	for key in results:
-		if(isinstance(results[key], int)):
-			if results[key] > best:
-				best = results[key]
-				position = key
-
-	return position
-	
 def miniMax(board, depth, player):
 	
 	if depth == 0 or checkForTie(board):
 		return evaluate(board, player)
 	
-	results = {}
+	copyBoard = deepcopy(board)
+	best = -1000
 	
-	for spot in findAllAvailableSpots(board):
+	for spot in findAllAvailableSpots(copyBoard):
 		x, y = spot
-		boardCopy =  deepcopy(board)
-		boardCopy[y][x] = player
-		results[(x,y)] = miniMax(boardCopy, depth - 1, otherPlayer(player))
-	
-	return findTheBest(results)
+		copyBoard[y][x] = Computer; 
+    	best = max(best, minimax(board, N, otherPlayer(player)); 
+
+    return best
 
 def main():
 	board = [[' ' for i in range(N)] for j in range(N)]
