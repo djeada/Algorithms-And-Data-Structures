@@ -6,18 +6,19 @@ Computer = "O"
 EmptySpot = " "
 
 def drawBoard(board):
+	print(board)
 	for i in range(N):
 		for j in range(N):
-			print(board[i][j], end = '')
-			
+			print(' ' + board[i][j], end = '')
+
 			if j != N - 1:
-				print(" | ", end = '')
-		
+				print(" |", end = '')
 		print('')
 		if i != N - 1:
 			for x in range(N):
-				print('_ ' , end = '')
+				print('--- ' , end = '')
 			print('')
+			
 	
 def move(x, y, board):
 	board[y][x] = Human
@@ -83,19 +84,24 @@ def checkForTie(board):
 				return False
 	
 	return True
+	
+def checkForBloc(board, player, new_pos):
+	copyBoard = deepcopy(board)
+	
+	copyBoard[new_pos[1]][new_pos[0]] = otherPlayer(player)
+	
+	return checkForWin(copyBoard)
+	
 
-def evaluate(board, player):
+def evaluate(board, player, points):
 	win = checkForWin(board)
 		
 	if win:
 		if win == player:
-			return 2
-		return -1
+			return points["win"]
+		return points["lose"]
 				
-	if checkForTie(board):
-		return 1
-			
-	return 0
+	return points["other"]
 
 def isSpotAvailable(x, y, board):
 	if board[y][x] != Human and board[y][x] != Computer:
@@ -112,43 +118,61 @@ def findAllAvailableSpots(board):
 
 def computerMove(board):
 
-    bestVal = -1000; 
-	betMove = (-1, -1)
-  
-   	for spot in findAllAvailableSpots(board):
+	bestVal = -1000
+	bestMove = (-1, -1)
+	initial_points = {"win": 200, "block": 100, "lose": -100, "other": 0}
+
+	for spot in findAllAvailableSpots(board):
 		x, y = spot
 
-    	board[y][x] = Computer; 
+		board[y][x] = Computer
 
-    	moveVal = minimax(board, N, Computer); 
+		moveVal = miniMax(board, 2*N, Computer, initial_points)
 
-    	board[y][x] = EmptySpot; 
+		print('x: ', x, ' y: ', y, ' result: ', moveVal)
+		board[y][x] = EmptySpot
 
-   		if moveVal > bestVal:
-        	betMove = (x, y) 
-        	bestVal = moveVal
- 
-	return betMove
+		if moveVal > bestVal:
+			bestMove = (x, y) 
+			bestVal = moveVal
+
+	return bestMove
+
+def decreasePoints(points):
+	new_points = {}
+	for key in points:
+		if points[key] > 0:
+			new_points[key] = points[key] - 10
+		else if points[key] < 0:
+			new_points[key] = points[key] + 10
+		else:
+			new_points[key] = points[key]
+	
+	return new_points
 
 def otherPlayer(player):
 	if player == Human:
 		return Computer
 	return Human
 
-def miniMax(board, depth, player):
+def miniMax(board, depth, player, points):
 	
-	if depth == 0 or checkForTie(board):
-		return evaluate(board, player)
-	
+	if depth == 0 or isGameFinished(board):
+		return evaluate(board, player, points)
+
+	if checkForBloc(board):
+		return points["block"]
+
 	copyBoard = deepcopy(board)
 	best = -1000
-	
+
 	for spot in findAllAvailableSpots(copyBoard):
 		x, y = spot
-		copyBoard[y][x] = Computer; 
-    	best = max(best, minimax(board, N, otherPlayer(player)); 
+		copyBoard[y][x] = Computer
+		best = max(best, miniMax(copyBoard, depth - 1, otherPlayer(player)), decreasePoints(points))
+		copyBoard[y][x] = EmptySpot
 
-    return best
+	return best
 
 def main():
 	board = [[' ' for i in range(N)] for j in range(N)]
