@@ -41,4 +41,3 @@ TEST(VectorTest, CopyConstructor) {
 	//EXPECT_EQ(original.pop_back(), copied.pop_back());
 	//EXPECT_EQ(original.pop_back(), copied.pop_back());
 }
-
