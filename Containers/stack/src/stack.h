@@ -1,9 +1,4 @@
-#ifndef CONTAINERS_STACK_H
-#define CONTAINERS_STACK_H
 #include <string>
-
-namespace Containers
-{
 
 const std::string invalidSizeMsg = "Invalid Size";
 const int defaultInitSize = 10;
@@ -29,6 +24,4 @@ private:
     void copy(const Stack& other);
     void expand();
 };
-}
 
-#endif

@@ -2,24 +2,24 @@
 #include <stdexcept>
 
 template<class T>
-Containers::Stack<T>::Stack() : 
+Stack<T>::Stack() : 
 	data(new T[defaultInitSize]), 
 	n(0), 
 	maxSize(defaultInitSize) {
 }
        
 template<class T>
-Containers::Stack<T>::Stack(const Stack& other) {
+Stack<T>::Stack(const Stack& other) {
 	copy(other);
 }
  
 template<class T>
-Containers::Stack<T>::~Stack() {
+Stack<T>::~Stack() {
 	delete[] data;
 }
 
 template<class T>
-void Containers::Stack<T>::copy(const Stack& other) {
+void Stack<T>::copy(const Stack& other) {
 	n = other.n;
 	maxSize = other.maxSize;
 
@@ -30,7 +30,7 @@ void Containers::Stack<T>::copy(const Stack& other) {
 }
 
 template<class T>
-void Containers::Stack<T>::expand() {
+void Stack<T>::expand() {
 	int newMaxSize = maxSize * 2;
 	T* newData = new T[newMaxSize];
 
@@ -45,7 +45,7 @@ void Containers::Stack<T>::expand() {
 }
 
 template<class T>
-T Containers::Stack<T>::pop() {
+T Stack<T>::pop() {
   if (n <= 0) 
 	throw std::invalid_argument(invalidSizeMsg);
 
@@ -55,15 +55,15 @@ T Containers::Stack<T>::pop() {
 }
 
 template<class T>
-void Containers::Stack<T>::push(T element) {
-  if (size >= maxSize)
+void Stack<T>::push(T element) {
+  if (n >= maxSize)
 	expand();
 
   data[n++] = element;
 }
 
 template<class T>
-T Containers::Stack<T>::peek() {
+T Stack<T>::peek() {
   if (n <= 0) 
 	throw std::invalid_argument(invalidSizeMsg);
 
@@ -71,18 +71,23 @@ T Containers::Stack<T>::peek() {
 }
 
 template<class T>
-int Containers::Stack<T>::size() {
+int Stack<T>::size() {
   return n;
 }
 
 template<class T>
-bool Containers::Stack<T>::isEmpty() {
+bool Stack<T>::isEmpty() {
   return n == 0;
 }
 
 template<class T>
-Containers::Stack<T>& Containers::Stack<T>::operator=(const Stack<T>& other) {
+Stack<T>& Stack<T>::operator=(const Stack<T>& other) {
   delete[] data;
   copy(other);
   return *this;
 }
+
+template class Stack<int>;
+template class Stack<float>;
+template class Stack<double>;
+template class Stack<char>;
