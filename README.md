@@ -35,6 +35,6 @@ Implementations and visualisations of various algorithms.
 <td>Dijkstra.</td>
 <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
  <td><a href="">Cpp</a></td> 
-<tr>
+</tr>
 </tbody>
 </table>
