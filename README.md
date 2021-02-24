@@ -28,13 +28,13 @@ Implementations and visualisations of various algorithms.
 <tr>
 <td>2</td>
 <td>BFS</td>
-<td><a href="">Python</a></td>
+<td><a>Python</a></td>
  <td><a href="href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
 <tr>
 <td>3</td>
 <td>Dijkstra</td>
 <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
- <td><a href="">Cpp</a></td> 
+ <td><a>Cpp</a></td> 
 </tr>
 </tbody>
 </table>
