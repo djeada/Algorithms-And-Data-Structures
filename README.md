@@ -8,3 +8,33 @@
 </div>
 
 Implementations and visualisations of various algorithms.
+
+
+<h1>Graphs</h1>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Algorithm</th>
+<th colspan="2">Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>General graph</td>
+<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/graph/graph.py">Python</a></td>
+ <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/graph">Cpp</a></td> 
+<tr>
+<td>2</td>
+<td>BFS.</td>
+<td><a href="">Python</a></td>
+ <td><a href="href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
+<tr>
+<td>3</td>
+<td>Dijkstra.</td>
+<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
+ <td><a href="">Cpp</a></td> 
+<tr>
+</tbody>
+</table>
