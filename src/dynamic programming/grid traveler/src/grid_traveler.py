@@ -1,4 +1,4 @@
-def grid_traveler(m, n, grid=list()):
+def grid_traveler(m, n, grid=list(), memo=dict()):
 
 	if len(grid) == 0:
 		x = max(m,n)
@@ -10,13 +10,18 @@ def grid_traveler(m, n, grid=list()):
 	if m==0 or n==0:
 		return 0
 
+	key = str(m) + "," + str(n)
+
+	if key in memo:
+		return memo[key]
+
 	if grid[m][n] != 0:
 		return grid[m][n]
 	
 	else:
-		number_of_steps = grid_traveler(m-1,n,grid) + grid_traveler(m,n-1,grid)
-		grid[m][n] = number_of_steps
-		grid[n][m] = number_of_steps
+		memo[key] = grid_traveler(m-1,n,grid) + grid_traveler(m,n-1,grid)
+		grid[m][n] = memo[key]
+		grid[n][m] = memo[key]
 
-	return number_of_steps
+	return memo[key]
       
