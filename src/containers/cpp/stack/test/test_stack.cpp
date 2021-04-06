@@ -41,4 +41,3 @@ TEST(StackTest, CopyConstructor) {
 	//EXPECT_EQ(original.pop(), copied.pop());
 	//EXPECT_EQ(original.pop(), copied.pop());
 }
-
