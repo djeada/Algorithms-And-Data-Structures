@@ -9,6 +9,14 @@
 
 Implementations and visualisations of various algorithms.
 
+<h1>Build</h1>
+```bash
+mkdir build
+cd build
+cmake ..
+make
+ctest --verbose
+```
 
 <h1>Graphs</h1>
 <table>
