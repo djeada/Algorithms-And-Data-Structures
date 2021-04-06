@@ -3,7 +3,7 @@
 const std::string invalidSizeMsg = "Invalid Size";
 const int defaultInitSize = 10;
 
-template<class T>
+template <class T>
 class Stack {
 
 public:
@@ -24,4 +24,3 @@ private:
     void copy(const Stack& other);
     void expand();
 };
-
