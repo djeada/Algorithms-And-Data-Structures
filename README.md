@@ -10,6 +10,7 @@
 Implementations and visualisations of various algorithms.
 
 <h1>Build</h1>
+
 ```bash
 mkdir build
 cd build
