@@ -1,6 +1,6 @@
-#include <vector>
-#include <memory>
 #include <functional>
+#include <memory>
+#include <vector>
 
 template <class T>
 class Heap {
@@ -11,8 +11,10 @@ public:
     void push(const T& val);
     T pop();
     T peek();
-    int size();
+    unsigned int size();
     bool empty();
+    bool isMaxHeap();
+    bool isMinHeap();
 
 private:
     std::vector<T> data;

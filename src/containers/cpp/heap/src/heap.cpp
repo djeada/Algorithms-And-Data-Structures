@@ -22,11 +22,11 @@ MaxHeap<T>::MaxHeap()
 template <class T>
 void Heap<T>::push(const T& val)
 {
-    data.push_back(val);
+    data.emplace_back(val);
 
     auto index = data.size() - 1;
     while (parentIdx(index) != -1 && comp(data[index], data[parentIdx(index)])) {
-        std::iter_swap(data.begin() + index - 1, data.begin() + parentIdx(index) - 1);
+        std::iter_swap(data.begin() + index, data.begin() + parentIdx(index));
         index = parentIdx(index);
     }
 }
@@ -36,7 +36,7 @@ T Heap<T>::pop()
 {
     assertNotEmpty();
 
-    T firstElement = data[1];
+    T firstElement = peek();
     int index = 0;
     data[index] = data.back();
 
@@ -56,7 +56,7 @@ T Heap<T>::pop()
         else
             swapIdx = comp(data[leftIdx], data[rightIdx]) ? leftIdx : rightIdx;
 
-        std::iter_swap(data.begin() + index - 1, data.begin() + swapIdx - 1);
+        std::iter_swap(data.begin() + index, data.begin() + swapIdx);
         index = swapIdx;
     }
 
@@ -67,19 +67,22 @@ template <class T>
 T Heap<T>::peek()
 {
     assertNotEmpty();
+
+    if (isMaxHeap())
+        return data.front();
+
     return data[1];
 }
 
 template <class T>
 void Heap<T>::assertNotEmpty()
 {
-
     if (empty())
         throw std::invalid_argument("Heap is empty.");
 }
 
 template <class T>
-int Heap<T>::size()
+unsigned int Heap<T>::size()
 {
     return data.size() - 1;
 }
@@ -91,23 +94,35 @@ bool Heap<T>::empty()
 }
 
 template <class T>
+bool Heap<T>::isMaxHeap()
+{
+    return comp(2, 1);
+}
+
+template <class T>
+bool Heap<T>::isMinHeap()
+{
+    return comp(1, 2);
+}
+
+template <class T>
 int Heap<T>::leftNodeIdx(int index)
 {
-    auto res = index * 2;
-    if (res >= data.size())
+    unsigned int result = index * 2;
+    if (result >= data.size())
         return -1;
 
-    return res;
+    return result;
 }
 
 template <class T>
 int Heap<T>::rightNodeIdx(int index)
 {
-    auto res = index * 2 + 1;
-    if (res >= data.size())
+    unsigned int result = index * 2 + 1;
+    if (result >= data.size())
         return -1;
 
-    return res;
+    return result;
 }
 
 template <class T>
