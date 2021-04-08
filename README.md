@@ -34,16 +34,20 @@ ctest --verbose
 <td>General graph</td>
 <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/graph/graph.py">Python</a></td>
  <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/graph">Cpp</a></td> 
+   </tr>
 <tr>
 <td>2</td>
 <td>BFS</td>
 <td><a>Python</a></td>
  <td><a href="href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
+  </tr>
 <tr>
 <td>3</td>
 <td>Dijkstra</td>
 <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
  <td><a>Cpp</a></td> 
+  </tr>
+
 </tr>
 </tbody>
 </table>
