@@ -60,7 +60,6 @@ ctest --verbose
  <td><a>Cpp</a></td> 
   </tr>
   
-    <tr>
 <td>6</td>
 <td>Binary Tree</td>
 <td><a>Python</a></td>
@@ -100,6 +99,7 @@ ctest --verbose
 </tr>
 </thead>
 <tbody>
+ 
 <tr>
 <td>1</td>
 <td>General graph</td>
@@ -112,6 +112,7 @@ ctest --verbose
 <td><a>Python</a></td>
  <td><a href="href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
   </tr>
+  
   <tr>
 <td>3</td>
 <td>DFS</td>
@@ -131,7 +132,6 @@ ctest --verbose
 <td><a>Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
-  
     <tr>
 <td>6</td>
 <td>Kruskal</td>
