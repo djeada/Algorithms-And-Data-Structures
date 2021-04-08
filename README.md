@@ -78,7 +78,7 @@ ctest --verbose
  <td><a>Cpp</a></td> 
   </tr>
           <tr>
-<td>9/td>
+<td>9</td>
 <td>Hash Map</td>
 <td><a>Python</a></td>
  <td><a>Cpp</a></td> 
