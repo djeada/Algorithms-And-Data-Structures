@@ -18,6 +18,77 @@ cmake ..
 make
 ctest --verbose
 ```
+<h1>Collections</h1>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Structure</th>
+<th colspan="2">Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Linked List</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+   </tr>
+<tr>
+<td>2</td>
+<td>Vector</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  <tr>
+<td>3</td>
+<td>Stack</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+<tr>
+<td>4</td>
+<td>Queue</td>
+<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  <tr>
+<td>5</td>
+<td>Heap</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+    <tr>
+<td>6</td>
+<td>Binary Tree</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+      <tr>
+<td>7</td>
+<td>Avl Tree</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+        <tr>
+<td>8</td>
+<td>Red Black Tree</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+          <tr>
+<td>9/td>
+<td>Hash Map</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+</tr>
+</tbody>
+</table>
+
+
 
 <h1>Graphs</h1>
 <table>
@@ -41,13 +112,45 @@ ctest --verbose
 <td><a>Python</a></td>
  <td><a href="href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
   </tr>
-<tr>
+  <tr>
 <td>3</td>
+<td>DFS</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+<tr>
+<td>4</td>
 <td>Dijkstra</td>
 <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
-
+  <tr>
+<td>5</td>
+<td>A*</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+    <tr>
+<td>6</td>
+<td>Kruskal</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+      <tr>
+<td>7</td>
+<td>Bellman-Ford</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+        <tr>
+<td>8</td>
+<td>Prim</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
 </tr>
 </tbody>
 </table>
