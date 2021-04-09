@@ -7,12 +7,15 @@ enum class Color { WHITE,
     BLACK };
 
 struct Vertex {
+    Vertex();
     Vertex(int value);
+    Vertex(const Vertex& vertex);
 
     int value;
     Color color;
 
     bool operator==(const Vertex& other) const;
+    bool operator!=(const Vertex& other) const;
 
     struct HashFunction {
         size_t operator()(const Vertex& vertex) const;
@@ -20,25 +23,32 @@ struct Vertex {
 };
 
 struct Edge {
-    Edge(Vertex _source, Vertex destination, int distance);
+    Edge(Vertex source, Vertex destination, int distance);
 
     Vertex source;
     Vertex destination;
     int distance;
 
     bool operator==(const Edge& other) const;
+    bool operator<(const Edge& other) const;
 };
+
+//Dodaj zabezpiecznia
+//Porownanie
 
 class Graph {
     std::unordered_map<Vertex, std::vector<Edge>, Vertex::HashFunction> adjcDict;
+    std::vector<Vertex> vertices;
 
 public:
     Graph();
     void addEdge(Vertex source, Vertex destination, int distance);
-    std::vector<Vertex> vertices();
-    std::vector<Edge> edges(const Vertex vertex);
-    bool contains(const Vertex vertex);
-    std::string toString();
-    unsigned int size();
-    bool empty();
+    void addVertex(Vertex vertex);
+    std::vector<Vertex> vertices() const;
+    std::vector<Edge> edges(const Vertex vertex) const;
+    std::vector<Edge> edges() const;
+    bool contains(const Vertex vertex) const;
+    bool empty() const;
+    unsigned int size() const;
+    std::string toString() const;
 };

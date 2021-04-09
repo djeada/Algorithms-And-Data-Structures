@@ -1,6 +1,13 @@
 #include "graph.h"
+#include <algorithm>
 #include <iterator>
 #include <sstream>
+
+Vertex::Vertex()
+    : value(0)
+    , color(Color::WHITE)
+{
+}
 
 Vertex::Vertex(int _value)
     : value(_value)
@@ -8,9 +15,20 @@ Vertex::Vertex(int _value)
 {
 }
 
+Vertex::Vertex(const Vertex& vertex)
+    : value(vertex.value)
+    , color(vertex.color)
+{
+}
+
 bool Vertex::operator==(const Vertex& other) const
 {
     return value == other.value && color == other.color;
+}
+
+bool Vertex::operator!=(const Vertex& other) const
+{
+    return value != other.value || color != other.color;
 }
 
 size_t Vertex::HashFunction::operator()(const Vertex& vertex) const
@@ -30,6 +48,11 @@ bool Edge::operator==(const Edge& other) const
     return source == other.source && destination == other.destination && distance == other.distance;
 }
 
+bool Edge::operator<(const Edge& other) const
+{
+    return distance < other.distance;
+}
+
 Graph::Graph()
 {
 }
@@ -43,39 +66,58 @@ void Graph::addEdge(Vertex source, Vertex destination, int distance)
         adjcDict[source] = std::vector<Edge>{ Edge(source, destination, distance) };
 }
 
-std::vector<Vertex> Graph::vertices()
+std::vector<Vertex> Graph::vertices() const
 {
-    std::vector<Vertex> keys;
+    std::vector<Vertex> result;
 
-    for (const auto& [key, _] : adjcDict)
-        keys.emplace_back(key);
+    for (const auto& [key, edges] : adjcDict) {
+        result.emplace_back(key);
 
-    return keys;
+        for (const auto& edge : edges) {
+            auto vertex = edge.destination;
+            if (find(result.begin(), result.end(), vertex) == result.end())
+                result.emplace_back(vertex);
+        }
+    }
+
+    return result;
 }
 
-std::vector<Edge> Graph::edges(const Vertex vertex)
+std::vector<Edge> Graph::edges(const Vertex vertex) const
 {
     if (!contains(vertex))
         throw std::invalid_argument("Graph doesn't contain given vertex.");
 
-    return adjcDict[vertex];
+    return adjcDict.at(vertex);
 }
 
-bool Graph::contains(const Vertex vertex)
+std::vector<Edge> Graph::edges() const
+{
+    std::vector<Edge> result;
+
+    for (auto [vertex, _edges] : adjcDict) {
+        std::copy(_edges.begin(), _edges.end(), std::back_inserter(result));
+    }
+
+    return result;
+}
+
+bool Graph::contains(const Vertex vertex) const
 {
     return adjcDict.find(vertex) != adjcDict.end();
 }
 
-unsigned int Graph::size()
+unsigned int Graph::size() const
 {
     return adjcDict.size();
 }
-bool Graph::empty()
+
+bool Graph::empty() const
 {
     return adjcDict.empty();
 }
 
-std::string Graph::toString()
+std::string Graph::toString() const
 {
     std::string result;
 
