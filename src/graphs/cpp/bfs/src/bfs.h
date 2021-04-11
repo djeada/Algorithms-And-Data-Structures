@@ -1,3 +1,3 @@
 #include "graph.h"
 
-void breadthFirstSearch(Graph graph, Vertex source);
+int breadthFirstSearch(const Graph& graph, Vertex source, Vertex destination);

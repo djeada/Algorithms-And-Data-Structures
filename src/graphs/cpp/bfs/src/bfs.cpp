@@ -1,30 +1,41 @@
 #include "bfs.h"
+#include <bits/stdc++.h>
 
-void breadthFirstSearch(Graph graph, Vertex source) {
+int breadthFirstSearch(const Graph& graph, Vertex source, Vertex destination)
+{
 
-	source.color = GRAY;
+    if (!graph.contains(source) || !graph.contains(destination))
+        return -1;
 
-	std::unordered_map<Vertex, int> distances;
-	distances[source] = 0;
-	
-	std::queue<Vertex> visited;
-	visited.push(source);
+    std::unordered_map<Vertex, int, Vertex::HashFunction> distances;
+    std::unordered_map<Vertex, bool, Vertex::HashFunction> visited;
 
-	while (!visited.empty()) {
-		auto vertex = visited.front();
-		visited.pop();
-		
-		for (auto& edge : adjDict[u]) {		
+    for (const auto vertex : graph.vertices()) {
+        distances[vertex] = INT_MAX;
+        visited[vertex] = false;
+    }
 
-			auto& neighbour = edge.destination;
+    distances[source] = 0;
+    visited[source] = true;
 
-			if (neighbour.color == Color::WHITE) {
-				neighbour.color = Color::GRAY;
-				distances[neighbour] = distances[vertex] + 1;
-				visited.push(neighbour);
-			}
-		}
+    std::queue<Vertex> queue;
+    queue.push(source);
 
-		vertex.color = Color::BLACK;
-	}
+    while (!queue.empty()) {
+        auto u = queue.front();
+        queue.pop();
+
+        for (auto& edge : graph.edges(u)) {
+
+            auto v = edge.destination;
+
+            if (!visited[v]) {
+                visited[v] = true;
+                distances[v] = distances[u] + edge.distance;
+                queue.push(v);
+            }
+        }
+    }
+
+    return distances[destination];
 }
