@@ -31,6 +31,11 @@ bool Vertex::operator!=(const Vertex& other) const
     return value != other.value || color != other.color;
 }
 
+bool Vertex::operator<(const Vertex& other) const
+{
+    return value < other.value;
+}
+
 size_t Vertex::HashFunction::operator()(const Vertex& vertex) const
 {
     return std::hash<int>()(vertex.value) ^ (std::hash<int>()(static_cast<int>(vertex.color)) << 1);
@@ -57,28 +62,43 @@ Graph::Graph()
 {
 }
 
-void Graph::addEdge(Vertex source, Vertex destination, int distance)
+Graph::Graph(std::unordered_map<Vertex, std::vector<Edge>, Vertex::HashFunction> adjcDict)
+    : adjcDict(adjcDict)
 {
+}
+
+void Graph::addEdge(Edge edge)
+{
+    auto source = edge.source;
+    auto destination = edge.destination;
+
     if (contains(source))
-        adjcDict[source].emplace_back(Edge(source, destination, distance));
+        adjcDict[source].emplace_back(edge);
 
     else
-        adjcDict[source] = std::vector<Edge>{ Edge(source, destination, distance) };
+        adjcDict[source] = std::vector<Edge>{ edge };
+
+    if (!contains(destination))
+        adjcDict[destination] = std::vector<Edge>{};
+}
+
+void Graph::addEdge(Vertex source, Vertex destination, int distance)
+{
+    addEdge(Edge(source, destination, distance));
+}
+
+void Graph::addVertex(Vertex vertex)
+{
+    if (!contains(vertex))
+        adjcDict[vertex] = std::vector<Edge>{};
 }
 
 std::vector<Vertex> Graph::vertices() const
 {
     std::vector<Vertex> result;
 
-    for (const auto& [key, edges] : adjcDict) {
+    for (const auto& [key, _] : adjcDict)
         result.emplace_back(key);
-
-        for (const auto& edge : edges) {
-            auto vertex = edge.destination;
-            if (find(result.begin(), result.end(), vertex) == result.end())
-                result.emplace_back(vertex);
-        }
-    }
 
     return result;
 }
@@ -105,6 +125,19 @@ std::vector<Edge> Graph::edges() const
 bool Graph::contains(const Vertex vertex) const
 {
     return adjcDict.find(vertex) != adjcDict.end();
+}
+
+bool Graph::connected(const Vertex source, const Vertex destination) const
+{
+    if (!contains(source) || !contains(destination))
+        return false;
+
+    for (auto& edge : adjcDict.at(source)) {
+        if (edge.destination == destination)
+            return true;
+    }
+
+    return false;
 }
 
 unsigned int Graph::size() const

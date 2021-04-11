@@ -16,6 +16,7 @@ struct Vertex {
 
     bool operator==(const Vertex& other) const;
     bool operator!=(const Vertex& other) const;
+    bool operator<(const Vertex& other) const;
 
     struct HashFunction {
         size_t operator()(const Vertex& vertex) const;
@@ -38,12 +39,16 @@ class Graph {
 
 public:
     Graph();
+    Graph(std::unordered_map<Vertex, std::vector<Edge>, Vertex::HashFunction> adjcDict);
+    void addEdge(Edge edge);
     void addEdge(Vertex source, Vertex destination, int distance);
+    void addVertex(Vertex vertex);
     std::vector<Vertex> vertices() const;
     std::vector<Edge> edges(const Vertex vertex) const;
     std::vector<Edge> edges() const;
     bool contains(const Vertex vertex) const;
-    std::string toString() const;
-    unsigned int size() const;
+    bool connected(const Vertex source, const Vertex destination) const;
     bool empty() const;
+    unsigned int size() const;
+    std::string toString() const;
 };
