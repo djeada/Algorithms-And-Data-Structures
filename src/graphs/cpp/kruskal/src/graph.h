@@ -47,6 +47,7 @@ public:
     std::vector<Edge> edges(const Vertex vertex) const;
     std::vector<Edge> edges() const;
     bool contains(const Vertex vertex) const;
+    bool connected(const Vertex source, const Vertex destination) const;
     bool empty() const;
     unsigned int size() const;
     std::string toString() const;
