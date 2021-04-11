@@ -127,6 +127,19 @@ bool Graph::contains(const Vertex vertex) const
     return adjcDict.find(vertex) != adjcDict.end();
 }
 
+bool Graph::connected(const Vertex source, const Vertex destination) const
+{
+    if (!contains(source) || !contains(destination))
+        return false;
+
+    for (auto& edge : adjcDict.at(source)) {
+        if (edge.destination == destination)
+            return true;
+    }
+
+    return false;
+}
+
 unsigned int Graph::size() const
 {
     return adjcDict.size();
