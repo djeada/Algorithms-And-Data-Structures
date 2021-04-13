@@ -7,7 +7,7 @@
 <a href=""><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
 </div>
 
-Implementations and visualizations of various algorithms.
+Implementations of various algorithms.
 
 <h1>Build</h1>
 
