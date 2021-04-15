@@ -110,7 +110,7 @@ ctest --verbose
 <td>2</td>
 <td>BFS</td>
 <td><a>Python</a></td>
- <td><a href="href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
   </tr>
   
   <tr>
@@ -154,3 +154,163 @@ ctest --verbose
 </tr>
 </tbody>
 </table>
+
+<h1>Backtracking</h1>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Algorithm</th>
+<th colspan="2">Implementation</th>
+</tr>
+</thead>
+<tbody>
+ 
+<tr>
+<td>1</td>
+<td>String Pattern</td>
+<td><a href="">Python</a></td>
+ <td><a href="">Cpp</a></td> 
+   </tr>
+<tr>
+<td>2</td>
+<td>Permutations</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+  <tr>
+<td>3</td>
+<td>Genereting words</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+<tr>
+<td>4</td>
+<td>K-colorable configurations</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  <tr>
+<td>5</td>
+<td>Hamiltonian paths</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+    <tr>
+<td>6</td>
+<td>K-partition</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+      <tr>
+<td>7</td>
+<td>Topological orderings</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+        <tr>
+<td>8</td>
+<td>Tic Tac Toe</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+</tr>
+</tbody>
+</table>
+
+
+<h1>Dynamic Programming</h1>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Algorithm</th>
+<th colspan="2">Implementation</th>
+</tr>
+</thead>
+<tbody>
+ 
+<tr>
+<td>1</td>
+<td>Fibonacci</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+   </tr>
+<tr>
+<td>2</td>
+<td>Grid travelers</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+  <tr>
+<td>3</td>
+<td>Stairs</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+<tr>
+<td>4</td>
+<td>Can sum</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  <tr>
+<td>5</td>
+<td>How sum</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+    <tr>
+<td>6</td>
+<td>Best sum</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+      <tr>
+<td>7</td>
+<td>Can construct/td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+        <tr>
+<td>8</td>
+<td>Count construct</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+   <tr>
+<td>9</td>
+<td>All construct</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+    <tr>
+<td>10</td>
+<td>Longest increasing subarray</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+      <tr>
+<td>11</td>
+<td>Longest common subsequence/td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+        <tr>
+<td>12</td>
+<td>Knuth-Morris-Pratt</td>
+<td><a>Python</a></td>
+ <td><a>Cpp</a></td> 
+  </tr>
+  
+</tr>
+</tbody>
+</table>
+
+
