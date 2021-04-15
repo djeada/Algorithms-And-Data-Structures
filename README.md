@@ -160,8 +160,8 @@ ctest --verbose
 <thead>
 <tr>
 <th>#</th>
-<th>Algorithm</th>
-<th colspan="2">Implementation</th>
+<th>Problem</th>
+<th colspan="2">Solution</th>
 </tr>
 </thead>
 <tbody>
@@ -227,8 +227,8 @@ ctest --verbose
 <thead>
 <tr>
 <th>#</th>
-<th>Algorithm</th>
-<th colspan="2">Implementation</th>
+<th>Problem</th>
+<th colspan="2">Solution</th>
 </tr>
 </thead>
 <tbody>
