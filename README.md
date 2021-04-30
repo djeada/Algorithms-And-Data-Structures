@@ -272,7 +272,7 @@ ctest --verbose
   </tr>
       <tr>
 <td>7</td>
-<td>Can construct/td>
+<td>Can construct</td>
 <td><a>Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
