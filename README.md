@@ -297,7 +297,7 @@ ctest --verbose
   </tr>
       <tr>
 <td>11</td>
-<td>Longest common subsequence/td>
+<td>Longest common subsequence</td>
 <td><a>Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
