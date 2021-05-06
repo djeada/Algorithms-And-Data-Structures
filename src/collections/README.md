@@ -44,8 +44,8 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 
 <h2> Time complexity </h2>
 
-| Operation | Average case | Worst case |
-| --- | --- | --- |
+| Operation | Average case | 
+| --- | --- | 
 | <i>Find min/max</i> | O(1) |
 | <i>Delete min/max</i> | O(logn) |
 | <i>Insert</i> | O(logn) |
