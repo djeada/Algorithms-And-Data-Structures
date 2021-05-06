@@ -64,7 +64,7 @@ Solutions:
 - If theere are many collisions: O(1) complexity gets worse !
 - It has an additional memory cost due to the references
 
-1. Open addressing: better solution
+2. Open addressing: better solution
 - If collision occurs, we find an empty slot instead
 - Linear probing: if a collision occures, we try the next slot ... if there is a collision too we keep trying the next slot until we find an empty slot
 - Quadratic probing: we trying slots 1,2,4,8... units far away
