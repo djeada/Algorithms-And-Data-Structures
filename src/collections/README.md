@@ -9,6 +9,7 @@ Enqueue operation: we just simply add the new item to the end of the queue
 Dequeue operation: we just simply remove the item starting at the beginning of the queue // FIFO structure
 
 <h2>Applications:</h2>
+
 - BFS
 - When a resource is shared with several consumers ( threads ): we store them in a queue For example: CPU scheduling
 - When data is transferred asynchronously (data not necessarily received at same rate as sent) between two processes For example: IO buffers
@@ -24,6 +25,7 @@ Pop operation: we take the last item we have inserted to the top of the stack (L
 Peek operation: return the item from the top of the stack without removing it Very simple operation, can be done in O(1)
 
 <h2>Applications:</h2>
+
 - In stack-oriented programming languages
 - Graph algorithms: depth-first search can be implemented with stacks ( or with recursion )
 - Finding Euler-cycles in a graph
@@ -43,6 +45,7 @@ What if we had a function that could give us that index for any input?
 This function is called hash function.
 
 <h2>Hash function</h2>
+
 - Purpose: Distribute the keys uniformly into buckets
 - Example:
 * n: number of keys
@@ -68,6 +71,7 @@ Solutions:
 - Rehashing: we hash the result again in order to find an empty slot
 
 <h2> Applications:</h2>
+
 - Databases: hashing is often easier than searching trees.
 - In large networks, lookup tables ( lookup for IP addresses )
 - Histograms are a type of graph that shows the distribution of data (ex. frequencies of charachter occurences in a string)
