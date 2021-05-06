@@ -31,6 +31,40 @@ Peek operation: return the item from the top of the stack without removing it Ve
 - Finding Euler-cycles in a graph
 - Finding strongly connected components in a graph
 
+<h1>Heap</h1>
+It is a binary tree.
+
+In a max heap, the keys of parent nodes are always greater than or equal to those of the children and the highest key is in the root
+node. In a min heap, the keys of parent nodes are less than or equal to those of the children and the lowest key is in the root node
+
+It is complete: it cannot be unbalanced.  
+We insert every new item to the next available place.
+
+It has nothing to do with the pool of memory from which dynamically allocated memory is allocated.
+
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Find min/max</i> | O(1) |
+| <i>Delete min/max</i> | O(logn) |
+| <i>Insert</i> | O(logn) |
+| <i>merge</i> | O(mlog(m+n)) | 
+
+<h2>Applications:</h2>
+
+- Graph algorithms: Dijkstra algorithm, Prims algorithm
+- Used to implement a priority queue
+
+<h2>Heapsort</h2>
+
+- comparison-based sorting algorithm
+- uses heap data structure
+- in-place
+- unstable
+- does not need additional memory
+- while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case O(n log n) runtime.
+
 <h1>Hash table</h1>
 
 In a balanced BST we can achieve O(logn) time complexity for several operations including search.
