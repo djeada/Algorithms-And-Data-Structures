@@ -7,7 +7,7 @@ Since it can reject a large number of candidates with a single test, backtrackin
 
 Backtracking is a useful technique for solving constraint satisfaction problems like combinatorial optimization.
 
-<h1>The method <h1>
+<h1>The method </h1>
 
 The nodes of a tree structure, the possible search tree, are used to represent the partial candidates. Each partial candidate is the parent of candidates that differ by a single extension step from it. The tree's leaves represent partial candidates who can't be expanded any further.
 
