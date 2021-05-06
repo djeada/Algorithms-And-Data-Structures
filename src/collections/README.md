@@ -36,8 +36,7 @@ The heights of any node's two child subtrees vary by no more than one in an AVL 
 
 Since they are more rigidly balanced, AVL trees are faster than red-black trees, but they need more memory.
 
-<h2> Applications:</h2>
-- Used internally by Operating Systems.
+<h2> Time complexity </h2>
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -45,6 +44,9 @@ Since they are more rigidly balanced, AVL trees are faster than red-black trees,
 | <i>Insert</i> | O(logn) | O(logn) |
 | <i>Delete</i> | O(logn) | O(logn) |
 | <i>Search</i> | O(logn) | O(logn) |
+
+<h2> Applications:</h2>
+- Used internally by Operating Systems.
 
 <h2> Properties </h2>
 
