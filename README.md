@@ -312,4 +312,53 @@ ctest --verbose
 </tbody>
 </table>
 
+<h1>Sorting</h1>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Algorithm</th>
+<th colspan="2">Implementation</th>
+</tr>
+</thead>
+<tbody>
+ 
+<tr>
+<td>1</td>
+<td>Heap sort</td>
+<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/heap%20sort">Cpp</a></td> 
+</tr>
+<tr>
+<td>2</td>
+<td>Insertion sort</td>
+<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/insertion%20sort">Cpp</a></td> 
+</tr>
+<tr>
+<td>3</td>
+<td>Merge sort</td>
+<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge%20sort">Cpp</a></td> 
+</tr>  
+<tr>
+<td>4</td>
+<td>Quick sort</td>
+<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/quick%20sort">Cpp</a></td> 
+</tr>
+<tr>
+<td>5</td>
+<td>Radix sort</td>
+<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/radix%20sort">Cpp</a></td> 
+</tr>
+<tr>
+<td>6</td>
+<td>Selection sort</td>
+<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/selection%20sort">Cpp</a></td> 
+</tr>
+</tbody>
+</table>
 
