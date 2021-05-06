@@ -48,9 +48,9 @@ This function is called hash function.
 
 - Purpose: Distribute the keys uniformly into buckets
 - Example:
-* n: number of keys
-* m: number of buckets 
-* h(x) = n % m
+1. n: number of keys
+1. m: number of buckets 
+1. h(x) = n % m
 
 To ensure that the distribution is uniform, we can use prime numbers both for the size of the array and in our hash function.
 For string we could compute the ASCII value for each character, add them together, and calculate modulo.
@@ -60,11 +60,11 @@ For string we could compute the ASCII value for each character, add them togethe
 Problem: Two or more inputs give the same output.
 
 Solutions:
-* Collision resolution with chaining: we put multiple entries into the same slot with the help of a linked list
+1. Collision resolution with chaining: we put multiple entries into the same slot with the help of a linked list
 - If theere are many collisions: O(1) complexity gets worse !
 - It has an additional memory cost due to the references
 
-* Open addressing: better solution
+1. Open addressing: better solution
 - If collision occurs, we find an empty slot instead
 - Linear probing: if a collision occures, we try the next slot ... if there is a collision too we keep trying the next slot until we find an empty slot
 - Quadratic probing: we trying slots 1,2,4,8... units far away
@@ -106,5 +106,5 @@ Since they are more rigidly balanced, AVL trees are faster than red-black trees,
 - On every insertion -> we have to check whether we have violated the red-black properties or not
 
 - If we have violated the RB properties: we have to rebalance the tree:
-* make rotations
-* OR just recolor the nodes
+1. make rotations
+1. OR just recolor the nodes
