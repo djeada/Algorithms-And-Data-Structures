@@ -1,12 +1,12 @@
 add_executable(
 	unit_tests
-	test_radix_sort.cpp
+	test_selection_sort.cpp
 )
 
 target_link_libraries(
 	unit_tests
 	gtest_main
-	radix_sort
+	selection_sort
 )
 
 add_test(
