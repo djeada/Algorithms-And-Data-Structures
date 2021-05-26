@@ -248,14 +248,14 @@ ctest --verbose
   <tr>
 <td>3</td>
 <td>Stairs</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/climbing%20stairs">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
   
 <tr>
 <td>4</td>
 <td>Can sum</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/can%20sum">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
   <tr>
@@ -267,13 +267,13 @@ ctest --verbose
     <tr>
 <td>6</td>
 <td>Best sum</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/best%20sum">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
       <tr>
 <td>7</td>
 <td>Can construct</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/can%20construct">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
         <tr>
@@ -286,7 +286,7 @@ ctest --verbose
    <tr>
 <td>9</td>
 <td>All construct</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/all%20construct">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
     <tr>
