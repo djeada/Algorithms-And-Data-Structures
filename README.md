@@ -8,7 +8,10 @@
 
 Implementations of various algorithms.
 
-<h1>Build</h1>
+<h1>How to run examples?</h1>
+Each algorithm implementation has it's own subfolder with source code, unit tests and build files. They are all independent of each other and should be built indepndently.
+
+Go to the project directory and run the following commands to create a C++ project and run unit tests:
 
 ```bash
 mkdir build
@@ -37,26 +40,26 @@ ctest --verbose
 <td>2</td>
 <td>Vector</td>
 <td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/vector">Cpp</a></td> 
   </tr>
   <tr>
 <td>3</td>
 <td>Stack</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/stack">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/stack">Cpp</a></td> 
   </tr>
   
 <tr>
 <td>4</td>
 <td>Queue</td>
-<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/queue">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/queue">Cpp</a></td> 
   </tr>
   <tr>
 <td>5</td>
 <td>Heap</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/heap">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/heap">Cpp</a></td> 
   </tr>
   
 <td>6</td>
@@ -79,7 +82,7 @@ ctest --verbose
           <tr>
 <td>9</td>
 <td>Hash Map</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/hashtable">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
 </tr>
@@ -108,45 +111,45 @@ ctest --verbose
 <tr>
 <td>2</td>
 <td>BFS</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bfs">Python</a></td>
  <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td> 
   </tr>
   
   <tr>
 <td>3</td>
 <td>DFS</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/dfs">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/dfs">Cpp</a></td> 
   </tr>
   
 <tr>
 <td>4</td>
 <td>Dijkstra</td>
 <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/dijkstra">Cpp</a></td> 
   </tr>
   <tr>
 <td>5</td>
 <td>A*</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/a%20star">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
     <tr>
 <td>6</td>
 <td>Kruskal</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/kruskal">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/kruskal">Cpp</a></td> 
   </tr>
       <tr>
 <td>7</td>
 <td>Bellman-Ford</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bellman%20ford">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
         <tr>
 <td>8</td>
 <td>Prim</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/prim">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
   
