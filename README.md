@@ -99,7 +99,6 @@ ctest --verbose
 </table>
 
 
-
 <h1>Graphs</h1>
 <table>
 <thead>
@@ -247,13 +246,13 @@ ctest --verbose
 <tr>
 <td>1</td>
 <td>Fibonacci</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/fibonacci">Python</a></td>
  <td><a>Cpp</a></td> 
    </tr>
 <tr>
 <td>2</td>
 <td>Grid travelers</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/grid%20traveler">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
   
@@ -268,13 +267,13 @@ ctest --verbose
 <td>4</td>
 <td>Can sum</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/can%20sum">Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/can%20sum">Cpp</a></td> 
   </tr>
   <tr>
 <td>5</td>
 <td>How sum</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/how%20sum">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/how%20sum">Cpp</a></td> 
   </tr>
     <tr>
 <td>6</td>
@@ -286,37 +285,44 @@ ctest --verbose
 <td>7</td>
 <td>Can construct</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/can%20construct">Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/can%20construct">Cpp</a></td> 
   </tr>
         <tr>
 <td>8</td>
 <td>Count construct</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/count%20construct">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/count%20construct">Cpp</a></td> 
   </tr>
   
    <tr>
 <td>9</td>
 <td>All construct</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/all%20construct">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/all%20construct">Cpp</a></td> 
+  </tr>
+ 
+   <tr>
+<td>10</td>
+<td>Coins</td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/coins">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
     <tr>
-<td>10</td>
+<td>11</td>
 <td>Longest increasing subarray</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/longest%20increasing%20subarray">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
       <tr>
-<td>11</td>
+<td>12</td>
 <td>Longest common subsequence</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/longest%20common%20subsequence">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
         <tr>
-<td>12</td>
+<td>13</td>
 <td>Knuth-Morris-Pratt</td>
-<td><a>Python</a></td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/kmp">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
   
@@ -361,16 +367,9 @@ ctest --verbose
 </tr>
 <tr>
 <td>5</td>
-<td>Radix sort</td>
-<td><a>Python</a></td>
-<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/radix%20sort">Cpp</a></td> 
-</tr>
-<tr>
-<td>6</td>
 <td>Selection sort</td>
 <td><a>Python</a></td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/selection%20sort">Cpp</a></td> 
 </tr>
 </tbody>
 </table>
-
