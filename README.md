@@ -12,7 +12,7 @@ Implementations of various algorithms.
 
 For C++ projects you will need:
 * A C++ compiler supporting C++14
-* Cmake
+* Cmake 3.15+
 
 For Python projects you will need:
 * Python 3.6+
