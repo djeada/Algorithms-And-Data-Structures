@@ -8,6 +8,15 @@
 
 Implementations of various algorithms.
 
+<h1>Requirements</h1>
+
+For C++ projects you will need:
+* A C++ compiler supporting C++14
+* Cmake
+
+For Python projects you will need:
+* Python 3.6+
+
 <h1>How to run examples?</h1>
 Each algorithm implementation has it's own subfolder with source code, unit tests and build files. They are all independent of each other and should be built indepndently.
 
