@@ -25,7 +25,7 @@ bool canConstructMemo(const std::string &target,
                       const std::vector<std::string> &wordBank) {
 
   std::function<bool(const std::string &, const std::vector<std::string> &,
-                      std::unordered_map<std::string, bool> &)>
+                     std::unordered_map<std::string, bool> &)>
       _canConstructMemo;
   _canConstructMemo = [&](const std::string &target,
                           const std::vector<std::string> &wordBank,

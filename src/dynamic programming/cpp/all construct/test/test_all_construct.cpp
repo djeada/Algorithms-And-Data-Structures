@@ -4,7 +4,8 @@
 
 bool equal(std::vector<std::vector<std::string>> &v1,
            std::vector<std::vector<std::string>> &v2) {
-  auto _equal = [](std::vector<std::string> &_v1, std::vector<std::string> &_v2) {
+  auto _equal = [](std::vector<std::string> &_v1,
+                   std::vector<std::string> &_v2) {
     std::sort(_v1.begin(), _v1.end());
     std::sort(_v2.begin(), _v2.end());
     return _v1 == _v2;
