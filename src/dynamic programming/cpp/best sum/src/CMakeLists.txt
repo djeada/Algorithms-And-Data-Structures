@@ -1,16 +1,16 @@
 
-add_library (how_sum "")
+add_library (best_sum "")
 
 target_sources(
-    how_sum
+    best_sum
     PRIVATE
-        how_sum.cpp
+        best_sum.cpp
     PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/how_sum.h
+        ${CMAKE_CURRENT_LIST_DIR}/best_sum.h
     )
 
 target_include_directories(
-    how_sum
+    best_sum
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}
     )
