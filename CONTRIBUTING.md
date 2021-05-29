@@ -1,18 +1,18 @@
 Any and all contributions are appreciated.
 
-You can fork this repository by pressing the fork button at the top of the page.  This will duplicate the repository in your account.
+You can <i>fork</i> this repository by pressing the fork button at the top of the page.  This will duplicate the repository in your account.
 
-You can now clone the forked archive on your local machine.
+You can now <i>clone</i> the forked repo to your local machine.
 
-Run the following git command in a terminal:
+Run the following git command in the terminal:
 
 ```bash
 git clone https://github.com/djeada/Algorithms-And-Data-Structures.git
 ```
 
-Navigate to repository directory on your computer.
+Navigate to the directory containing the repository on your computer.
 
-Now use the git checkout command to create a new branch:
+Now use the <i>git checkout</i> command to create a new branch:
 
 ```bash
 git checkout -b your-new-branch-name
@@ -26,4 +26,4 @@ git commit -m "your commit message"
 git push origin <your-new-branch-name>
 ```
 
-Now go to the github website and create a Pull request in your forked repository.
+Now go to the github website and create a <i>pull request</i> in your forked repository.
