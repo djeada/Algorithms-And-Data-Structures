@@ -113,7 +113,7 @@ ctest --verbose
 <tr>
 <td>1</td>
 <td>General graph</td>
-<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/graph/graph.py">Python</a></td>
+<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/graph">Python</a></td>
  <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/graph">Cpp</a></td> 
    </tr>
 <tr>
