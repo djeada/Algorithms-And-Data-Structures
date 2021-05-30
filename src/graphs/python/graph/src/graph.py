@@ -16,8 +16,11 @@ class Vertex:
 
         return self.value < other.value
 
-    def __str__(self):
+    def __repr__(self):
         return str(self.value)
+
+    def __hash__(self):
+        return hash(self.value)
 
 
 class Edge:
@@ -44,6 +47,9 @@ class Edge:
 
         return self.distance < other.distance
 
+    def __repr__(self):
+        return f"({self.source}, {self.destination}, {self.distance})"
+
 
 class Graph:
     def __init__(self):
@@ -68,7 +74,7 @@ class Graph:
         return self._adj_dict.keys()
 
     def edges(self):
-        return self._adj_dict.values()
+        return [elem for array in self._adj_dict.values() for elem in array if array]
 
     def edges_from_vertex(self, vertex):
         self._assert_graph_contains_vertex(vertex)
@@ -97,13 +103,16 @@ class Graph:
     def size(self):
         return len(self._adj_dict)
 
-    def __str__(self):
+    def __repr__(self):
 
+        result = ""
         for vertex, edges in self._adj_dict.items():
-            print(f"{vertex} —> ", end="")
+            result += f"{vertex} —> "
             for edge in edges:
-                print(f"({edge.destination}, {edge.weight})", end="")
-            print("")
+                result += edge
+            result += "\n"
+
+        return result
 
     def _assert_graph_contains_vertex(self, vertex):
         if vertex not in self._adj_dict:
