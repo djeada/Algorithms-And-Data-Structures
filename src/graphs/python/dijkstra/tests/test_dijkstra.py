@@ -4,11 +4,11 @@ import sys
 sys.path.insert(0, "../src")
 
 from graph import Vertex, Edge, Graph
-from dfs import dfs
+from dijkstra import dijkstra
 
 
-class TestDFS(unittest.TestCase):
-    def test_dfs_str_vertices_negative(self):
+class TestDijkstra(unittest.TestCase):
+    def test_dijkstra_str_vertices_negative(self):
 
         graph = Graph()
 
@@ -21,13 +21,13 @@ class TestDFS(unittest.TestCase):
         graph.add_edge(Edge(Vertex("F"), Vertex("C"), 12))
         graph.add_edge(Edge(Vertex("E"), Vertex("G"), 9))
 
-        self.assertEqual(dfs(graph, Vertex("A"), Vertex("C")), 20)
-        self.assertEqual(dfs(graph, Vertex("A"), Vertex("F")), 8)
-        self.assertEqual(dfs(graph, Vertex("B"), Vertex("G")), 15)
-        self.assertEqual(dfs(graph, Vertex("E"), Vertex("A")), float("inf"))
-        self.assertEqual(dfs(graph, Vertex("C"), Vertex("D")), float("inf"))
+        self.assertEqual(dijkstra(graph, Vertex("A"), Vertex("C")), 20)
+        self.assertEqual(dijkstra(graph, Vertex("A"), Vertex("F")), 8)
+        self.assertEqual(dijkstra(graph, Vertex("B"), Vertex("G")), 15)
+        self.assertEqual(dijkstra(graph, Vertex("E"), Vertex("A")), float("inf"))
+        self.assertEqual(dijkstra(graph, Vertex("C"), Vertex("D")), float("inf"))
 
-    def test_dfs_int_vertices_positive(self):
+    def test_dijkstra_int_vertices_positive(self):
 
         graph = Graph()
 
@@ -43,13 +43,13 @@ class TestDFS(unittest.TestCase):
         graph.add_edge(Edge(Vertex(3), Vertex(2), 1))
         graph.add_edge(Edge(Vertex(3), Vertex(4), 1))
 
-        self.assertEqual(dfs(graph, Vertex(2), Vertex(0)), 3)
-        self.assertEqual(dfs(graph, Vertex(2), Vertex(1)), 2)
-        self.assertEqual(dfs(graph, Vertex(2), Vertex(2)), 0)
-        self.assertEqual(dfs(graph, Vertex(2), Vertex(3)), 1)
-        self.assertEqual(dfs(graph, Vertex(2), Vertex(4)), 4)
+        self.assertEqual(dijkstra(graph, Vertex(2), Vertex(0)), 2)
+        self.assertEqual(dijkstra(graph, Vertex(2), Vertex(1)), 1)
+        self.assertEqual(dijkstra(graph, Vertex(2), Vertex(2)), 0)
+        self.assertEqual(dijkstra(graph, Vertex(2), Vertex(3)), 1)
+        self.assertEqual(dijkstra(graph, Vertex(2), Vertex(4)), 2)
 
-    def test_dfs_int_vertices_negaitve(self):
+    def test_dijkstra_int_vertices_negaitve(self):
 
         graph = Graph()
 
@@ -58,8 +58,8 @@ class TestDFS(unittest.TestCase):
         graph.add_edge(Edge(Vertex(3), Vertex(4), 1))
         graph.add_edge(Edge(Vertex(4), Vertex(2), 1))
 
-        self.assertEqual(dfs(graph, Vertex(5), Vertex(0)), float("inf"))
-        self.assertEqual(dfs(graph, Vertex(1), Vertex(5)), float("inf"))
+        self.assertEqual(dijkstra(graph, Vertex(5), Vertex(0)), float("inf"))
+        self.assertEqual(dijkstra(graph, Vertex(1), Vertex(5)), float("inf"))
 
 
 if __name__ == "__main__":

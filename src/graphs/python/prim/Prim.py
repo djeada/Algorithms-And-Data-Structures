@@ -1,58 +1,61 @@
 import heapq
 
-class Vertex():
 
-	def __init__(self, name):
-		self.name = name
-		self.visited = False
-		self.predecessor = None
-		self.adjacencyList = []
-		
-	def __str__(self):
-		return self.name
-		
-class Edge():
+class Vertex:
+    def __init__(self, name):
+        self.name = name
+        self.visited = False
+        self.predecessor = None
+        self.adjacencyList = []
 
-	def __init__(self, weight, startVertex, targetVertex):
-		self.weight = weight
-		self.startVertex = startVertex
-		self.targetVertex = targetVertex	
-		
-	def __lt__(self, other):
-		selfPriority = self.weight;
-		otherPriority = other.weight;
-		return selfPriority < otherPriority;
-	
-class PrimsJarnik():
+    def __str__(self):
+        return self.name
 
-	def __init__(self, unvisitedList):
-		self.unvisitedList = unvisitedList
-		self.spanningTree = []
-		self.edgeHeap = []
-		self.fullCost = 0
-		
-	def calculateSpanningTree(self, vertex):
-		self.unvisitedList.remove(vertex);
-		while self.unvisitedList:
-		
-			for edge in vertex.adjacencyList:
-				if edge.targetVertex in self.unvisitedList:
-					heapq.heappush(self.edgeHeap, edge);
 
-			minEdge  = heapq.heappop(self.edgeHeap);
+class Edge:
+    def __init__(self, weight, startVertex, targetVertex):
+        self.weight = weight
+        self.startVertex = startVertex
+        self.targetVertex = targetVertex
 
-			if minEdge.targetVertex in self.unvisitedList:
-				self.spanningTree.append(minEdge)      
-				print("Edge added to spanning tree: %s - %s" % (minEdge.startVertex.name,minEdge.targetVertex.name))
-				self.fullCost += minEdge.weight
-				vertex = minEdge.targetVertex
-				self.unvisitedList.remove(vertex)
+    def __lt__(self, other):
+        selfPriority = self.weight
+        otherPriority = other.weight
+        return selfPriority < otherPriority
 
-	def getSpanningTree(self):
-		return self.spanningTree
-		
-	def getCost(self):
-		return self.fullCost
+
+class PrimsJarnik:
+    def __init__(self, unvisitedList):
+        self.unvisitedList = unvisitedList
+        self.spanningTree = []
+        self.edgeHeap = []
+        self.fullCost = 0
+
+    def calculateSpanningTree(self, vertex):
+        self.unvisitedList.remove(vertex)
+        while self.unvisitedList:
+
+            for edge in vertex.adjacencyList:
+                if edge.targetVertex in self.unvisitedList:
+                    heapq.heappush(self.edgeHeap, edge)
+
+            minEdge = heapq.heappop(self.edgeHeap)
+
+            if minEdge.targetVertex in self.unvisitedList:
+                self.spanningTree.append(minEdge)
+                print(
+                    "Edge added to spanning tree: %s - %s"
+                    % (minEdge.startVertex.name, minEdge.targetVertex.name)
+                )
+                self.fullCost += minEdge.weight
+                vertex = minEdge.targetVertex
+                self.unvisitedList.remove(vertex)
+
+    def getSpanningTree(self):
+        return self.spanningTree
+
+    def getCost(self):
+        return self.fullCost
 
 
 vertexA = Vertex("A")
@@ -62,7 +65,7 @@ vertexD = Vertex("D")
 vertexE = Vertex("E")
 vertexF = Vertex("F")
 vertexG = Vertex("G")
- 
+
 edgeAB = Edge(2, vertexA, vertexB)
 edgeBA = Edge(2, vertexB, vertexA)
 edgeAE = Edge(5, vertexA, vertexE)
@@ -85,7 +88,7 @@ edgeDG = Edge(5, vertexD, vertexG)
 edgeGD = Edge(5, vertexG, vertexD)
 edgeFG = Edge(3, vertexF, vertexG)
 edgeGF = Edge(3, vertexG, vertexF)
- 
+
 unvisitedList = []
 unvisitedList.append(vertexA)
 unvisitedList.append(vertexB)
@@ -94,7 +97,7 @@ unvisitedList.append(vertexD)
 unvisitedList.append(vertexE)
 unvisitedList.append(vertexF)
 unvisitedList.append(vertexG)
- 
+
 vertexA.adjacencyList.append(edgeAB)
 vertexA.adjacencyList.append(edgeAC)
 vertexA.adjacencyList.append(edgeAE)
@@ -117,7 +120,7 @@ vertexF.adjacencyList.append(edgeFC)
 vertexF.adjacencyList.append(edgeFG)
 vertexG.adjacencyList.append(edgeGD)
 vertexG.adjacencyList.append(edgeGF)
- 
+
 algorithm = PrimsJarnik(unvisitedList)
 algorithm.calculateSpanningTree(vertexD)
 print(algorithm.getCost())

@@ -4,7 +4,7 @@ from graph import Graph
 def bfs(graph, source, destination):
 
     if not (graph.contains(source) and graph.contains(destination)):
-        return -1
+        return float("inf")
 
     distances = dict()
     visited = dict()
