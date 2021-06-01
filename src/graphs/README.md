@@ -29,8 +29,6 @@ In a weighted graph, each of the edges is assigned a weight (usually a non-negat
 
 <h1> A* </h1>
 
-<h1> Kruskal </h1>
-
 <h1> Bellman-Ford </h1>
 
 - Invented in 1958
@@ -48,4 +46,7 @@ In a weighted graph, each of the edges is assigned a weight (usually a non-negat
 * When a node receives distance tables from its neighbors, it determines the shortest routes to all other nodes and updates its own table accordingly.
 
 
+<h1> Kruskal </h1>
+
 <h1> Prim </h1>
+
