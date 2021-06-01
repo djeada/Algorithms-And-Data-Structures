@@ -71,7 +71,7 @@ class Graph:
             self._adj_dict[vertex] = list()
 
     def vertices(self):
-        return self._adj_dict.keys()
+        return list(self._adj_dict.keys())
 
     def edges(self):
         return [elem for array in self._adj_dict.values() for elem in array if array]
