@@ -30,7 +30,11 @@ Edge<T>::Edge(Vertex<T> _source, Vertex<T> _destination, int _distance)
     : source(_source), destination(_destination), distance(_distance) {}
 
 template <class T> bool Edge<T>::operator==(const Edge<T> &other) const {
-  return source == other.source && destination == other.destination;
+  return source == other.source && destination == other.destination && distance == other.distance;
+}
+
+template <class T> bool Edge<T>::operator!=(const Edge<T> &other) const {
+  return source != other.source || destination != other.destination || distance != other.distance;
 }
 
 template <class T> bool Edge<T>::operator<(const Edge<T> &other) const {

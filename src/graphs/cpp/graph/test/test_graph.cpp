@@ -44,8 +44,63 @@ TEST(Vertex, NotEqualChar) {
 }
 
 TEST(Vertex, Sort) {
-  std::vector<Vertex<int>> array = {Vertex<int>(5), Vertex<int>(4), Vertex<int>(1), Vertex<int>(3), Vertex<int>(2)};
-  std::vector<Vertex<int>> expectedResult = {Vertex<int>(1), Vertex<int>(2), Vertex<int>(3), Vertex<int>(4), Vertex<int>(5)};
+  std::vector<Vertex<int>> array = {Vertex<int>(5), Vertex<int>(4),
+                                    Vertex<int>(1), Vertex<int>(3),
+                                    Vertex<int>(2)};
+  std::vector<Vertex<int>> expectedResult = {Vertex<int>(1), Vertex<int>(2),
+                                             Vertex<int>(3), Vertex<int>(4),
+                                             Vertex<int>(5)};
+  std::sort(array.begin(), array.end());
+
+  assertVectorsEqual(array, expectedResult);
+}
+
+TEST(Edge, EqualInt) {
+  auto edgeA = Edge<int>(Vertex<int>(1), Vertex<int>(2), 10);
+  auto edgeB = Edge<int>(Vertex<int>(1), Vertex<int>(2), 10);
+
+  EXPECT_EQ(edgeA, edgeB);
+}
+
+TEST(Edge, EqualChar) {
+  auto edgeA = Edge<char>(Vertex<char>('A'), Vertex<char>('B'), 5);
+  auto edgeB = Edge<char>(Vertex<char>('A'), Vertex<char>('B'), 5);
+
+  EXPECT_EQ(edgeA, edgeB);
+}
+
+TEST(Edge, NotEqualInt) {
+  auto edgeA = Edge<int>(Vertex<int>(1), Vertex<int>(2), 10);
+  auto edgeB = Edge<int>(Vertex<int>(1), Vertex<int>(2), 3);
+
+  EXPECT_NE(edgeA, edgeB);
+
+  edgeA = Edge<int>(Vertex<int>(3), Vertex<int>(2), 10);
+  edgeB = Edge<int>(Vertex<int>(1), Vertex<int>(2), 10);
+
+  EXPECT_NE(edgeA, edgeB);
+}
+
+TEST(Edge, NotEqualChar) {
+  auto edgeA = Edge<char>(Vertex<char>('A'), Vertex<char>('B'), 5);
+  auto edgeB = Edge<char>(Vertex<char>('A'), Vertex<char>('C'), 5);
+
+  EXPECT_NE(edgeA, edgeB);
+}
+
+TEST(Edge, Sort) {
+  std::vector<Edge<int>> array = {Edge<int>(Vertex<int>(1), Vertex<int>(2), 10),
+                                  Edge<int>(Vertex<int>(3), Vertex<int>(7), 2),
+                                  Edge<int>(Vertex<int>(5), Vertex<int>(4), 7),
+                                  Edge<int>(Vertex<int>(6), Vertex<int>(2), 5),
+                                  Edge<int>(Vertex<int>(9), Vertex<int>(3), 8)};
+
+  std::vector<Edge<int>> expectedResult = {
+      Edge<int>(Vertex<int>(3), Vertex<int>(7), 2),
+      Edge<int>(Vertex<int>(6), Vertex<int>(2), 5),
+      Edge<int>(Vertex<int>(5), Vertex<int>(4), 7),
+      Edge<int>(Vertex<int>(9), Vertex<int>(3), 8),
+      Edge<int>(Vertex<int>(1), Vertex<int>(2), 10)};
   std::sort(array.begin(), array.end());
 
   assertVectorsEqual(array, expectedResult);

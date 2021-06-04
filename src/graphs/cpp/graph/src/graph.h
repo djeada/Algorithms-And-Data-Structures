@@ -25,6 +25,7 @@ template <class T> struct Edge {
   int distance;
 
   bool operator==(const Edge<T> &other) const;
+  bool operator!=(const Edge<T> &other) const;
   bool operator<(const Edge<T> &other) const;
 };
 
