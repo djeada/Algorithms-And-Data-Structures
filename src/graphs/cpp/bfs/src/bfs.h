@@ -1,3 +1,4 @@
 #include "graph.h"
 
-int breadthFirstSearch(const Graph& graph, Vertex source, Vertex destination);
+template <class T>
+int bfs(const Graph<T>& graph, Vertex<T> source, Vertex<T> destination);

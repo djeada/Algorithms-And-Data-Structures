@@ -1,14 +1,16 @@
 #include "bfs.h"
 #include <bits/stdc++.h>
 
-int breadthFirstSearch(const Graph& graph, Vertex source, Vertex destination)
+template <class T>
+int bfs(const Graph<T>& graph, Vertex<T> source, Vertex<T> destination)
 {
 
     if (!graph.contains(source) || !graph.contains(destination))
-        return -1;
+        return INT_MAX;
 
-    std::unordered_map<Vertex, int, Vertex::HashFunction> distances;
-    std::unordered_map<Vertex, bool, Vertex::HashFunction> visited;
+      std::unordered_map<Vertex<T>, T, HashFunction<T>> distances;
+
+      std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
     for (const auto vertex : graph.vertices()) {
         distances[vertex] = INT_MAX;
@@ -18,14 +20,14 @@ int breadthFirstSearch(const Graph& graph, Vertex source, Vertex destination)
     distances[source] = 0;
     visited[source] = true;
 
-    std::queue<Vertex> queue;
+    std::queue<Vertex<T>> queue;
     queue.push(source);
 
     while (!queue.empty()) {
         auto u = queue.front();
         queue.pop();
 
-        for (auto& edge : graph.edges(u)) {
+        for (auto& edge : graph.edgesFromVertex(u)) {
 
             auto v = edge.destination;
 
@@ -37,5 +39,11 @@ int breadthFirstSearch(const Graph& graph, Vertex source, Vertex destination)
         }
     }
 
+    if (distances[destination] < 0)
+        return INT_MAX;
+
     return distances[destination];
 }
+
+template int bfs<int>(const Graph<int>& graph, Vertex<int> source, Vertex<int> destination);
+template int bfs<char>(const Graph<char>& graph, Vertex<char> source, Vertex<char> destination);
