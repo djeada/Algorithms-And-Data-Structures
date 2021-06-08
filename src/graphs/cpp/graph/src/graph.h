@@ -40,7 +40,7 @@ public:
   void addEdge(Vertex<T> source, Vertex<T> destination, int distance);
   void addVertex(Vertex<T> vertex);
   std::vector<Vertex<T>> vertices() const;
-  std::vector<Edge<T>> edges(const Vertex<T> vertex) const;
+  std::vector<Edge<T>> edgesFromVertex(const Vertex<T> vertex) const;
   std::vector<Edge<T>> edges() const;
   bool contains(const Vertex<T> vertex) const;
   bool connected(const Vertex<T> source, const Vertex<T> destination) const;

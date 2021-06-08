@@ -30,11 +30,13 @@ Edge<T>::Edge(Vertex<T> _source, Vertex<T> _destination, int _distance)
     : source(_source), destination(_destination), distance(_distance) {}
 
 template <class T> bool Edge<T>::operator==(const Edge<T> &other) const {
-  return source == other.source && destination == other.destination && distance == other.distance;
+  return source == other.source && destination == other.destination &&
+         distance == other.distance;
 }
 
 template <class T> bool Edge<T>::operator!=(const Edge<T> &other) const {
-  return source != other.source || destination != other.destination || distance != other.distance;
+  return source != other.source || destination != other.destination ||
+         distance != other.distance;
 }
 
 template <class T> bool Edge<T>::operator<(const Edge<T> &other) const {
@@ -83,7 +85,7 @@ template <class T> std::vector<Vertex<T>> Graph<T>::vertices() const {
 }
 
 template <class T>
-std::vector<Edge<T>> Graph<T>::edges(const Vertex<T> vertex) const {
+std::vector<Edge<T>> Graph<T>::edgesFromVertex(const Vertex<T> vertex) const {
   if (!contains(vertex))
     throw std::invalid_argument("Graph<T> doesn't contain given vertex.");
 

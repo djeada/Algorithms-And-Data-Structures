@@ -106,7 +106,7 @@ TEST(Edge, Sort) {
   assertVectorsEqual(array, expectedResult);
 }
 
-TEST(Graph, DefaultConstructor) {
+TEST(Graph, Empty) {
   Graph<int> graph;
   ASSERT_TRUE(graph.empty());
 }
@@ -143,20 +143,57 @@ TEST(Graph, AddingEdges) {
   ASSERT_TRUE(graph.contains(4));
 
   assertVectorsEqual(
-      graph.edges(Vertex<int>(1)),
+      graph.edgesFromVertex(Vertex<int>(1)),
       std::vector<Edge<int>>{Edge<int>(Vertex<int>(1), Vertex<int>(5), 10),
                              Edge<int>(Vertex<int>(1), Vertex<int>(2), 10),
                              Edge<int>(Vertex<int>(1), Vertex<int>(3), 10)});
 
   assertVectorsEqual(
-      graph.edges(Vertex<int>(2)),
+      graph.edgesFromVertex(Vertex<int>(2)),
       std::vector<Edge<int>>{Edge<int>(Vertex<int>(2), Vertex<int>(2), 1)});
 
   assertVectorsEqual(
-      graph.edges(Vertex<int>(3)),
+      graph.edgesFromVertex(Vertex<int>(3)),
       std::vector<Edge<int>>{Edge<int>(Vertex<int>(3), Vertex<int>(3), 2)});
 
   assertVectorsEqual(
-      graph.edges(Vertex<int>(4)),
+      graph.edgesFromVertex(Vertex<int>(4)),
       std::vector<Edge<int>>{Edge<int>(Vertex<int>(4), Vertex<int>(-5), 3)});
+}
+
+TEST(Graph, EdgesFromVertex) {
+  Graph<int> graph;
+
+  auto vertex = Vertex<int>(1);
+
+  auto edgeA = Edge<int>(vertex, Vertex<int>(9), 8);
+  auto edgeB = Edge<int>(vertex, Vertex<int>(4), 5);
+  auto edgeC = Edge<int>(vertex, Vertex<int>(3), -5);
+
+  graph.addEdge(edgeA);
+  graph.addEdge(edgeB);
+  graph.addEdge(edgeC);
+
+  auto expectedResult = std::vector<Edge<int>>{edgeA, edgeB, edgeC};
+
+  assertVectorsEqual(graph.edgesFromVertex(vertex), expectedResult);
+}
+
+TEST(Graph, Contains) {
+  Graph<char> graph;
+
+  auto vertex = Vertex<char>('A');
+  ASSERT_FALSE(graph.contains(vertex));
+
+  graph.addVertex(vertex);
+
+  ASSERT_TRUE(graph.contains(vertex));
+}
+
+TEST(Graph, size) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(1), Vertex<int>(9), 10);
+  graph.addEdge(Vertex<int>(5), Vertex<int>(4), 10);
+  graph.addEdge(Vertex<int>(3), Vertex<int>(1), 10);
+  EXPECT_EQ(graph.size(), 5);
 }
