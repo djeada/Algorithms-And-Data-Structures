@@ -1,38 +1,55 @@
 #include "dfs.h"
 #include "gtest/gtest.h"
+#include <climits>
 
-TEST(TestDfs, nonEmptyGraph)
+TEST(TestDfs, charVertices)
 {
-    Graph graph;
-    graph.addEdge(0, 1, 1);
-    graph.addEdge(0, 4, 1);
-    graph.addEdge(1, 0, 1);
-    graph.addEdge(1, 3, 1);
-    graph.addEdge(1, 4, 1);
-    graph.addEdge(1, 2, 1);
-    graph.addEdge(2, 3, 1);
-    graph.addEdge(2, 1, 1);
-    graph.addEdge(3, 1, 1);
-    graph.addEdge(3, 2, 1);
-    graph.addEdge(3, 4, 1);
-    graph.addEdge(4, 1, 1);
-    graph.addEdge(4, 0, 1);
-    graph.addEdge(4, 3, 1);
+    Graph<char> graph;
+    graph.addEdge(Vertex<char>('A'), Vertex<char>('D'), 2);
+    graph.addEdge(Vertex<char>('A'), Vertex<char>('G'), 3);
+    graph.addEdge(Vertex<char>('A'), Vertex<char>('B'), 1);
+    graph.addEdge(Vertex<char>('B'), Vertex<char>('E'), 6);
+    graph.addEdge(Vertex<char>('B'), Vertex<char>('F'), 7);
+    graph.addEdge(Vertex<char>('F'), Vertex<char>('D'), 10);
+    graph.addEdge(Vertex<char>('F'), Vertex<char>('C'), 12);
+    graph.addEdge(Vertex<char>('E'), Vertex<char>('G'), 9);
 
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(2), Vertex(0)), 3);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(2), Vertex(1)), 2);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(2), Vertex(2)), 0);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(2), Vertex(3)), 1);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(2), Vertex(4)), 4);
+    EXPECT_EQ(dfs(graph, Vertex<char>('A'), Vertex<char>('C')), 20);
+    EXPECT_EQ(dfs(graph, Vertex<char>('A'), Vertex<char>('F')), 8);
+    EXPECT_EQ(dfs(graph, Vertex<char>('B'), Vertex<char>('G')), 15);
+    EXPECT_EQ(dfs(graph, Vertex<char>('E'), Vertex<char>('A')), INT_MAX);
+    EXPECT_EQ(dfs(graph, Vertex<char>('C'), Vertex<char>('D')), INT_MAX);
+}
+
+TEST(TestDfs, intVertices)
+{
+    Graph<int> graph;
+    graph.addEdge(Vertex<int>(0), Vertex<int>(1), 1);
+    graph.addEdge(Vertex<int>(0), Vertex<int>(4), 1);
+    graph.addEdge(Vertex<int>(1), Vertex<int>(0), 1);
+    graph.addEdge(Vertex<int>(1), Vertex<int>(3), 1);
+    graph.addEdge(Vertex<int>(1), Vertex<int>(4), 1);
+    graph.addEdge(Vertex<int>(1), Vertex<int>(2), 1);
+    graph.addEdge(Vertex<int>(2), Vertex<int>(3), 1);
+    graph.addEdge(Vertex<int>(2), Vertex<int>(1), 1);
+    graph.addEdge(Vertex<int>(3), Vertex<int>(1), 1);
+    graph.addEdge(Vertex<int>(3), Vertex<int>(2), 1);
+    graph.addEdge(Vertex<int>(3), Vertex<int>(4), 1);
+
+    EXPECT_EQ(dfs(graph, Vertex<int>(2), Vertex<int>(0)), 3);
+    EXPECT_EQ(dfs(graph, Vertex<int>(2), Vertex<int>(1)), 2);
+    EXPECT_EQ(dfs(graph, Vertex<int>(2), Vertex<int>(2)), 0);
+    EXPECT_EQ(dfs(graph, Vertex<int>(2), Vertex<int>(3)), 1);
+    EXPECT_EQ(dfs(graph, Vertex<int>(2), Vertex<int>(4)), 4);
 }
 
 TEST(TestDfs, nonExistentVertices)
 {
-    Graph graph;
+    Graph<int> graph;
 
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(1), Vertex(1)), -1);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(1), Vertex(2)), -1);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(1), Vertex(3)), -1);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(1), Vertex(4)), -1);
-    EXPECT_EQ(depthFirstSearch(graph, Vertex(1), Vertex(5)), -1);
+    EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(1)), INT_MAX);
+    EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(2)), INT_MAX);
+    EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(3)), INT_MAX);
+    EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(4)), INT_MAX);
+    EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(5)), INT_MAX);
 }
