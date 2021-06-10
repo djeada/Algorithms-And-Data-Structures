@@ -142,17 +142,17 @@ ctest --verbose
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/a%20star">Python</a></td>
  <td><a>Cpp</a></td> 
   </tr>
-    <tr>
-<td>6</td>
-<td>Kruskal</td>
-<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/kruskal">Python</a></td>
- <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/kruskal">Cpp</a></td> 
-  </tr>
       <tr>
-<td>7</td>
+<td>6</td>
 <td>Bellman-Ford</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bellman%20ford">Python</a></td>
  <td><a>Cpp</a></td> 
+  </tr>
+     <tr>
+<td>7</td>
+<td>Kruskal</td>
+<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/kruskal">Python</a></td>
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/kruskal">Cpp</a></td> 
   </tr>
         <tr>
 <td>8</td>
