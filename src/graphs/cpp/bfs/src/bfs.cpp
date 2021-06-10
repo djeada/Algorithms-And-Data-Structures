@@ -47,3 +47,5 @@ int bfs(const Graph<T>& graph, Vertex<T> source, Vertex<T> destination)
 
 template int bfs<int>(const Graph<int>& graph, Vertex<int> source, Vertex<int> destination);
 template int bfs<char>(const Graph<char>& graph, Vertex<char> source, Vertex<char> destination);
+template int bfs<float>(const Graph<float>& graph, Vertex<float> source, Vertex<float> destination);
+template int bfs<double>(const Graph<double>& graph, Vertex<double> source, Vertex<double> destination);
