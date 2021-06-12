@@ -7,7 +7,7 @@ int dfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   if (!graph.contains(source) || !graph.contains(destination))
     return INT_MAX;
 
-  std::unordered_map<Vertex<T>, T, HashFunction<T>> distances;
+  std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
   std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
   for (const auto vertex : graph.vertices()) {

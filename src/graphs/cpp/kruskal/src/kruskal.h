@@ -1,3 +1,3 @@
 #include "graph.h"
 
-int kruskal(const Graph& graph);
+int kruskal(const Graph &graph);

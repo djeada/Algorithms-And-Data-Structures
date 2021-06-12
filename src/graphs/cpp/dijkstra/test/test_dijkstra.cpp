@@ -1,33 +1,53 @@
 #include "dijkstra.h"
 #include "gtest/gtest.h"
+#include <climits>
 
-TEST(TestDijkstra, nonEmptyGraph)
-{
-    Graph graph;
-    graph.addEdge(1, 2, 4);
-    graph.addEdge(1, 3, 2);
-    graph.addEdge(2, 4, 2);
-    graph.addEdge(2, 3, 3);
-    graph.addEdge(2, 5, 3);
-    graph.addEdge(3, 2, 1);
-    graph.addEdge(3, 4, 4);
-    graph.addEdge(3, 5, 5);
-    graph.addEdge(5, 4, 1);
+TEST(TestDijkstra, charVertices) {
+  Graph<char> graph;
+  graph.addEdge(Vertex<char>('A'), Vertex<char>('D'), 2);
+  graph.addEdge(Vertex<char>('A'), Vertex<char>('G'), 3);
+  graph.addEdge(Vertex<char>('A'), Vertex<char>('B'), 1);
+  graph.addEdge(Vertex<char>('B'), Vertex<char>('E'), 6);
+  graph.addEdge(Vertex<char>('B'), Vertex<char>('F'), 7);
+  graph.addEdge(Vertex<char>('F'), Vertex<char>('D'), 10);
+  graph.addEdge(Vertex<char>('F'), Vertex<char>('C'), 12);
+  graph.addEdge(Vertex<char>('E'), Vertex<char>('G'), 9);
 
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(1)), 0);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(2)), 3);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(3)), 2);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(4)), 5);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(5)), 6);
+  EXPECT_EQ(dijkstra(graph, Vertex<char>('A'), Vertex<char>('C')), 20);
+  EXPECT_EQ(dijkstra(graph, Vertex<char>('A'), Vertex<char>('F')), 8);
+  EXPECT_EQ(dijkstra(graph, Vertex<char>('B'), Vertex<char>('G')), 15);
+  EXPECT_EQ(dijkstra(graph, Vertex<char>('E'), Vertex<char>('A')), INT_MAX);
+  EXPECT_EQ(dijkstra(graph, Vertex<char>('C'), Vertex<char>('D')), INT_MAX);
 }
 
-TEST(TestDijkstra, nonExistentVertices)
-{
-    Graph graph;
+TEST(TestDijkstra, nonEmptyGraph) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(1), 1);
+  graph.addEdge(Vertex<int>(0), Vertex<int>(4), 1);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(0), 1);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(3), 1);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(4), 1);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(2), 1);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(3), 1);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(1), 1);
+  graph.addEdge(Vertex<int>(3), Vertex<int>(1), 1);
+  graph.addEdge(Vertex<int>(3), Vertex<int>(2), 1);
+  graph.addEdge(Vertex<int>(3), Vertex<int>(4), 1);
 
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(1)), -1);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(2)), -1);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(3)), -1);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(4)), -1);
-    EXPECT_EQ(dijkstra(graph, Vertex(1), Vertex(5)), -1);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(2), Vertex<int>(0)), 2);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(2), Vertex<int>(1)), 1);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(2), Vertex<int>(2)), 0);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(2), Vertex<int>(3)), 1);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(2), Vertex<int>(4)), 2);
+}
+
+TEST(TestDijkstra, nonExistentVertices) {
+
+  Graph<int> graph;
+
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(1), Vertex<int>(1)), INT_MAX);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(1), Vertex<int>(2)), INT_MAX);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(1), Vertex<int>(3)), INT_MAX);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(1), Vertex<int>(4)), INT_MAX);
+  EXPECT_EQ(dijkstra(graph, Vertex<int>(1), Vertex<int>(5)), INT_MAX);
 }

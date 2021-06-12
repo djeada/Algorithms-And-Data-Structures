@@ -1,50 +1,60 @@
 #include "dijkstra.h"
 #include <bits/stdc++.h>
 
-//chose the smallest edge of which the vertex hasnt been chosen
+// chose the smallest edge of which the vertex hasnt been chosen
+template <class T>
+int dijkstra(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
 
-int dijkstra(const Graph& graph, const Vertex& source, const Vertex& destination)
-{
+  if (!graph.contains(source) || !graph.contains(destination))
+    return INT_MAX;
 
-    if (!graph.contains(source) || !graph.contains(destination))
-        return -1;
+  std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
+  std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
-    std::unordered_map<Vertex, int, Vertex::HashFunction> distances;
-    std::unordered_map<Vertex, bool, Vertex::HashFunction> visited;
-
-    auto minDistance = [&]() {
-        int min = INT_MAX;
-        Vertex minVertex;
-
-        for (auto vertex : graph.vertices()) {
-            if (!visited[vertex] && distances[vertex] <= min) {
-                min = distances[vertex];
-                minVertex = vertex;
-            }
-        }
-
-        return minVertex;
-    };
-
-    for (const auto vertex : graph.vertices()) {
-        distances[vertex] = INT_MAX;
-        visited[vertex] = false;
+  auto minDistance = [&]() {
+    auto vertices = graph.vertices();
+    std::sort(vertices.begin(), vertices.end(),
+              [&](const auto &r, const auto &l) {
+                return distances[r] < distances[l];
+              });
+    for (auto vertex : vertices) {
+      if (!visited[vertex])
+        return vertex;
     }
+    return source;
+  };
 
-    distances[source] = 0;
+  for (const auto vertex : graph.vertices()) {
+    distances[vertex] = INT_MAX;
+    visited[vertex] = false;
+  }
 
-    for (int i = 0; i < graph.size() - 1; i++) {
+  distances[source] = 0;
 
-        auto u = minDistance();
-        visited[u] = true;
+  for (int i = 0; i < graph.size() - 1; i++) {
 
-        for (auto& edge : graph.edges(u)) {
-            auto v = edge.destination;
-            auto newDistance = distances[u] + edge.distance;
-            if (newDistance < distances[v])
-                distances[v] = newDistance;
-        }
+    auto u = minDistance();
+    visited[u] = true;
+
+    for (auto &edge : graph.edgesFromVertex(u)) {
+      auto v = edge.destination;
+      auto newDistance = distances[u] + edge.distance;
+      if (newDistance < distances[v])
+        distances[v] = newDistance;
     }
+  }
 
-    return distances[destination];
+  if (distances[destination] < 0)
+    return INT_MAX;
+
+  return distances[destination];
 }
+
+template int dijkstra<int>(const Graph<int> &graph, Vertex<int> source,
+                           Vertex<int> destination);
+template int dijkstra<char>(const Graph<char> &graph, Vertex<char> source,
+                            Vertex<char> destination);
+template int dijkstra<float>(const Graph<float> &graph, Vertex<float> source,
+                             Vertex<float> destination);
+template int dijkstra<double>(const Graph<double> &graph, Vertex<double> source,
+                              Vertex<double> destination);
