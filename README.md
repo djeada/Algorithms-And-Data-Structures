@@ -133,7 +133,7 @@ ctest --verbose
 <tr>
 <td>4</td>
 <td>Dijkstra</td>
-<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra/dijkstra.py">Python</a></td>
+<td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/dijkstra">Python</a></td>
  <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/dijkstra">Cpp</a></td> 
   </tr>
   <tr>
