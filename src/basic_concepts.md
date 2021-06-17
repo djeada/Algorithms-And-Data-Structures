@@ -28,16 +28,16 @@ We have the following three categories of cases:
 
 <h1>Rate of Growth</h1>
 
-<h2>Big–OH O (Upper Bound)</h2>
+<h3>Big–OH O (Upper Bound)</h3>
 f(n) = O(g(n)), says that the growth rate of f(n) is less than or equal (<=) that of g(n).
 
-<h2>Big–OMEGA &#937; (Lower Bound)</h2>
+<h3>Big–OMEGA &#937; (Lower Bound)</h3>
 f(n) = &#937;(g(n)), says that the growth rate of f(n) is greater than or equal to (>=) that of g(n).
 
-<h2>Big–THETA &#952; (Same order)</h2>
+<h3>Big–THETA &#952; (Same order)</h3>
 f(n) = &#952;(g(n)), says that the growth rate of f(n) equals (=) the growth rate of g(n).
 
-Rules for using big-O:
+<h3>Rules for using big-O:</h3>
 
 1. Ignoring constant factors: O(c f(n)) = O(f(n)), where c is a constant; e.g. O(5 n) = O(n)
 1. Ignoring smaller terms: If a<b then O(a+b) = O(b), for example O(n^2 + n) = O(n^2)
