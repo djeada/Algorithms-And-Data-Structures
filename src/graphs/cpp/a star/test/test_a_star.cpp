@@ -1,53 +1,31 @@
 #include "a_star.h"
 #include "gtest/gtest.h"
 #include <climits>
+#include <cmath>
 
-TEST(TestAStar, charVertices) {
-  Graph<char> graph;
-  graph.addEdge(Vertex<char>('A'), Vertex<char>('D'), 2);
-  graph.addEdge(Vertex<char>('A'), Vertex<char>('G'), 3);
-  graph.addEdge(Vertex<char>('A'), Vertex<char>('B'), 1);
-  graph.addEdge(Vertex<char>('B'), Vertex<char>('E'), 6);
-  graph.addEdge(Vertex<char>('B'), Vertex<char>('F'), 7);
-  graph.addEdge(Vertex<char>('F'), Vertex<char>('D'), 10);
-  graph.addEdge(Vertex<char>('F'), Vertex<char>('C'), 12);
-  graph.addEdge(Vertex<char>('E'), Vertex<char>('G'), 9);
-
-  EXPECT_EQ(aStar(graph, Vertex<char>('A'), Vertex<char>('C')), 20);
-  EXPECT_EQ(aStar(graph, Vertex<char>('A'), Vertex<char>('F')), 8);
-  EXPECT_EQ(aStar(graph, Vertex<char>('B'), Vertex<char>('G')), 15);
-  EXPECT_EQ(aStar(graph, Vertex<char>('E'), Vertex<char>('A')), INT_MAX);
-  EXPECT_EQ(aStar(graph, Vertex<char>('C'), Vertex<char>('D')), INT_MAX);
+double distance(Point a, Point b) {
+    return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
 }
 
-TEST(TestAStar, nonEmptyGraph) {
-  Graph<int> graph;
-  graph.addEdge(Vertex<int>(0), Vertex<int>(1), 1);
-  graph.addEdge(Vertex<int>(0), Vertex<int>(4), 1);
-  graph.addEdge(Vertex<int>(1), Vertex<int>(0), 1);
-  graph.addEdge(Vertex<int>(1), Vertex<int>(3), 1);
-  graph.addEdge(Vertex<int>(1), Vertex<int>(4), 1);
-  graph.addEdge(Vertex<int>(1), Vertex<int>(2), 1);
-  graph.addEdge(Vertex<int>(2), Vertex<int>(3), 1);
-  graph.addEdge(Vertex<int>(2), Vertex<int>(1), 1);
-  graph.addEdge(Vertex<int>(3), Vertex<int>(1), 1);
-  graph.addEdge(Vertex<int>(3), Vertex<int>(2), 1);
-  graph.addEdge(Vertex<int>(3), Vertex<int>(4), 1);
+TEST(TestAStar, PointVertices) {
+  Graph<Point> graph;
 
-  EXPECT_EQ(aStar(graph, Vertex<int>(2), Vertex<int>(0)), 2);
-  EXPECT_EQ(aStar(graph, Vertex<int>(2), Vertex<int>(1)), 1);
-  EXPECT_EQ(aStar(graph, Vertex<int>(2), Vertex<int>(2)), 0);
-  EXPECT_EQ(aStar(graph, Vertex<int>(2), Vertex<int>(3)), 1);
-  EXPECT_EQ(aStar(graph, Vertex<int>(2), Vertex<int>(4)), 2);
+  Point a(1, 1);
+  Point b(4, 3);
+  Point c(7, 2);
+  Point d(3, 8);
+  Point e(4, 1);
+
+  graph.addEdge(Vertex<Point>(a), Vertex<Point>(e), 4);
+  graph.addEdge(Vertex<Point>(a), Vertex<Point>(b), 8);
+  graph.addEdge(Vertex<Point>(a), Vertex<Point>(d), 11);
+  graph.addEdge(Vertex<Point>(e), Vertex<Point>(c), 18);
+  graph.addEdge(Vertex<Point>(e), Vertex<Point>(b), 2);
+  graph.addEdge(Vertex<Point>(b), Vertex<Point>(c), 12);
+
+  EXPECT_EQ(aStar(graph, Vertex<Point>(a), Vertex<Point>(c), distance), 18);
+  EXPECT_EQ(aStar(graph, Vertex<Point>(a), Vertex<Point>(b), distance), 6);
+  EXPECT_EQ(aStar(graph, Vertex<Point>(d), Vertex<Point>(b), distance), INT_MAX);
+  EXPECT_EQ(aStar(graph, Vertex<Point>(b), Vertex<Point>(e), distance), INT_MAX);
 }
 
-TEST(TestAStar, nonExistentVertices) {
-
-  Graph<int> graph;
-
-  EXPECT_EQ(aStar(graph, Vertex<int>(1), Vertex<int>(1)), INT_MAX);
-  EXPECT_EQ(aStar(graph, Vertex<int>(1), Vertex<int>(2)), INT_MAX);
-  EXPECT_EQ(aStar(graph, Vertex<int>(1), Vertex<int>(3)), INT_MAX);
-  EXPECT_EQ(aStar(graph, Vertex<int>(1), Vertex<int>(4)), INT_MAX);
-  EXPECT_EQ(aStar(graph, Vertex<int>(1), Vertex<int>(5)), INT_MAX);
-}

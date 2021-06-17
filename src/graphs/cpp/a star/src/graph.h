@@ -2,6 +2,17 @@
 #include <unordered_map>
 #include <vector>
 
+struct Point {
+  int x;
+  int y;
+
+  Point(int _x, int _y);
+
+  bool operator==(const Point &other) const;
+  bool operator!=(const Point &other) const;
+  bool operator<(const Point &other) const;
+};
+
 template <class T> struct Vertex {
   Vertex(T value);
   Vertex(const Vertex<T> &vertex);
@@ -46,5 +57,4 @@ public:
   bool connected(const Vertex<T> source, const Vertex<T> destination) const;
   bool empty() const;
   unsigned int size() const;
-  std::string toString() const;
 };

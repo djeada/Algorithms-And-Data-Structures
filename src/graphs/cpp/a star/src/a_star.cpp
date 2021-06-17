@@ -3,16 +3,16 @@
 
 // chose the smallest edge of which the vertex hasnt been chosen
 template <class T>
-int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
+int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
+          double (*heuristic)(T a, T b)) {
 
   if (!graph.contains(source) || !graph.contains(destination))
     return INT_MAX;
 
   std::unordered_map<Vertex<T>, int, HashFunction<T>> distance_from_source;
-  std::unordered_map<Vertex<T>, int, HashFunction<T>>
+  std::unordered_map<Vertex<T>, double, HashFunction<T>>
       distance_till_destination;
- std::unordered_map<Vertex<T>, bool, HashFunction<T>>
-      visited;
+  std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
   for (const auto vertex : graph.vertices()) {
     distance_from_source[vertex] = INT_MAX;
@@ -23,12 +23,14 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   distance_from_source[source] = 0;
   visited[source] = true;
   distance_till_destination[source] =
-      3; // heuristic(source.value, destination.value);
+      heuristic(source.value, destination.value);
 
-    auto cmp = [&](Vertex<T> l, Vertex<T> r) { return distance_till_destination[l] < distance_till_destination[r]; };
+  auto cmp = [&](Vertex<T> l, Vertex<T> r) {
+    return distance_till_destination[l] > distance_till_destination[r];
+  };
 
-  std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, decltype(cmp)> nextVertex(
-      cmp);
+  std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, decltype(cmp)>
+      nextVertex(cmp);
 
   nextVertex.push(source);
 
@@ -48,13 +50,12 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
 
         distance_till_destination[edge.destination] =
             distance_from_source[edge.destination] +
-            3; // heuristic(edge.destination.value, destination.value);
+            heuristic(edge.destination.value, destination.value);
 
         if (!visited[edge.destination]) {
           nextVertex.push(edge.destination);
-        visited[edge.destination] = true;
-}
-
+          visited[edge.destination] = true;
+        }
       }
     }
   }
@@ -65,11 +66,6 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   return distance_from_source[destination];
 }
 
-template int aStar<int>(const Graph<int> &graph, Vertex<int> source,
-                        Vertex<int> destination);
-template int aStar<char>(const Graph<char> &graph, Vertex<char> source,
-                         Vertex<char> destination);
-template int aStar<float>(const Graph<float> &graph, Vertex<float> source,
-                          Vertex<float> destination);
-template int aStar<double>(const Graph<double> &graph, Vertex<double> source,
-                           Vertex<double> destination);
+template int aStar<Point>(const Graph<Point> &graph, Vertex<Point> source,
+                          Vertex<Point> destination,
+                          double (*heuristic)(Point a, Point b));

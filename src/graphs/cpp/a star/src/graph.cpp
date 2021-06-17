@@ -2,6 +2,21 @@
 #include <algorithm>
 #include <iterator>
 #include <sstream>
+#include <type_traits>
+
+Point::Point(int _x, int _y) : x(_x), y(_y){};
+
+bool Point::operator==(const Point &other) const {
+  return x == other.x && y == other.y;
+}
+
+bool Point::operator!=(const Point &other) const {
+  return x != other.x || y != other.y;
+}
+
+bool Point::operator<(const Point &other) const {
+  return x < other.x && y < other.y;
+}
 
 template <class T> Vertex<T>::Vertex(T _value) : value(_value) {}
 
@@ -24,6 +39,14 @@ template <class T>
 size_t HashFunction<T>::operator()(const Vertex<T> &vertex) const {
   return std::hash<T>()(vertex.value);
 }
+
+template <>
+size_t HashFunction<Point>::operator()(const Vertex<Point> &vertex) const {
+        std::size_t h1 =  std::hash<int>{}(vertex.value.x);
+        std::size_t h2 = std::hash<int>{}(vertex.value.y);
+        return h1 ^ (h2 << 1);
+}
+
 
 template <class T>
 Edge<T>::Edge(Vertex<T> _source, Vertex<T> _destination, int _distance)
@@ -126,41 +149,20 @@ template <class T> unsigned int Graph<T>::size() const {
 
 template <class T> bool Graph<T>::empty() const { return adjcDict.empty(); }
 
-template <class T> std::string Graph<T>::toString() const {
-  std::string result;
-
-  for (auto const &[vertex, edges] : adjcDict) {
-
-    std::ostringstream oss;
-    for (const auto &edge : edges) {
-      oss << std::to_string(edge.destination.value) + ", ";
-    }
-
-    auto edgesStr = oss.str();
-
-    if (edgesStr.size() > 1)
-      edgesStr.erase(edgesStr.size() - 2);
-
-    result += std::to_string(vertex.value) + " : " + edgesStr + "\n";
-  }
-
-  if (result.size() > 1)
-    result.erase(result.size() - 1);
-
-  return result;
-}
-
 template class Vertex<int>;
 template class Vertex<float>;
 template class Vertex<double>;
 template class Vertex<char>;
+template class Vertex<Point>;
 
 template class Edge<int>;
 template class Edge<float>;
 template class Edge<double>;
 template class Edge<char>;
+template class Edge<Point>;
 
 template class Graph<int>;
 template class Graph<float>;
 template class Graph<double>;
 template class Graph<char>;
+template class Graph<Point>;
