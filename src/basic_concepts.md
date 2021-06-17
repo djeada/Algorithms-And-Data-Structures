@@ -32,7 +32,21 @@ We have the following three categories of cases:
 f(n) = O(g(n)), says that the growth rate of f(n) is less than or equal (<=) that of g(n).
 
 <h2>Big–OMEGA &#937; (Lower Bound)</h2>
-f(n) = &#937; (g(n)), says that the growth rate of f(n) is greater than or equal to (>=) that of g(n).
+f(n) = &#937;(g(n)), says that the growth rate of f(n) is greater than or equal to (>=) that of g(n).
 
 <h2>Big–THETA &#952; (Same order)</h2>
-f(n) = &#952; (g(n)), says that the growth rate of f(n) equals (=) the growth rate of g(n).
+f(n) = &#952;(g(n)), says that the growth rate of f(n) equals (=) the growth rate of g(n).
+
+Rules for using big-O:
+
+1. Ignoring constant factors: O(c f(n)) = O(f(n)), where c is a constant; e.g. O(5 n) = O(n)
+1. Ignoring smaller terms: If a<b then O(a+b) = O(b), for example O(n^2 + n) = O(n^2)
+1. Upper bound only: If a<b then an O(a) algorithm is also an O(b) algorithm. For example, an O(n) algorithm is also an O(n^2) algorithm (but not vice versa).
+1. n and log n are "bigger" than any constant, for example O(n + k) = O(n)
+
+<h1>The Running time of a program</h1>
+
+One problem can be usually solve in many different ways. When choosing the algorithm we should consider the following:
+
+1. We want an algorithm that is simple to comprehend, develop, and debug.
+1. We'd want an algorithm that makes good use of the computer's resources, preferably one that runs as quickly as feasible.
