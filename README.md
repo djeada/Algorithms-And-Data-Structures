@@ -11,7 +11,7 @@ Implementations of various algorithms.
 <h1>Requirements</h1>
 
 For C++ projects you will need:
-* A C++ compiler supporting C++14
+* C++ compiler supporting C++14
 * Cmake 3.15+
 
 For Python projects you will need:
