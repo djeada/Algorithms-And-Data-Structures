@@ -4,7 +4,7 @@
 #include <cmath>
 
 double distance(Point a, Point b) {
-    return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
+  return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
 }
 
 TEST(TestAStar, PointVertices) {
@@ -25,7 +25,8 @@ TEST(TestAStar, PointVertices) {
 
   EXPECT_EQ(aStar(graph, Vertex<Point>(a), Vertex<Point>(c), distance), 18);
   EXPECT_EQ(aStar(graph, Vertex<Point>(a), Vertex<Point>(b), distance), 6);
-  EXPECT_EQ(aStar(graph, Vertex<Point>(d), Vertex<Point>(b), distance), INT_MAX);
-  EXPECT_EQ(aStar(graph, Vertex<Point>(b), Vertex<Point>(e), distance), INT_MAX);
+  EXPECT_EQ(aStar(graph, Vertex<Point>(d), Vertex<Point>(b), distance),
+            INT_MAX);
+  EXPECT_EQ(aStar(graph, Vertex<Point>(b), Vertex<Point>(e), distance),
+            INT_MAX);
 }
-

@@ -1,7 +1,7 @@
-#include "kruskal.h"
+#include "prim.h"
 #include "gtest/gtest.h"
 
-TEST(TestKruskal, nonEmptyGraph) {
+TEST(TestPrim, nonEmptyGraph) {
   Graph<int> graph;
 
   graph.addEdge(Vertex<int>(0), Vertex<int>(8), 1);
@@ -29,5 +29,5 @@ TEST(TestKruskal, nonEmptyGraph) {
   graph.addEdge(Vertex<int>(8), Vertex<int>(5), 6);
   graph.addEdge(Vertex<int>(8), Vertex<int>(6), 7);
 
-  EXPECT_EQ(kruskal(graph), 27);
+  EXPECT_EQ(prim(graph), 27);
 }

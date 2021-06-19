@@ -1,11 +1,9 @@
-
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 template <class T> struct Vertex {
   Vertex(T value);
-  Vertex();
   Vertex(const Vertex<T> &vertex);
 
   T value;

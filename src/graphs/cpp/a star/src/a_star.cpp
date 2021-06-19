@@ -9,6 +9,9 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
   if (!graph.contains(source) || !graph.contains(destination))
     return INT_MAX;
 
+  if (source == destination)
+    return 0;
+
   std::unordered_map<Vertex<T>, int, HashFunction<T>> distance_from_source;
   std::unordered_map<Vertex<T>, double, HashFunction<T>>
       distance_till_destination;

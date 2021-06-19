@@ -1,3 +1,3 @@
 #include "graph.h"
 
-int kruskal(const Graph &graph);
+template <class T> int kruskal(const Graph<T> &graph);

@@ -4,8 +4,6 @@
 #include <iterator>
 #include <sstream>
 
-template <class T> Vertex<T>::Vertex() {}
-
 template <class T> Vertex<T>::Vertex(T _value) : value(_value) {}
 
 template <class T>

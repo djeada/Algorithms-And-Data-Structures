@@ -6,29 +6,29 @@
 // 2. Sort the set
 // 3. Build spanning tree
 
-int kruskal(const Graph &graph) {
-  int result = 0;
-  std::unordered_map<Vertex, Vertex, Vertex::HashFunction> parent;
-  std::unordered_map<Vertex, int, Vertex::HashFunction> rank;
+template <class T> int kruskal(const Graph<T> &graph) {
 
-  std::function<Vertex(Vertex)> find;
-  find = [&](Vertex u) -> Vertex {
+  std::unordered_map<Vertex<T>, Vertex<T>, HashFunction<T>> parent;
+  std::unordered_map<Vertex<T>, int, HashFunction<T>> rank;
+
+  std::function<Vertex<T>(const Vertex<T> &)> find;
+  find = [&](const Vertex<T> &u) -> Vertex<T> {
     if (u != parent[u])
       parent[u] = find(parent[u]);
     return parent[u];
   };
 
-  auto merge = [&](Vertex x, Vertex y) {
-    x = find(x);
-    y = find(y);
+  auto merge = [&](const Vertex<T> &x, const Vertex<T> &y) {
+    auto _x = find(x);
+    auto _y = find(y);
 
-    if (rank[x] > rank[y])
-      parent[y] = x;
+    if (rank[_x] > rank[_y])
+      parent[_y] = _x;
     else
-      parent[x] = y;
+      parent[_x] = _y;
 
-    if (rank[x] == rank[y])
-      rank[y]++;
+    if (rank[_x] == rank[_y])
+      rank[_y]++;
   };
 
   auto vertices = graph.vertices();
@@ -39,6 +39,7 @@ int kruskal(const Graph &graph) {
 
   auto edges = graph.edges();
   std::sort(edges.begin(), edges.end());
+  int result = 0;
 
   for (const auto &edge : edges) {
 
@@ -56,3 +57,8 @@ int kruskal(const Graph &graph) {
 
   return result;
 }
+
+template int kruskal<int>(const Graph<int> &graph);
+template int kruskal<char>(const Graph<char> &graph);
+template int kruskal<float>(const Graph<float> &graph);
+template int kruskal<double>(const Graph<double> &graph);

@@ -42,11 +42,10 @@ size_t HashFunction<T>::operator()(const Vertex<T> &vertex) const {
 
 template <>
 size_t HashFunction<Point>::operator()(const Vertex<Point> &vertex) const {
-        std::size_t h1 =  std::hash<int>{}(vertex.value.x);
-        std::size_t h2 = std::hash<int>{}(vertex.value.y);
-        return h1 ^ (h2 << 1);
+  std::size_t h1 = std::hash<int>{}(vertex.value.x);
+  std::size_t h2 = std::hash<int>{}(vertex.value.y);
+  return h1 ^ (h2 << 1);
 }
-
 
 template <class T>
 Edge<T>::Edge(Vertex<T> _source, Vertex<T> _destination, int _distance)
