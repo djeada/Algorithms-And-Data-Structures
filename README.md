@@ -140,13 +140,13 @@ ctest --verbose
 <td>5</td>
 <td>A*</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/a%20star">Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/a%20star">Cpp</a></td> 
   </tr>
       <tr>
 <td>6</td>
 <td>Bellman-Ford</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bellman%20ford">Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/bellman%20ford">Cpp</a></td> 
   </tr>
      <tr>
 <td>7</td>
@@ -158,7 +158,7 @@ ctest --verbose
 <td>8</td>
 <td>Prim</td>
 <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/prim">Python</a></td>
- <td><a>Cpp</a></td> 
+ <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/prim">Cpp</a></td> 
   </tr>
   
 </tr>
