@@ -1,5 +1,23 @@
 <h1>Data Structures</h1>
 
+A data structure is a representation of the logical relationship that exists between individual data items. In other words, a data structure provides a method of arranging all data items that takes into account not just the pieces contained but also their relationships to one another. The phrase data structure refers to the method through which data is stored.
+
+* Primitive data structures: fundamental data structures that operate directly on machine instructions.
+* Non primitive data structures: more complex, developed from primitive data structures.
+
+<h2>Linear data structure</h2>
+
+* arrays.
+* stacks
+* queues
+* linked lists
+
+<h2>Non linear data structure</h2>
+
+* graphs
+* trees
+
+
 ![Data Structures](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/resources/ds.png)
 
 <h1>Algorithm</h1>
@@ -54,3 +72,5 @@ One problem can be usually solve in many different ways. When choosing the algor
 
 1. We want an algorithm that is simple to comprehend, develop, and debug.
 1. We'd want an algorithm that makes good use of the computer's resources, preferably one that runs as quickly as feasible.
+
+![Run time](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/resources/big_o.png)
