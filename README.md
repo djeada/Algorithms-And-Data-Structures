@@ -381,3 +381,18 @@ ctest --verbose
 </tr>
 </tbody>
 </table>
+
+<h1>Bibliography </h1>
+
+<ol>
+  <li>L. V. Narashima Prasad, E. Kishna Rao Patro "<i>Lecture Notes on Data Structures using C</i>"> </li>
+  <li>Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein. "<i>Introduction to Algorithms, 3rd Edition (The MIT Press)</i>"</li>  
+  <li>Steven Halim "<i>Competitive Programming 3</i>" </li>
+  <li>Narasimha Karumanchi "<i>Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles</i>" </li>
+  <li>Brian Kernighan, Dennis Ritchie "<i>The C Programming Language</i>" </li>  
+  <li>Steven Skiena, Miguel Revilla "<i>Programming Challenges: The Programming Contest Training Manual</i>" </li>  
+  <li>Antti Laaksonen "<i>  Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science) </i>" </li>  
+  <li>Nite Nimajneb "<i>The Hitchhiker’s Guide to the Programming Contests</i>" </li>  
+</ol>
+
+
