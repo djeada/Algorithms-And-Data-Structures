@@ -14,7 +14,7 @@ Since I initially attended the course at my university in 2015, Algorithms and D
 
 The code is written in two of my favorite programming languages: C++ and Python. To the best of my ability, I adhered to modern practices.
 
-Aside from the code, you'll come across various of comprehensive notes that I collected while learning the subject.
+Aside from the code, you'll come across various of comprehensive notes that I wrote down while learning the subject.
 
 <h1>Requirements</h1>
 
