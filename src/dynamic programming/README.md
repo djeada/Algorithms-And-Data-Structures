@@ -44,4 +44,4 @@ Count Construct: If we can construct a word by concatenating string from a given
 All Constructs: If we can construct a word by concatenating string from a given list, then which set of strings would be the smallest.
 
 <h2>Coins</h2>
-Give a set of denominations and an amount, find the minimum number of coins from the set that will sum up to the given amount.
+Given a set of denominations and an amount, find the minimum number of coins from the set that will sum up to the given amount.
