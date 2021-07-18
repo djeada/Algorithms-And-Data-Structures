@@ -39,71 +39,69 @@ ctest --verbose
 ```
 <h1>Collections</h1>
 <table>
-<thead>
-<tr>
-<th>#</th>
-<th>Structure</th>
-<th colspan="2">Implementation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Linked List</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
-   </tr>
-<tr>
-<td>2</td>
-<td>Vector</td>
-<td><a>Python</a></td>
- <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/vector">Cpp</a></td> 
-  </tr>
-  <tr>
-<td>3</td>
-<td>Stack</td>
-<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/stack">Python</a></td>
- <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/stack">Cpp</a></td> 
-  </tr>
-  
-<tr>
-<td>4</td>
-<td>Queue</td>
-<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/queue">Python</a></td>
- <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/queue">Cpp</a></td> 
-  </tr>
-  <tr>
-<td>5</td>
-<td>Heap</td>
-<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/heap">Python</a></td>
- <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/heap">Cpp</a></td> 
-  </tr>
-  
-<td>6</td>
-<td>Binary Tree</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
-  </tr>
-      <tr>
-<td>7</td>
-<td>Avl Tree</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
-  </tr>
+    <thead>
         <tr>
-<td>8</td>
-<td>Red Black Tree</td>
-<td><a>Python</a></td>
- <td><a>Cpp</a></td> 
-  </tr>
-          <tr>
-<td>9</td>
-<td>Hash Map</td>
-<td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/hashtable">Python</a></td>
- <td><a>Cpp</a></td> 
-  </tr>
-</tr>
-</tbody>
+            <th>#</th>
+            <th>Structure</th>
+            <th colspan="2">Implementation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Linked List</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Vector</td>
+            <td><a>Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/vector">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Stack</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/stack">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/stack">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Queue</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/queue">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/queue">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Heap</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/heap">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/heap">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Binary Tree</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Avl Tree</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Red Black Tree</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Hash Map</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/hashtable">Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+    </tbody>
 </table>
 
 
