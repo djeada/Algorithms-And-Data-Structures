@@ -14,7 +14,7 @@ Since I initially attended the course at my university in 2015, Algorithms and D
 
 The code is written in two of my favorite programming languages: C++ and Python. To the best of my ability, I adhered to modern practices.
 
-Aside from the code, you'll come across various of comprehensive notes that I wrote down while learning the subject.
+Aside from the code, you'll come across various comprehensive notes that I wrote down while learning the subject.
 
 <h1>Requirements</h1>
 
@@ -26,7 +26,7 @@ For Python projects you will need:
 * Python 3.6+
 
 <h1>How to run examples?</h1>
-Each algorithm implementation has it's own subfolder with source code, unit tests and build files. They are all independent of each other and should be built indepndently.
+Each algorithm implementation has its own subfolder with source code, unit tests and build files. They are all independent of each other and should be built independently.
 
 Go to the project directory and run the following commands to create a C++ project and run unit tests:
 
