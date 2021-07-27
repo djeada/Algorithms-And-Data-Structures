@@ -372,4 +372,5 @@ ctest --verbose
     <li>Steven Skiena, Miguel Revilla "<i>Programming Challenges: The Programming Contest Training Manual</i>" </li>
     <li>Antti Laaksonen "<i>  Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science) </i>" </li>
     <li>Nite Nimajneb "<i>The Hitchhiker’s Guide to the Programming Contests</i>" </li>
+    <li>http://cslibrary.stanford.edu/105/</h1>
 </ol>
