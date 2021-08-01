@@ -41,7 +41,6 @@ TEST(BestSumTest, TestPositiveBasic2) {
   ASSERT_TRUE(equal(bestSumBasic(target, numbers), expectedResult));
 }
 
-
 TEST(BestSumTest, TestNegativeMemo1) {
   std::vector<unsigned int> numbers = {10, 15, 20};
   unsigned int target = 5;
@@ -71,5 +70,3 @@ TEST(BestSumTest, TestPositiveMemo2) {
   std::vector<unsigned int> expectedResult = {3, 6};
   ASSERT_TRUE(equal(bestSumMemo(target, numbers), expectedResult));
 }
-
-

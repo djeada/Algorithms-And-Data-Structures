@@ -142,11 +142,10 @@ std::vector<unsigned int> bestSumTable(const unsigned int target,
 
   for (auto combination : table) {
     if (!combination.empty()) {
-    if (shortestCombination.empty() ||
-        combination.front().size() < shortestCombination.size())
-      shortestCombination = combination.front();
-}
-
+      if (shortestCombination.empty() ||
+          combination.front().size() < shortestCombination.size())
+        shortestCombination = combination.front();
+    }
   }
 
   // if (!table.back().empty())

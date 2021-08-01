@@ -6,4 +6,3 @@ bestSumBasic(const unsigned int target,
 
 std::vector<unsigned int> bestSumMemo(const unsigned int target,
                                       const std::vector<unsigned int> &numbers);
-
