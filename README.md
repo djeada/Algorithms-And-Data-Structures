@@ -26,7 +26,7 @@ For Python projects you will need:
 * Python 3.6+
 
 <h1>How to run examples?</h1>
-Each algorithm implementation has its own subdir with source code, unit tests and build files. They are all independent of each other and should be built independently.
+Each algorithm implementation has its own subdirectory with source code, unit tests and build files. They are all independent of each other and should be built independently.
 
 Go to the project directory and run the following commands to create a C++ project and run unit tests:
 
