@@ -16,37 +16,35 @@ struct hash {
 
 int longestIncreasingSubarrayBasic(const std::vector<int> &array) {
 
-  std::function<int(const std::vector<int> &, unsigned int, unsigned int, int)>
+  std::function<int(const std::vector<int> &, unsigned int, int)>
       _longestIncreasingSubarrayBasic;
   _longestIncreasingSubarrayBasic = [&](const std::vector<int> &array,
-                                        unsigned int i, unsigned int n,
-                                        int prev) -> int {
-    if (i == n)
+                                        unsigned int i, int prev) -> int {
+    if (i == array.size())
       return 0;
 
-    auto excl = _longestIncreasingSubarrayBasic(array, i + 1, n, prev);
+    auto excl = _longestIncreasingSubarrayBasic(array, i + 1, prev);
 
     auto incl = 0;
 
     if (array[i] > prev)
-      incl = _longestIncreasingSubarrayBasic(array, i + 1, n, array[i]) + 1;
+      incl = _longestIncreasingSubarrayBasic(array, i + 1, array[i]) + 1;
 
     return std::max(incl, excl);
   };
 
-  return _longestIncreasingSubarrayBasic(array, 0, array.size() - 1, INT_MIN);
+  return _longestIncreasingSubarrayBasic(array, 0, INT_MIN);
 }
 
 int longestIncreasingSubarrayMemo(const std::vector<int> &array) {
 
-  std::function<int(const std::vector<int> &, unsigned int, unsigned int, int,
+  std::function<int(const std::vector<int> &, unsigned int, int,
                     std::unordered_map<std::pair<int, int>, int, hash> &)>
       _longestIncreasingSubarrayMemo;
   _longestIncreasingSubarrayMemo =
-      [&](const std::vector<int> &array, unsigned int i, unsigned int n,
-          int prev,
+      [&](const std::vector<int> &array, unsigned int i, int prev,
           std::unordered_map<std::pair<int, int>, int, hash> &memo) -> int {
-    if (i == n)
+    if (i == array.size())
       return 0;
 
     std::pair<int, int> key(i, prev);
@@ -54,13 +52,12 @@ int longestIncreasingSubarrayMemo(const std::vector<int> &array) {
     if (memo.count(key))
       return memo[key];
 
-    auto excl = _longestIncreasingSubarrayMemo(array, i + 1, n, prev, memo);
+    auto excl = _longestIncreasingSubarrayMemo(array, i + 1, prev, memo);
 
     auto incl = 0;
 
     if (array[i] > prev)
-      incl =
-          _longestIncreasingSubarrayMemo(array, i + 1, n, array[i], memo) + 1;
+      incl = _longestIncreasingSubarrayMemo(array, i + 1, array[i], memo) + 1;
 
     memo[key] = std::max(incl, excl);
     return memo[key];
@@ -68,10 +65,8 @@ int longestIncreasingSubarrayMemo(const std::vector<int> &array) {
 
   std::unordered_map<std::pair<int, int>, int, hash> memo;
 
-  return _longestIncreasingSubarrayMemo(array, 0, array.size() - 1, INT_MIN,
-                                        memo);
+  return _longestIncreasingSubarrayMemo(array, 0, INT_MIN, memo);
 }
-#include <iostream>
 
 int longestIncreasingSubarrayTable(const std::vector<int> &array) {
 
