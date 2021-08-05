@@ -20,7 +20,7 @@ def climb_memo(n, memo=dict()):
     if n in memo:
         return memo[n]
 
-    memo[n] = climb_memo(n - 1, memo) + climb_memo(n - 2, memo) + climb_memo(n - 3, memo)
+    memo[n] = (
+        climb_memo(n - 1, memo) + climb_memo(n - 2, memo) + climb_memo(n - 3, memo)
+    )
     return memo[n]
-
-

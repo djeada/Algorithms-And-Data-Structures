@@ -27,7 +27,7 @@ def count_construct_memo(target, word_bank, memo=dict()):
         if len(target) >= len(word) and target[: len(word)] == word:
             remainder = target[len(word) :]
             totalCount += count_construct_memo(remainder, word_bank, memo)
-    
+
     memo[target] = totalCount
     return totalCount
 

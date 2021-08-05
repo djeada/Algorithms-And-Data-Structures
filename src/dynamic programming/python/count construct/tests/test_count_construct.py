@@ -3,7 +3,11 @@ import sys
 
 sys.path.insert(0, "../src")
 
-from count_construct import count_construct_basic, count_construct_memo, count_construct_table
+from count_construct import (
+    count_construct_basic,
+    count_construct_memo,
+    count_construct_table,
+)
 
 
 class TestCountConstructBasic(unittest.TestCase):

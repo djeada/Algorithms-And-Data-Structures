@@ -9,7 +9,7 @@ from lis import lis_basic, lis_memo, lis_tab
 class TestLisBasic(unittest.TestCase):
     def test_1(self):
         a = [13, 1, 15, 13, 6, 11, 10, 20, 7]
-        result = 4 
+        result = 4
         self.assertEqual(lis_basic(a), result)
 
     def test_2(self):

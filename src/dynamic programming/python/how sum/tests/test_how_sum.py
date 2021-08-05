@@ -7,7 +7,7 @@ from how_sum import how_sum_basic, how_sum_memo, how_sum_table
 
 
 class TestHowSumBasic(unittest.TestCase):
-   def test_negative_1(self):
+    def test_negative_1(self):
         target = 5
         numbers = [10, 15, 20]
         result = []

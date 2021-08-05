@@ -24,9 +24,7 @@ def coin_change_memo(amount, coins, memo=dict()):
 
     for coin in coins:
         if coin <= amount:
-            min_coins = min(
-                min_coins, coin_change_memo(amount - coin, coins, memo) + 1
-            )
+            min_coins = min(min_coins, coin_change_memo(amount - coin, coins, memo) + 1)
 
     memo[amount] = min_coins
     return memo[amount]
