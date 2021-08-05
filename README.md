@@ -241,19 +241,19 @@ ctest --verbose
             <td>1</td>
             <td>Fibonacci</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/fibonacci">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/fibonacci">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>Grid travelers</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/grid%20traveler">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/grid%20travelers">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Stairs</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/climbing%20stairs">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/climb%20stairs">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
@@ -271,7 +271,7 @@ ctest --verbose
             <td>6</td>
             <td>Best sum</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/best%20sum">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/best%20sum">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
@@ -295,25 +295,25 @@ ctest --verbose
             <td>10</td>
             <td>Coins</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/coins">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/coin%20change">Cpp</a></td>
         </tr>
         <tr>
             <td>11</td>
-            <td>Longest increasing subarray</td>
+            <td>Longest increasing subsequence</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/longest%20increasing%20subarray">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/longest%20increasing%20subarray">Cpp</a></td>
         </tr>
         <tr>
             <td>12</td>
             <td>Longest common subsequence</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/longest%20common%20subsequence">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/longest%20common%20subsequence">Cpp</a></td>
         </tr>
         <tr>
             <td>13</td>
             <td>Knuth-Morris-Pratt</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/kmp">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="">Cpp</a></td>
         </tr>
     </tbody>
 </table>
