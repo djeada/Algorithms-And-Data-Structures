@@ -377,4 +377,5 @@ ctest --verbose
     <li>https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm</li>
     <li>https://www.cs.bham.ac.uk/~jxb/DSA/</li>
     <li>https://www.ics.uci.edu/~eppstein/161/syl.html</li>
+    <li>http://www.columbia.edu/~cs2035/oldcourses.html</li>
 </ol>
