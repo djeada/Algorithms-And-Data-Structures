@@ -45,3 +45,7 @@ All Constructs: If we can construct a word by concatenating string from a given 
 
 <h2>Coins</h2>
 Given a set of denominations and an amount, find the minimum number of coins from the set that will sum up to the given amount.
+
+
+Explain:
+Subarray, Substring, Subsequence, Subset.
