@@ -374,6 +374,7 @@ ctest --verbose
     <li>Nite Nimajneb "<i>The Hitchhiker’s Guide to the Programming Contests</i>" </li>
     <li>http://cslibrary.stanford.edu/105/</li>
     <li>https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/</li>
+    <li>https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm</li>
     <li>https://www.cs.bham.ac.uk/~jxb/DSA/</li>
     <li>https://www.ics.uci.edu/~eppstein/161/syl.html</li>
 </ol>
