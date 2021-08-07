@@ -31,15 +31,16 @@ def how_sum_memo(target, numbers, memo=dict()):
         remainder = target - number
 
         if remainder >= 0:
-            
+
             combination = how_sum_memo(remainder, numbers, memo)
-            
+
             if combination is not None:
                 memo[target] = combination + [number]
                 return memo[target]
 
     memo[target] = None
     return memo[target]
+
 
 def how_sum_table(target, numbers):
 

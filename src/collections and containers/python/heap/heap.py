@@ -35,7 +35,6 @@ class Heap:
             i = parent_pos
             parent_pos = (int)((i - 1) / 2)
 
-
     def repair_bottom(self, i, end):
         while i <= end:
             left = 2 * i + 1
@@ -63,4 +62,3 @@ class Heap:
                     i = idx_to_change
             else:
                 break
-

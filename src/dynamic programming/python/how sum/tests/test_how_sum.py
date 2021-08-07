@@ -2,6 +2,7 @@ import unittest
 
 import os
 import sys
+
 file_dir = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(file_dir + "/src")
 
@@ -24,7 +25,7 @@ class TestHowSumBasic(unittest.TestCase):
     def test_positive_1(self):
         target = 8
         numbers = [2, 2, 4, 5]
-        expected = [[4,2,2], [2,4,2], [2, 2, 4], [2,2,2,2], [4, 4]]
+        expected = [[4, 2, 2], [2, 4, 2], [2, 2, 4], [2, 2, 2, 2], [4, 4]]
         result = how_sum_basic(target, numbers)
 
         self.assertTrue(any([result == elem for elem in expected]))
@@ -36,6 +37,7 @@ class TestHowSumBasic(unittest.TestCase):
         result = how_sum_basic(target, numbers)
 
         self.assertTrue(any([result == elem for elem in expected]))
+
 
 class TestHowSumMemo(unittest.TestCase):
     def test_negative_1(self):
@@ -53,7 +55,7 @@ class TestHowSumMemo(unittest.TestCase):
     def test_positive_1(self):
         target = 8
         numbers = [2, 2, 4, 5]
-        expected = [[4,2,2], [2,4,2], [2, 2, 4], [2,2,2,2], [4, 4]]
+        expected = [[4, 2, 2], [2, 4, 2], [2, 2, 4], [2, 2, 2, 2], [4, 4]]
         result = how_sum_memo(target, numbers, {})
 
         self.assertTrue(any([result == elem for elem in expected]))
@@ -83,7 +85,7 @@ class TestHowSumTab(unittest.TestCase):
     def test_positive_1(self):
         target = 8
         numbers = [2, 2, 4, 5]
-        expected = [[4,2,2], [2,4,2], [2, 2, 4], [2,2,2,2], [4, 4]]
+        expected = [[4, 2, 2], [2, 4, 2], [2, 2, 4], [2, 2, 2, 2], [4, 4]]
         result = how_sum_table(target, numbers)
 
         self.assertTrue(any([result == elem for elem in expected]))

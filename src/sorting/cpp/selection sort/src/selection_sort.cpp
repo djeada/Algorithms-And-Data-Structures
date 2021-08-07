@@ -1,6 +1,6 @@
 #include "selection_sort.h"
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 template <class T> void selection_sort(std::vector<T> &arr) {
   for (auto it = arr.begin(); it != arr.end(); ++it) {
