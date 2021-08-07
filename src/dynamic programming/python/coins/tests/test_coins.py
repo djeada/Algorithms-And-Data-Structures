@@ -1,7 +1,9 @@
 import unittest
-import sys
 
-sys.path.insert(0, "../src")
+import os
+import sys
+file_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(file_dir + "/src")
 
 from coins import coin_change_basic, coin_change_memo, coin_change_tab
 
@@ -14,9 +16,9 @@ class TestCoinChangeBasic(unittest.TestCase):
         self.assertEqual(coin_change_basic(num, coins), result)
 
     def test_positivie(self):
-        num = 67
-        coins = [1, 5, 10, 25]
-        result = 6
+        num = 25
+        coins = [5, 10]
+        result = 3
         self.assertEqual(coin_change_basic(num, coins), result)
 
 

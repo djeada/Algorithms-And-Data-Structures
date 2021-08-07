@@ -1,10 +1,11 @@
 import unittest
-import sys
 
-sys.path.insert(0, "../src")
+import os
+import sys
+file_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(file_dir + "/src")
 
 from best_sum import best_sum_basic, best_sum_memo, best_sum_table
-
 
 class TestBesSumBasic(unittest.TestCase):
     def test_negative_1(self):

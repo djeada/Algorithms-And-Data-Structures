@@ -1,7 +1,9 @@
 import unittest
-import sys
 
-sys.path.insert(0, "../src")
+import os
+import sys
+file_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(file_dir + "/src")
 
 from can_construct import can_construct_basic, can_construct_memo, can_construct_table
 

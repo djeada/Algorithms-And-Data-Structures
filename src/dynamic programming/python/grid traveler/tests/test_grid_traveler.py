@@ -1,7 +1,9 @@
 import unittest
-import sys
 
-sys.path.insert(0, "../src")
+import os
+import sys
+file_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(file_dir + "/src")
 
 from grid_traveler import (
     grid_traveller_basic,
@@ -59,13 +61,7 @@ class TestTravelerMemo(unittest.TestCase):
         m = 10
         n = 10
         result = 48620
-        self.assertEqual(grid_traveller_memo(m, n), result)
-
-    def test_with_15_and_15(self):
-        m = 15
-        n = 15
-        result = 40116600
-        self.assertEqual(grid_traveller_memo(m, n), result)
+        self.assertEqual(grid_traveller_memo(m, n, dict()), result)
 
 
 class TestTravelerTable(unittest.TestCase):
@@ -91,12 +87,6 @@ class TestTravelerTable(unittest.TestCase):
         m = 10
         n = 10
         result = 48620
-        self.assertEqual(grid_traveller_table(m, n), result)
-
-    def test_with_15_and_15(self):
-        m = 15
-        n = 15
-        result = 40116600
         self.assertEqual(grid_traveller_table(m, n), result)
 
 

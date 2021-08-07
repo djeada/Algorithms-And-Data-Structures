@@ -1,7 +1,9 @@
 import unittest
-import sys
 
-sys.path.insert(0, "../src")
+import os
+import sys
+file_dir = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(file_dir + "/src")
 
 from graph import Vertex, Edge, Graph
 from bfs import bfs
