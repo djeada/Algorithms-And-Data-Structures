@@ -9,7 +9,7 @@ python:
   - "3.8"
 language: bash
 script:
-    - chmod u+x bash run.sh && ./run.sh
+    - chmod u+x run.sh && ./run.sh
 notifications:
   email:
     on_success: change
