@@ -330,33 +330,33 @@ ctest --verbose
     <tbody>
         <tr>
             <td>1</td>
-            <td>Heap sort</td>
-            <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/heap%20sort">Cpp</a></td>
-        </tr>
-        <tr>
-            <td>2</td>
             <td>Insertion sort</td>
-            <td><a>Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/insertion%20sort">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/insertion%20sort">Cpp</a></td>
         </tr>
         <tr>
+            <td>2</td>
+            <td>Selection sort</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/selection%20sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/selection%20sort">Cpp</a></td>
+        </tr>
+        <tr>
             <td>3</td>
-            <td>Merge sort</td>
-            <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge%20sort">Cpp</a></td>
+            <td>Heap sort</td>
+            <td><a herf="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/heap%20sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/heap%20sort">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
-            <td>Quick sort</td>
-            <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/quick%20sort">Cpp</a></td>
+            <td>Merge sort</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/merge%20sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge%20sort">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
-            <td>Selection sort</td>
-            <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/selection%20sort">Cpp</a></td>
+            <td>Quick sort</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/quick%20sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/quick%20sort">Cpp</a></td>
         </tr>
     </tbody>
 </table>
