@@ -11,7 +11,6 @@ TEST(VectorTest, AddingSingleElement) {
   EXPECT_EQ(v.size(), expectedSize);
   EXPECT_EQ(v.back(), value);
 }
-#include <iostream>
 
 TEST(VectorTest, AddingMultipleElements) {
   Vector<char> v;
