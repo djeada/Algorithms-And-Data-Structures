@@ -343,7 +343,7 @@ ctest --verbose
         <tr>
             <td>3</td>
             <td>Heap sort</td>
-            <td><a herf="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/heap%20sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/heap%20sort">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/heap%20sort">Cpp</a></td>
         </tr>
         <tr>
