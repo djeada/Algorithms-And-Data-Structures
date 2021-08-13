@@ -378,4 +378,5 @@ ctest --verbose
     <li>https://www.cs.bham.ac.uk/~jxb/DSA/</li>
     <li>https://www.ics.uci.edu/~eppstein/161/syl.html</li>
     <li>http://www.columbia.edu/~cs2035/oldcourses.html</li>
+    <li>https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/</li>
 </ol>
