@@ -190,7 +190,7 @@ ctest --verbose
         </tr>
         <tr>
             <td>3</td>
-            <td>Genereting words</td>
+            <td>Generating words</td>
             <td><a>Python</a></td>
             <td><a>Cpp</a></td>
         </tr>
