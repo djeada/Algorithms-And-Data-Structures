@@ -23,12 +23,16 @@ For C++ projects you will need:
 * Cmake 3.15+
 
 For Python projects you will need:
-* Python 3.6+
+* Python 3.10+
+
+No additional libraries or modules are needed.
 
 <h1>How to run examples?</h1>
 Each algorithm implementation has its own subdirectory with source code, unit tests and build files. They are all independent of each other and should be built independently.
 
-Go to the project directory and run the following commands to create a C++ project and run unit tests:
+<h3>C++</h3>
+
+To build a C++ project and run unit tests, go to the project directory and execute the following commands:
 
 ```bash
 mkdir build
@@ -37,6 +41,15 @@ cmake ..
 make
 ctest --verbose
 ```
+
+<h3>Python</h3>
+
+Use the following commands to run Python unit tests from the project directory:
+
+```bash
+python -m unittest discover -p 'test*.py'
+```
+
 <h1>Collections</h1>
 <table>
     <thead>
