@@ -1,6 +1,9 @@
 #!/bin/bash
+
 python3 -m unittest discover -p 'test*.py'
+
 cd src
+
 for dir in */; do
     if [ -d "$dir" ]; then
         cd "$dir/cpp"
