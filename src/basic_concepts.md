@@ -1,6 +1,6 @@
 <h1>Data Structures</h1>
 
-A data structure is a representation of the logical relationship that exists between individual data items. In other words, a data structure provides a method of arranging all data items that takes into account not just the pieces contained but also their relationships to one another. The phrase data structure refers to the method through which data is stored.
+The term data structure refers to a specific method of organizing data for specific types of operations. In other words, a data structure provides a method of arranging all data items that takes into account not just the pieces contained but also their relationships to one another. The phrase data structure refers to the method through which data is stored. We usually think about data structures without getting bogged down in implementation details of certain programming languages or how data is stored in computer memory. This is why abstract mathematical representations of data structures and data types were developed.
 
 * Primitive data structures: fundamental data structures that operate directly on machine instructions.
 * Non primitive data structures: more complex, developed from primitive data structures.
@@ -32,7 +32,14 @@ Requirements of an algorithm:
 * Finiteness: the algorithm can not run ad infinitum. It ends after executing a finite number of steps.
 * Effectiveness: each instruction in addition to being specific must be feasible.
 
-Programs (e.g., operating systems) do not have to fulfill the fourth requirement; with an infinite loop, they can run indefinitely.
+<h2>Algorithms as opposed to programs</h2>
+
+Programs (for example, operating systems) are exempted from the fourth requirement since an infinite loop may be used to make them run indefinitely. A computer program can, but does not have to, be used to implement an algorithm. They can be described in plain English just as well.
+
+<h2>Diffrent programming paradigms</h2>
+
+* <i>Imperative Programming</i> describes computing in terms of instructions that modify the program or data state.
+* <i>Declarative Programming</i> specifies what the program should do without describing how to do it.
 
 <h1>Complexity of algorithms</h1>
 
