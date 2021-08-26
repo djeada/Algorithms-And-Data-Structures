@@ -1,28 +1,49 @@
-# Containers
+# Collections and containers
 
-<h1>Queue</h1>
-It is an abstract data type (interface)
-Basic operations: enqueue() and dequeue()
-FIFO: first in first out
-It can be implemented with linked lists
-Enqueue operation: we just simply add the new item to the end of the queue
-Dequeue operation: we just simply remove the item starting at the beginning of the queue // FIFO structure
+For our purposes, the words data structures and containers are interchangeable. Collections are a type of data structure that holds a variable number of objects. We will be describing various collections in this section.
 
-<h2>Applications:</h2>
+Collections can involve virtually anything, for example, a set of integers [5, 7, 2, 3 and 4] or strings [item_a, item_c, item_b] 
 
-- BFS
-- When a resource is shared with several consumers ( threads ): we store them in a queue For example: CPU scheduling
-- When data is transferred asynchronously (data not necessarily received at same rate as sent) between two processes For example: IO buffers
+We can speak about them on two different levels:
+
+1. on a very abstract level: we can define what we mean by them and what can we do with them.
+2. on a machine level: we figure out how to implement them.
+
+<h1>Linked List</h1>
+
+A linked list's elements are made up of two cells. The element's data (or a pointer to that data) is stored in the first cell. The second cell holds a reference to the next element in the list or NULL if there is no next element.
+
+<h2>Basic operations</h2>
+
+* is_empty(): it is self-explanatory.
+* first(): access the first item in the list.
+* append(element): append the provided element at the end of the list.
+* remove(index): remove an element from the list that is stored at the provided index.
+* replace(index, data): store the provided data at the specified index in the list.
+
+<h2>Implementation</h2>
+There are several methods for implementing lists, and the best one depends on the programming language used. Lists are the most important primitive data structure in the programming language Lisp and its derivates. Lists are more natural to implement as arrays in certain languages, however this might be troublesome because lists are not theoretically restricted in size.
+
+Recursion is a natural way to process collections of items stored in linked lists. To find the last element of a list we can simply keep removing the first remaining item until there are no more left. The running time of this depends on the length of the list, and is proportional to that length.
+
+<h1>Vector</h1>
+TODO
 
 <h1>Stack</h1>
-It is an abstract data type (interface)
-Basic operations: pop(), push() and peek()
-LIFO structure: last in first out
-In most high level languages, a stack can be easily implemented either with arrays or linked lists
-A number of programming languages are stack-oriented, meaning they define most basic operations (adding two numbers, printing a character) as taking their arguments from the stack, and placing any return values back on the stack
-Push operation: put the given item to the top of the stack Very simple operation, can be done in O(1)
-Pop operation: we take the last item we have inserted to the top of the stack (LIFO) Very simple operation, can be done in O(1)
-Peek operation: return the item from the top of the stack without removing it Very simple operation, can be done in O(1)
+They are the ideal data structure to model a First-In-Last-Out (FILO), or Last-In-First-Out (LIFO), strategy in search. 
+A number of programming languages are stack-oriented, meaning they define most basic operations (adding two numbers, printing a character) as taking their arguments from the stack, and placing any return values back on the stack.
+
+<h2>Basic operations</h2>
+
+* push(element): it takes an element and places it on top of an existing stack O(1)
+* pop(): it returns the top element of a stack and removes it from the stack O(1)
+* top(): it returns the top element of a stack without removing it from the stack O(1)
+
+<h2>Implementation</h2>
+In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
+
+1. The number of items in an original stack is never changed in a functional approach. A new stack is created by the push operation.
+2. Another approach to think about it is to imagine a single stack that has been destructively modified, so that after applying push, the old stack no longer exists, but has been replaced by a new stack with an extra element. This is theoretically more complex, because applying top now may provide various results depending on how the system's state has changed.
 
 <h2>Applications:</h2>
 
@@ -30,6 +51,23 @@ Peek operation: return the item from the top of the stack without removing it Ve
 - Graph algorithms: depth-first search can be implemented with stacks ( or with recursion )
 - Finding Euler-cycles in a graph
 - Finding strongly connected components in a graph
+
+<h1>Queue</h1>
+A queue is a data model that supports a First-In-First-Out (FIFO) approach.
+
+<h2>Basic operations</h2>
+
+* enqueue(element): append the provided element at the end of the queue.
+* dequeue(): remove the first element from the queue.
+
+<h2>Implementation</h2>
+In most programming languages, a queue can be easily implemented with linked lists. 
+
+<h2>Applications:</h2>
+
+- BFS
+- When a resource is shared with several consumers ( threads ): we store them in a queue For example: CPU scheduling
+- When data is transferred asynchronously (data not necessarily received at same rate as sent) between two processes For example: IO buffers
 
 <h1>Heap</h1>
 It is a binary tree.
