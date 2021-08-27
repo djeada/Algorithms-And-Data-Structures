@@ -1,6 +1,6 @@
 # Collections and containers
 
-For our purposes, the words data structures and containers are interchangeable. Collections are a type of data structure that holds a variable number of objects. We will be describing various collections in this section.
+For our purposes, the words data structures and containers are interchangeable. Collections are a type of data structure that holds a variable number of items. We will be describing various collections in this section.
 
 Collections can involve virtually anything, for example, a set of integers [5, 7, 2, 3 and 4] or strings [item_a, item_c, item_b] 
 
