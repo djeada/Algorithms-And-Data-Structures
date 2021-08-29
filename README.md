@@ -92,7 +92,7 @@ python -m unittest discover -p 'test*.py'
         </tr>
         <tr>
             <td>6</td>
-            <td>Binary Tree</td>
+            <td>BST</td>
             <td><a>Python</a></td>
             <td><a>Cpp</a></td>
         </tr>
@@ -110,7 +110,7 @@ python -m unittest discover -p 'test*.py'
         </tr>
         <tr>
             <td>9</td>
-            <td>Hash Map</td>
+            <td>Hash Table</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/hashtable">Python</a></td>
             <td><a>Cpp</a></td>
         </tr>
