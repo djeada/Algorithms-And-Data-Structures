@@ -43,9 +43,11 @@ Programs (for example, operating systems) are exempted from the fourth requireme
 
 <h1>Complexity of algorithms</h1>
 
-The <b>time complexity</b> of an algorithm is the time needed by an algorithm to be completed, expressed as a function of the size of a problem.
+The <b>time complexity</b> of an algorithm is the number of times atomic operations are called while the algorithm is being executed, expressed as a function of the size of a problem.
 
 The <b>space complexity</b> of an algorithm is the space needed by an algorithm to be completed, expressed as a function of the size of a problem.
+
+A problem's size is generally represented as an integer, and this is the number of items that are manipulated.
 
 The function f(n) describing the running time of an algorithm depends not only on the size "n" of the input data but also on the specific data. 
 We have the following three categories of cases:
