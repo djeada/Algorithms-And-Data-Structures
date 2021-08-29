@@ -27,7 +27,24 @@ There are several methods for implementing lists, and the best one depends on th
 Recursion is a natural way to process collections of items stored in linked lists. To find the last element of a list we can simply keep removing the first remaining item until there are no more left. The running time of this depends on the length of the list, and is proportional to that length.
 
 <h1>Vector</h1>
-TODO
+
+Because they are so simple to implement in a machine, arrays were most likely the first data structures to be used. Array elements are generally kept in continuous chunks of computer memory. Arrays are represented by items separated by commas and enclosed in square brackets:
+
+a = [8, 5, 4, 9, 3]
+
+Because this array a has 5 elements, we refer to it as having a size of 5. We generally begin numbering at 1 in everyday life. However, when working with arrays in computer science, we frequently begin with 0. We write a[i] to signify the element in the ith position for any integer i denoting a position. For array <i>a</i> we have: a[0] = 8, a[1] = 5, a[2] = 4, and so on.
+
+A fixed-size sequential collection of elements of the same type is stored in an array. Vectors are nearly identical, with the exception that they can manage storage and expand dynamically in an efficient manner. In reality, arrays are very low-level constructs that you should definitely avoid as much as possible. Vectors have almost the same performance as arrays, but with many more conveniences and safety features.
+
+<h2>Basic operations</h2>
+
+* is_empty() it is self-explanatory	O(1)
+* push_back(elem)	append the provided element at the end of the vector O(1)
+* pop_back() return the vector's last element O(1)
+* clear()	remove all elements from the vector O(n)
+* erase(position)	remove the element from the vector at the specified position O(n)
+* sort(start, end) sort vector elements between position start and position end O(nlog(n))
+* reverse(start, end)	reverse vector elements between position start and position end O(n)
 
 <h1>Stack</h1>
 They are the ideal data structure to model a First-In-Last-Out (FILO), or Last-In-First-Out (LIFO), strategy in search. 
