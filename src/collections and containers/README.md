@@ -36,6 +36,13 @@ Because this array a has 5 elements, we refer to it as having a size of 5. We ge
 
 A fixed-size sequential collection of elements of the same type is stored in an array. Vectors are nearly identical, with the exception that they can manage storage and expand dynamically in an efficient manner. In reality, arrays are very low-level constructs that you should definitely avoid as much as possible. Vectors have almost the same performance as arrays, but with many more conveniences and safety features.
 
+<h2>Applications:</h2>
+
+- storing a list of values
+- matrix operations
+- implementation of search and sorting algorithms
+- implementation of data structures
+
 <h2>Basic operations</h2>
 
 * is_empty() it is self-explanatory	O(1)
@@ -52,9 +59,9 @@ A number of programming languages are stack-oriented, meaning they define most b
 
 <h2>Basic operations</h2>
 
-* push(element): it takes an element and places it on top of an existing stack O(1)
-* pop(): it returns the top element of a stack and removes it from the stack O(1)
-* top(): it returns the top element of a stack without removing it from the stack O(1)
+* push(element): take an element and place it on top of an existing stack O(1)
+* pop(): return the top element of the stack and removes it from the stack O(1)
+* top(): return the top element of the stack without removing it from the stack O(1)
 
 <h2>Implementation</h2>
 In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
@@ -120,6 +127,87 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 - does not need additional memory
 - while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case O(n log n) runtime.
 
+<h1>Binary search tree</h1>
+
+To fully comprehend the idea of binary search trees, let us first define trees and binary trees.
+
+<h2>Tree</h2>
+In programming, a tree is a fairly general and powerful data structure that resembles a real tree. It is composed of an ordered collection of connected nodes, with each node having no more than one parent node and zero or more children nodes.
+
+* Nodes are frequently, but not always, labeled with a data item (e.g. an integer). The label of a node will be referred to as its value.
+* There must always be a distinct ‘top level' node known as the root. 
+* Then, given a node, any node on the following level "down" that is related to it through a branch is a child of that node.
+* In contrast, the node (there can only be one) on the level above that is connected to the provided node (through an edge) is its parent.
+* A path is a series of linked edges connecting one node to another. 
+* Trees have the characteristic that each node has a distinct path connecting it to the root.
+* The length of the path linking a node to the root determines its depth or level. As a result, the root has a level of 0, its children have a level of 1, and so on.
+
+<h2>Binary Tree</h2>
+In computer science, binary trees are the most prevalent form of tree. 
+A binary tree is one in which each node has no more than two children.
+In contrast with binary search trees there is no constraint imposed on the values.
+
+<h2>Properties</h2>
+Binary search trees are binary trees that satisfy the following conditions:
+
+* Each node has one value (key).
+* The keys in the left subtree are smaller than the keys in the parent node.
+* The keys in the right subtree are greater than the key in its parent node.
+* It is not permitted to have duplicate node values.
+
+<h2>Building binary search trees</h2>
+
+To add <i>new_value</i> to the BST, we should do the following:
+
+1. If the tree is empty, just assign the <i>new_value</i> to the root while leaving the left and right subtrees empty.
+2. If the tree is non-empty, then do the following:
+  - If <i>new_value</i> is less than the root value, place it into the left sub-tree.
+  - If <i>new_value</i> is greater than the root value, place it into the right sub-tree.
+  - If <i>new_value</i> equals the value of the root, throw an exception.
+  
+<h2>Basic operations</h2>
+
+* root(): return the value of the root node of binary tree O(1)
+* height(): returns the height of the BST O(1)
+* insert(value): place the provided value into an appropriate node in the BST
+* search(value): look for a node with the specified value in the BST
+* remove(value): remove a node with the specified value from the BST
+
+<h1>AVL tree</h1>
+TODO
+
+<h1>Red-black tree</h1>
+The height of the binary search tree determines how long it takes for BST operations to finish. In order to obtain the best results, we need keep the tree balanced.
+
+In an AVL tree, the heights of each node's two child subtrees differ by no more than one.
+
+AVL trees are quicker than red-black trees because they are more strictly balanced, but they require more memory.
+
+<h2> Properties </h2>
+
+- Each node is either red or black
+- The root node is always black
+- All leaves (NIL) are black
+- Every red node must have two black child nodes and no other children -> it must have a black parent
+- Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes
+- On every insertion -> we have to check whether we have violated the red-black properties or not
+
+- If we have violated the RB properties: we have to rebalance the tree:
+1. make rotations
+1. OR just recolor the nodes
+
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Space</i> | O(n) | O(n) |
+| <i>Insert</i> | O(logn) | O(logn) |
+| <i>Delete</i> | O(logn) | O(logn) |
+| <i>Search</i> | O(logn) | O(logn) |
+
+<h2> Applications:</h2>
+- Used internally by Operating Systems.
+
 <h1>Hash table</h1>
 
 In a balanced BST we can achieve O(logn) time complexity for several operations including search.
@@ -165,35 +253,3 @@ Solutions:
 - In large networks, lookup tables ( lookup for IP addresses )
 - Histograms are a type of graph that shows the distribution of data (ex. frequencies of charachter occurences in a string)
 - For substring search, the Rabin-Karp algorithm uses the hashing technique.
-
-<h1>Red-black tree</h1>
-The length of time it takes for BST operations to complete is determined by the height of the binary search tree; in order to achieve the best results, we should keep the tree balanced.
-
-The heights of any node's two child subtrees vary by no more than one in an AVL tree.
-
-Since they are more rigidly balanced, AVL trees are faster than red-black trees, but they need more memory.
-
-<h2> Time complexity </h2>
-
-| Operation | Average case | Worst case |
-| --- | --- | --- |
-| <i>Space</i> | O(n) | O(n) |
-| <i>Insert</i> | O(logn) | O(logn) |
-| <i>Delete</i> | O(logn) | O(logn) |
-| <i>Search</i> | O(logn) | O(logn) |
-
-<h2> Applications:</h2>
-- Used internally by Operating Systems.
-
-<h2> Properties </h2>
-
-- Each node is either red or black
-- The root node is always black
-- All leaves (NIL) are black
-- Every red node must have two black child nodes and no other children -> it must have a black parent
-- Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes
-- On every insertion -> we have to check whether we have violated the red-black properties or not
-
-- If we have violated the RB properties: we have to rebalance the tree:
-1. make rotations
-1. OR just recolor the nodes
