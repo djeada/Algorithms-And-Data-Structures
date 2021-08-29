@@ -45,13 +45,13 @@ A fixed-size sequential collection of elements of the same type is stored in an 
 
 <h2>Basic operations</h2>
 
-* is_empty() it is self-explanatory	O(1)
-* push_back(elem)	append the provided element at the end of the vector O(1)
-* pop_back() return the vector's last element O(1)
-* clear()	remove all elements from the vector O(n)
-* erase(position)	remove the element from the vector at the specified position O(n)
-* sort(start, end) sort vector elements between position start and position end O(nlog(n))
-* reverse(start, end)	reverse vector elements between position start and position end O(n)
+* is_empty(): it is self-explanatory	O(1)
+* push_back(elem):	append the provided element at the end of the vector O(1)
+* pop_back(): return the vector's last element O(1)
+* clear():	remove all elements from the vector O(n)
+* erase(position):	remove the element from the vector at the specified position O(n)
+* sort(start, end): sort vector elements between position start and position end O(nlog(n))
+* reverse(start, end):	reverse vector elements between position start and position end O(n)
 
 <h1>Stack</h1>
 They are the ideal data structure to model a First-In-Last-Out (FILO), or Last-In-First-Out (LIFO), strategy in search. 
