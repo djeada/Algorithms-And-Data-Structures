@@ -28,7 +28,7 @@ For Python projects you will need:
 No additional libraries or modules are needed.
 
 <h1>How to run examples?</h1>
-Each algorithm implementation has its own subdirectory with source code, unit tests and build files. They are all independent of each other and should be built independently.
+Each algorithm implementation is contained in its own subdirectory, which contains the source code, unit tests, and build configuration files. Each subdirectory is a distinct project that should be built independently.
 
 <h3>C++</h3>
 
