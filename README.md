@@ -392,4 +392,5 @@ python -m unittest discover -p 'test*.py'
     <li>https://www.ics.uci.edu/~eppstein/161/syl.html</li>
     <li>http://www.columbia.edu/~cs2035/oldcourses.html</li>
     <li>https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/</li>
+    <li>https://sp19.datastructur.es/</li>
 </ol>
