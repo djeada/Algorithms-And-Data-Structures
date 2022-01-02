@@ -70,25 +70,25 @@ python -m unittest discover -p 'test*.py'
             <td>2</td>
             <td>Vector</td>
             <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/vector">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/vector">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Stack</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/stack">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/stack">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/python/stack">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/stack">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Queue</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/queue">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/queue">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/python/queue">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/queue">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>Heap</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/heap">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/cpp/heap">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/python/heap">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/heap">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
