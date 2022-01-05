@@ -17,17 +17,15 @@ The basic idea is to locate the smallest item and place it at the beginning of t
 
 <h2>Steps</h1>
 
-* Find the smallest element's position and replace it with <code>arr[0]</code>.
-* Remove the first element and locate the smallest element in the subarray beginning with <code>arr[1]</code> and swap it with xarr[1].
-* Repeat these steps for the rest of the array.
+* Consider the elements from 0 till n-1. Find the smallest element's position and swap it with <code>arr[0]</code>.
+* Consider the elements from 1 till n-1. Find the smallest element's position and swap it with <code>arr[1]</code>.
+* Repeat these steps, reducing the number of examined indices by one and increasing the position of the swapped element by one each time.
 
 <h2>Time complexity</h2>
 <code>O(n^2)</code>
 
 <h1>Insertion Sort</h1>
-Take the items one at a time and insert them into an initially
-empty data structure such that the data structure continues to be
-sorted at each stage.
+It works by adding the items one at a time into an initial empty container. With each iteration, the container maintains its order. Again there are n iterations.
 
 <h2>Time complexity</h2>
 <code>O(n^2)</code>
