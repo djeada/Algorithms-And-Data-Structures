@@ -12,7 +12,7 @@ It is possible that the array will be sorted before the n'th iteration. In that 
 <h2>Time complexity</h2>
 <code>O(n^2)</code>
 
-<h2>Selection Sort</h2>
+<h1>Selection Sort</h1>
 The basic idea is to locate the smallest item and place it at the beginning of the array, then find the smallest of the remaining items and place it second, and so on. The algorithm will just repeat this operation until the largest member is placed at the end of the array. There will be no more than n-1 swaps required for selection sort.
 
 <h2>Steps</h1>
@@ -24,7 +24,7 @@ The basic idea is to locate the smallest item and place it at the beginning of t
 <h2>Time complexity</h2>
 <code>O(n^2)</code>
 
-<h2>Insertion Sort</h2>
+<h1>Insertion Sort</h1>
 Take the items one at a time and insert them into an initially
 empty data structure such that the data structure continues to be
 sorted at each stage.
@@ -32,7 +32,7 @@ sorted at each stage.
 <h2>Time complexity</h2>
 <code>O(n^2)</code>
 
-<h2>Merge sort</h2>
+<h1>Merge sort</h1>
 
 Recursively split the problem into smaller sub-problems till you
 just have single items that are trivial to sort. Then put the sorted
@@ -44,13 +44,13 @@ The function's interface can support iterators with random access.
 <h2>Time complexity</h2>
 <code>O(nlogn)</code>
 
-<h2>Quick Sort</h2>
+<h1>Quick Sort</h1>
 The quick sort method divides the original array into two groups by rearranging it. The first group comprises items that are less than an arbitrarily selected value from the set, whereas the second group contains elements that are larger than or equal to the chosen value. The chosen value is referred to as the pivot element. After the array has been reorganized with regard to the pivot, the same partitioning method is done recursively to each of the two subgroups. The original array is sorted after all of the subsets have been partitioned and reorganized.
 
 <h2>Time complexity</h2>
 <code>O(nlogn)</code>
 
-<h2>Heap sort</h2>
+<h1>Heap sort</h1>
 It provides random access to iterators.
 Since it is inplace sorting, the memory complexity is O(1).
 It's an unstable sort.
