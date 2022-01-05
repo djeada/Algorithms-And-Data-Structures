@@ -1,4 +1,7 @@
-<h1>Dynamic Programming</h1>
+Explain:
+Subarray, Substring, Subsequence, Subset.
+
+# Dynamic Programming
 
 A lot of problems dealing with optimizing some quantity can be solved using three different approaches: 
 
@@ -22,34 +25,64 @@ A lot of problems dealing with optimizing some quantity can be solved using thre
 
 Recursive brute force solutions usually look elegant and concise. However they are doing the same calculation repeatedly. As a result, not seldom the time grows exponentially with the size of the problem.
 
-<h1>List of problems</h1>
-
-<h2>Fibonacci</h2>
+<h1>Fibonacci</h1>
 Given a number n, find n-th element of the Fibonacci Sequence.
 
-Add: nlogn fast solution
+TODO: nlogn fast solution
 
-<h2>Grid traveller</h2>
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
+<h1>Grid traveller</h1>
 Grid traveller can only move right and down. Give a matrix of size MxN, in how many ways he can reach point (M, N) starting from (1, 1).
 
-<h2>Climbing stairs</h2>
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
+<h1>Climbing stairs</h1>
 Given a n-step stair case, count the number of ways of reaching the stop of stairs. You can make: 1, 2, or 3 steps.
 
-<h2>Sum problems</h2>
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
+<h1>Sum problems</h1>
 Can Sum: Can we sum numbers from the list to get a given target. We can choose one number multiple times.
 How Sum: If we can sum numbers from the list to get a given target, then which numbers would that be.
 Best Sum: If we can sum numbers from the list to get a given target, then which set of numbers would be the smallest.
 
-<h2>Construct problems</h2>
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
+<h1>Construct problems</h1>
 Can Construct: Can we construct a word by concatenating string from a given list. One string can be chosen multiple times.
 Count Construct: If we can construct a word by concatenating string from a given list, then which strings would that be.
 All Constructs: If we can construct a word by concatenating string from a given list, then which set of strings would be the smallest.
 
-<h2>Coins</h2>
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
+<h1>Coins</h1>
 Given a set of denominations and an amount, find the minimum number of coins from the set that will sum up to the given amount.
 
-<h2>Longest increasing subsequence</h2>
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
+<h1>Longest increasing subsequence</h1>
 Find longest increasing subsequence in a given array.
 
-Explain:
-Subarray, Substring, Subsequence, Subset.
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
