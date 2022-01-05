@@ -4,7 +4,7 @@
 In computer science,'sorting' generally refers to arranging a collection of items in a specific order. To do so, we must first define the idea of order on the things under consideration. For numbers, for example, we can use the standard numerical order (defined by the mathematical 'less than' or " relation) and for strings, we can use the so-called lexicographic or alphabetic order, which is used by dictionaries and encyclopedias. Sorting may be applied to any arbitrary category of objects if the order is defined for them.
 
 <h1>Bubble Sort</h1>
-The bubble sort is the simplest to grasp and implement, therefore it is usally used to introduce the students to sorting algorithms. The main idea behind bubble sort is to go over the n-element array n times. In each pass, we check each element in the array with its neighbour, i.e., <code>arr[i]</code> with <code>arr[i+1]</code> and swap two elements if they are not in order. This way the larger elements will "bubble up" towards the end of the array. In the first iteration we are guaranteed to have the largest element at the end of array. Therefore, n iterations will always result in a sorted array.
+The bubble sort is the simplest to grasp and implement, therefore it is usually used to introduce the students to sorting algorithms. The main idea behind bubble sort is to go over the n-element array n times. In each pass, we check each element in the array with its neighbor, i.e., <code>arr[i]</code> with <code>arr[i+1]</code> and swap two elements if they are not in order. This way the larger elements will "bubble up" towards the end of the array. In the first iteration we are guaranteed to have the largest element at the end of array. Therefore, n iterations will always result in a sorted array.
 
 <h2>Steps</h2>
 
@@ -14,10 +14,10 @@ The bubble sort is the simplest to grasp and implement, therefore it is usally u
 * Repeat step 1-3 n times.
 
 <h2>Optimizations</h2>
-It is possible that the array will be sorted before the n'th iteration. In that case, we simply stop the algorithm.
+It is possible that the array will be sorted before the nth iteration. In that case, we simply stop the algorithm.
 
 <h2>Stability</h2>
-It is a steady algorithm since no item gets switched ahead of another unless they are in the incorrect order. As a result, objects with identical keys will retain their original arrangement.
+It is a stable algorithm since no item gets switched ahead of another unless they are in the incorrect order. As a result, objects with identical keys will retain their original arrangement.
 
 <h2>Time complexity</h2>
 
@@ -34,7 +34,7 @@ The basic idea is to locate the smallest item and place it at the beginning of t
 * Repeat these steps, reducing the number of examined indices by one and increasing the position of the swapped element by one each time.
 
 <h2>Stability</h2>
-It is not a steady algorithm since there is nothing to prevent an item from being switched past another item with the same key. For example, the array <code>[5_0, 5_1, 2_2]</code> would be sorted to <code>[2_2, 5_1, 5_0]</code>, which has the values 2 2 and 2 1 out of order.
+It is not a stable algorithm since there is nothing to prevent an item from being switched past another item with the same key. For example, the array <code>[5_0, 5_1, 2_2]</code> would be sorted to <code>[2_2, 5_1, 5_0]</code>, which has the values 2 2 and 2 1 out of order.
 
 <h2>Time complexity</h2>
 
@@ -52,7 +52,7 @@ Insertion sort works by directly inserting items from the unsorted part of the a
 * Repeat the process until you reach the last element of the array.
 
 <h2>Stability</h2>
-It is a steady algorithm because no item gets swapped past another unless it has a smaller key. As a result, items with identical keys will retain their original arrangement.
+It is a stable algorithm because no item gets swapped past another unless it has a smaller key. As a result, items with identical keys will retain their original arrangement.
 
 <h2>Time complexity</h2>
 
@@ -67,10 +67,10 @@ Recursively divide the problem into smaller sub-problems until you just have sin
 
 * Recursively divide the array into n subarrays each containing a single element.
 * Merge every pair of subarrays arrays into a single sorted array.
-* Repeat the second step until theire is only one array left.
+* Repeat the second step until there is only one array left.
 
 <h2>Stability</h2>
-It is a steady algorithm.
+It is a stable algorithm.
 
 <h2>Time complexity</h2>
 
@@ -78,7 +78,7 @@ It is a steady algorithm.
 2. Average case complexity: <code>O(nlogn)</code>
 
 <h1>Quick Sort</h1>
-The quick sort method divides the original array into two parts by rearranging it. The first part comprises items that are smaller than an arbitrarily selected value from the original array, whereas the second group contains elements that are larger than or equal to the selcted value. The selected value is referred to as the pivot element. After the array has been reorganized with regard to the pivot, the same partitioning method is done recursively to each of the two subgroups. The original array is sorted after all of the subsets have been partitioned and reorganized.
+The quick sort method divides the original array into two parts by rearranging it. The first part comprises items that are smaller than an arbitrarily selected value from the original array, whereas the second group contains elements that are larger than or equal to the selected value. The selected value is referred to as the pivot element. After the array has been reorganized with regard to the pivot, the same partitioning method is done recursively to each of the two subgroups. The original array is sorted after all of the subsets have been partitioned and reorganized.
 
 <h2>Steps</h2>
 
@@ -93,8 +93,8 @@ The crucial concern is how to split as effectively as possible. We must certainl
 We have the following options:
 
 * Pick an index k using a random number generator and then use <code>arr[k]</code>.
-* Select a key from the array's'middle,' which is <code>arr[(n-1)/2]</code>.
-* Take a small sample (e.g., three or five items) and select the'middle' key from those.
+* Select a key from the array's middle, which is <code>arr[(n-1)/2]</code>.
+* Take a small sample (e.g., three or five items) and select the middle key from those.
 
 <h2>Stability</h2>
 The partitioning determines the stability. Quick sort is only stable if the partitioning is done so that the order of identical items can never be reversed.
@@ -117,7 +117,7 @@ In order for sorting to work, the '<' operator must be defined.
 * Deleted items will be used to create a sorted version of the original array.
 
 <h2>Stability</h2>
-It is not a steady algorithm.
+It is not a stable algorithm.
 
 <h2>Time complexity</h2>
 
