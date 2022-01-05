@@ -61,7 +61,7 @@ The quick sort method divides the original array into two parts by rearranging i
 
 * Choose the pivot element.
 * Divide the array into two halves. The first part contains all components that are smaller than the pivot, while the second contains all elements that are larger than the pivot.
-* Repeat for each subarray until you reach single element arrays.
+* Repeat the steps for each subarray until you reach single element arrays.
 
 <h2>Time complexity</h2>
 <code>O(nlogn)</code>
