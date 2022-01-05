@@ -1,28 +1,54 @@
 # Sorting
 
-<h2>Bubble Sort</h2>
-The bubble sort is simple to grasp and implement. The main idea behind bubble sort is to go over the file multiple times in a row. In each pass, we check each element in the file with its successor, i.e., X[i] with X[i+1], and swap two elements if they are not in the correct sequence.
+<h1>The problem of sorting</h1>
+In computer science,'sorting' generally refers to arranging a collection of items in a specific order. To do so, we must first define the idea of order on the things under consideration. For numbers, for example, we can use the standard numerical order (defined by the mathematical 'less than' or " relation) and for strings, we can use the so-called lexicographic or alphabetic order, which is used by dictionaries and encyclopedias. Sorting may be applied to any arbitrary category of objects if the order is defined for them.
 
-The bigger elements will "bubble up" towards the end of the array.
+<h1>Bubble Sort</h1>
+The bubble sort is the simplest to grasp and implement, therefore it is usally used to introduce the students to sorting algorithms. The main idea behind bubble sort is to go over the n-element array n times. In each pass, we check each element in the array with its neighbour, i.e., <code>arr[i]</code> with <code>arr[i+1]</code> and swap two elements if they are not in order. This way the larger elements will "bubble up" towards the end of the array. In the first iteration we are guaranteed to have the largest element at the end of array. Therefore n iterations will for sure give us a sorted array.
 
-Time complexity
-O(n^2)
+<h2>Optimizations</h2>
+It is possible that the array will be sorted before the n'th iteration. In that case, we simply stop the algorithm.
+
+<h2>Time complexity</h2>
+<code>O(n^2)</code>
 
 <h2>Selection Sort</h2>
-There will be no more than n-1 interchanges required for selection sort. Assume x is a memory-stored array of size n. The selection sort algorithm chooses the smallest element in the array x and places it at array position 0; it then chooses the next smallest element in the array x and places it at array position 1. It just repeats this operation until the largest member is placed at the end of the array. The array is traversed (n-1) times, and the smallest member is placed in its appropriate position in the array, as seen below:
+The basic idea is to locate the smallest item and place it at the beginning of the array, then find the smallest of the remaining items and place it second, and so on. The algorithm will just repeat this operation until the largest member is placed at the end of the array. There will be no more than n-1 swaps required for selection sort.
 
-* Find the smallest element's position and replace it with arr[0].
-* Remove the first element and locate the smallest element in the subarray beginning with arr[1] and swap it with xarr[1].
+<h2>Steps</h1>
+
+* Find the smallest element's position and replace it with <code>arr[0]</code>.
+* Remove the first element and locate the smallest element in the subarray beginning with <code>arr[1]</code> and swap it with xarr[1].
 * Repeat these steps for the rest of the array.
 
-Time complexity
-O(n^2)
+<h2>Time complexity</h2>
+<code>O(n^2)</code>
+
+<h2>Insertion Sort</h2>
+Take the items one at a time and insert them into an initially
+empty data structure such that the data structure continues to be
+sorted at each stage.
+
+<h2>Time complexity</h2>
+<code>O(n^2)</code>
+
+<h2>Merge sort</h2>
+
+Recursively split the problem into smaller sub-problems till you
+just have single items that are trivial to sort. Then put the sorted
+‘parts’ back together in a way that preserves the sorting.
+
+In it's current implementation it's an unstable sort.
+The function's interface can support iterators with random access.
+
+<h2>Time complexity</h2>
+<code>O(nlogn)</code>
 
 <h2>Quick Sort</h2>
 The quick sort method divides the original array into two groups by rearranging it. The first group comprises items that are less than an arbitrarily selected value from the set, whereas the second group contains elements that are larger than or equal to the chosen value. The chosen value is referred to as the pivot element. After the array has been reorganized with regard to the pivot, the same partitioning method is done recursively to each of the two subgroups. The original array is sorted after all of the subsets have been partitioned and reorganized.
 
-Time complexity
-O(n log n)
+<h2>Time complexity</h2>
+<code>O(nlogn)</code>
 
 <h2>Heap sort</h2>
 It provides random access to iterators.
@@ -35,12 +61,5 @@ Sorting procedure consists of a  few binary heap operations.
 * The heap is then deconstructed by several deletions from the end.
 * Finally, we will have a non-decreasing sorted array.
 
-Time complexity
-O(n log n)
-
-<h2>Merge sort</h2>
-In it's current implementation it's an unstable sort.
-The function's interface can support iterators with random access.
-
-Time complexity
-O(n log n)
+<h2>Time complexity</h2>
+<code>O(nlogn)</code>
