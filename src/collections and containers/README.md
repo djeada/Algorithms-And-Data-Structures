@@ -11,18 +11,18 @@ We can speak about them on two different levels:
 
 <h1>Linked List</h1>
 
-A linked list's elements are made up of two cells. The element's data (or a pointer to that data) is stored in the first cell. The second cell holds a reference to the next element in the list or NULL if there is no next element.
+A linked list's elements are made up of two cells. The element's data (or a pointer to that data)</code> is stored in the first cell. The second cell holds a reference to the next element in the list or NULL if there is no next element.
 
 <h2>Basic operations</h2>
 
-* is_empty(): it is self-explanatory.
-* first(): access the first item in the list.
-* append(element): append the provided element at the end of the list.
-* remove(index): remove an element from the list that is stored at the provided index.
-* replace(index, data): store the provided data at the specified index in the list.
+* <code>is_empty()</code>: it is self-explanatory.
+* <code>first()</code>: access the first item in the list.
+* <code>append(element)</code>: append the provided element at the end of the list.
+* <code>remove(index)</code>: remove an element from the list that is stored at the provided index.
+* <code>replace(index, data)</code>: store the provided data at the specified index in the list.
 
 <h2>Implementation</h2>
-There are several methods for implementing lists, and the best one depends on the programming language used. Lists are the most important primitive data structure in the programming language Lisp and its derivates. Lists are more natural to implement as arrays in certain languages, however this might be troublesome because lists are not theoretically restricted in size.
+There are several methods for implementing lists, and the best one depends on the programming language used. Lists are the most important primitive data structure in the programming language Lisp and its derivatives. Lists are more natural to implement as arrays in certain languages, however this might be troublesome because lists are not theoretically restricted in size.
 
 Recursion is a natural way to process collections of items stored in linked lists. To find the last element of a list we can simply keep removing the first remaining item until there are no more left. The running time of this depends on the length of the list, and is proportional to that length.
 
@@ -45,23 +45,23 @@ A fixed-size sequential collection of elements of the same type is stored in an 
 
 <h2>Basic operations</h2>
 
-* is_empty(): it is self-explanatory	O(1)
-* push_back(elem):	append the provided element at the end of the vector O(1)
-* pop_back(): return the vector's last element O(1)
-* clear():	remove all elements from the vector O(n)
-* erase(position):	remove the element from the vector at the specified position O(n)
-* sort(start, end): sort vector elements between position start and position end O(nlog(n))
-* reverse(start, end):	reverse vector elements between position start and position end O(n)
+* <code>is_empty()</code>: it is self-explanatory	<code>O(1)</code>
+* <code>push_back(elem)</code>:	append the provided element at the end of the vector <code>O(1)</code>
+* <code>pop_back()</code>: return the vector's last element <code>O(1)</code>
+* <code>clear()</code>:	remove all elements from the vector <code>O(n)</code>
+* <code>erase(position)</code>:	remove the element from the vector at the specified position <code>O(n)</code>
+* <code>sort(start, end)</code>: sort vector elements between position start and position end <code>O(nlog(n)</code>)</code>
+* <code>reverse(start, end)</code>:	reverse vector elements between position start and position end <code>O(n)</code>
 
 <h1>Stack</h1>
-They are the ideal data structure to model a First-In-Last-Out (FILO), or Last-In-First-Out (LIFO), strategy in search. 
-A number of programming languages are stack-oriented, meaning they define most basic operations (adding two numbers, printing a character) as taking their arguments from the stack, and placing any return values back on the stack.
+They are the ideal data structure to model a First-In-Last-Out (FILO)</code>, or Last-In-First-Out (LIFO)</code>, strategy in search. 
+A number of programming languages are stack-oriented, meaning they define most basic operations (adding two numbers, printing a character)</code> as taking their arguments from the stack, and placing any return values back on the stack.
 
 <h2>Basic operations</h2>
 
-* push(element): take an element and place it on top of an existing stack O(1)
-* pop(): return the top element of the stack and removes it from the stack O(1)
-* top(): return the top element of the stack without removing it from the stack O(1)
+* <code>push(element)</code>: take an element and place it on top of an existing stack <code>O(1)</code>
+* <code>pop()</code>: return the top element of the stack and removes it from the stack <code>O(1)</code>
+* <code>top()</code>: return the top element of the stack without removing it from the stack <code>O(1)</code>
 
 <h2>Implementation</h2>
 In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
@@ -72,17 +72,17 @@ In most programming languages, a stack can be easily implemented either with arr
 <h2>Applications:</h2>
 
 - In stack-oriented programming languages
-- Graph algorithms: depth-first search can be implemented with stacks ( or with recursion )
+- Graph algorithms: depth-first search can be implemented with stacks ( or with recursion )</code>
 - Finding Euler-cycles in a graph
 - Finding strongly connected components in a graph
 
 <h1>Queue</h1>
-A queue is a data model that supports a First-In-First-Out (FIFO) approach.
+A queue is a data model that supports a First-In-First-Out (FIFO)</code> approach.
 
 <h2>Basic operations</h2>
 
-* enqueue(element): append the provided element at the end of the queue.
-* dequeue(): remove the first element from the queue.
+* <code>enqueue(element)</code>: append the provided element at the end of the queue.
+* <code>dequeue()</code>: remove the first element from the queue.
 
 <h2>Implementation</h2>
 In most programming languages, a queue can be easily implemented with linked lists. 
@@ -90,8 +90,8 @@ In most programming languages, a queue can be easily implemented with linked lis
 <h2>Applications:</h2>
 
 - BFS
-- When a resource is shared with several consumers ( threads ): we store them in a queue For example: CPU scheduling
-- When data is transferred asynchronously (data not necessarily received at same rate as sent) between two processes For example: IO buffers
+- When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling
+- When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers
 
 <h1>Heap</h1>
 It is a binary tree.
@@ -108,10 +108,10 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 
 | Operation | Average case | 
 | --- | --- | 
-| <i>Find min/max</i> | O(1) |
-| <i>Delete min/max</i> | O(logn) |
-| <i>Insert</i> | O(logn) |
-| <i>merge</i> | O(mlog(m+n)) | 
+| <i>Find min/max</i> | <code>O(1)</code> |
+| <i>Delete min/max</i> | <code>O(logn)</code> |
+| <i>Insert</i> | <code>O(logn)</code> |
+| <i>merge</i> | <code>O(mlog(m+n)</code>)</code> | 
 
 <h2>Applications:</h2>
 
@@ -125,7 +125,7 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 - in-place
 - unstable
 - does not need additional memory
-- while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case O(n log n) runtime.
+- while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case <code>O(n log n)</code> run time.
 
 <h1>Binary search tree</h1>
 
@@ -134,10 +134,10 @@ To fully comprehend the idea of binary search trees, let us first define trees a
 <h2>Tree</h2>
 In programming, a tree is a fairly general and powerful data structure that resembles a real tree. It is composed of an ordered collection of connected nodes, with each node having no more than one parent node and zero or more children nodes.
 
-* Nodes are frequently, but not always, labeled with a data item (e.g. an integer). The label of a node will be referred to as its value.
+* Nodes are frequently, but not always, labeled with a data item (e.g. an integer)</code>. The label of a node will be referred to as its value.
 * There must always be a distinct ‘top level' node known as the root. 
 * Then, given a node, any node on the following level "down" that is related to it through a branch is a child of that node.
-* In contrast, the node (there can only be one) on the level above that is connected to the provided node (through an edge) is its parent.
+* In contrast, the node (there can only be one)</code> on the level above that is connected to the provided node (through an edge)</code> is its parent.
 * A path is a series of linked edges connecting one node to another. 
 * Trees have the characteristic that each node has a distinct path connecting it to the root.
 * The length of the path linking a node to the root determines its depth or level. As a result, the root has a level of 0, its children have a level of 1, and so on.
@@ -150,7 +150,7 @@ In contrast with binary search trees there is no constraint imposed on the value
 <h2>Properties</h2>
 Binary search trees are binary trees that satisfy the following conditions:
 
-* Each node has one value (key).
+* Each node has one value (key)</code>.
 * The keys in the left subtree are smaller than the keys in the parent node.
 * The keys in the right subtree are greater than the key in its parent node.
 * It is not permitted to have duplicate node values.
@@ -167,11 +167,11 @@ To add <i>new_value</i> to the BST, we should do the following:
   
 <h2>Basic operations</h2>
 
-* root(): return the value of the root node of binary tree O(1)
-* height(): returns the height of the BST O(1)
-* insert(value): place the provided value into an appropriate node in the BST
-* search(value): look for a node with the specified value in the BST
-* remove(value): remove a node with the specified value from the BST
+* <code>root()</code>: return the value of the root node of binary tree <code>O(1)</code>
+* <code>height()</code>: returns the height of the BST <code>O(1)</code>
+* <code>insert(value)</code>: place the provided value into an appropriate node in the BST
+* <code>search(value)</code>: look for a node with the specified value in the BST
+* <code>remove(value)</code>: remove a node with the specified value from the BST
 
 <h1>AVL tree</h1>
 TODO
@@ -187,12 +187,12 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 
 - Each node is either red or black
 - The root node is always black
-- All leaves (NIL) are black
+- All leaves (NIL)</code> are black
 - Every red node must have two black child nodes and no other children -> it must have a black parent
 - Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes
 - On every insertion -> we have to check whether we have violated the red-black properties or not
 
-- If we have violated the RB properties: we have to rebalance the tree:
+- If we have violated the RB properties: we have to re balance the tree:
 1. make rotations
 1. OR just recolor the nodes
 
@@ -200,23 +200,23 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
-| <i>Space</i> | O(n) | O(n) |
-| <i>Insert</i> | O(logn) | O(logn) |
-| <i>Delete</i> | O(logn) | O(logn) |
-| <i>Search</i> | O(logn) | O(logn) |
+| <i>Space</i> | <code>O(n)</code> | <code>O(n)</code> |
+| <i>Insert</i> | <code>O(logn)</code> | <code>O(logn)</code> |
+| <i>Delete</i> | <code>O(logn)</code> | <code>O(logn)</code> |
+| <i>Search</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 
 <h2> Applications:</h2>
 - Used internally by Operating Systems.
 
 <h1>Hash table</h1>
 
-In a balanced BST we can achieve O(logn) time complexity for several operations including search.
+In a balanced BST we can achieve <code>O(logn)</code> time complexity for several operations including search.
 
 Can it get better?
 
-Yes, we can theoretically reach O(1) in hash tables.
+Yes, we can theoretically reach <code>O(1)</code> in hash tables.
 
-If we know index in an array we can retrive and insert element in O(1).
+If we know index in an array we can retrieve and insert element in <code>O(1)</code>.
 What if we had a function that could give us that index for any input?
 
 This function is called hash function.
@@ -227,7 +227,7 @@ This function is called hash function.
 - Example:
 1. n: number of keys
 1. m: number of buckets 
-1. h(x) = n % m
+1. h(x)</code> = n % m
 
 To ensure that the distribution is uniform, we can use prime numbers both for the size of the array and in our hash function.
 For string we could compute the ASCII value for each character, add them together, and calculate modulo.
@@ -238,18 +238,18 @@ Problem: Two or more inputs give the same output.
 
 Solutions:
 1. Collision resolution with chaining: we put multiple entries into the same slot with the help of a linked list
-- If theere are many collisions: O(1) complexity gets worse !
+- If there are many collisions: <code>O(1)</code> complexity gets worse !
 - It has an additional memory cost due to the references
 
 2. Open addressing: better solution
 - If collision occurs, we find an empty slot instead
-- Linear probing: if a collision occures, we try the next slot ... if there is a collision too we keep trying the next slot until we find an empty slot
+- Linear probing: if a collision occurs, we try the next slot ... if there is a collision too we keep trying the next slot until we find an empty slot
 - Quadratic probing: we trying slots 1,2,4,8... units far away
 - Rehashing: we hash the result again in order to find an empty slot
 
 <h2> Applications:</h2>
 
 - Databases: hashing is often easier than searching trees.
-- In large networks, lookup tables ( lookup for IP addresses )
-- Histograms are a type of graph that shows the distribution of data (ex. frequencies of charachter occurences in a string)
+- In large networks, lookup tables ( lookup for IP addresses )</code>
+- Histograms are a type of graph that shows the distribution of data (ex. frequencies of character occurrences in a string)</code>
 - For substring search, the Rabin-Karp algorithm uses the hashing technique.
