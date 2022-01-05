@@ -71,12 +71,6 @@ A number of programming languages are stack-oriented, meaning they define most b
 * <code>pop()</code>: return the top element of the stack and removes it from the stack <code>O(1)</code>
 * <code>top()</code>: return the top element of the stack without removing it from the stack <code>O(1)</code>
 
-<h2>Implementation</h2>
-In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
-
-1. The number of items in an original stack is never changed in a functional approach. A new stack is created by the push operation.
-2. Another approach to think about it is to imagine a single stack that has been destructively modified, so that after applying push, the old stack no longer exists, but has been replaced by a new stack with an extra element. This is theoretically more complex, because applying top now may provide various results depending on how the system's state has changed.
-
 <h2>Applications:</h2>
 
 - In stack-oriented programming languages
@@ -85,6 +79,10 @@ In most programming languages, a stack can be easily implemented either with arr
 - Finding strongly connected components in a graph
 
 <h2>Implementation</h2>
+In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
+
+1. The number of items in an original stack is never changed in a functional approach. A new stack is created by the push operation.
+2. Another approach to think about it is to imagine a single stack that has been destructively modified, so that after applying push, the old stack no longer exists, but has been replaced by a new stack with an extra element. This is theoretically more complex, because applying top now may provide various results depending on how the system's state has changed.
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
