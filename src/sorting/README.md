@@ -21,8 +21,8 @@ It is a steady algorithm since no item gets switched ahead of another unless the
 
 <h2>Time complexity</h2>
 
-Worst case complexity: <code>O(n^2)</code>
-Average case complexity: <code>O(n^2)</code>
+1. Worst case complexity: <code>O(n^2)</code>
+2. Average case complexity: <code>O(n^2)</code>
 
 <h1>Selection Sort</h1>
 The basic idea is to locate the smallest item and place it at the beginning of the array, then find the smallest of the remaining items and place it second, and so on. The algorithm will just repeat this operation until the largest member is placed at the end of the array. There will be no more than n-1 swaps required for selection sort.
@@ -38,8 +38,8 @@ It is not a steady algorithm since there is nothing to prevent an item from bein
 
 <h2>Time complexity</h2>
 
-Worst case complexity: <code>O(n^2)</code>
-Average case complexity: <code>O(n^2)</code>
+1. Worst case complexity: <code>O(n^2)</code>
+2. Average case complexity: <code>O(n^2)</code>
 
 <h1>Insertion Sort</h1>
 Insertion sort works by directly inserting items from the unsorted part of the array into the sorted one at their proper position. The sorted part maintains its order and grows by one item with each iteration, whereas the unsorted part shrinks by one item. Again there are n iterations.
@@ -56,8 +56,8 @@ It is a steady algorithm because no item gets swapped past another unless it has
 
 <h2>Time complexity</h2>
 
-Worst case complexity: <code>O(n^2)</code>
-Average case complexity: <code>O(n^2)</code>
+1. Worst case complexity: <code>O(n^2)</code>
+2. Average case complexity: <code>O(n^2)</code>
 
 <h1>Merge sort</h1>
 
@@ -74,8 +74,8 @@ It is a steady algorithm.
 
 <h2>Time complexity</h2>
 
-Worst case complexity: <code>O(nlogn)</code>
-Average case complexity: <code>O(nlogn)</code>
+1. Worst case complexity: <code>O(nlogn)</code>
+2. Average case complexity: <code>O(nlogn)</code>
 
 <h1>Quick Sort</h1>
 The quick sort method divides the original array into two parts by rearranging it. The first part comprises items that are smaller than an arbitrarily selected value from the original array, whereas the second group contains elements that are larger than or equal to the selcted value. The selected value is referred to as the pivot element. After the array has been reorganized with regard to the pivot, the same partitioning method is done recursively to each of the two subgroups. The original array is sorted after all of the subsets have been partitioned and reorganized.
@@ -101,8 +101,8 @@ The partitioning determines the stability. Quick sort is only stable if the part
 
 <h2>Time complexity</h2>
 
-Worst case complexity: <code>O(n^2)</code>
-Average case complexity: <code>O(nlogn)</code>
+1. Worst case complexity: <code>O(n^2)</code>
+2. Average case complexity: <code>O(nlogn)</code>
 
 <h1>Heap sort</h1>
 It provides random access to iterators.
@@ -121,5 +121,5 @@ It is not a steady algorithm.
 
 <h2>Time complexity</h2>
 
-Worst case complexity: <code>O(nlogn)</code>
-Average case complexity: <code>O(nlogn)</code>
+1. Worst case complexity: <code>O(nlogn)</code>
+2. Average case complexity: <code>O(nlogn)</code>
