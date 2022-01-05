@@ -23,11 +23,31 @@ In a weighted graph, each of the edges is assigned a weight (usually a non-negat
 
 <h1> BFS </h1>
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
 <h1> DFS </h1>
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1> Dijkstra </h1>
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
 <h1> A* </h1>
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1> Bellman-Ford </h1>
 
@@ -45,8 +65,21 @@ In a weighted graph, each of the edges is assigned a weight (usually a non-negat
 * Each node sends its table to all adjacent nodes
 * When a node receives distance tables from its neighbors, it determines the shortest routes to all other nodes and updates its own table accordingly.
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1> Kruskal </h1>
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
 <h1> Prim </h1>
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
