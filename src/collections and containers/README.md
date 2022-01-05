@@ -26,6 +26,9 @@ There are several methods for implementing lists, and the best one depends on th
 
 Recursion is a natural way to process collections of items stored in linked lists. To find the last element of a list we can simply keep removing the first remaining item until there are no more left. The running time of this depends on the length of the list, and is proportional to that length.
 
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
 <h1>Vector</h1>
 
 Because they are so simple to implement in a machine, arrays were most likely the first data structures to be used. Array elements are generally kept in continuous chunks of computer memory. Arrays are represented by items separated by commas and enclosed in square brackets:
@@ -50,8 +53,13 @@ A fixed-size sequential collection of elements of the same type is stored in an 
 * <code>pop_back()</code>: return the vector's last element <code>O(1)</code>
 * <code>clear()</code>:	remove all elements from the vector <code>O(n)</code>
 * <code>erase(position)</code>:	remove the element from the vector at the specified position <code>O(n)</code>
-* <code>sort(start, end)</code>: sort vector elements between position start and position end <code>O(nlog(n)</code>)</code>
+* <code>sort(start, end)</code>: sort vector elements between position start and position end <code>O(nlogn</code>)</code>
 * <code>reverse(start, end)</code>:	reverse vector elements between position start and position end <code>O(n)</code>
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1>Stack</h1>
 They are the ideal data structure to model a First-In-Last-Out (FILO)</code>, or Last-In-First-Out (LIFO)</code>, strategy in search. 
@@ -76,6 +84,11 @@ In most programming languages, a stack can be easily implemented either with arr
 - Finding Euler-cycles in a graph
 - Finding strongly connected components in a graph
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
 <h1>Queue</h1>
 A queue is a data model that supports a First-In-First-Out (FIFO)</code> approach.
 
@@ -84,14 +97,17 @@ A queue is a data model that supports a First-In-First-Out (FIFO)</code> approac
 * <code>enqueue(element)</code>: append the provided element at the end of the queue.
 * <code>dequeue()</code>: remove the first element from the queue.
 
-<h2>Implementation</h2>
-In most programming languages, a queue can be easily implemented with linked lists. 
-
 <h2>Applications:</h2>
 
 - BFS
 - When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling
 - When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers
+
+<h2>Implementation</h2>
+In most programming languages, a queue can be easily implemented with linked lists. 
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1>Heap</h1>
 It is a binary tree.
@@ -104,7 +120,7 @@ We insert every new item to the next available place.
 
 It has nothing to do with the pool of memory from which dynamically allocated memory is allocated.
 
-<h2> Time complexity </h2>
+<h2>Time complexity </h2>
 
 | Operation | Average case | 
 | --- | --- | 
@@ -125,7 +141,12 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 - in-place
 - unstable
 - does not need additional memory
-- while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case <code>O(n log n)</code> run time.
+- while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case <code>O(nlogn)</code> run time.
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1>Binary search tree</h1>
 
@@ -173,8 +194,18 @@ To add <i>new_value</i> to the BST, we should do the following:
 * <code>search(value)</code>: look for a node with the specified value in the BST
 * <code>remove(value)</code>: remove a node with the specified value from the BST
 
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
+
 <h1>AVL tree</h1>
 TODO
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1>Red-black tree</h1>
 The height of the binary search tree determines how long it takes for BST operations to finish. In order to obtain the best results, we need keep the tree balanced.
@@ -207,6 +238,11 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 
 <h2> Applications:</h2>
 - Used internally by Operating Systems.
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
 
 <h1>Hash table</h1>
 
@@ -253,3 +289,8 @@ Solutions:
 - In large networks, lookup tables ( lookup for IP addresses )</code>
 - Histograms are a type of graph that shows the distribution of data (ex. frequencies of character occurrences in a string)</code>
 - For substring search, the Rabin-Karp algorithm uses the hashing technique.
+
+<h2>Implementation</h2>
+
+* <a href=””>C++</a>
+* <a href=””>Python</a>
