@@ -40,12 +40,22 @@ If two vertices A and B are joined by an edge e, we call them <b>neighbours</b>,
 
 <h1>Representation of graphs</h1>
 
+<h2>Array-based implementation.</h2>
+
 <b>The adjacency matrix</b> of a graph G is a V × V matrix A where the rows and columns are indexed by the vertices and such that Aij = 1 if and only if vertex i is adjacent to vertex j.
+
+<h2>Pointer-based implementation</h2>
 
 <b>Adjacency lists</b> The graph G is represented by an array of |V (G)| linked lists, with each list containing the neighbours of a vertex.
 
+<h2>Mixed implementation</h2>
+
 <h1>Traversals</h1>
 systematically visiting all vertices
+
+<h1>Planarity</h1>
+
+<h1>Minimal spanning trees</h1>
 
 <h1> BFS </h1>
 
