@@ -21,6 +21,15 @@ A linked list's elements are made up of two cells. The element's data (or a poin
 * <code>remove(index)</code>: remove an element from the list that is stored at the provided index.
 * <code>replace(index, data)</code>: store the provided data at the specified index in the list.
 
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Access</i> | <code>O(n)</code> | <code>O(n)</code> |
+| <i>Insert</i> | <code>O(1)</code> | <code>O(1)</code> |
+| <i>Delete</i> | <code>O(1)</code> | <code>O(1)</code> |
+| <i>Search</i> | <code>O(n)</code> | <code>O(n)</code> |
+
 <h2>Implementation</h2>
 There are several methods for implementing lists, and the best one depends on the programming language used. Lists are the most important primitive data structure in the programming language Lisp and its derivatives. Lists are more natural to implement as arrays in certain languages, however this might be troublesome because lists are not theoretically restricted in size.
 
@@ -48,13 +57,13 @@ A fixed-size sequential collection of elements of the same type is stored in an 
 
 <h2>Basic operations</h2>
 
-* <code>is_empty()</code>: it is self-explanatory	<code>O(1)</code>
-* <code>push_back(elem)</code>:	append the provided element at the end of the vector <code>O(1)</code>
-* <code>pop_back()</code>: return the vector's last element <code>O(1)</code>
-* <code>clear()</code>:	remove all elements from the vector <code>O(n)</code>
-* <code>erase(position)</code>:	remove the element from the vector at the specified position <code>O(n)</code>
-* <code>sort(start, end)</code>: sort vector elements between position start and position end <code>O(nlogn</code>)</code>
-* <code>reverse(start, end)</code>:	reverse vector elements between position start and position end <code>O(n)</code>
+* <code>is_empty()</code>: it is self-explanatory.
+* <code>push_back(elem)</code>:	append the provided element at the end of the vector.
+* <code>pop_back()</code>: return the vector's last element.
+* <code>clear()</code>:	remove all elements from the vector.
+* <code>erase(position)</code>:	remove the element from the vector at the specified position.
+* <code>sort(start, end)</code>: sort vector elements between position start and position end.
+* <code>reverse(start, end)</code>:	reverse vector elements between position start and position end.
 
 <h2>Implementation</h2>
 
@@ -67,9 +76,9 @@ A number of programming languages are stack-oriented, meaning they define most b
 
 <h2>Basic operations</h2>
 
-* <code>push(element)</code>: take an element and place it on top of an existing stack <code>O(1)</code>
-* <code>pop()</code>: return the top element of the stack and removes it from the stack <code>O(1)</code>
-* <code>top()</code>: return the top element of the stack without removing it from the stack <code>O(1)</code>
+* <code>push(element)</code>: take an element and place it on top of an existing stack.
+* <code>pop()</code>: return the top element of the stack and removes it from the stack.
+* <code>top()</code>: return the top element of the stack without removing it from the stack.
 
 <h2>Applications:</h2>
 
@@ -77,6 +86,15 @@ A number of programming languages are stack-oriented, meaning they define most b
 - Graph algorithms: depth-first search can be implemented with stacks ( or with recursion )</code>
 - Finding Euler-cycles in a graph
 - Finding strongly connected components in a graph
+
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Access</i> | <code>O(n)</code> | <code>O(n)</code> |
+| <i>Insert</i> | <code>O(1)</code> | <code>O(1)</code> |
+| <i>Delete</i> | <code>O(1)</code> | <code>O(1)</code> |
+| <i>Search</i> | <code>O(n)</code> | <code>O(n)</code> |
 
 <h2>Implementation</h2>
 In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
@@ -100,6 +118,16 @@ A queue is a data model that supports a First-In-First-Out (FIFO)</code> approac
 - BFS
 - When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling
 - When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers
+
+
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Access</i> | <code>O(n)</code> | <code>O(n)</code> |
+| <i>Insert</i> | <code>O(1)</code> | <code>O(1)</code> |
+| <i>Delete</i> | <code>O(1)</code> | <code>O(1)</code> |
+| <i>Search</i> | <code>O(n)</code> | <code>O(n)</code> |
 
 <h2>Implementation</h2>
 In most programming languages, a queue can be easily implemented with linked lists. 
@@ -192,13 +220,31 @@ To add <i>new_value</i> to the BST, we should do the following:
 * <code>search(value)</code>: look for a node with the specified value in the BST
 * <code>remove(value)</code>: remove a node with the specified value from the BST
 
-<h2>Implementation</h2>
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Access</i> | <code>O(logn)</code> | <code>O(n)</code> |
+| <i>Insert</i> | <code>O(logn)</code> | <code>O(n)</code> |
+| <i>Delete</i> | <code>O(logn)</code> | <code>O(n)</code> |
+| <i>Search</i> | <code>O(logn)</code> | <code>O(n)</code> |
+
+<h2>Implementation</h2> <code>O(1)</code>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
 <h1>AVL tree</h1>
 TODO
+
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Access</i> | <code>O(logn)</code> | <code>O(logn)</code> |
+| <i>Insert</i> | <code>O(logn)</code> | <code>O(logn)</code> |
+| <i>Delete</i> | <code>O(logn)</code> | <code>O(logn)</code> |
+| <i>Search</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 
 <h2>Implementation</h2>
 
@@ -232,7 +278,7 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
-| <i>Space</i> | <code>O(n)</code> | <code>O(n)</code> |
+| <i>Access</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Insert</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Delete</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Search</i> | <code>O(logn)</code> | <code>O(logn)</code> |
@@ -244,27 +290,28 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 
 <h1>Hash table</h1>
 
-In a balanced BST we can achieve <code>O(logn)</code> time complexity for several operations including search.
+We have already discussed the several types of trees that may reach O(logn) time complexity for a variety of tasks, including search. It's an incredible progression from our humble beginnings, but the question remains: can we get better? What if we placed each item in a readily defined position, eliminating the need to look for it and eliminating the necessity to preserve ordering while inserting or removing items? Yes, we can potentially achieve O(1) time complexity in a data structure known as a "hash table." This data structure has an amazing performance in terms of time, but that benefit is offset by the requirement for greater space, as well as by being more complex and hence more difficult to understand and implement.
 
-Can it get better?
+<h2>Basic operations</h2>
 
-Yes, we can theoretically reach <code>O(1)</code> in hash tables.
-
-If we know index in an array we can retrieve and insert element in <code>O(1)</code>.
-What if we had a function that could give us that index for any input?
-
-This function is called hash function.
+* <code>is_empty()</code>: it is self-explanatory.
+* <code>insert(elem)</code>:	append the provided element at the end of the vector
+* <code>retrive(key)</code>: return the vector's last element
+* <code>update(elem)</code>:	remove all elements from the vector
+* <code>delete(position)</code>:	remove the element from the vector at the specified position
+* <code>traverse()</code>: sort vector elements between position start and position end
 
 <h2>Hash function</h2>
 
-- Purpose: Distribute the keys uniformly into buckets
+This is a function that return an index for any input. 
+
+- Purpose: Distribute the keys uniformly into buckets.
 - Example:
 1. n: number of keys
 1. m: number of buckets 
 1. h(x)</code> = n % m
 
-To ensure that the distribution is uniform, we can use prime numbers both for the size of the array and in our hash function.
-For string we could compute the ASCII value for each character, add them together, and calculate modulo.
+To ensure that the distribution is uniform, we can use prime numbers both for the size of the array and in our hash function. For string we could compute the ASCII value for each character, add them together, and calculate modulo.
 
 <h2>Collisions</h2>
 
@@ -292,6 +339,7 @@ Solutions:
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
+| <i>Access</i> | <code>-</code> | <code>-</code> |
 | <i>Insert</i> | <code>O(1)</code> | <code>O(n)</code> |
 | <i>Delete</i> | <code>O(1)</code> | <code>O(n)</code> |
 | <i>Search</i> | <code>O(1)</code> | <code>O(n)</code> |
