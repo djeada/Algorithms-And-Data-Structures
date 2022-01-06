@@ -1,25 +1,40 @@
 # Graphs
-A graph G consists of a set V(G) called vertices together with a collection E(G) of pairs of vertices. 
-Each pair {x, y} ∈ E(G) is called an edge of G.
 
-If {x, y} ∈ E(G), we say that x and y are <b>adjacent</b> to each other. The number of vertices adjacent to v is called the degree of v. The sum of the degrees of the vertices of a graph is even.
+Many real life situations involve objects that are connected in some way to other objects, such as:
 
-<b>A path</b> of length n in a graph is a sequence of vertices v1 ∼ v2 ∼ ··· ∼ vn+1 such that (vi, vi+1) ∈ E(G) and vertices {v1, v2,...,vn+1} are distinct.
+* underground tunnel network;
+* network of pipes;
+* railway map;
+* cities linked by flights;
+* countries and their political alliances.
 
-<b>A cycle</b> of length n is a sequence of vertices v1 ∼ v2 ∼ ··· vn ∼ vn+1 such that v1 = vn+1, (vi, vi+1) ∈ E(G) and therefore only vertices {v1, v2,...,vn} are distinct.
+To model such examples, we will use a data structure known as a graph.
 
-<b>The distance</b>  between two vertices x and y in a graph is the length of the shortest path between them.
+<h2>Graph terminology</h2>
+
+A graph <i>G</i> consists of a set <code>V(G)</code> called vertices together with a collection <code>E(G)</code> of pairs of vertices. 
+Each pair <code>{x, y} ∈ E(G)</code> is called an edge of <i>G</i>.
+
+If <code>{x, y} ∈ E(G)</code>, we say that <i>x</i> and <i>y</i> are <b>adjacent</b> to each other. The number of vertices adjacent to <i>v</i> is called the degree of <i>v</i>. The sum of the degrees of the vertices of a graph is even.
+
+<b>A path</b> of length <i>n</i> in a graph is a sequence of vertices <code>v_1 ∼ v_2 ∼ ··· ∼ v_(n+1)</code> such that <code>(v_i, v_(i+1)) ∈ E(G)</code> and vertices <code>{v_1, v_2,...,v_(n+1)}</code> are distinct.
+
+<b>A cycle</b> of length n is a sequence of vertices <code>v_1 ∼ v_2 ∼ ··· v+n ∼ v_(n+1)</code> such that <code>v_1 = v_(n+1), (v_i, v_(i+1)) ∈ E(G)</code> and therefore only vertices <code>{v_1, v_2,...,v_n}</code> are distinct.
+
+<b>The distance</b> between two vertices <i>x</i> and <i>y</i> in a graph is the length of the shortest path between them.
 
 In a <b>directed graph</b>, an edge is an ordered pair of vertices, and hence has a direction. In directed graphs, edges are often called arcs.
 
-Directed Tree Each vertex has at most one directed edge leading into it, and there is one vertex (the root) which has a path to every other vertex.
+In a <b>weighted graph</b>, each of the edges is assigned a weight (usually a non-negative integer).
 
-In a weighted graph, each of the edges is assigned a weight (usually a non-negative integer).
-
-<h2>Representation of graphs</h2>
-<b>Adjacency lists</b> The graph G is represented by an array of |V (G)| linked lists, with each list containing the neighbours of a vertex.
+<h1>Representation of graphs</h1>
 
 <b>The adjacency matrix</b> of a graph G is a V × V matrix A where the rows and columns are indexed by the vertices and such that Aij = 1 if and only if vertex i is adjacent to vertex j.
+
+<b>Adjacency lists</b> The graph G is represented by an array of |V (G)| linked lists, with each list containing the neighbours of a vertex.
+
+<h1>Traversals</h1>
+systematically visiting all vertices
 
 <h1> BFS </h1>
 
