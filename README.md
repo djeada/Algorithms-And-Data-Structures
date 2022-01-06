@@ -70,25 +70,25 @@ python -m unittest discover -p 'test*.py'
             <td>2</td>
             <td>Vector</td>
             <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/vector">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/vector">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Stack</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/python/stack">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/stack">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/stack">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/stack">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Queue</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/python/queue">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/queue">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/queue">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/queue">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>Heap</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/python/heap">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections%20and%20containers/cpp/heap">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/heap">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/heap">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
@@ -155,14 +155,14 @@ python -m unittest discover -p 'test*.py'
         <tr>
             <td>5</td>
             <td>A*</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/a%20star">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/a%20star">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/a_star">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/a_star">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
             <td>Bellman-Ford</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bellman%20ford">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/bellman%20ford">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bellman_ford">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/bellman_ford">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
@@ -253,79 +253,79 @@ python -m unittest discover -p 'test*.py'
         <tr>
             <td>1</td>
             <td>Fibonacci</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/fibonacci">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/fibonacci">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/fibonacci">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/fibonacci">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>Grid travelers</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/grid%20traveler">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/grid%20travelers">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/grid_traveler">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/grid_travelers">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Stairs</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/climbing%20stairs">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/climb%20stairs">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/climbing_stairs">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/climb_stairs">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Can sum</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/can%20sum">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/can%20sum">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/can_sum">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/can_sum">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>How sum</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/how%20sum">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/how%20sum">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/how_sum">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/how_sum">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
             <td>Best sum</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/best%20sum">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/best%20sum">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/best_sum">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/best_sum">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
             <td>Can construct</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/can%20construct">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/can%20construct">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/can_construct">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/can_construct">Cpp</a></td>
         </tr>
         <tr>
             <td>8</td>
             <td>Count construct</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/count%20construct">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/count%20construct">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/count_construct">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/count_construct">Cpp</a></td>
         </tr>
         <tr>
             <td>9</td>
             <td>All construct</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/all%20construct">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/all%20construct">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/all_construct">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/all_construct">Cpp</a></td>
         </tr>
         <tr>
             <td>10</td>
             <td>Coins</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/coins">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/coin%20change">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/coins">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/coin_change">Cpp</a></td>
         </tr>
         <tr>
             <td>11</td>
             <td>Longest increasing subsequence</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/longest%20increasing%20subarray">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/longest%20increasing%20subarray">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/longest_increasing_subarray">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/longest_increasing_subarray">Cpp</a></td>
         </tr>
         <tr>
             <td>12</td>
             <td>Longest common subsequence</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/longest%20common%20subsequence">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/cpp/longest%20common%20subsequence">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/longest_common_subsequence">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/longest_common_subsequence">Cpp</a></td>
         </tr>
         <tr>
             <td>13</td>
             <td>Knuth-Morris-Pratt</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic%20programming/python/kmp">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/kmp">Python</a></td>
             <td><a href="">Cpp</a></td>
         </tr>
     </tbody>
@@ -344,32 +344,32 @@ python -m unittest discover -p 'test*.py'
         <tr>
             <td>1</td>
             <td>Insertion sort</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/insertion%20sort">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/insertion%20sort">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/insertion_sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/insertion_sort">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>Selection sort</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/selection%20sort">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/selection%20sort">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/selection_sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/selection_sort">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Heap sort</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/heap%20sort">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/heap%20sort">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/heap_sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/heap_sort">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Merge sort</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/merge%20sort">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge%20sort">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/merge_sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge_sort">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>Quick sort</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/quick%20sort">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/quick%20sort">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/quick_sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/quick_sort">Cpp</a></td>
         </tr>
     </tbody>
 </table>
