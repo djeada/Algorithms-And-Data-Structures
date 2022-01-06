@@ -118,20 +118,6 @@ We insert every new item to the next available place.
 
 It has nothing to do with the pool of memory from which dynamically allocated memory is allocated.
 
-<h2>Time complexity </h2>
-
-| Operation | Average case | 
-| --- | --- | 
-| <i>Find min/max</i> | <code>O(1)</code> |
-| <i>Delete min/max</i> | <code>O(logn)</code> |
-| <i>Insert</i> | <code>O(logn)</code> |
-| <i>merge</i> | <code>O(mlog(m+n)</code>)</code> | 
-
-<h2>Applications:</h2>
-
-- Graph algorithms: Dijkstra algorithm, Prims algorithm
-- Used to implement a priority queue
-
 <h2>Heapsort</h2>
 
 - comparison-based sorting algorithm
@@ -140,6 +126,20 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 - unstable
 - does not need additional memory
 - while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case <code>O(nlogn)</code> run time.
+
+<h2>Applications:</h2>
+
+- Graph algorithms: Dijkstra algorithm, Prims algorithm
+- Used to implement a priority queue
+
+<h2>Time complexity </h2>
+
+| Operation | Average case | 
+| --- | --- | 
+| <i>Find min/max</i> | <code>O(1)</code> |
+| <i>Delete min/max</i> | <code>O(logn)</code> |
+| <i>Insert</i> | <code>O(logn)</code> |
+| <i>Merge</i> | <code>O(mlog(m+n)</code>)</code> | 
 
 <h2>Implementation</h2>
 
@@ -225,6 +225,9 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 1. make rotations
 1. OR just recolor the nodes
 
+<h2> Applications:</h2>
+- Used internally by Operating Systems.
+
 <h2> Time complexity </h2>
 
 | Operation | Average case | Worst case |
@@ -233,9 +236,6 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 | <i>Insert</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Delete</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Search</i> | <code>O(logn)</code> | <code>O(logn)</code> |
-
-<h2> Applications:</h2>
-- Used internally by Operating Systems.
 
 <h2>Implementation</h2>
 
@@ -287,6 +287,14 @@ Solutions:
 - In large networks, lookup tables ( lookup for IP addresses )</code>
 - Histograms are a type of graph that shows the distribution of data (ex. frequencies of character occurrences in a string)</code>
 - For substring search, the Rabin-Karp algorithm uses the hashing technique.
+
+<h2> Time complexity </h2>
+
+| Operation | Average case | Worst case |
+| --- | --- | --- |
+| <i>Insert</i> | <code>O(1)</code> | <code>O(n)</code> |
+| <i>Delete</i> | <code>O(1)</code> | <code>O(n)</code> |
+| <i>Search</i> | <code>O(1)</code> | <code>O(n)</code> |
 
 <h2>Implementation</h2>
 
