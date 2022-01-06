@@ -111,7 +111,7 @@ python -m unittest discover -p 'test*.py'
         <tr>
             <td>9</td>
             <td>Hash Table</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections/python/hashtable">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hashtable">Python</a></td>
             <td><a>Cpp</a></td>
         </tr>
     </tbody>
