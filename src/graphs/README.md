@@ -78,7 +78,7 @@ General techniques for assessing if a given graph is planar are really fairly di
 <h1>Traversals</h1>
 Traversing a graph entails visiting all of its vertices in a methodical manner. We definitely want a mechanism for examining graphs that ensures we do not overlook any edges or vertices. Because graphs, unlike trees, do not have a root vertex, there is no obvious vertex to begin a traversal, thus we suppose we are provided, or randomly choose, a beginning vertex <i>i</i>.
 
-Important: The order of the vertices in both breadth first search and depth first search depends on the implementation. If our starting vertex A has three neighbors, C, F, and G, there is no reason for one to be processed before the others. As a consequence, instead of speaking about the result, it is preferable to speak about a result of such algorithms.
+!Important: The order of the vertices in both breadth first search and depth first search depends on the implementation. If our starting vertex A has three neighbors, C, F, and G, there is no reason for one to be processed before the others. As a consequence, instead of speaking about the result, it is preferable to speak about a result of such algorithms.
 
 <h2>BFS</h2>
 
