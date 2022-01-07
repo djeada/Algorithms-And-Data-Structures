@@ -57,25 +57,48 @@ This only works if the graph is explicitly defined, that is, if we know how many
 
 <h2>Pointer-based implementation</h2>
 
-<b>Adjacency lists</b> The graph G is represented by an array of |V (G)| linked lists, with each list containing the neighbours of a vertex.
+The graph <i>G</i> is represented by an array of <code>|V(G)|</code> linked lists, with each list containing the neighbours of the vertex.
 
-<h2>Mixed implementation</h2>
+| A | -> | B | D |
+| B | -> | A | C | D |
+| C | -> | B | D |
+| D | -> | A |
 
-<h1>Traversals</h1>
-systematically visiting all vertices
 
 <h1>Planarity</h1>
+A planar graph is one that may be fitted onto a plane. In other words, it may be drawn on a piece of paper so that no edges cross each other. This is crucial in applications such as printed circuit design.
+It is obvious that planar graphs may be drawn in such a manner that their edges cross, but the important issue is that they can be transformed into a form with no edges crossing.
+General techniques for assessing if a given graph is planar are really fairly difficult to develop. It is straightforward to confirm systematically for small graphs that there are no feasible vertex repositionings or edge deformations that would put the graph into explicitly planar shape, but it gets complicated quite fast for bigger graphs.
 
 <h1>Minimal spanning trees</h1>
 
-<h1> BFS </h1>
+<h1>Traversals</h1>
+Traversing a graph entails visiting all of its vertices in a methodical manner. We definitely want a mechanism for examining graphs that ensures we do not overlook any edges or vertices. Because graphs, unlike trees, do not have a root vertex, there is no obvious vertex to begin a traversal, thus we suppose we are provided, or randomly choose, a beginning vertex <i>i</i>.
+
+<h2> BFS </h2>
+
+We need two additional containers:
+
+* a queue called unexplored.
+* a hash table called visited.
+
+We begin with the vertex <i>i</i> that has been handed to us. Then, one by one, we visit its neighbors, adding them to the <i>unexplored</i> queue. The initial vertex is then removed from the queue. We then go to the next vertex in the queue and place its neighbors at the end of the queue once more. This is repeated until the queue is empty.
+
+However, there is no reason why this simple method should ever terimnate. If there is a circle in the graph, we will return to a vertex we have previously visited, resulting in an infinite loop. We utilize the hash table <i>visited</i> to prevent this. Initially, all <code>visted[v] = false</code>. Then, after each visited vertex, we set it to <i>true</i>.
 
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1> DFS </h1>
+<h2> DFS </h2>
+
+We need two additional containers:
+
+* a stack called unexplored.
+* a hash table called visited.
+
+We start with the vertex <i>i</i> that was handed to us. We move it to a stack rather than a queue. Then we remove it from the stack, mark it as visited, look up its neighbors one by one, and place them back on the stack. We then continuously remove the next vertex from the stack, mark it as visited, and place its neighbors on the stack, assuming they have not already been marked as visited.
 
 <h2>Implementation</h2>
 
