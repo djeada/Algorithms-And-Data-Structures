@@ -42,7 +42,15 @@ If two vertices A and B are joined by an edge e, we call them <b>neighbours</b>,
 
 <h2>Array-based implementation.</h2>
 
-<b>The adjacency matrix</b> of a graph G is a V × V matrix A where the rows and columns are indexed by the vertices and such that Aij = 1 if and only if vertex i is adjacent to vertex j.
+<b>The adjacency matrix</b> of a graph <i>G</i> is a <code>V × V</code> matrix <i>A</i> where the rows and columns are indexed by the vertices and such that <code>A_(ij) = 1 </code> if and only if vertex <i>i</i> is adjacent to vertex <i>j</i> and is equal to 0 otherwise. For weighted graphs other values representing the respective weights might be stored in the array.
+
+
+|   |   |
+|---|---|
+|__Bold Key__| Value1 |
+| Normal Key | Value2 |
+
+This only works if the graph is explicitly defined, that is, if we know how many vertices there will be and which pairs will have edges between them.
 
 <h2>Pointer-based implementation</h2>
 
