@@ -68,7 +68,9 @@ D -> [A]
 
 <h1>Planarity</h1>
 A planar graph is one that may be fitted onto a plane. In other words, it may be drawn on a piece of paper so that no edges cross each other. This is crucial in applications such as printed circuit design.
+
 It is obvious that planar graphs may be drawn in such a manner that their edges cross, but the important issue is that they can be transformed into a form with no edges crossing.
+
 General techniques for assessing if a given graph is planar are really fairly difficult to develop. It is straightforward to confirm systematically for small graphs that there are no feasible vertex repositionings or edge deformations that would put the graph into explicitly planar shape, but it gets complicated quite fast for bigger graphs.
 
 <h1>Minimal spanning trees</h1>
