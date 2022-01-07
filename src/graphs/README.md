@@ -78,7 +78,7 @@ General techniques for assessing if a given graph is planar are really fairly di
 <h1>Traversals</h1>
 Traversing a graph entails visiting all of its vertices in a methodical manner. We definitely want a mechanism for examining graphs that ensures we do not overlook any edges or vertices. Because graphs, unlike trees, do not have a root vertex, there is no obvious vertex to begin a traversal, thus we suppose we are provided, or randomly choose, a beginning vertex <i>i</i>.
 
-<h2> BFS </h2>
+<h2>BFS</h2>
 
 We need two additional containers:
 
@@ -87,14 +87,14 @@ We need two additional containers:
 
 We begin with the vertex <i>i</i> that has been handed to us. Then, one by one, we visit its neighbors, adding them to the <i>unexplored</i> queue. The initial vertex is then removed from the queue. We then go to the next vertex in the queue and place its neighbors at the end of the queue once more. This is repeated until the queue is empty.
 
-However, there is no reason why this simple method should ever terimnate. If there is a circle in the graph, we will return to a vertex we have previously visited, resulting in an infinite loop. We utilize the hash table <i>visited</i> to prevent this. Initially, all <code>visted[v] = false</code>. Then, after each visited vertex, we set it to <i>true</i>.
+However, there is no reason why this simple method should ever terimnate. If there is a circle in the graph, we will return to a vertex we have previously visited, resulting in an infinite loop. We utilize the hash table <i>visited</i> to prevent this. Initially, <code>visted[v] = false</code> for all vertices <code>v ∈ V(G)</code>. Then, after each visited vertex, we set it to <i>true</i>.
 
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h2> DFS </h2>
+<h2>DFS</h2>
 
 We need two additional containers:
 
@@ -115,14 +115,14 @@ We start with the vertex <i>i</i> that was handed to us. We move it to a stack r
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1> A* </h1>
+<h1>A*</h1>
 
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1> Bellman-Ford </h1>
+<h1>Bellman-Ford</h1>
 
 - Invented in 1958
 - Running time is O(V*E)
@@ -131,7 +131,7 @@ We start with the vertex <i>i</i> that was handed to us. We move it to a stack r
 - Does V-1 iteration + 1 to detect cycles: if cost decreases in the V-th iteration, there is a negative loop, since all paths have been explored up to the V-1 iteration.
 
 <h2>Applications</h2>
-- RIP ,,Routing Information Protocol”
+- RIP "Routing Information Protocol"
 
 <h2>Algorithm</h2>
 * Each node calculates and stores the distances between itself and all other nodes in a table.
@@ -143,14 +143,14 @@ We start with the vertex <i>i</i> that was handed to us. We move it to a stack r
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1> Kruskal </h1>
+<h1>Kruskal</h1>
 
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1> Prim </h1>
+<h1>Prim</h1>
 
 <h2>Implementation</h2>
 
