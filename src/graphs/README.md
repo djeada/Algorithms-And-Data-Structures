@@ -78,6 +78,8 @@ General techniques for assessing if a given graph is planar are really fairly di
 <h1>Traversals</h1>
 Traversing a graph entails visiting all of its vertices in a methodical manner. We definitely want a mechanism for examining graphs that ensures we do not overlook any edges or vertices. Because graphs, unlike trees, do not have a root vertex, there is no obvious vertex to begin a traversal, thus we suppose we are provided, or randomly choose, a beginning vertex <i>i</i>.
 
+Important: The order of the vertices in both breadth first search and depth first search depends on the implementation. If our starting vertex A has three neighbors, C, F, and G, there is no reason for one to be processed before the others. As a consequence, instead of speaking about the result, it is preferable to speak about a result of such algorithms.
+
 <h2>BFS</h2>
 
 We need two additional containers:
@@ -108,7 +110,45 @@ We start with the vertex <i>i</i> that was handed to us. We move it to a stack r
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1> Dijkstra </h1>
+<h1>Dijkstra</h1>
+
+Common task when dealing with weighted graphs is to find the shortest route from vertex A to vertex B. Note that there need not be a unique shortest path, since several paths might have the same length.
+
+It turns out that if we wish to compute the shortest path from a given vertex A to a given vertex B, it is actually more convenient to compute the shortest routes from A to all other vertices and then choose the interesting distance. The Dijsktra algorithm works in this manner.
+
+* <b>Input</b>: A weighted graph and a start vertex A.
+* <b>Output</b>: An array of distances.
+
+We need two additional containers:
+
+* an array called distances indexed by the vertices.
+* a hash table called finished.
+
+<h2>Overestimation of shortest paths.</h2>
+
+Distances are initialized using <code>distances[v] = ∞</code> for all vertices <code>v ∈ V(G)</code>. Then, starting with vertex A, set <code>distances[A] = 0</code>.The algorithm then reduces the overestimations continually until they can no longer be reduced any further. When this occurs, the algorithm is terminated.
+
+<h2>Improving estimates.</h2>
+The fundamental goal is to search for shortcuts in a methodical manner. Assume that for two given vertices C and D, <code>distances[C] + weights[C][D] < distances[D]</code>. Then there is a path from A to D and then to z that has a shorter total length than the current overestimate <code>distances[D]</code>, and we can replace <code>distances[D]</code> with this better estimate.
+
+1. Repeat the following steps as many times as there are vertices in the graph:
+2. Find a vertex <i>v</i> with <code>finished[v]</code> equal to false and set it to true.
+3. Iterate over each vertex <i>u</i> adjacent to <i>v</i>.
+4. Update the distances array <code>distances[u] = distances[v] + weights[v][u]</code> if <code>distances[v] + weights[v][u] < distances[u]</code>.
+
+<h2>Improving the time complexity</h2>
+                                  
+The time complexity of the above Dijkstra’s algorithm implementation is <code>O(n^2)</code>.
+  
+It may be optimized by using a priority queue to track which vertices can be marked as finished next. When choosing the next vertex <i>v</i> for evaluation, we can choose the vertex with the lowest priority from the queue. And in the most inner loop, while iterating over the vertex <i>v</i>'s neighbors called <i>u</i>, we modify the priority of vertex <i>u</i> in the queue to <code>distances[u]</code>.
+
+Thus, the time complexity for Dijkstra algorithm can be improved to <code>O(nlogn)</code> for sparse graphs.
+                               
+<h2>Applications</h2>
+                               
+* internet packet routing (since a message sent from your computer to someone else must pass through several routers before arriving at its final destination);
+* train-ticket reservation systems (it must be able to provide the user with the cheapest and fastest connections);
+* driving route finders.
 
 <h2>Implementation</h2>
 
