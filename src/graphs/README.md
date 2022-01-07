@@ -60,10 +60,10 @@ This only works if the graph is explicitly defined, that is, if we know how many
 The graph <i>G</i> is represented by an array of <code>|V(G)|</code> linked lists, with each list containing the neighbours of the vertex.
 
 ```
-| A | -> | B | D |
-| B | -> | A | C | D |
-| C | -> | B | D |
-| D | -> | A |
+A -> [B, D]
+B -> [A, C, D]
+C -> [B, D]
+D -> [A]
 ```
 
 <h1>Planarity</h1>
