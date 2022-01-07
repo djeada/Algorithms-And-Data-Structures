@@ -123,6 +123,7 @@ We need two additional containers:
 
 * an array called distances indexed by the vertices.
 * a hash table called finished.
+* optional: a priority queue.
 
 <h2>Overestimation of shortest paths.</h2>
 
