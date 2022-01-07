@@ -394,4 +394,5 @@ python -m unittest discover -p 'test*.py'
     <li>https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/</li>
     <li>https://sp19.datastructur.es/</li>
     <li>https://www.csc.kth.se/~viggo/problemlist/M</li>
+    <li>https://cp-algorithms.com/</li>
 </ol>
