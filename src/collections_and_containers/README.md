@@ -116,8 +116,8 @@ A queue is a data model that supports a First-In-First-Out (FIFO)</code> approac
 <h2>Applications:</h2>
 
 - BFS
-- When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling
-- When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers
+- When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling.
+- When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers.
 
 
 <h2> Time complexity </h2>
@@ -148,11 +148,11 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 
 <h2>Heapsort</h2>
 
-- comparison-based sorting algorithm
-- uses heap data structure
-- in-place
-- unstable
-- does not need additional memory
+- comparison-based sorting algorithm.
+- uses heap data structure.
+- in-place.
+- unstable.
+- does not need additional memory.
 - while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case <code>O(nlogn)</code> run time.
 
 <h2>Applications:</h2>
@@ -214,11 +214,11 @@ To add <i>new_value</i> to the BST, we should do the following:
   
 <h2>Basic operations</h2>
 
-* <code>root()</code>: return the value of the root node of binary tree <code>O(1)</code>
-* <code>height()</code>: returns the height of the BST <code>O(1)</code>
-* <code>insert(value)</code>: place the provided value into an appropriate node in the BST
-* <code>search(value)</code>: look for a node with the specified value in the BST
-* <code>remove(value)</code>: remove a node with the specified value from the BST
+* <code>root()</code>: return the value of the root node of binary tree <code>O(1)</code>.
+* <code>height()</code>: returns the height of the BST <code>O(1)</code>.
+* <code>insert(value)</code>: place the provided value into an appropriate node in the BST.
+* <code>search(value)</code>: look for a node with the specified value in the BST.
+* <code>remove(value)</code>: remove a node with the specified value from the BST.
 
 <h2> Time complexity </h2>
 
@@ -229,7 +229,7 @@ To add <i>new_value</i> to the BST, we should do the following:
 | <i>Delete</i> | <code>O(logn)</code> | <code>O(n)</code> |
 | <i>Search</i> | <code>O(logn)</code> | <code>O(n)</code> |
 
-<h2>Implementation</h2> <code>O(1)</code>
+<h2>Implementation</h2>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
@@ -260,16 +260,16 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 
 <h2> Properties </h2>
 
-- Each node is either red or black
-- The root node is always black
-- All leaves (NIL)</code> are black
-- Every red node must have two black child nodes and no other children -> it must have a black parent
-- Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes
-- On every insertion -> we have to check whether we have violated the red-black properties or not
+- Each node is either red or black.
+- The root node is always black.
+- All leaves (NIL)</code> are black.
+- Every red node must have two black child nodes and no other children -> it must have a black parent.
+- Every path from a given node to any of its descendant NIL nodes contains the same number of black nodes.
+- On every insertion -> we have to check whether we have violated the red-black properties or not.
 
 - If we have violated the RB properties: we have to re balance the tree:
-1. make rotations
-1. OR just recolor the nodes
+1. make rotations.
+1. OR just recolor the nodes.
 
 <h2> Applications:</h2>
 - Used internally by Operating Systems.
@@ -295,11 +295,11 @@ We have already discussed the several types of trees that may reach O(logn) time
 <h2>Basic operations</h2>
 
 * <code>is_empty()</code>: it is self-explanatory.
-* <code>insert(elem)</code>:	append the provided element at the end of the vector
-* <code>retrive(key)</code>: return the vector's last element
-* <code>update(elem)</code>:	remove all elements from the vector
-* <code>delete(position)</code>:	remove the element from the vector at the specified position
-* <code>traverse()</code>: sort vector elements between position start and position end
+* <code>insert(elem)</code>:	append the provided element at the end of the vector.
+* <code>retrive(key)</code>: return the vector's last element.
+* <code>update(elem)</code>:	remove all elements from the vector.
+* <code>delete(position)</code>:	remove the element from the vector at the specified position.
+* <code>traverse()</code>: sort vector elements between position start and position end.
 
 <h2>Hash function</h2>
 
@@ -318,21 +318,21 @@ To ensure that the distribution is uniform, we can use prime numbers both for th
 Problem: Two or more inputs give the same output.
 
 Solutions:
-1. Collision resolution with chaining: we put multiple entries into the same slot with the help of a linked list
-- If there are many collisions: <code>O(1)</code> complexity gets worse !
-- It has an additional memory cost due to the references
+1. Collision resolution with chaining: we put multiple entries into the same slot with the help of a linked list.
+- If there are many collisions: <code>O(1)</code> complexity gets worse!
+- It has an additional memory cost due to the references.
 
-2. Open addressing: better solution
-- If collision occurs, we find an empty slot instead
-- Linear probing: if a collision occurs, we try the next slot ... if there is a collision too we keep trying the next slot until we find an empty slot
-- Quadratic probing: we trying slots 1,2,4,8... units far away
-- Rehashing: we hash the result again in order to find an empty slot
+2. Open addressing: better solution.
+- If collision occurs, we find an empty slot instead.
+- Linear probing: if a collision occurs, we try the next slot ... if there is a collision too we keep trying the next slot until we find an empty slot.
+- Quadratic probing: we trying slots 1,2,4,8... units far away.
+- Rehashing: we hash the result again in order to find an empty slot.
 
 <h2> Applications:</h2>
 
 - Databases: hashing is often easier than searching trees.
-- In large networks, lookup tables ( lookup for IP addresses )</code>
-- Histograms are a type of graph that shows the distribution of data (ex. frequencies of character occurrences in a string)</code>
+- In large networks, lookup tables (lookup for IP addresses)</code>.
+- Histograms are a type of graph that shows the distribution of data (ex. frequencies of character occurrences in a string)</code>.
 - For substring search, the Rabin-Karp algorithm uses the hashing technique.
 
 <h2> Time complexity </h2>
