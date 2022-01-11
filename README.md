@@ -374,6 +374,80 @@ python -m unittest discover -p 'test*.py'
     </tbody>
 </table>
 
+<h1>Brain Teasers</h1>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Problem</th>
+            <th colspan="2">Solution</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Minimum remove to make valid parentheses</td>
+            <td><a href="">Python</a></td>
+            <td><a href="">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Is palindrome after at most one char delete?</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><i>K</i> closest points to origin</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Subarray sum equals <i>K</i></td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Add numbes given as strings</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Dot product of two sparse vectors</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Range sum of BST </td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Product of array except self</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Convert BST to sorted doubly linked list</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>Lowest common ancestor of a binary tree</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+    </tbody>
+</table>
+
+
 <h1>Bibliography </h1>
 
 <ol>
