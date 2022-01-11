@@ -75,6 +75,14 @@ General techniques for assessing if a given graph is planar are really fairly di
 
 <h1>Minimal spanning trees</h1>
 
+Suppose we have a graph that represents a web of houses. Weights represent the distances between vertices, which each represent a single house. All houses must have water, electricity, and internet, but we want the cost of installation to be as low as possible. We need to identify a subgraph of our graph with the following properties:
+
+* there are no cycles in the graph.
+* all vertices are connected.
+* the total sum of weights is minimum.
+
+Such a subgraph is called a minimal spanning tree.
+
 <h1>Traversals</h1>
 Traversing a graph entails visiting all of its vertices in a methodical manner. We definitely want a mechanism for examining graphs that ensures we do not overlook any edges or vertices. Because graphs, unlike trees, do not have a root vertex, there is no obvious vertex to begin a traversal, thus we suppose we are provided, or randomly choose, a beginning vertex <i>i</i>.
 
@@ -119,7 +127,7 @@ It turns out that if we wish to compute the shortest path from a given vertex A 
 * <b>Input</b>: A weighted graph and a start vertex A.
 * <b>Output</b>: An array of distances.
 
-We need two additional containers:
+We need three additional containers:
 
 * an array called distances indexed by the vertices.
 * a hash table called finished.
@@ -184,15 +192,19 @@ Thus, the time complexity for Dijkstra algorithm can be improved to <code>O(nlog
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Kruskal</h1>
+<h1>Prim</h1>
 
+A greedy vertex-based approach.
+  
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
+    
+<h1>Kruskal</h1>
 
-<h1>Prim</h1>
-
+A greedy edge-based approach.
+  
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
