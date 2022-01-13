@@ -1,29 +1,43 @@
-Explain:
-Subarray, Substring, Subsequence, Subset.
-
 # Dynamic Programming
 
 A lot of problems dealing with optimizing some quantity can be solved using three different approaches: 
 
-1.  A brute force top-down recursive approach.
-    - Visualize the problem as a tree of subproblems
-    - Implement the tree using recursion
-    - Add a base case that will end the recursion
+1.  A brute force top-down recursive approach (recursion).
+    - Visualize the problem as a tree of subproblems;
+    - Implement the tree using recursion;
+    - Add a base case that will end the recursion;
  
-2.  A dynamic top-down recursive approach using memoization.   
-    - Visualize the problem as a tree of subproblems
-    - Implement the tree using recursion
-    - Use a hash-map to store already computed subproblem
-    - Add a base case that will end the recursion       
+2.  A dynamic top-down recursive approach using memoization (recursion + memoization).   
+    - Visualize the problem as a tree of subproblems;
+    - Implement the tree using recursion;
+    - Use a hash-map to store already computed subproblem;
+    - Add a base case that will end the recursion;
 
 3.  A dynamic bottom-up iterative approach using tabulation.
-    - Visualize the problem as a table
-    - Initialize table with default values
-    - The table size is based on inputs
-    - Put trivial answer as a first element in the table
-    - Set further elements based on the already set elements
+    - Visualize the problem as a table;
+    - Initialize table with default values;
+    - The table size is based on inputs;
+    - Put trivial answer as a first element in the table;
+    - Set further elements based on the already set elements;
+    - It tracks the mapping between the term number and the answer for that term;
 
 Recursive brute force solutions usually look elegant and concise. However they are doing the same calculation repeatedly. As a result, not seldom the time grows exponentially with the size of the problem.
+
+## Why are recursive solutions needed when iterative techniques with tabulation are so fast?
+
+Overall, it is faster, but we must manually choose the order in which the subproblems must be calculated. That is frequently troublesome in and of itself. This is straightforward for fibonacci, but it quickly becomes challenging for more complicated dynamic programming problems. As a result, when it is not the bottleneck of our program or we do not expect large inputs, we are typically satisfied with recursive solutions. 
+
+# Common terms explained
+
+## Recursion
+
+## Subset
+
+## Subarray
+
+## Substring
+
+## Subsequence
 
 <h1>Fibonacci</h1>
 Given a number n, find n-th element of the Fibonacci Sequence.
