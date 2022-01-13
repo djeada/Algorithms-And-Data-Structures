@@ -136,29 +136,25 @@ In most programming languages, a queue can be easily implemented with linked lis
 * <a href=””>Python</a>
 
 <h1>Heap</h1>
-It is a binary tree.
+Heaps are a kind of binary tree. There are two types of heaps: maximum heaps and minimum heaps.
 
-In a max heap, the keys of parent nodes are always greater than or equal to those of the children and the highest key is in the root
-node. In a min heap, the keys of parent nodes are less than or equal to those of the children and the lowest key is in the root node
+The keys of parent nodes are always larger than or equal to those of the children in a max heap, and the root node has the largest key. The keys of parent nodes in a min heap are less than or equal to those of the children, and the root node has the smallest key.
 
-It is complete: it cannot be unbalanced.  
-We insert every new item to the next available place.
+Heaps are complete, which means they can never be imbalanced. Every new item is placed in the next available space.
 
-It has nothing to do with the pool of memory from which dynamically allocated memory is allocated.
+Important: It has nothing to do with the pool of memory from which dynamically allocated memory is allocated.
 
-<h2>Heapsort</h2>
+<h2>Basic operations</h2>
 
-- comparison-based sorting algorithm.
-- uses heap data structure.
-- in-place.
-- unstable.
-- does not need additional memory.
-- while it is slightly slower in practice on most machines than a well-implemented quicksort, it has a better worst-case <code>O(nlogn)</code> run time.
+* <code>insert(element)</code>: the new element is inserted in a suitable place, preserving the heap's characteristics.
+* <code>delete(node)</code>: remove the given node and re-heap any nodes located beneath it.
+* <code>merge(heap_b)</code>: merging heap_b and heap_a means including all nodes from heap_b to heap_a. The heap type returned will be the same as heap_a.
 
 <h2>Applications:</h2>
 
-- Graph algorithms: Dijkstra algorithm, Prims algorithm
-- Used to implement a priority queue
+- Internally used by several graph algorithms, including the Dijkstra and Prims algorithms.
+- Used to implement a priority queue.
+- Heap sort is a heap data structure-based sorting algorithm.
 
 <h2>Time complexity </h2>
 
@@ -170,6 +166,13 @@ It has nothing to do with the pool of memory from which dynamically allocated me
 | <i>Merge</i> | <code>O(mlog(m+n)</code>)</code> | 
 
 <h2>Implementation</h2>
+
+Since heap is a complete binary tree, a heap tree can be efficiently represented using one dimensional array. This provides a very convenient way of figuring out where children belong to.
+
+* The root of the tree is placed at index 1.
+* The left child of an element with index <code>i</code> is placed at index <code>2*i</code>.
+* The right child of an element with index <code>i</code> is placed at index <code>2*i + 1</code>.
+* The parent of an element with index <code>i</code> is placed at index<code>floor(i/2)</code>.
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
