@@ -119,7 +119,6 @@ A queue is a data model that supports a First-In-First-Out (FIFO)</code> approac
 - When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling.
 - When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers.
 
-
 <h2> Time complexity </h2>
 
 | Operation | Average case | Worst case |
@@ -169,10 +168,10 @@ Important: It has nothing to do with the pool of memory from which dynamically a
 
 Since heap is a complete binary tree, a heap tree can be efficiently represented using one dimensional array. This provides a very convenient way of figuring out where children belong to.
 
-* The root of the tree is placed at index 1.
-* The left child of an element with index <code>i</code> is placed at index <code>2*i</code>.
-* The right child of an element with index <code>i</code> is placed at index <code>2*i + 1</code>.
-* The parent of an element with index <code>i</code> is placed at index<code>floor(i/2)</code>.
+1. The root of the tree is placed at index 1.
+1. The left child of an element with index <code>i</code> is placed at index <code>2*i</code>.
+1. The right child of an element with index <code>i</code> is placed at index <code>2*i + 1</code>.
+1. The parent of an element with index <code>i</code> is placed at index<code>floor(i/2)</code>.
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
@@ -318,7 +317,7 @@ To ensure that the distribution is uniform, we can use prime numbers both for th
 
 <h2>Collisions</h2>
 
-Problem: Two or more inputs give the same output.
+Problem: The output of two or more inputs is the same. To put it another way, no two pairs in the hash table should have the same key.
 
 Solutions:
 1. Collision resolution with chaining: we put multiple entries into the same slot with the help of a linked list.
