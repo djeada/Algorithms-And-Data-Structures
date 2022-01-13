@@ -194,7 +194,7 @@ Thus, the time complexity for Dijkstra algorithm can be improved to <code>O(nlog
 
 <h1>Prim</h1>
 
-A greedy vertex-based approach.
+A greedy vertex-based approach. Any vertex not in the tree but connected to it by an edge can be added to the spanning tree. To find a minimal cost spanning tree, we must be picky - we must always add a new vertex with the lowest cost of the new edge.
   
 <h2>Implementation</h2>
 
@@ -203,7 +203,10 @@ A greedy vertex-based approach.
     
 <h1>Kruskal</h1>
 
-A greedy edge-based approach.
+A greedy edge-based approach. A greedy algorithm selects a local optimum (for example, the edge with the least weight in a minimal spanning tree).
+
+Take a graph with 'n' vertices and keep adding the edge with the smallest weight while avoiding the formation of cycles until (n - 1) edges are added. Two or more edges may have the same weight at times. In this scenario, the order in which the edges are picked is irrelevant. Different minimal spanning trees may be produced, but they will always have the same overall cost, which will always be the bare minimum.
+  
   
 <h2>Implementation</h2>
 
