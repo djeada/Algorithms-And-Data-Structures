@@ -35,8 +35,7 @@ Each algorithm implementation is contained in its own subdirectory, which contai
 To build a C++ project and run unit tests, go to the project directory and execute the following commands:
 
 ```bash
-mkdir build
-cd build
+mkdir -p build && cd build
 cmake ..
 make
 ctest --verbose
