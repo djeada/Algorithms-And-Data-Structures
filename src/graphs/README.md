@@ -185,7 +185,7 @@ Thus, the time complexity for Dijkstra algorithm can be improved to <code>O(nlog
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-#Minimal spanning trees
+# Minimal spanning trees
 
 Suppose we have a graph that represents a web of houses. Weights represent the distances between vertices, which each represent a single house. All houses must have water, electricity, and internet, but we want the cost of installation to be as low as possible. We need to identify a subgraph of our graph with the following properties:
 
@@ -210,10 +210,9 @@ Any vertex not in the tree but connected to it by an edge can be added to the tr
 
 A greedy edge-based approach. Our greedy choice is to take the next available edge with the smallest weight.
 
- In a graph with <code>n</code> vertices, we keep adding the edge with the smallest weight while avoiding the formation of cycles until <code>n - 1</code> edges are added. Two or more edges may have the same weight at times. In this scenario, the order in which the edges are picked is irrelevant. Different minimal spanning trees may be produced, but they will always have the same overall cost, which will always be the minimum.
+In a graph with <code>n</code> vertices, we keep adding the edge with the smallest weight while avoiding the formation of cycles until <code>n - 1</code> edges are added. Two or more edges may have the same weight at times. In this scenario, the order in which the edges are picked is irrelevant. Different minimal spanning trees may be produced, but they will always have the same overall cost, which will always be the minimum.
   
-  
-  ## Kruskal vs Prim
+## Kruskal vs Prim
   
   Take note of the differences in the algorithms: Kruskal's approach always keeps a spanning subgraph, which only becomes a tree at the end.
 Prim's method, on the other hand, always maintains a tree that only becomes spanning in the end.
