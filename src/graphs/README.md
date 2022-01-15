@@ -4,6 +4,7 @@ Many real life situations involve objects that are connected in some way to othe
 
 * underground tunnel network;
 * network of pipes;
+* carbon atoms in a molecule.
 * railway map;
 * cities linked by flights;
 * countries and their political alliances.
@@ -194,8 +195,10 @@ Thus, the time complexity for Dijkstra algorithm can be improved to <code>O(nlog
 
 <h1>Prim</h1>
 
-A greedy vertex-based approach. Any vertex not in the tree but connected to it by an edge can be added to the spanning tree. To find a minimal cost spanning tree, we must be picky - we must always add a new vertex with the lowest cost of the new edge.
+A greedy vertex-based approach. A greedy algorithm is defined as one that makes a locally optimum choice at each stage. A greedy algorithm is one in which no overall strategy is followed, but instead you simply do whatever appears to be the best at the time.
   
+Any vertex not in the tree but connected to it by an edge can be added to the tree. To find a minimal spanning tree, we must be picky - we must always add a new vertex with the lowest cost of the new edge. By constantly adding the smallest edge that touches a vertex in the current tree, we produce a minimum spanning tree.
+
 <h2>Implementation</h2>
 
 * <a href=””>C++</a>
@@ -203,10 +206,15 @@ A greedy vertex-based approach. Any vertex not in the tree but connected to it b
     
 <h1>Kruskal</h1>
 
-A greedy edge-based approach. A greedy algorithm selects a local optimum (for example, the edge with the least weight in a minimal spanning tree).
+A greedy edge-based approach. Our greedy choice is to take the next available edge with the smallest weight.
 
-Take a graph with 'n' vertices and keep adding the edge with the smallest weight while avoiding the formation of cycles until (n - 1) edges are added. Two or more edges may have the same weight at times. In this scenario, the order in which the edges are picked is irrelevant. Different minimal spanning trees may be produced, but they will always have the same overall cost, which will always be the bare minimum.
+ In a graph with <code>n</code> vertices, we keep adding the edge with the smallest weight while avoiding the formation of cycles until <code>n - 1</code> edges are added. Two or more edges may have the same weight at times. In this scenario, the order in which the edges are picked is irrelevant. Different minimal spanning trees may be produced, but they will always have the same overall cost, which will always be the minimum.
   
+  
+  <h2>Kruskal vs Prim</h2>
+  
+  Take note of the differences in the algorithms: Kruskal's approach always keeps a spanning subgraph, which only becomes a tree at the end.
+Prim's method, on the other hand, always maintains a tree that only becomes spanning in the end.
   
 <h2>Implementation</h2>
 
