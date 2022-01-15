@@ -109,7 +109,7 @@ We start with the vertex <i>i</i> that was handed to us. We move it to a stack r
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-#Shortest paths
+# Shortest paths
 
 Common task when dealing with weighted graphs is to find the shortest route from vertex A to vertex B. Note that there need not be a unique shortest path, since several paths might have the same length.
 
