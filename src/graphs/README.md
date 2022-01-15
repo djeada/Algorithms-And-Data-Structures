@@ -67,14 +67,14 @@ C -> [B, D]
 D -> [A]
 ```
 
-#Planarity
+## Planarity
 A planar graph is one that may be fitted onto a plane. In other words, it may be drawn on a piece of paper so that no edges cross each other. This is crucial in applications such as printed circuit design.
 
 It is obvious that planar graphs may be drawn in such a manner that their edges cross, but the important issue is that they can be transformed into a form with no edges crossing.
 
 General techniques for assessing if a given graph is planar are really fairly difficult to develop. It is straightforward to confirm systematically for small graphs that there are no feasible vertex repositionings or edge deformations that would put the graph into explicitly planar shape, but it gets complicated quite fast for bigger graphs.
 
-#Traversals
+# Traversals
 Traversing a graph entails visiting all of its vertices in a methodical manner. We definitely want a mechanism for examining graphs that ensures we do not overlook any edges or vertices. Because graphs, unlike trees, do not have a root vertex, there is no obvious vertex to begin a traversal, thus we suppose we are provided, or randomly choose, a beginning vertex <i>i</i>.
 
 Important: The order of the vertices in both breadth first search and depth first search depends on the implementation. If our starting vertex A has three neighbors, C, F, and G, there is no reason for one to be processed before the others. As a consequence, instead of speaking about the result, it is preferable to speak about a result of such algorithms.
