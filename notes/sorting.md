@@ -39,7 +39,7 @@ The basic idea is to locate the smallest item and place it at the beginning of t
 1. Repeat these steps, reducing the number of examined indices by one and increasing the position of the swapped element by one each time.
 
 <h2>Stability</h2>
-It is not a stable algorithm since there is nothing to prevent an item from being switched past another item with the same key. For example, the array <code>[5_0, 5_1, 2_2]</code> would be sorted to <code>[2_2, 5_1, 5_0]</code>, which has the values 2 2 and 2 1 out of order.
+It is not a stable algorithm since there is nothing to prevent an item from being switched past another item with the same key. For example, the array <code>[5_0, 5_1, 2_2]</code> would be sorted to <code>[2_2, 5_1, 5_0]</code>, which has the values <code>2_2</code> and <code>2_1</code> out of order.
 
 <h2>Time complexity</h2>
 
