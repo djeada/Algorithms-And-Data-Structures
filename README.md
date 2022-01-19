@@ -49,7 +49,18 @@ Use the following commands to run Python unit tests from the project directory:
 python -m unittest discover -p 'test*.py'
 ```
 
-<h1>Collections</h1>
+<h1>Notes</h1>
+
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/basic_concepts.md">Basic concepts.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/collections_and_containers.md">Collections and containers.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/graphs.md">Graph algorithms.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/backtracking.md">Backtracking.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/dynamic_programming.md">Dynamic programming.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/sorting.md">Sorting.</a>
+
+<h1>List of projects</h1>
+
+<h2>Collections</h2>
 <table>
     <thead>
         <tr>
@@ -117,7 +128,7 @@ python -m unittest discover -p 'test*.py'
 </table>
 
 
-<h1>Graphs</h1>
+<h2>Graphs</h2>
 <table>
     <thead>
         <tr>
@@ -178,7 +189,7 @@ python -m unittest discover -p 'test*.py'
     </tbody>
 </table>
 
-<h1>Backtracking</h1>
+<h2>Backtracking</h2>
 <table>
     <thead>
         <tr>
@@ -239,7 +250,7 @@ python -m unittest discover -p 'test*.py'
     </tbody>
 </table>
 
-<h1>Dynamic Programming</h1>
+<h2>Dynamic Programming</h2>
 <table>
     <thead>
         <tr>
@@ -330,7 +341,7 @@ python -m unittest discover -p 'test*.py'
     </tbody>
 </table>
 
-<h1>Sorting</h1>
+<h2>Sorting</h2>
 <table>
     <thead>
         <tr>
@@ -373,7 +384,7 @@ python -m unittest discover -p 'test*.py'
     </tbody>
 </table>
 
-<h1>Brain Teasers</h1>
+<h2>Brain Teasers</h2>
 <table>
     <thead>
         <tr>
