@@ -48,8 +48,8 @@ It is not a stable algorithm since there is nothing to prevent an item from bein
 
 <h2>Implementation</h2>
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/selection_sort/src/selection_sort.cpp”>C++</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/selection_sort/src/selection_sort.py”>Python</a>
 
 <h1>Insertion Sort</h1>
 Insertion sort works by directly inserting items from the unsorted part of the array into the sorted one at their proper position. The sorted part maintains its order and grows by one item with each iteration, whereas the unsorted part shrinks by one item. Again there are n iterations.
@@ -71,8 +71,8 @@ It is a stable algorithm because no item gets swapped past another unless it has
 
 <h2>Implementation</h2>
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/insertion_sort/src/insertion_sort.cpp”>C++</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/insertion_sort/src/insertion_sort.py”>Python</a>
 
 <h1>Merge sort</h1>
 
@@ -94,8 +94,8 @@ It is a stable algorithm.
 
 <h2>Implementation</h2>
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/merge_sort/src/merge_sort.cpp”>C++</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/merge_sort/src/merge_sort.py”>Python</a>
 
 <h1>Quick Sort</h1>
 The quick sort method divides the original array into two parts by rearranging it. The first part comprises items that are smaller than an arbitrarily selected value from the original array, whereas the second group contains elements that are larger than or equal to the selected value. The selected value is referred to as the pivot element. After the array has been reorganized with regard to the pivot, the same partitioning method is done recursively to each of the two subgroups. The original array is sorted after all of the subsets have been partitioned and reorganized.
@@ -126,8 +126,8 @@ The partitioning determines the stability. Quick sort is only stable if the part
 
 <h2>Implementation</h2>
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/quick_sort/src/quick_sort.cpp”>C++</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/quick_sort/src/quick_sort.py”>Python</a>
 
 <h1>Heap sort</h1>
 It provides random access to iterators.
@@ -151,5 +151,5 @@ It is not a stable algorithm.
 
 <h2>Implementation</h2>
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/heap_sort/src/heap_sort.cpp”>C++</a>
+* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/heap_sort/src/heap_sort.py”>Python</a>
