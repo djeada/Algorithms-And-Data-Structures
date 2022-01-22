@@ -39,64 +39,105 @@ Overall, it is faster, but we must manually choose the order in which the subpro
 
 ## Subsequence
 
-<h1>Fibonacci</h1>
+## Fibonacci
 Given a number n, find n-th element of the Fibonacci Sequence.
 
 TODO: nlogn fast solution
 
-<h2>Implementation</h2>
+### Implementation
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/fibonacci/src/fibonacci.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/fibonacci/src/fib.py">Python</a>
 
-<h1>Grid traveller</h1>
+## Grid traveller
 Grid traveller can only move right and down. Give a matrix of size MxN, in how many ways he can reach point (M, N) starting from (1, 1).
 
-<h2>Implementation</h2>
+### Implementation
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/grid_traveler/src/grid_travelers.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/grid_traveler/src/grid_traveler.py">Python</a>
 
-<h1>Climbing stairs</h1>
+## Climbing stairs
 Given a n-step stair case, count the number of ways of reaching the stop of stairs. You can make: 1, 2, or 3 steps.
 
-<h2>Implementation</h2>
+### Implementation
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/climb_stairs/src/climb.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/climbing_stairs/src/climb.py">Python</a>
 
-<h1>Sum problems</h1>
-Can Sum: Can we sum numbers from the list to get a given target. We can choose one number multiple times.
-How Sum: If we can sum numbers from the list to get a given target, then which numbers would that be.
-Best Sum: If we can sum numbers from the list to get a given target, then which set of numbers would be the smallest.
+## Sum problems
 
-<h2>Implementation</h2>
+### Can Sum: 
+Can we sum numbers from the list to get a given target. We can choose one number multiple times.
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+### Implementation
 
-<h1>Construct problems</h1>
-Can Construct: Can we construct a word by concatenating string from a given list. One string can be chosen multiple times.
-Count Construct: If we can construct a word by concatenating string from a given list, then which strings would that be.
-All Constructs: If we can construct a word by concatenating string from a given list, then which set of strings would be the smallest.
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_sum/src/can_sum.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_sum/src/can_sum.py">Python</a>
 
-<h2>Implementation</h2>
+### How Sum: 
+If we can sum numbers from the list to get a given target, then which numbers would that be.
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+### Implementation
 
-<h1>Coins</h1>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/how_sum/src/how_sum.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/how_sum/src/how_sum.py">Python</a>
+
+### Best Sum: 
+If we can sum numbers from the list to get a given target, then which set of numbers would be the smallest.
+
+### Implementation
+
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/best_sum/src/best_sum.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/best_sum/src/best_sum.py">Python</a>
+
+## Construct problems
+
+### Can Construct: 
+Can we construct a word by concatenating string from a given list. One string can be chosen multiple times.
+
+### Implementation
+
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_construct/src/can_construct.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_construct/src/can_construct.py">Python</a>
+
+### Count Construct: 
+If we can construct a word by concatenating string from a given list, then which strings would that be.
+
+### Implementation
+
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/count_construct/src/count_construct.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/count_construct/src/count_construct.py">Python</a>
+
+### All Constructs: 
+If we can construct a word by concatenating string from a given list, then which set of strings would be the smallest.
+
+### Implementation
+
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/all_construct/src/all_construct.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/all_construct/src/all_construct.py">Python</a>
+
+## Coins
 Given a set of denominations and an amount, find the minimum number of coins from the set that will sum up to the given amount.
 
-<h2>Implementation</h2>
+### Implementation
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/coin_change/src/coin_change.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/coins/src/coins.py">Python</a>
 
-<h1>Longest increasing subsequence</h1>
-Find longest increasing subsequence in a given array.
+## Longest common subsequence
+Find the longest common subsequence in a given array.
 
-<h2>Implementation</h2>
+### Implementation
 
-* <a href=””>C++</a>
-* <a href=””>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_common_subsequence/src/longest_common_subsequence.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_common_subsequence/src/lcs.py">Python</a>
+
+## Longest increasing subarray
+Find the longest increasing subarray in a given array.
+
+### Implementation
+
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_increasing_subarray/src/longest_increasing_subarray.cpp">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_increasing_subarray/src/lis.py">Python</a>
+
