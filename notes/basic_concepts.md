@@ -20,7 +20,7 @@ The term data structure refers to a specific method of organizing data for speci
 
 ![Data Structures](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/resources/ds.png)
 
-<h1>Algorithm</h1>
+<h1>Algorithms</h1>
 An algorithm is a set of instructions that each have a defined meaning and may be completed in a specified amount of time and effort. 
 An algorithm ends after processing a certain amount of instructions, regardless of the input values. 
 
