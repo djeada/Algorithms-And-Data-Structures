@@ -460,23 +460,22 @@ python -m unittest discover -p 'test*.py'
 
 <h1>Bibliography </h1>
 
-<ol>
-    <li>L. V. Narashima Prasad, E. Kishna Rao Patro "<i>Lecture Notes on Data Structures using C</i>" </li>
-    <li>Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein. "<i>Introduction to Algorithms, 3rd Edition (The MIT Press)</i>"</li>
-    <li>Steven Halim "<i>Competitive Programming 3</i>" </li>
-    <li>Narasimha Karumanchi "<i>Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles</i>" </li>
-    <li>Brian Kernighan, Dennis Ritchie "<i>The C Programming Language</i>" </li>
-    <li>Steven Skiena, Miguel Revilla "<i>Programming Challenges: The Programming Contest Training Manual</i>" </li>
-    <li>Antti Laaksonen "<i>  Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science) </i>" </li>
-    <li>Nite Nimajneb "<i>The Hitchhiker’s Guide to the Programming Contests</i>" </li>
-    <li>http://cslibrary.stanford.edu/</li>
-    <li>https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/</li>
-    <li>https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm</li>
-    <li>https://www.cs.bham.ac.uk/~jxb/DSA/</li>
-    <li>https://www.ics.uci.edu/~eppstein/161/syl.html</li>
-    <li>http://www.columbia.edu/~cs2035/oldcourses.html</li>
-    <li>https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/</li>
-    <li>https://sp19.datastructur.es/</li>
-    <li>https://www.csc.kth.se/~viggo/problemlist/M</li>
-    <li>https://cp-algorithms.com/</li>
-</ol>
+* L. V. Narashima Prasad, E. Kishna Rao Patro "<i>Lecture Notes on Data Structures using C</i>" 
+* Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein. "<i>Introduction to Algorithms, 3rd Edition (The MIT Press)</i>"
+* Steven Halim "<i>Competitive Programming 3</i>" 
+* Narasimha Karumanchi "<i>Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles</i>" 
+* Brian Kernighan, Dennis Ritchie "<i>The C Programming Language</i>" 
+* Steven Skiena, Miguel Revilla "<i>Programming Challenges: The Programming Contest Training Manual</i>" 
+* Antti Laaksonen "<i>  Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science) </i>" 
+* Nite Nimajneb "<i>The Hitchhiker’s Guide to the Programming Contests</i>" 
+* http://cslibrary.stanford.edu/
+* https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/
+* https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm
+* https://www.cs.bham.ac.uk/~jxb/DSA/
+* https://www.ics.uci.edu/~eppstein/161/syl.html
+* http://www.columbia.edu/~cs2035/oldcourses.html
+* https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/
+* https://sp19.datastructur.es/
+* https://www.csc.kth.se/~viggo/problemlist/M
+* https://cp-algorithms.com/
+* https://www.personal.kent.edu/~rmuhamma/Compgeometry/compgeom.html	
