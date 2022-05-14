@@ -458,7 +458,7 @@ python -m unittest discover -p 'test*.py'
 </table>
 
 
-<h1>Bibliography </h1>
+## Refrences
 
 * L. V. Narashima Prasad, E. Kishna Rao Patro "<i>Lecture Notes on Data Structures using C</i>" 
 * Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein. "<i>Introduction to Algorithms, 3rd Edition (The MIT Press)</i>"
