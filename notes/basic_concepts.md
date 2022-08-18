@@ -69,14 +69,14 @@ The algorithm execution tends to (but it's not always the case) get slower as th
 
 ### Formal definitions
 
-#### Big–OH O (Upper Bound)
+#### Big–O (Upper Bound)
 
 $f(n) = O(g(n))$, says that the growth rate of $f(n)$ is less than or equal $<=$ that of $g(n)$.
 
-#### Big–OMEGA &#937; (Lower Bound)
+#### Big–&#937; (Lower Bound)
 $f(n) = &#937;(g(n))$, says that the growth rate of $f(n)$ is greater than or equal to $>=$ that of $g(n)$.
 
-#### Big–THETA &#952; (Same order)
+#### Big–&#952; (Same order)
 $f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth rate of $g(n)$.
 
 ### Rules for using big-O:
