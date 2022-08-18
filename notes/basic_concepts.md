@@ -79,6 +79,8 @@ $f(n) = &#937;(g(n))$, says that the growth rate of $f(n)$ is greater than or eq
 #### Big–&#952; (Same order)
 $f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth rate of $g(n)$.
 
+If we have $&#952;(n)$, then we also have $O(n)$ and  $&#937;(n)$.
+
 ### Rules for using big-O:
 
 1. Ignoring constant factors: $O(c f(n)) = O(f(n))$, where c is a constant; e.g. $O(5n) = O(n)$
@@ -90,7 +92,8 @@ $f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth
 
 * Outside of academia, you will never be required to perform a formal proof to demonstrate the Big O of an algorithm.
 * It is a language used to describe existing algorithms and data structures.
-* The fact that an algorithm is O(n) does not imply that it will scale linearly. Only that it is bounded by afun ction of such a form. 
+* The fact that an algorithm is O(n) does not imply that it will scale linearly. Only that it is bounded by afun ction of such a form.
+* It doesn't say anything about a specific run (which is usually dependent on other factors), only about general trends. So, if given favourably ordered data, an algorithm with worse complexity may outperform a "faster" algorithm.
 
 ## The Running time of a program
 
