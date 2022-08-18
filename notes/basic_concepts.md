@@ -55,17 +55,28 @@ We have the following three categories of cases:
 1. The expected value of f(n) is known as the Average Case.
 1. Worst Case: The largest f(n) value for every key conceivable input.
 
-
 ## Rate of Growth
 
-### Big–OH O (Upper Bound)
+The focus of notations describing the rate of growth is on the general trend of an algorithm.
+We don't care if an algorithm takes 1000 or 1012 steps; we only care about how it scales as input size changes. 
+
+### Intuition
+
+The algorithm execution tends to (but it's not always the case) get slower as the input gets larger.
+* It takes a constant amount of time to return the first element of an array. If I have an array of 1000 elements and an array of 5000 elements, it should take roughly the same amount of time to access the first element in both cases.
+* Summing all the elements of an array becomes linearly longer as the array size grows. If I have a 1000-element array and a 5000-element array, it should take roughly 5 times as long to sum the elements of the second array. 
+* Binary search is a logarithmic complexity algorithm. If I have a sorted array of 1000 elements and a sorted array of 10000 elements, it should take roughly twice as long to find an element in the second array. 
+
+### Formal definitions
+
+#### Big–OH O (Upper Bound)
 
 $f(n) = O(g(n))$, says that the growth rate of $f(n)$ is less than or equal $<=$ that of $g(n)$.
 
-### Big–OMEGA &#937; (Lower Bound)
+#### Big–OMEGA &#937; (Lower Bound)
 $f(n) = &#937;(g(n))$, says that the growth rate of $f(n)$ is greater than or equal to $>=$ that of $g(n)$.
 
-### Big–THETA &#952; (Same order)
+#### Big–THETA &#952; (Same order)
 $f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth rate of $g(n)$.
 
 ### Rules for using big-O:
@@ -74,6 +85,12 @@ $f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth
 1. Ignoring smaller terms: If $a < b$ then $O(a+b) = O(b)$, for example $O(n^2 + n) = O(n^2)$
 1. Upper bound only: If $a < b$ then an $O(a)$ algorithm is also an $O(b)$ algorithm. For example, an $O(n)$ algorithm is also an $O(n^2)$ algorithm (but not vice versa).
 1. $n$ and $log n$ are "bigger" than any constant, for example $O(n + k) = O(n)$
+
+### Misconceptions
+
+* Outside of academia, you will never be required to perform a formal proof to demonstrate the Big O of an algorithm.
+* It is a language used to describe existing algorithms and data structures.
+* The fact that an algorithm is O(n) does not imply that it will scale linearly. Only that it is bounded by afun ction of such a form. 
 
 ## The Running time of a program
 
