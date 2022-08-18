@@ -59,20 +59,21 @@ We have the following three categories of cases:
 ## Rate of Growth
 
 ### Big–OH O (Upper Bound)
-f(n) = O(g(n)), says that the growth rate of f(n) is less than or equal (<=) that of g(n).
+
+$f(n) = O(g(n))$, says that the growth rate of $f(n)$ is less than or equal $<=$ that of $g(n)$.
 
 ### Big–OMEGA &#937; (Lower Bound)
-f(n) = &#937;(g(n)), says that the growth rate of f(n) is greater than or equal to (>=) that of g(n).
+$f(n) = &#937;(g(n))$, says that the growth rate of $f(n)$ is greater than or equal to $>=$ that of $g(n)$.
 
 ### Big–THETA &#952; (Same order)
-f(n) = &#952;(g(n)), says that the growth rate of f(n) equals (=) the growth rate of g(n).
+$f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth rate of $g(n)$.
 
 ### Rules for using big-O:
 
-1. Ignoring constant factors: O(c f(n)) = O(f(n)), where c is a constant; e.g. O(5 n) = O(n)
-1. Ignoring smaller terms: If a<b then O(a+b) = O(b), for example O(n^2 + n) = O(n^2)
-1. Upper bound only: If a<b then an O(a) algorithm is also an O(b) algorithm. For example, an O(n) algorithm is also an O(n^2) algorithm (but not vice versa).
-1. n and log n are "bigger" than any constant, for example O(n + k) = O(n)
+1. Ignoring constant factors: $O(c f(n)) = O(f(n))$, where c is a constant; e.g. $O(5n) = O(n)$
+1. Ignoring smaller terms: If a<b then $O(a+b) = O(b)$, for example $O(n^2 + n) = O(n^2)$
+1. Upper bound only: If $a<b$ then an $O(a)$ algorithm is also an $O(b)$ algorithm. For example, an $O(n)$ algorithm is also an $O(n^2)$ algorithm (but not vice versa).
+1. $n$ and $log n$ are "bigger" than any constant, for example $O(n + k) = O(n)$
 
 ## The Running time of a program
 
