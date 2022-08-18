@@ -71,8 +71,8 @@ $f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth
 ### Rules for using big-O:
 
 1. Ignoring constant factors: $O(c f(n)) = O(f(n))$, where c is a constant; e.g. $O(5n) = O(n)$
-1. Ignoring smaller terms: If a<b then $O(a+b) = O(b)$, for example $O(n^2 + n) = O(n^2)$
-1. Upper bound only: If $a<b$ then an $O(a)$ algorithm is also an $O(b)$ algorithm. For example, an $O(n)$ algorithm is also an $O(n^2)$ algorithm (but not vice versa).
+1. Ignoring smaller terms: If $a < b$ then $O(a+b) = O(b)$, for example $O(n^2 + n) = O(n^2)$
+1. Upper bound only: If $a < b$ then an $O(a)$ algorithm is also an $O(b)$ algorithm. For example, an $O(n)$ algorithm is also an $O(n^2)$ algorithm (but not vice versa).
 1. $n$ and $log n$ are "bigger" than any constant, for example $O(n + k) = O(n)$
 
 ## The Running time of a program
@@ -87,5 +87,5 @@ One problem can be usually solve in many different ways. When choosing the algor
 ### Is it possible to develop O(1) algorithm for every problem?
 
 1. In fact, it is not even possible to formulate an algorithm for every problem. Example: https://en.m.wikipedia.org/wiki/Halting_problem
-2. Assuming the problem can be solved alogritmically, we can precompute the solutions for each and every possible input and store them in a massive hash table (access is O(1)). However, for many problems, this is not a feasible solution because the number of single possible inputs may be infinite. We simply do not always know the size of the problem ahead of time. 
-3. If precomputing is not an option, then O(n) or even O(nlogn) is the best we can get for many problems. For example, if we are given a list of numbers and we want to return the sum of those numbers, we must access each number in the list. There is no way to do better than O(n). 
+2. Assuming the problem can be solved alogritmically, we can precompute the solutions for each and every possible input and store them in a massive hash table (access is $O(1)$). However, for many problems, this is not a feasible solution because the number of single possible inputs may be infinite. We simply do not always know the size of the problem ahead of time. 
+3. If precomputing is not an option, then $O(n)$ or even $O(nlogn)$ is the best we can get for many problems. For example, if we are given a list of numbers and we want to return the sum of those numbers, we must access each number in the list. There is no way to do better than $O(n)$. 
