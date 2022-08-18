@@ -1,26 +1,25 @@
-<h1>Data Structures</h1>
+## Data Structures
 
 The term data structure refers to a specific method of organizing data for specific types of operations. In other words, a data structure provides a method of arranging all data items that takes into account not just the pieces contained but also their relationships to one another. The phrase data structure refers to the method through which data is stored. We usually think about data structures without getting bogged down in implementation details of certain programming languages or how data is stored in computer memory. This is why abstract mathematical representations of data structures and data types were developed.
 
 * Primitive data structures: fundamental data structures that operate directly on machine instructions.
 * Non primitive data structures: more complex, developed from primitive data structures.
 
-<h2>Linear data structure</h2>
+### Linear data structure
 
 * arrays.
 * stacks
 * queues
 * linked lists
 
-<h2>Non linear data structure</h2>
+### Non linear data structure
 
 * graphs
 * trees
 
+![ds](https://user-images.githubusercontent.com/37275728/185381435-9335db5b-8c9a-4e74-87dc-deac3c0356f1.png)
 
-![Data Structures](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/resources/ds.png)
-
-<h1>Algorithms</h1>
+## Algorithms
 An algorithm is a set of instructions that each have a defined meaning and may be completed in a specified amount of time and effort. 
 An algorithm ends after processing a certain amount of instructions, regardless of the input values. 
 
@@ -32,16 +31,16 @@ Requirements of an algorithm:
 * Finiteness: the algorithm can not run ad infinitum. It ends after executing a finite number of steps.
 * Effectiveness: each instruction in addition to being specific must be feasible.
 
-<h2>Algorithms as opposed to programs</h2>
+### Algorithms as opposed to programs
 
 Programs (for example, operating systems) are exempted from the fourth requirement since an infinite loop may be used to make them run indefinitely. A computer program can, but does not have to, be used to implement an algorithm. They can be described in plain English just as well.
 
-<h2>Diffrent programming paradigms</h2>
+### Diffrent programming paradigms
 
 * <i>Imperative Programming</i> describes computing in terms of instructions that modify the program or data state.
 * <i>Declarative Programming</i> specifies what the program should do without describing how to do it.
 
-<h1>Complexity of algorithms</h1>
+## Complexity of algorithms
 
 The <b>time complexity</b> of an algorithm is the number of times atomic operations are called while the algorithm is being executed, expressed as a function of the size of a problem.
 
@@ -57,29 +56,35 @@ We have the following three categories of cases:
 1. Worst Case: The largest f(n) value for every key conceivable input.
 
 
-<h1>Rate of Growth</h1>
+## Rate of Growth
 
-<h3>Big–OH O (Upper Bound)</h3>
+### Big–OH O (Upper Bound)
 f(n) = O(g(n)), says that the growth rate of f(n) is less than or equal (<=) that of g(n).
 
-<h3>Big–OMEGA &#937; (Lower Bound)</h3>
+### Big–OMEGA &#937; (Lower Bound)
 f(n) = &#937;(g(n)), says that the growth rate of f(n) is greater than or equal to (>=) that of g(n).
 
-<h3>Big–THETA &#952; (Same order)</h3>
+### Big–THETA &#952; (Same order)
 f(n) = &#952;(g(n)), says that the growth rate of f(n) equals (=) the growth rate of g(n).
 
-<h3>Rules for using big-O:</h3>
+### Rules for using big-O:
 
 1. Ignoring constant factors: O(c f(n)) = O(f(n)), where c is a constant; e.g. O(5 n) = O(n)
 1. Ignoring smaller terms: If a<b then O(a+b) = O(b), for example O(n^2 + n) = O(n^2)
 1. Upper bound only: If a<b then an O(a) algorithm is also an O(b) algorithm. For example, an O(n) algorithm is also an O(n^2) algorithm (but not vice versa).
 1. n and log n are "bigger" than any constant, for example O(n + k) = O(n)
 
-<h1>The Running time of a program</h1>
+## The Running time of a program
 
 One problem can be usually solve in many different ways. When choosing the algorithm we should consider the following:
 
 1. We want an algorithm that is simple to comprehend, develop, and debug.
 1. We'd want an algorithm that makes good use of the computer's resources, preferably one that runs as quickly as feasible.
 
-![Run time](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/resources/big_o.png)
+![big_o](https://user-images.githubusercontent.com/37275728/185381461-ec062561-1f55-4cf5-a3fa-d4cc0a2c06df.png)
+
+### Is it possible to develop O(1) algorithm for every problem?
+
+1. In fact, it is not even possible to formulate an algorithm for every problem. Example: https://en.m.wikipedia.org/wiki/Halting_problem
+2. Assuming the problem can be solved alogritmically, we can precompute the solutions for each and every possible input and store them in a massive hash table (access is O(1)). However, for many problems, this is not a feasible solution because the number of single possible inputs may be infinite. We simply do not always know the size of the problem ahead of time. 
+3. If precomputing is not an option, then O(n) or even O(nlogn) is the best we can get for many problems. For example, if we are given a list of numbers and we want to return the sum of those numbers, we must access each number in the list. There is no way to do better than O(n). 
