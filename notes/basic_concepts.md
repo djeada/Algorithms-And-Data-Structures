@@ -121,3 +121,39 @@ One problem can be usually solve in many different ways. When choosing the algor
 1. In fact, it is not even possible to formulate an algorithm for every problem. Example: https://en.m.wikipedia.org/wiki/Halting_problem
 2. Assuming the problem can be solved alogritmically, we can precompute the solutions for each and every possible input and store them in a massive hash table (access is $O(1)$ ). However, for many problems, this is not a feasible solution because the number of single possible inputs may be infinite. We simply do not always know the size of the problem ahead of time. 
 3. If precomputing is not an option, then $O(n)$ or even $O(nlogn)$ is the best we can get for many problems. For example, if we are given a list of numbers and we want to return the sum of those numbers, we must access each number in the list. There is no way to do better than $O(n)$. 
+
+### When does an algorithm have O(logn) or O(nlogn) complexity? 
+
+Everyone knows that a single loop has linear complexity and nested loops have quadratic complexity.
+How then could we ever manage to achieve logarithmic complexity?
+Things aren't as simple as some tutorials make them out to be. 
+
+Let's take a look at a standard example with a single loop and $O(1)$ complexity:
+ 
+       while n > 0:
+           n -= 1
+
+Let's modify it slightly to get $O(logn)$ complexity:
+
+        while n > 0:
+           n /= 2
+
+Let's modify it slightly to get $O(nlogn)$ complexity:
+
+        m = n
+        while m > 0:
+           k = n
+           while k > 0:
+              k /= 2
+           m -= 1
+
+
+Let's modify it slightly to get $O(log^2n)$ complexity:
+
+        m = n
+        while m > 0:
+           k = n
+           while k > 0:
+              k /= 2
+           m /= 2
+       
