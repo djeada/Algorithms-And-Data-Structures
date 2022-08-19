@@ -19,6 +19,8 @@ Which is more extensible, and under what circumstances?
 Which uses less memory or executes faster?
 When and why would you want to sacrifice memory or efficiency for these other benefits?
 
+![G70oT](https://user-images.githubusercontent.com/37275728/185710905-8acd7541-e8ed-4439-a644-5d739b39e783.png)
+
 ## Linked List
 
 A linked list's elements are made up of two cells. The element's data (or a pointer to that data)</code> is stored in the first cell. The second cell holds a reference to the next element in the list or NULL if there is no next element.
