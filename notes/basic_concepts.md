@@ -40,6 +40,18 @@ Programs (for example, operating systems) are exempted from the fourth requireme
 * <i>Imperative Programming</i> describes computing in terms of instructions that modify the program or data state.
 * <i>Declarative Programming</i> specifies what the program should do without describing how to do it.
 
+### What algorithms I need to know?
+
+There are no algorithms that every software engineer must know. 
+You read that correctly: you don't need to memorize ten sorting algorithms to be a productive developer. 
+If the algorithm is well-known, there is almost certainly a library that already implements it.
+That library is most likely well-tested and optimized for maximum performance.
+It's pointless to try to reinvent the wheel.
+All that you need to know is how to use external libraries and packages.
+
+That being said, learning how known problems were solved is extremely beneficial, especially in the early stages of a programming journey.
+We study algorithms not to memorize the implementation so that we can write it down from memory someday, but to learn the programming mindset. 
+
 ## Complexity of algorithms
 
 The <b>time complexity</b> of an algorithm is the number of times atomic operations are called while the algorithm is being executed, expressed as a function of the size of a problem.
