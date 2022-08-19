@@ -1,4 +1,4 @@
-# Collections and containers
+## Collections and containers
 
 For our purposes, the words data structures and containers are interchangeable. Collections are a type of data structure that holds a variable number of items. We will be describing various collections in this section.
 
@@ -9,11 +9,21 @@ We can speak about them on two different levels:
 1. on a very abstract level: we can define what we mean by them and what can we do with them.
 2. on a machine level: we figure out how to implement them.
 
-<h1>Linked List</h1>
+### Why would you want to study this topic?
+
+Without data structures, there is no programming.
+To be efficient, you must go beyond simply knowing what types of data structures exist.
+Recognize the trade-offs between them.
+When do you prefer one over the other?
+Which is more extensible, and under what circumstances?
+Which uses less memory or executes faster?
+When and why would you want to sacrifice memory or efficiency for these other benefits?
+
+## Linked List
 
 A linked list's elements are made up of two cells. The element's data (or a pointer to that data)</code> is stored in the first cell. The second cell holds a reference to the next element in the list or NULL if there is no next element.
 
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>is_empty()</code>: it is self-explanatory.
 * <code>first()</code>: access the first item in the list.
@@ -21,7 +31,7 @@ A linked list's elements are made up of two cells. The element's data (or a poin
 * <code>remove(index)</code>: remove an element from the list that is stored at the provided index.
 * <code>replace(index, data)</code>: store the provided data at the specified index in the list.
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -30,7 +40,7 @@ A linked list's elements are made up of two cells. The element's data (or a poin
 | <i>Delete</i> | <code>O(1)</code> | <code>O(1)</code> |
 | <i>Search</i> | <code>O(n)</code> | <code>O(n)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 There are several methods for implementing lists, and the best one depends on the programming language used. Lists are the most important primitive data structure in the programming language Lisp and its derivatives. Lists are more natural to implement as arrays in certain languages, however this might be troublesome because lists are not theoretically restricted in size.
 
 Recursion is a natural way to process collections of items stored in linked lists. To find the last element of a list we can simply keep removing the first remaining item until there are no more left. The running time of this depends on the length of the list, and is proportional to that length.
@@ -38,7 +48,7 @@ Recursion is a natural way to process collections of items stored in linked list
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Vector</h1>
+## Vector
 
 Because they are so simple to implement in a machine, arrays were most likely the first data structures to be used. Array elements are generally kept in continuous chunks of computer memory. Arrays are represented by items separated by commas and enclosed in square brackets:
 
@@ -48,14 +58,14 @@ Because this array a has 5 elements, we refer to it as having a size of 5. We ge
 
 A fixed-size sequential collection of elements of the same type is stored in an array. Vectors are nearly identical, with the exception that they can manage storage and expand dynamically in an efficient manner. In reality, arrays are very low-level constructs that you should definitely avoid as much as possible. Vectors have almost the same performance as arrays, but with many more conveniences and safety features.
 
-<h2>Applications:</h2>
+### Applications:
 
 - storing a list of values
 - matrix operations
 - implementation of search and sorting algorithms
 - implementation of data structures
 
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>is_empty()</code>: it is self-explanatory.
 * <code>push_back(elem)</code>:	append the provided element at the end of the vector.
@@ -65,29 +75,29 @@ A fixed-size sequential collection of elements of the same type is stored in an 
 * <code>sort(start, end)</code>: sort vector elements between position start and position end.
 * <code>reverse(start, end)</code>:	reverse vector elements between position start and position end.
 
-<h2>Implementation</h2>
+### Implementation
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Stack</h1>
+## Stack
 They are the ideal data structure to model a First-In-Last-Out (FILO)</code>, or Last-In-First-Out (LIFO)</code>, strategy in search. 
 A number of programming languages are stack-oriented, meaning they define most basic operations (adding two numbers, printing a character)</code> as taking their arguments from the stack, and placing any return values back on the stack.
 
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>push(element)</code>: take an element and place it on top of an existing stack.
 * <code>pop()</code>: return the top element of the stack and removes it from the stack.
 * <code>top()</code>: return the top element of the stack without removing it from the stack.
 
-<h2>Applications:</h2>
+### Applications:
 
 - In stack-oriented programming languages
 - Graph algorithms: depth-first search can be implemented with stacks ( or with recursion )</code>
 - Finding Euler-cycles in a graph
 - Finding strongly connected components in a graph
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -96,7 +106,7 @@ A number of programming languages are stack-oriented, meaning they define most b
 | <i>Delete</i> | <code>O(1)</code> | <code>O(1)</code> |
 | <i>Search</i> | <code>O(n)</code> | <code>O(n)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 In most programming languages, a stack can be easily implemented either with arrays or linked lists. There are however two approaches that could be taken:
 
 1. The number of items in an original stack is never changed in a functional approach. A new stack is created by the push operation.
@@ -105,21 +115,21 @@ In most programming languages, a stack can be easily implemented either with arr
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Queue</h1>
+## Queue
 A queue is a data model that supports a First-In-First-Out (FIFO)</code> approach.
 
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>enqueue(element)</code>: append the provided element at the end of the queue.
 * <code>dequeue()</code>: remove the first element from the queue.
 
-<h2>Applications:</h2>
+### Applications:
 
 - BFS
 - When a resource is shared with several consumers ( threads )</code>: we store them in a queue For example: CPU scheduling.
 - When data is transferred asynchronously (data not necessarily received at same rate as sent)</code> between two processes For example: IO buffers.
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -128,13 +138,13 @@ A queue is a data model that supports a First-In-First-Out (FIFO)</code> approac
 | <i>Delete</i> | <code>O(1)</code> | <code>O(1)</code> |
 | <i>Search</i> | <code>O(n)</code> | <code>O(n)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 In most programming languages, a queue can be easily implemented with linked lists. 
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Heap</h1>
+## Heap
 Heaps are a kind of binary tree. There are two types of heaps: maximum heaps and minimum heaps.
 
 The keys of parent nodes are always larger than or equal to those of the children in a max heap, and the root node has the largest key. The keys of parent nodes in a min heap are less than or equal to those of the children, and the root node has the smallest key.
@@ -143,19 +153,19 @@ Heaps are complete, which means they can never be imbalanced. Every new item is 
 
 Important: It has nothing to do with the pool of memory from which dynamically allocated memory is allocated.
 
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>insert(element)</code>: the new element is inserted in a suitable place, preserving the heap's characteristics.
 * <code>delete(node)</code>: remove the given node and re-heap any nodes located beneath it.
 * <code>merge(heap_b)</code>: merging heap_b and heap_a means including all nodes from heap_b to heap_a. The heap type returned will be the same as heap_a.
 
-<h2>Applications:</h2>
+### Applications:
 
 - Internally used by several graph algorithms, including the Dijkstra and Prims algorithms.
 - Used to implement a priority queue.
 - Heap sort is a heap data structure-based sorting algorithm.
 
-<h2>Time complexity </h2>
+### Time complexity 
 
 | Operation | Average case | 
 | --- | --- | 
@@ -164,7 +174,7 @@ Important: It has nothing to do with the pool of memory from which dynamically a
 | <i>Insert</i> | <code>O(logn)</code> |
 | <i>Merge</i> | <code>O(mlog(m+n)</code>)</code> | 
 
-<h2>Implementation</h2>
+### Implementation
 
 Since heap is a complete binary tree, a heap tree can be efficiently represented using one dimensional array. This provides a very convenient way of figuring out where children belong to.
 
@@ -176,11 +186,11 @@ Since heap is a complete binary tree, a heap tree can be efficiently represented
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Binary search tree</h1>
+## Binary search tree
 
 To fully comprehend the idea of binary search trees, let us first define trees and binary trees.
 
-<h2>Tree</h2>
+### Tree
 In programming, a tree is a fairly general and powerful data structure that resembles a real tree. It is composed of an ordered collection of connected nodes, with each node having no more than one parent node and zero or more children nodes.
 
 * Nodes are frequently, but not always, labeled with a data item (e.g. an integer)</code>. The label of a node will be referred to as its value.
@@ -191,12 +201,12 @@ In programming, a tree is a fairly general and powerful data structure that rese
 * Trees have the characteristic that each node has a distinct path connecting it to the root.
 * The length of the path linking a node to the root determines its depth or level. As a result, the root has a level of 0, its children have a level of 1, and so on.
 
-<h2>Binary Tree</h2>
+### Binary Tree
 In computer science, binary trees are the most prevalent form of tree. 
 A binary tree is one in which each node has no more than two children.
 In contrast with binary search trees there is no constraint imposed on the values.
 
-<h2>Properties</h2>
+### Properties
 Binary search trees are binary trees that satisfy the following conditions:
 
 * Each node has one value (key)</code>.
@@ -204,7 +214,7 @@ Binary search trees are binary trees that satisfy the following conditions:
 * The keys in the right subtree are greater than the key in its parent node.
 * It is not permitted to have duplicate node values.
 
-<h2>Building binary search trees</h2>
+### Building binary search trees
 
 To add <i>new_value</i> to the BST, we should do the following:
 
@@ -214,7 +224,7 @@ To add <i>new_value</i> to the BST, we should do the following:
   - If <i>new_value</i> is greater than the root value, place it into the right sub-tree.
   - If <i>new_value</i> equals the value of the root, throw an exception.
   
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>root()</code>: return the value of the root node of binary tree <code>O(1)</code>.
 * <code>height()</code>: returns the height of the BST <code>O(1)</code>.
@@ -222,7 +232,7 @@ To add <i>new_value</i> to the BST, we should do the following:
 * <code>search(value)</code>: look for a node with the specified value in the BST.
 * <code>remove(value)</code>: remove a node with the specified value from the BST.
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -231,15 +241,15 @@ To add <i>new_value</i> to the BST, we should do the following:
 | <i>Delete</i> | <code>O(logn)</code> | <code>O(n)</code> |
 | <i>Search</i> | <code>O(logn)</code> | <code>O(n)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>AVL tree</h1>
+## AVL tree
 TODO
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -248,19 +258,19 @@ TODO
 | <i>Delete</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Search</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Red-black tree</h1>
+## Red-black tree
 The height of the binary search tree determines how long it takes for BST operations to finish. In order to obtain the best results, we need keep the tree balanced.
 
 In an AVL tree, the heights of each node's two child subtrees differ by no more than one.
 
 AVL trees are quicker than red-black trees because they are more strictly balanced, but they require more memory.
 
-<h2> Properties </h2>
+###  Properties 
 
 - Each node is either red or black.
 - The root node is always black.
@@ -273,10 +283,10 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 1. make rotations.
 1. OR just recolor the nodes.
 
-<h2> Applications:</h2>
+###  Applications:
 - Used internally by Operating Systems.
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -285,16 +295,16 @@ AVL trees are quicker than red-black trees because they are more strictly balanc
 | <i>Delete</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 | <i>Search</i> | <code>O(logn)</code> | <code>O(logn)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
 
-<h1>Hash table</h1>
+## Hash table
 
 We have already discussed the several types of trees that may reach O(logn) time complexity for a variety of tasks, including search. It's an incredible progression from our humble beginnings, but the question remains: can we get better? What if we placed each item in a readily defined position, eliminating the need to look for it and eliminating the necessity to preserve ordering while inserting or removing items? Yes, we can potentially achieve O(1) time complexity in a data structure known as a "hash table." This data structure has an amazing performance in terms of time, but that benefit is offset by the requirement for greater space, as well as by being more complex and hence more difficult to understand and implement.
 
-<h2>Basic operations</h2>
+### Basic operations
 
 * <code>is_empty()</code>: it is self-explanatory.
 * <code>insert(elem)</code>:	append the provided element at the end of the vector.
@@ -303,7 +313,7 @@ We have already discussed the several types of trees that may reach O(logn) time
 * <code>delete(position)</code>:	remove the element from the vector at the specified position.
 * <code>traverse()</code>: sort vector elements between position start and position end.
 
-<h2>Hash function</h2>
+### Hash function
 
 This is a function that return an index for any input. 
 
@@ -315,7 +325,7 @@ This is a function that return an index for any input.
 
 To ensure that the distribution is uniform, we can use prime numbers both for the size of the array and in our hash function. For string we could compute the ASCII value for each character, add them together, and calculate modulo.
 
-<h2>Collisions</h2>
+### Collisions
 
 Problem: The output of two or more inputs is the same. To put it another way, no two pairs in the hash table should have the same key.
 
@@ -330,14 +340,14 @@ Solutions:
 - Quadratic probing: we trying slots 1,2,4,8... units far away.
 - Rehashing: we hash the result again in order to find an empty slot.
 
-<h2> Applications:</h2>
+###  Applications:
 
 - Databases: hashing is often easier than searching trees.
 - In large networks, lookup tables (lookup for IP addresses)</code>.
 - Histograms are a type of graph that shows the distribution of data (ex. frequencies of character occurrences in a string)</code>.
 - For substring search, the Rabin-Karp algorithm uses the hashing technique.
 
-<h2> Time complexity </h2>
+###  Time complexity 
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -346,7 +356,7 @@ Solutions:
 | <i>Delete</i> | <code>O(1)</code> | <code>O(n)</code> |
 | <i>Search</i> | <code>O(1)</code> | <code>O(n)</code> |
 
-<h2>Implementation</h2>
+### Implementation
 
 * <a href=””>C++</a>
 * <a href=””>Python</a>
