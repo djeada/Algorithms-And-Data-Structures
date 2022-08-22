@@ -126,7 +126,7 @@ One problem can be usually solve in many different ways. When choosing the algor
 
 Everyone knows that a single loop has linear complexity and nested loops have quadratic complexity.
 How then could we ever manage to achieve logarithmic complexity?
-Things aren't as simple as some tutorials make them out to be. 
+It turns out that things aren't as simple as some tutorials make them out to be. 
 
 Let's take a look at a standard example with a single loop and $O(1)$ complexity:
  
