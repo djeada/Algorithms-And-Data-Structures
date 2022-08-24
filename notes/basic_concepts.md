@@ -106,6 +106,7 @@ If we have $&#952;(n)$, then we also have $O(n)$ and  $&#937;(n)$.
 * It is a language used to describe existing algorithms and data structures.
 * The fact that an algorithm is O(n) does not imply that it will scale linearly. Only that it is bounded by afun ction of such a form.
 * It doesn't say anything about a specific run (which is usually dependent on other factors), only about general trends. So, if given favourably ordered data, an algorithm with worse complexity may outperform a "faster" algorithm.
+* Common overengineering practice is attempting to find a better (with smaller complexity) implementation of an existing working function when that function is not even close to being the application's bottleneck. 
 
 ## The Running time of a program
 
