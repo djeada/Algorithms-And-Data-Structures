@@ -80,6 +80,11 @@ The algorithm execution tends to (but it's not always the case) get slower as th
 * Binary search is a logarithmic complexity algorithm. If I have a sorted array of 1000 elements and a sorted array of 10000 elements, it should take roughly twice as long to find an element in the second array. 
 
 ### Formal definitions
+When analyzing the asymptotic runtime of algorithms, we frequently cannot compute the runtime exactly.
+Instead, we estimate it using Big-O and Big-&#937.
+That is, Big-O is an upper bound on the runtime of a given algorithm, and Big–&#937 is a lower bound on the runtime.
+This means that the algorithm cannot run slower than its Big-O runtime or faster than its Big–&#937 in a particular situation .
+However, for some algorithms, the runtime can be precisely computed because it is always the same (therefore Big-O = Big–&#937 = Big–&#952).
 
 #### Big–O (Upper Bound)
 
