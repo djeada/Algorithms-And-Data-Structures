@@ -10,7 +10,7 @@ Implementations of various algorithms.
 
 <h1>About</h1>
 
-Since I initially attended the course at my university in 2015, Algorithms and Data Structures have attracted my attention. I find it really beneficial to return to the fundamentals on a regular basis, especially while learning a new language. While learning, I usually find it helpful to compare my approach to that of others. Since this is my n'th iteration of the process, I wanted to share my code with others so that they, too, may benefit from it.
+Since I initially attended the course at my university in 2015, Algorithms and Data Structures have attracted my attention. I find it really beneficial to return to the fundamentals on a regular basis, especially while learning a new language. Since this is my n'th iteration of the process, I wanted to share my code with the world so everyone may benefit from it.
 
 The code is written in two of my favorite programming languages: C++ and Python. To the best of my ability, I adhered to modern practices.
 
