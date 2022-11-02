@@ -420,7 +420,7 @@ python -m unittest discover -p 'test*.py'
         </tr>
         <tr>
             <td>5</td>
-            <td>Add numbes given as strings</td>
+            <td>Add numbers given as strings</td>
             <td><a>Python</a></td>
             <td><a>Cpp</a></td>
         </tr>
