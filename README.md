@@ -8,7 +8,7 @@
 
 Implementations of various algorithms.
 
-<h1>About</h1>
+## About
 
 Since I initially attended the course at my university in 2015, Algorithms and Data Structures have attracted my attention. I find it really beneficial to return to the fundamentals on a regular basis, especially while learning a new language. Since this is my n'th iteration of the process, I wanted to share my code with the world so everyone may benefit from it.
 
@@ -16,7 +16,7 @@ The code is written in two of my favorite programming languages: C++ and Python.
 
 Aside from the code, you'll come across various comprehensive notes that I wrote down while learning the subject.
 
-<h1>Requirements</h1>
+## Requirements
 
 For C++ projects you will need:
 * C++ compiler supporting C++14
@@ -27,10 +27,10 @@ For Python projects you will need:
 
 No additional libraries or modules are needed.
 
-<h1>How to run the examples?</h1>
+## How to run the examples?
 Each algorithm implementation is contained in its own subdirectory, which contains the source code, unit tests, and build configuration files. Each subdirectory is a distinct project that should be built independently.
 
-<h3>C++</h3>
+### C++
 
 To build a C++ project and run unit tests, go to the project directory and execute the following commands:
 
@@ -41,7 +41,7 @@ make
 ctest --verbose
 ```
 
-<h3>Python</h3>
+### Python
 
 Use the following commands to run Python unit tests from the project directory:
 
@@ -49,7 +49,7 @@ Use the following commands to run Python unit tests from the project directory:
 python -m unittest discover -p 'test*.py'
 ```
 
-<h1>Notes</h1>
+## Notes
 
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/basic_concepts.md">Basic concepts.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/collections_and_containers.md">Collections and containers.</a>
@@ -58,7 +58,7 @@ python -m unittest discover -p 'test*.py'
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/dynamic_programming.md">Dynamic programming.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/sorting.md">Sorting.</a>
 
-<h1>List of projects</h1>
+## List of projects
 
 <h2>Collections</h2>
 <table>
@@ -480,3 +480,12 @@ python -m unittest discover -p 'test*.py'
 * https://cp-algorithms.com/
 * https://www.personal.kent.edu/~rmuhamma/Compgeometry/compgeom.html
 * https://codeahoy.com/learn/cprogramming/toc/
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
+
