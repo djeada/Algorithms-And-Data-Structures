@@ -23,6 +23,8 @@ Backtracking is often referred to as "depth-first search!
 
 ## Dynamic Programming
 
+Dynamic programming (DP) is a backtracking search algorithm with memoization (i.e. partial results are saved) whose goal is to find a minimum cost path from state ss to an end state sendsend. It can potentially have exponential savings compared to traditional graph search algorithms, and has the property to only work for acyclic graphs.
+
 A lot of problems dealing with optimizing some quantity can be solved using three different approaches: 
 
 1.  A brute force top-down recursive approach (recursion).
