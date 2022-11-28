@@ -7,7 +7,7 @@ Since it can reject a large number of candidates with a single test, backtrackin
 
 Backtracking is a useful technique for solving constraint satisfaction problems like combinatorial optimization.
 
-<h1>The method </h1>
+## The method 
 
 The nodes of a tree structure, the possible search tree, are used to represent the partial candidates. Each partial candidate is the parent of candidates that differ by a single extension step from it. The tree's leaves represent partial candidates who can't be expanded any further.
 
@@ -19,7 +19,7 @@ Backtracking is often referred to as "depth-first search!
 - If not, the node is skipped.
 - If yes, recursively enumerates all subtrees of the node.
 
-<h1>8 Queens problem </h1>
+## 8 Queens problem 
 
 The problem of arranging N chess queens on a NxN chessboard in such a way that none of them threaten each other.
 
