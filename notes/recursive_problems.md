@@ -172,3 +172,11 @@ The problem of arranging N chess queens on a NxN chessboard in such a way that n
 The problem was originally intended for eight queens. This was a topic that Gauss studied.
 
 This problem was used by Dijkstra to demonstrate the influence of formal programming.
+
+## Minimax
+
+Game tree A game tree is a tree that describes the possibilities of a game. In particular, each node is a decision point for a player and each root-to-leaf path is a possible outcome of the game.
+
+Minimax The goal of minimax policies is to find an optimal policy against an adversary by assuming the worst case, i.e. that the opponent is doing everything to minimize the agent's utility.
+
+Alpha-beta pruning Alpha-beta pruning is a domain-general exact method optimizing the minimax algorithm by avoiding the unnecessary exploration of parts of the game tree. To do so, each player keeps track of the best value they can hope for (stored in αα for the maximizing player and in ββ for the minimizing player). At a given step, the condition β<αβ<α means that the optimal path is not going to be in the current branch as the earlier player had a better option at their disposal.
