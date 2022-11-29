@@ -4,7 +4,9 @@ Many real life situations involve objects that are connected in some way to othe
 
 * underground tunnel network;
 * network of pipes;
-* carbon atoms in a molecule.
+* carbon atoms in a molecule;
+* task scheduling;
+* spread of a disease;
 * railway map;
 * cities linked by flights;
 * countries and their political alliances.
@@ -13,24 +15,29 @@ To model such examples, we will use a data structure known as a graph.
 
 ## Graph terminology
 
+
 There is a lot of vocabulary that allows us to exactly define graphs.
 
-A graph <i>G</i> consists of a set <code>V(G)</code> called vertices (or points or nodes) together with a set <code>E(G)</code> of pairs of vertices. 
-Each pair <code>{x, y} ∈ E(G)</code> is called an edge (or link or line) of <i>G</i>.
+A graph $G$ consists of a set $V(G)$ called vertices (or points or nodes) together with a set $E(G)$ of pairs of vertices. 
+Each pair $\\{x, y\\} \in E(G)$ is called an edge (or link or line) of $G$.
 
-If <code>{x, y} ∈ E(G)</code>, we say that <i>x</i> and <i>y</i> are <b>adjacent</b> to each other. The number of vertices adjacent to <i>v</i> is called the degree of <i>v</i>. The sum of the degrees of the vertices of a graph is even.
+If $\\{x, y\\} \in E(G)$, we say that $x$ and $y$ are <b>adjacent</b> to each other. The number of vertices adjacent to $v$ is called the degree of $v$. The sum of the degrees of the vertices of a graph is even.
 
-<b>A path</b> of length <i>n</i> in a graph is a sequence of vertices <code>v_1 ∼ v_2 ∼ ··· ∼ v_(n+1)</code> such that <code>(v_i, v_(i+1)) ∈ E(G)</code> and vertices <code>{v_1, v_2,...,v_(n+1)}</code> are distinct.
+<b>A path</b> of length $n$ in a graph is a sequence of vertices $v_1 ∼ v_2 ∼ ··· ∼ v_(n+1)$ such that $(v_i, v_{i+1}) \in E(G)$ and vertices $\\{v_1, v_2,...,v_{n+1}\\}$ are distinct.
 
-<b>A cycle</b> of length n is a sequence of vertices <code>v_1 ∼ v_2 ∼ ··· v+n ∼ v_(n+1)</code> such that <code>v_1 = v_(n+1), (v_i, v_(i+1)) ∈ E(G)</code> and therefore only vertices <code>{v_1, v_2,...,v_n}</code> are distinct.
+<b>A cycle</b> of length n is a sequence of vertices $v_1 ∼ v_2 ∼ ··· v+n ∼ v_{n+1}$ such that $v_1 = v_{n+1}, (v_i, v_{i+1}) \in E(G)$ and therefore only vertices $\\{v_1, v_2,...,v_n\\}$ are distinct.
 
-<b>The distance</b> between two vertices <i>x</i> and <i>y</i> in a graph is the length of the shortest path between them.
+<b>The distance</b> between two vertices $x$ and $y$in a graph is the length of the shortest path between them.
 
-In a <b>simple graph</b>  has no <i>self-loops</i> (i.e., edges connected at both ends to the same vertex) and no more than one edge connecting any pair of vertices.
+In a <b>simple graph</b>  has no $self-loops$ (i.e., edges connected at both ends to the same vertex) and no more than one edge connecting any pair of vertices.
 
 In a <b>directed graph</b>, an edge is an ordered pair of vertices, and hence has a direction. In directed graphs, edges are often called arcs. In <b>undirected graphs</b>, we assume that every edge can be considered as going both ways, that is, an edge between A and B can be viewed as a way from A to B and from B to A.
 
 In a <b>weighted graph</b>, each of the edges is assigned a weight (usually a non-negative integer).
+
+* Binary weight: A weight of 0 or 1 indicates whether or not a connection exists between two nodes.
+* Numeric weight: reflects the strength of a node's relationship to other nodes.
+* Normalized weight: A numeric weight option in which all of a node's outgoing edges add up to one. 
 
 An undirected graph is <b>connected</b> if every pair of vertices is connected by a path. The concept of connection has two unique variants in directed graphs: 
 
