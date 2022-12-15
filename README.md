@@ -28,7 +28,8 @@ For Python projects you will need:
 No additional libraries or modules are needed.
 
 ## How to run the examples?
-Each algorithm implementation is contained in its own subdirectory, which contains the source code, unit tests, and build configuration files. Each subdirectory is a distinct project that should be built independently.
+Each algorithm implementation has its own subdirectory including the source code, unit tests, and build configuration files.
+Each subdirectory is a separate project that should be built separately.
 
 ### C++
 
@@ -47,6 +48,14 @@ Use the following commands to run Python unit tests from the project directory:
 
 ```bash
 python -m unittest discover -p 'test*.py'
+```
+
+## Formatting conventions
+
+For CMake files we use <a href="https://github.com/cheshirekow/cmake_format">cmake-format</a>. For example you can format the *CMakeLists.txt* in the following way:
+
+```bash
+cmake-format CMakeLists.txt -i
 ```
 
 ## Notes
