@@ -69,7 +69,7 @@ cmake-format CMakeLists.txt -i
 
 ## List of projects
 
-<h2>Collections</h2>
+### Collections
 <table>
     <thead>
         <tr>
@@ -83,61 +83,61 @@ cmake-format CMakeLists.txt -i
             <td>1</td>
             <td>Linked List</td>
             <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/linked_list/src/linked_list.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>Vector</td>
             <td><a>Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/vector">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/vector/src/vector.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Stack</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/stack">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/stack">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/stack/src/stack.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Queue</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/queue">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/queue">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/queue/src/queue.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>Heap</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/heap">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/heap">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/heap/src/heap.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
-            <td>BST</td>
+            <td>Binary Search Tree</td>
             <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/binary_search_tree/src/binary_search_tree.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
             <td>Avl Tree</td>
             <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/avl_tree/src/avl_tree.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>8</td>
             <td>Red Black Tree</td>
             <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/red_black_tree/src/avl_tree.cpp">Cpp</a></td>
         </tr>
         <tr>
             <td>9</td>
             <td>Hash Table</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hashtable">Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/hash_table/src/hash_table.cpp">Cpp</a></td>
         </tr>
     </tbody>
 </table>
 
 
-<h2>Graphs</h2>
+### Graphs
 <table>
     <thead>
         <tr>
@@ -198,7 +198,7 @@ cmake-format CMakeLists.txt -i
     </tbody>
 </table>
 
-<h2>Backtracking</h2>
+### Backtracking
 <table>
     <thead>
         <tr>
@@ -259,7 +259,7 @@ cmake-format CMakeLists.txt -i
     </tbody>
 </table>
 
-<h2>Dynamic Programming</h2>
+### Dynamic Programming
 <table>
     <thead>
         <tr>
@@ -350,7 +350,7 @@ cmake-format CMakeLists.txt -i
     </tbody>
 </table>
 
-<h2>Sorting</h2>
+### Sorting
 <table>
     <thead>
         <tr>
@@ -393,7 +393,7 @@ cmake-format CMakeLists.txt -i
     </tbody>
 </table>
 
-<h2>Brain Teasers</h2>
+### Brain Teasers
 <table>
     <thead>
         <tr>
@@ -497,4 +497,3 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
-
