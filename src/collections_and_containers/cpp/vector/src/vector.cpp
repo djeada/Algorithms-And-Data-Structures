@@ -1,4 +1,5 @@
 #include "vector.h"
+#include <stdexcept>
 
 template <class T> Vector<T>::Vector() : capacity(0), n(0), data(nullptr) {}
 
@@ -42,6 +43,8 @@ template <class T> void Vector<T>::push_back(const T &v) {
   data[n++] = v;
 }
 
+template <class T> bool Vector<T>::empty() { return n == 0; }
+
 template <class T> T Vector<T>::pop_back() { return data[n--]; }
 
 template <class T> void Vector<T>::reserve(unsigned int newCapacity) {
@@ -67,6 +70,8 @@ template <class T> void Vector<T>::resize(unsigned int newSize) {
 }
 
 template <class T> T &Vector<T>::operator[](unsigned int index) {
+  if (index >= n)
+    throw std::out_of_range("Index out of range");
   return data[index];
 }
 

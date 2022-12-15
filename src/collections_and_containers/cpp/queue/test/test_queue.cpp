@@ -1,43 +1,77 @@
 #include "queue.h"
 #include "gtest/gtest.h"
 
-TEST(QueueTest, AddingSingleElement) {
-  Queue<int> q;
-
-  int value = 10;
-  int expectedSize = 1;
-
-  q.enqueue(value);
-  EXPECT_EQ(q.size(), expectedSize);
-  EXPECT_EQ(q.peek(), value);
+TEST(QueueTest, EmptyQueue) {
+  Queue<int> queue;
+  ASSERT_TRUE(queue.isEmpty());
 }
 
 TEST(QueueTest, AddingMultipleElements) {
-  Queue<char> q;
+  Queue<int> queue;
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
+  EXPECT_EQ(queue.size(), 3);
 
-  char value1 = 'a';
-  char value2 = 'b';
-  char value3 = 'c';
-  int expectedSize = 3;
+  EXPECT_EQ(queue.dequeue(), 1);
+  EXPECT_EQ(queue.dequeue(), 2);
+  EXPECT_EQ(queue.dequeue(), 3);
 
-  q.enqueue(value1);
-  q.enqueue(value2);
-  q.enqueue(value3);
-  EXPECT_EQ(q.dequeue(), value1);
-  EXPECT_EQ(q.dequeue(), value2);
-  EXPECT_EQ(q.dequeue(), value3);
+  ASSERT_TRUE(queue.isEmpty());
+
+  // adding the same elements in different order
+  queue.enqueue(3);
+  queue.enqueue(1);
+  queue.enqueue(2);
+
+  EXPECT_EQ(queue.dequeue(), 3);
+  EXPECT_EQ(queue.dequeue(), 1);
+  EXPECT_EQ(queue.dequeue(), 2);
+}
+
+TEST(QueueTest, FrontAndBack) {
+  Queue<int> queue;
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
+
+  EXPECT_EQ(queue.front(), 1);
+  EXPECT_EQ(queue.back(), 3);
+}
+
+TEST(QueueTest, FrontWhenEmpty) {
+  Queue<int> queue;
+  ASSERT_THROW(queue.front(), std::out_of_range);
+}
+
+TEST(QueueTest, BackWhenEmpty) {
+  Queue<int> queue;
+  ASSERT_THROW(queue.back(), std::out_of_range);
 }
 
 TEST(QueueTest, CopyConstructor) {
-  Queue<int> original;
+  Queue<int> queue;
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
 
-  int value1 = 1;
-  int value2 = 2;
-  int value3 = 3;
+  Queue<int> queue2(queue);
 
-  Queue<int> copied(original);
+  EXPECT_EQ(queue2.dequeue(), 1);
+  EXPECT_EQ(queue2.dequeue(), 2);
+  EXPECT_EQ(queue2.dequeue(), 3);
+}
 
-  // EXPECT_EQ(original.dequeue(), copied.dequeue());
-  // EXPECT_EQ(original.dequeue(), copied.dequeue());
-  // EXPECT_EQ(original.dequeue(), copied.dequeue());
+TEST(QueueTest, AssignmentOperator) {
+  Queue<int> queue;
+  queue.enqueue(1);
+  queue.enqueue(2);
+  queue.enqueue(3);
+
+  Queue<int> queue2;
+  queue2 = queue;
+
+  EXPECT_EQ(queue2.dequeue(), 1);
+  EXPECT_EQ(queue2.dequeue(), 2);
+  EXPECT_EQ(queue2.dequeue(), 3);
 }

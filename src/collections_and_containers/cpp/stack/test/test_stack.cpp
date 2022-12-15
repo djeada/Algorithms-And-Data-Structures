@@ -1,43 +1,74 @@
 #include "stack.h"
 #include "gtest/gtest.h"
 
-TEST(StackTest, AddingSingleElement) {
-  Stack<int> s;
-
-  int value = 10;
-  int expectedSize = 1;
-
-  s.push(value);
-  EXPECT_EQ(s.size(), expectedSize);
-  EXPECT_EQ(s.peek(), value);
+TEST(StackTest, EmptyStack) {
+  Stack<int> stack;
+  ASSERT_TRUE(stack.isEmpty());
 }
 
 TEST(StackTest, AddingMultipleElements) {
-  Stack<char> s;
+  Stack<int> stack;
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+  EXPECT_EQ(stack.size(), 3);
 
-  char value1 = 'a';
-  char value2 = 'b';
-  char value3 = 'c';
-  int expectedSize = 3;
+  EXPECT_EQ(stack.pop(), 3);
+  EXPECT_EQ(stack.pop(), 2);
+  EXPECT_EQ(stack.pop(), 1);
 
-  s.push(value1);
-  s.push(value2);
-  s.push(value3);
-  EXPECT_EQ(s.pop(), value3);
-  EXPECT_EQ(s.pop(), value2);
-  EXPECT_EQ(s.pop(), value1);
+  ASSERT_TRUE(stack.isEmpty());
+
+  // adding the same elements in different order
+  stack.push(3);
+  stack.push(1);
+  stack.push(2);
+
+  EXPECT_EQ(stack.pop(), 2);
+  EXPECT_EQ(stack.pop(), 1);
+  EXPECT_EQ(stack.pop(), 3);
+}
+
+TEST(StackTest, Top) {
+  Stack<int> stack;
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
+
+  EXPECT_EQ(stack.top(), 3);
+}
+
+TEST(StackTest, TopWhenEmpty) {
+  Stack<int> stack;
+  ASSERT_THROW(stack.top(), std::out_of_range);
+}
+
+TEST(StackTest, PopWhenEmpty) {
+  Stack<int> stack;
+  ASSERT_THROW(stack.pop(), std::out_of_range);
 }
 
 TEST(StackTest, CopyConstructor) {
-  Stack<int> original;
+  Stack<int> stack;
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
 
-  int value1 = 1;
-  int value2 = 2;
-  int value3 = 3;
+  Stack<int> stack2(stack);
+  EXPECT_EQ(stack2.pop(), 3);
+  EXPECT_EQ(stack2.pop(), 2);
+  EXPECT_EQ(stack2.pop(), 1);
+}
 
-  Stack<int> copied(original);
+TEST(StackTest, AssignmentOperator) {
+  Stack<int> stack;
+  stack.push(1);
+  stack.push(2);
+  stack.push(3);
 
-  // EXPECT_EQ(original.pop(), copied.pop());
-  // EXPECT_EQ(original.pop(), copied.pop());
-  // EXPECT_EQ(original.pop(), copied.pop());
+  Stack<int> stack2;
+  stack2 = stack;
+  EXPECT_EQ(stack2.pop(), 3);
+  EXPECT_EQ(stack2.pop(), 2);
+  EXPECT_EQ(stack2.pop(), 1);
 }

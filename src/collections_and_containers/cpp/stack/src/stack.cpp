@@ -1,9 +1,11 @@
 #include "stack.h"
 #include <stdexcept>
 
+#define DEFAULT_INIT_SIZE 10000
+
 template <class T>
 Stack<T>::Stack()
-    : data(new T[defaultInitSize]), n(0), maxSize(defaultInitSize) {}
+    : data(new T[DEFAULT_INIT_SIZE]), n(0), maxSize(DEFAULT_INIT_SIZE) {}
 
 template <class T> Stack<T>::Stack(const Stack &other) { copy(other); }
 
@@ -35,7 +37,7 @@ template <class T> void Stack<T>::expand() {
 
 template <class T> T Stack<T>::pop() {
   if (n <= 0)
-    throw std::invalid_argument(invalidSizeMsg);
+    throw std::out_of_range("Stack is empty");
 
   T element = data[--n];
 
@@ -49,9 +51,9 @@ template <class T> void Stack<T>::push(T element) {
   data[n++] = element;
 }
 
-template <class T> T Stack<T>::peek() {
+template <class T> T Stack<T>::top() {
   if (n <= 0)
-    throw std::invalid_argument(invalidSizeMsg);
+    throw std::out_of_range("Stack is empty");
 
   return data[n - 1];
 }

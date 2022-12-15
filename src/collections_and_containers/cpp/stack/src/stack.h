@@ -1,17 +1,14 @@
 #include <string>
 
-const std::string invalidSizeMsg = "Invalid Size";
-const int defaultInitSize = 10;
-
 template <class T> class Stack {
 
 public:
   Stack();
   Stack(const Stack &other);
   ~Stack();
-  T pop();
-  void push(T element);
-  T peek();
+  T pop();              // removes an element from the top of the stack
+  void push(T element); // adds an element to the top of the stack
+  T top();              // returns the element at the top of the stack
   int size();
   bool isEmpty();
   Stack &operator=(const Stack &other);

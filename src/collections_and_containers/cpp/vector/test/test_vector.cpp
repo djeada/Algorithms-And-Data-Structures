@@ -1,45 +1,117 @@
 #include "vector.h"
 #include "gtest/gtest.h"
 
-TEST(VectorTest, AddingSingleElement) {
-  Vector<int> v;
+TEST(VectorTest, EmptyVector) {
+  Vector<int> vector;
+  ASSERT_TRUE(vector.empty());
+}
 
-  int value = 10;
-  int expectedSize = 1;
+TEST(VectorTest, Clear) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
+  EXPECT_EQ(vector.size(), 3);
 
-  v.push_back(value);
-  EXPECT_EQ(v.size(), expectedSize);
-  EXPECT_EQ(v.back(), value);
+  vector.clear();
+  ASSERT_TRUE(vector.empty());
 }
 
 TEST(VectorTest, AddingMultipleElements) {
-  Vector<char> v;
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
 
-  char value1 = 'a';
-  char value2 = 'b';
-  char value3 = 'c';
-  int expectedSize = 3;
+  EXPECT_EQ(vector.size(), 3);
+  EXPECT_EQ(vector.front(), 1);
+  EXPECT_EQ(vector.back(), 3);
+}
 
-  v.push_back(value1);
-  v.push_back(value2);
-  v.push_back(value3);
-  EXPECT_EQ(v.size(), expectedSize);
-  std::cout << v.pop_back() << std::endl;
-  // EXPECT_EQ(v.pop_back(), value1);
-  // EXPECT_EQ(v.pop_back(), value2);
-  // EXPECT_EQ(v.pop_back(), value1);
+TEST(VectorTest, Front) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
+
+  EXPECT_EQ(vector.front(), 1);
+}
+
+TEST(VectorTest, Back) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
+
+  EXPECT_EQ(vector.back(), 3);
+}
+
+TEST(VectorTest, Resize) {
+  Vector<int> vector;
+  vector.resize(1111);
+  EXPECT_EQ(vector.size(), 1111);
+}
+
+TEST(VectorTest, Indexing) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
+
+  EXPECT_EQ(vector[0], 1);
+  EXPECT_EQ(vector[1], 2);
+  EXPECT_EQ(vector[2], 3);
 }
 
 TEST(VectorTest, CopyConstructor) {
-  Vector<int> original;
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
 
-  int value1 = 1;
-  int value2 = 2;
-  int value3 = 3;
+  Vector<int> vector2(vector);
+  EXPECT_EQ(vector2.size(), 3);
+  EXPECT_EQ(vector2[0], 1);
+  EXPECT_EQ(vector2[1], 2);
+  EXPECT_EQ(vector2[2], 3);
+}
 
-  Vector<int> copied(original);
+TEST(VectorTest, AssignmentOperator) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
 
-  // EXPECT_EQ(original.pop_back(), copied.pop_back());
-  // EXPECT_EQ(original.pop_back(), copied.pop_back());
-  // EXPECT_EQ(original.pop_back(), copied.pop_back());
+  Vector<int> vector2;
+  vector2 = vector;
+  EXPECT_EQ(vector2.size(), 3);
+  EXPECT_EQ(vector2[0], 1);
+  EXPECT_EQ(vector2[1], 2);
+  EXPECT_EQ(vector2[2], 3);
+}
+
+TEST(VectorTest, Iterator) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
+
+  Vector<int>::iterator it = vector.begin();
+  EXPECT_EQ(*it, 1);
+  ++it;
+  EXPECT_EQ(*it, 2);
+  ++it;
+  EXPECT_EQ(*it, 3);
+  ++it;
+  EXPECT_EQ(it, vector.end());
+}
+
+TEST(VectorTest, AcessingIllegalIndex) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.push_back(3);
+
+  ASSERT_THROW(vector[3], std::out_of_range);
+  ASSERT_THROW(vector[-1], std::out_of_range);
 }

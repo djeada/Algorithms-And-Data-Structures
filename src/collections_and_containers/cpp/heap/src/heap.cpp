@@ -1,100 +1,86 @@
 #include "heap.h"
+#include <stdexcept>
 
-template <class T>
-Heap<T>::Heap(std::function<bool(T, T)> comp) : data{T()}, comp(comp) {}
+template <class T> Heap<T>::Heap(std::function<bool(T, T)> comp) {
+  this->comp = comp;
+}
 
-template <class T>
-MinHeap<T>::MinHeap() : Heap<T>([](const T &a, const T &b) { return a < b; }) {}
-
-template <class T>
-MaxHeap<T>::MaxHeap() : Heap<T>([](const T &a, const T &b) { return a > b; }) {}
+template <class T> Heap<T>::Heap(const Heap &other) {
+  this->data = other.data;
+  this->comp = other.comp;
+}
 
 template <class T> void Heap<T>::push(const T &val) {
-  data.emplace_back(val);
+  data.push_back(val);
+  int index = data.size() - 1;
+  int parent = parentIdx(index);
 
-  auto index = data.size() - 1;
-  while (parentIdx(index) != -1 && comp(data[index], data[parentIdx(index)])) {
-    std::iter_swap(data.begin() + index, data.begin() + parentIdx(index));
-    index = parentIdx(index);
+  while (index > 0 && comp(data[index], data[parent])) {
+    std::swap(data[index], data[parent]);
+    index = parent;
+    parent = parentIdx(index);
   }
 }
 
 template <class T> T Heap<T>::pop() {
-  assertNotEmpty();
-
-  T firstElement = peek();
-  int index = 0;
-  data[index] = data.back();
-
-  data.erase(data.begin() + (data.size() - 1));
-
-  while ((leftNodeIdx(index) != -1 &&
-          comp(data[leftNodeIdx(index)], data[index])) ||
-         (rightNodeIdx(index) != -1 &&
-          comp(data[rightNodeIdx(index)], data[index]))) {
-
-    int leftIdx = leftNodeIdx(index);
-    int rightIdx = rightNodeIdx(index);
-
-    int swapIdx;
-    if (leftIdx == -1)
-      swapIdx = rightIdx;
-    else if (rightIdx == -1)
-      swapIdx = leftIdx;
-    else
-      swapIdx = comp(data[leftIdx], data[rightIdx]) ? leftIdx : rightIdx;
-
-    std::iter_swap(data.begin() + index, data.begin() + swapIdx);
-    index = swapIdx;
+  if (data.size() == 0) {
+    throw std::out_of_range("Heap is empty");
   }
 
-  return firstElement;
+  T val = data[0];
+  data[0] = data[data.size() - 1];
+  data.pop_back();
+
+  int index = 0;
+  int left = leftNodeIdx(index);
+  int right = rightNodeIdx(index);
+
+  while (left < data.size()) {
+    int swapIdx = left;
+    if (right < data.size() && comp(data[right], data[left])) {
+      swapIdx = right;
+    }
+
+    if (comp(data[swapIdx], data[index])) {
+      std::swap(data[swapIdx], data[index]);
+      index = swapIdx;
+      left = leftNodeIdx(index);
+      right = rightNodeIdx(index);
+    } else {
+      break;
+    }
+  }
+
+  return val;
 }
 
 template <class T> T Heap<T>::peek() {
-  assertNotEmpty();
+  if (data.size() == 0) {
+    throw std::out_of_range("Heap is empty");
+  }
 
-  if (isMaxHeap())
-    return data.front();
-
-  return data[1];
+  return data[0];
 }
 
-template <class T> void Heap<T>::assertNotEmpty() {
-  if (empty())
-    throw std::invalid_argument("Heap is empty.");
-}
+template <class T> unsigned int Heap<T>::size() { return data.size(); }
 
-template <class T> unsigned int Heap<T>::size() { return data.size() - 1; }
-
-template <class T> bool Heap<T>::empty() { return data.size() <= 1; }
+template <class T> bool Heap<T>::empty() { return data.size() == 0; }
 
 template <class T> bool Heap<T>::isMaxHeap() { return comp(2, 1); }
 
 template <class T> bool Heap<T>::isMinHeap() { return comp(1, 2); }
 
-template <class T> int Heap<T>::leftNodeIdx(int index) {
-  unsigned int result = index * 2;
-  if (result >= data.size())
-    return -1;
+template <class T> int Heap<T>::parentIdx(int index) { return (index - 1) / 2; }
 
-  return result;
-}
+template <class T> int Heap<T>::leftNodeIdx(int index) { return 2 * index + 1; }
 
 template <class T> int Heap<T>::rightNodeIdx(int index) {
-  unsigned int result = index * 2 + 1;
-  if (result >= data.size())
-    return -1;
-
-  return result;
+  return 2 * index + 2;
 }
 
-template <class T> int Heap<T>::parentIdx(int index) {
-  if (index <= 0)
-    return -1;
+template <class T> MinHeap<T>::MinHeap() : Heap<T>(std::less<T>()) {}
 
-  return index / 2;
-}
+template <class T> MaxHeap<T>::MaxHeap() : Heap<T>(std::greater<T>()) {}
 
 template class Heap<int>;
 template class Heap<float>;

@@ -1,9 +1,11 @@
 #include "queue.h"
 #include <stdexcept>
 
+#define DEFAULT_INIT_SIZE 1000
+
 template <class T>
 Queue<T>::Queue()
-    : data(new T[defaultInitSize]), n(0), maxSize(defaultInitSize), head(0),
+    : data(new T[DEFAULT_INIT_SIZE]), n(0), maxSize(DEFAULT_INIT_SIZE), head(0),
       tail(0) {}
 
 template <class T> Queue<T>::Queue(const Queue &other) { copy(other); }
@@ -42,7 +44,7 @@ template <class T> void Queue<T>::expand() {
 
 template <class T> T Queue<T>::dequeue() {
   if (n <= 0)
-    throw std::invalid_argument(invalidSizeMsg);
+    throw std::out_of_range("Queue is empty");
 
   T element = data[head];
   head = (head + 1) % maxSize;
@@ -60,11 +62,18 @@ template <class T> void Queue<T>::enqueue(T element) {
   n++;
 }
 
-template <class T> T Queue<T>::peek() {
+template <class T> T Queue<T>::front() {
   if (n <= 0)
-    throw std::invalid_argument(invalidSizeMsg);
+    throw std::out_of_range("Queue is empty");
 
-  return data[n - 1];
+  return data[head];
+}
+
+template <class T> T Queue<T>::back() {
+  if (n <= 0)
+    throw std::out_of_range("Queue is empty");
+
+  return data[tail];
 }
 
 template <class T> int Queue<T>::size() { return n; }
