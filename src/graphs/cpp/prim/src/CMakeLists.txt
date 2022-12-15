@@ -1,17 +1,8 @@
-
-add_library (prim "")
+add_library(prim "")
 
 target_sources(
-    prim
-    PRIVATE
-        prim.cpp
-        graph.cpp
-    PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/prim.h
-    )
+  prim
+  PRIVATE prim.cpp graph.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/prim.h)
 
-target_include_directories(
-    prim
-    PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
-    )
+target_include_directories(prim PUBLIC ${CMAKE_CURRENT_LIST_DIR})

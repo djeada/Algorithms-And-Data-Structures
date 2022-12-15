@@ -1,16 +1,8 @@
-
-add_library (merge_sort "")
+add_library(merge_sort "")
 
 target_sources(
-    merge_sort
-    PRIVATE
-        merge_sort.cpp
-    PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/merge_sort.h
-    )
+  merge_sort
+  PRIVATE merge_sort.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/merge_sort.h)
 
-target_include_directories(
-    merge_sort
-    PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
-    )
+target_include_directories(merge_sort PUBLIC ${CMAKE_CURRENT_LIST_DIR})

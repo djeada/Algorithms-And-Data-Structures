@@ -1,17 +1,6 @@
-add_executable(
-	unit_tests
-	test_kruskal.cpp
-)
+add_executable(unit_tests test_kruskal.cpp)
 
-target_link_libraries(
-	unit_tests
-	gtest_main
-	kruskal
-)
+target_link_libraries(unit_tests gtest_main kruskal)
 
-add_test(
-	NAME
-		unit
-	COMMAND
-		${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit_tests
-)
+add_test(NAME unit
+         COMMAND ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/unit_tests)
