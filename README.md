@@ -20,7 +20,7 @@ Aside from the code, you'll come across various comprehensive notes that I wrote
 
 For C++ projects you will need:
 * C++ compiler supporting C++14
-* Cmake 3.15+
+* CMake 3.15+
 
 For Python projects you will need:
 * Python 3.10+
@@ -512,7 +512,7 @@ cmake-format CMakeLists.txt -i
 * http://www.columbia.edu/~cs2035/oldcourses.html
 * https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/
 * https://sp19.datastructur.es/
-* https://www.csc.kth.se/~viggo/problemlist/M
+* https://www.csc.kth.se/~viggo/problemlist
 * https://cp-algorithms.com/
 * https://www.personal.kent.edu/~rmuhamma/Compgeometry/compgeom.html
 * https://codeahoy.com/learn/cprogramming/toc/
