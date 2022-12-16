@@ -47,7 +47,15 @@ ctest --verbose
 Use the following commands to run Python unit tests from the project directory:
 
 ```bash
-python -m unittest discover -p 'test*.py'
+python -m unittest discover -v
+```
+
+### Using BASH script
+
+You can also check the unit tests in all subprojects using the utility script *run_tests.sh*, which is located in the project directory: 
+
+```bash
+./run_tests.sh
 ```
 
 ## Formatting conventions
