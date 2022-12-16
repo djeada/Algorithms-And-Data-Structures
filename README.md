@@ -154,6 +154,12 @@ cmake-format CMakeLists.txt -i
             <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/graph">Cpp</a></td>
         </tr>
         <tr>
+            <td>1</td>
+            <td>Is Bipartite?</td>
+            <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/graph">Python</a></td>
+            <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/graph">Cpp</a></td>
+        </tr>
+        <tr>
             <td>2</td>
             <td>BFS</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bfs">Python</a></td>
@@ -341,10 +347,10 @@ cmake-format CMakeLists.txt -i
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/longest_common_subsequence">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/longest_common_subsequence">Cpp</a></td>
         </tr>
-        <tr>
-            <td>13</td>
-            <td>Knuth-Morris-Pratt</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/kmp">Python</a></td>
+         <tr>
+            <td>14</td>
+            <td>Minimum insertions to form a palindrome</td>
+            <td><a href="">Python</a></td>
             <td><a href="">Cpp</a></td>
         </tr>
     </tbody>
@@ -460,6 +466,18 @@ cmake-format CMakeLists.txt -i
         <tr>
             <td>10</td>
             <td>Lowest common ancestor of a binary tree</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>LRU Cache</td>
+            <td><a>Python</a></td>
+            <td><a>Cpp</a></td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>Randomize An Array</td>
             <td><a>Python</a></td>
             <td><a>Cpp</a></td>
         </tr>
