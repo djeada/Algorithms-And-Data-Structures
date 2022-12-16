@@ -74,6 +74,7 @@ cmake-format CMakeLists.txt -i
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/backtracking.md">Backtracking.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/dynamic_programming.md">Dynamic programming.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/sorting.md">Sorting.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/brain_teasers.md">Brain teasers.</a>
 
 ## List of projects
 
