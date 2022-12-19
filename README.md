@@ -6,15 +6,13 @@
 <a href=""><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
 </div>
 
-Implementations of various algorithms.
+This repository contains a collection of projects in C++ and Python that implement various data structures and algorithms. The projects are organized by language and topic, and include detailed explanations and examples to help you understand how they work.
 
 ## About
 
-Since I initially attended the course at my university in 2015, Algorithms and Data Structures have attracted my attention. I find it really beneficial to return to the fundamentals on a regular basis, especially while learning a new language. Since this is my n'th iteration of the process, I wanted to share my code with the world so everyone may benefit from it.
+As someone who has been captivated by Algorithms and Data Structures since my first encounter with the subject at university in 2015, I have come to value the importance of regularly revisiting the fundamentals. This is especially true when learning a new programming language, as it helps to build a strong foundation of understanding. With this in mind, I have decided to share my code and notes on Algorithms and Data Structures with the wider community.
 
-The code is written in two of my favorite programming languages: C++ and Python. To the best of my ability, I adhered to modern practices.
-
-Aside from the code, you'll come across various comprehensive notes that I wrote down while learning the subject.
+My code is written in two of my favorite programming languages, C++ and Python, and I have made a conscious effort to adhere to modern best practices. Along with the code, I have also included comprehensive notes that I took while learning the topic. These notes are intended to provide additional context and understanding, and may be particularly helpful for those who are new to the subject.
 
 ## Requirements
 
