@@ -16,41 +16,40 @@ My code is written in two of my favorite programming languages, C++ and Python, 
 
 ## Requirements
 
-For C++ projects you will need:
-* C++ compiler supporting C++14
-* CMake 3.15+
+The following requirements are necessary to build and run the code in this repository:
 
-For Python projects you will need:
-* Python 3.10+
+* For C++ projects:
+  - A C++ compiler supporting C++14
+  - CMake 3.15 or later
+* For Python projects:
+  - Python 3.10 or later
 
-No additional libraries or modules are needed.
+No additional libraries or modules are required.
 
-## How to run the examples?
-Each algorithm implementation has its own subdirectory including the source code, unit tests, and build configuration files.
-Each subdirectory is a separate project that should be built separately.
+## Running the examples
+Each algorithm implementation has its own subdirectory, including the source code, unit tests, and build configuration files. Each subdirectory is a separate project that should be built and tested individually.
 
 ### C++
 
-To build a C++ project and run unit tests, go to the project directory and execute the following commands:
+To build and test a C++ project, follow these steps:
 
-```bash
-mkdir -p build && cd build
-cmake ..
-make
-ctest --verbose
-```
+1. Navigate to the project directory.
+1. Create a build directory and enter it: `mkdir -p build && cd build`
+1. Generate the build files with CMake: `cmake ..`
+1. Build the project: `make`
+1. Run the unit tests: `ctest --verbose`
 
 ### Python
 
-Use the following commands to run Python unit tests from the project directory:
+To test a Python project, use the following command from the project directory:
 
 ```bash
 python -m unittest discover -v
 ```
 
-### Using BASH script
+### Using the utility script
 
-You can also check the unit tests in all subprojects using the utility script *run_tests.sh*, which is located in the project directory: 
+You can also use the `run_tests.sh` utility script to run the unit tests for all subprojects. To do so, execute the following command from the root directory of the repository:
 
 ```bash
 ./run_tests.sh
@@ -58,10 +57,27 @@ You can also check the unit tests in all subprojects using the utility script *r
 
 ## Formatting conventions
 
-For CMake files we use <a href="https://github.com/cheshirekow/cmake_format">cmake-format</a>. For example you can format the *CMakeLists.txt* in the following way:
+### C++
+
+We follow the <a href="https://google.github.io/styleguide/cppguide.html">Google C++ Style Guide</a> and use clang-format to automatically format the code.
+
+```bash
+find . -regex '.*\.\(cpp\|hpp\|cu\|c\|h\)' -exec clang-format -style=file -i {} \;
+```
+
+### CMake
+For CMake files, we use <a href="https://github.com/cheshirekow/cmake_format">cmake-format</a> to ensure a consistent style. To format a CMakeLists.txt file, use the following command:
 
 ```bash
 cmake-format CMakeLists.txt -i
+```
+
+### Python
+
+We follow the <a href="https://peps.python.org/pep-0008/">PEP 8 - Style Guide for Python Code</a> and use black to automatically format the code.
+
+```bash
+black .
 ```
 
 ## Notes
