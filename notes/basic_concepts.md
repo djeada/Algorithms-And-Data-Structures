@@ -1,27 +1,22 @@
+## Data Structures and Algorithms: An Introduction
+
+Data structures and algorithms are fundamental concepts in computer science that deal with the organization and manipulation of data. A data structure is a specific way of organizing and storing data in a computer, while an algorithm is a set of well-defined steps for solving a problem or performing a task. In this article, we will explore the basics of data structures and algorithms, their importance, and how they are used in practice.
+
 ## Data Structures
 
-The term data structure refers to a specific method of organizing data for specific types of operations. In other words, a data structure provides a method of arranging all data items that takes into account not just the pieces contained but also their relationships to one another. The phrase data structure refers to the method through which data is stored. We usually think about data structures without getting bogged down in implementation details of certain programming languages or how data is stored in computer memory. This is why abstract mathematical representations of data structures and data types were developed.
+A data structure is a way of organizing and storing data in a computer so that it can be accessed and modified efficiently. Different types of data structures are suitable for different kinds of applications, and some are highly specialized to specific tasks. Some common data structures include:
 
-* Primitive data structures: fundamental data structures that operate directly on machine instructions.
-* Non primitive data structures: more complex, developed from primitive data structures.
-
-### Linear data structure
-
-* arrays.
-* stacks
-* queues
-* linked lists
-
-### Non linear data structure
-
-* graphs
-* trees
+* Arrays: An array is a contiguous block of memory that stores a fixed number of elements of the same data type. Arrays are efficient for storing and accessing data, but they have a fixed size and are not well suited for inserting or deleting elements.
+* Stacks: A stack is a linear data structure that follows the "last-in, first-out" (LIFO) principle. Elements are added to the top of the stack (pushed) and removed from the top (popped). Stacks are often used to implement undo functionality in software applications.
+* Queues: A queue is a linear data structure that follows the "first-in, first-out" (FIFO) principle. Elements are added to the back of the queue (enqueued) and removed from the front (dequeued). Queues are commonly used to store data that needs to be processed in a specific order, such as tasks in a task queue or events in an event loop.
+* Linked lists: A linked list is a linear data structure that consists of a sequence of nodes, each containing a value and a reference to the next node. Linked lists are dynamic data structures that can grow or shrink as needed, and they allow for efficient insertion and deletion of elements.
+* Trees: A tree is a non-linear data structure that consists of nodes organized in a hierarchical structure. Each node in a tree has one or more children, and the node at the top of the hierarchy is called the root. Trees are often used to represent hierarchical relationships, such as the structure of a file system.
+* Graphs: A graph is a non-linear data structure that consists of a set of vertices (nodes) and a set of edges connecting them. Graphs can be directed (with edges having a direction) or undirected (with edges having no direction). Graphs are useful for representing relationships between objects and for solving problems such as finding the shortest path between two nodes.
 
 ![ds](https://user-images.githubusercontent.com/37275728/185381435-9335db5b-8c9a-4e74-87dc-deac3c0356f1.png)
 
 ## Algorithms
-An algorithm is a set of instructions that each have a defined meaning and may be completed in a specified amount of time and effort. 
-An algorithm ends after processing a certain amount of instructions, regardless of the input values. 
+An algorithm is a set of instructions that are used to solve a specific problem or perform a specific task. Algorithms are designed to be efficient and effective, and they are used in many different fields, including computer science, mathematics, and engineering. There are many different types of algorithms, and they can be classified based on their characteristics, such as their time complexity and space complexity.. 
 
 Requirements of an algorithm:
 
@@ -31,135 +26,144 @@ Requirements of an algorithm:
 * Finiteness: the algorithm can not run ad infinitum. It ends after executing a finite number of steps.
 * Effectiveness: each instruction in addition to being specific must be feasible.
 
-### Algorithms as opposed to programs
+### Algorithms vs. Programs
 
-Programs (for example, operating systems) are exempted from the fourth requirement since an infinite loop may be used to make them run indefinitely. A computer program can, but does not have to, be used to implement an algorithm. They can be described in plain English just as well.
+Algorithms are typically designed to be efficient and to terminate after a finite number of steps. However, programs are not necessarily required to have these properties. For example, an operating system is a program that is designed to run indefinitely, and it may contain infinite loops that allow it to perform certain tasks repeatedly.
 
-### Diffrent programming paradigms
+While a computer program can be used to implement an algorithm, it is not always necessary to do so. An algorithm can be described in plain English or in a high-level programming language, such as Python or Java, without being implemented as a computer program.
 
-* <i>Imperative Programming</i> describes computing in terms of instructions that modify the program or data state.
-* <i>Declarative Programming</i> specifies what the program should do without describing how to do it.
+### Types of Algorithms
 
-### What algorithms I need to know?
+There are many different types of algorithms, and they can be classified based on their characteristics and the problems they are designed to solve. Some common types of algorithms include:
 
-There are no algorithms that every software engineer must know. 
-You read that correctly: you don't need to memorize ten sorting algorithms to be a productive developer. 
-If the algorithm is well-known, there is almost certainly a library that already implements it.
-That library is most likely well-tested and optimized for maximum performance.
-It's pointless to try to reinvent the wheel.
-All that you need to know is how to use external libraries and packages.
+* Sorting algorithms are used to sort data in a specific order, such as ascending or descending. There are many different sorting algorithms, including bubble sort, insertion sort, selection sort, and merge sort.
+* Searching algorithms are used to search for a specific element or value in a dataset. Some common searching algorithms include linear search, binary search, and depth-first search.
+* Graph algorithms are used to solve problems that involve graphs, such as finding the shortest path between two nodes or determining whether a graph is connected. Some common graph algorithms include Dijkstra's algorithm and the Floyd-Warshall algorithm. Algorithms
+* String algorithms are used to solve problems that involve strings, such as finding the longest common subsequence between two strings or searching for a specific pattern within a string. Some common string algorithms include the Knuth-Morris-Pratt algorithm and the Boyer-Moore algorithm.
 
-That being said, learning how known problems were solved is extremely beneficial, especially in the early stages of a programming journey.
-We study algorithms not to memorize the implementation so that we can write it down from memory someday, but to learn the programming mindset. 
+## What algorithms should I know as a software engineer?
+
+As a software engineer, it is not necessary to memorize and be able to implement every algorithm. Instead, it is more important to understand how to use existing libraries and packages that implement common algorithms, and to be able to choose the most appropriate algorithm for a given task based on its complexity and other trade-offs.
+
+That being said, learning about algorithms and how they work can be a valuable exercise, especially in the early stages of learning to program. Studying algorithms can help you develop a deeper understanding of the programming mindset and how to approach and solve problems. It can also give you a sense of the range of possibilities and the trade-offs involved in different approaches to solving problems. However, once you have a solid understanding of the principles of algorithm design and analysis, you can focus on using existing libraries and packages to solve problems, rather than reimplementing algorithms from scratch.
 
 ## Complexity of algorithms
 
-The <b>time complexity</b> of an algorithm is the number of times atomic operations are called while the algorithm is being executed, expressed as a function of the size of a problem.
+Complexity of algorithms refers to how long an algorithm takes to run, or how much memory it requires, as the size of the input increases. There are several different ways to measure the complexity of an algorithm, including best case, average case, and worst case complexity.
 
-The <b>space complexity</b> of an algorithm is the space needed by an algorithm to be completed, expressed as a function of the size of a problem.
+* Best case complexity refers to the shortest amount of time or space required by an algorithm for any possible input of a given size. For example, if an algorithm has a best case complexity of O(1), this means that the algorithm will always take a constant amount of time to run, no matter how large the input is.
+* Average case complexity refers to the average amount of time or space required by an algorithm for all possible inputs of a given size. This is often more difficult to analyze than best case complexity, as it requires taking into account the likelihood of different inputs and how they affect the running time of the algorithm.
+* Worst case complexity refers to the longest amount of time or space required by an algorithm for any possible input of a given size. This is often the most important measure of complexity, as it gives an upper bound on the running time of the algorithm.
+* Space complexity refers to the amount of memory required by an algorithm as the size of the input increases. This is important to consider when designing algorithms, as memory constraints can often be a limiting factor in the performance of an algorithm.
+* Time complexity refers to the amount of time required by an algorithm as the size of the input increases. This is the most commonly analyzed measure of complexity, as the running time of an algorithm is often the main factor that determines its performance.
 
-A problem's size is generally represented as an integer, and this is the number of items that are manipulated.
+### Rate of Growth
 
-The function f(n) describing the running time of an algorithm depends not only on the size "n" of the input data but also on the specific data. 
-We have the following three categories of cases:
+The rate of growth of an algorithm is a measure of how the running time or space complexity of the algorithm changes as the size of the input data increases. In other words, the complexity of an algorithm can be expressed in terms of the rate of growth. There are several different notations that are used to describe the rate of growth of an algorithm, including:
 
-1. Best Case : The best case is the smallest feasible value of f(n).
-1. The expected value of f(n) is known as the Average Case.
-1. Worst Case: The largest f(n) value for every key conceivable input.
+#### O-Notation
 
-## Rate of Growth
-
-The focus of notations describing the rate of growth is on the general trend of an algorithm.
-We don't care if an algorithm takes 1000 or 1012 steps; we only care about how it scales as input size changes. 
-
-### Intuition
-
-The algorithm execution tends to (but it's not always the case) get slower as the input gets larger.
-* It takes a constant amount of time to return the first element of an array. If I have an array of 1000 elements and an array of 5000 elements, it should take roughly the same amount of time to access the first element in both cases.
-* Summing all the elements of an array becomes linearly longer as the array size grows. If I have a 1000-element array and a 5000-element array, it should take roughly 5 times as long to sum the elements of the second array. 
-* Binary search is a logarithmic complexity algorithm. If I have a sorted array of 1000 elements and a sorted array of 10000 elements, it should take roughly twice as long to find an element in the second array. 
-
-### Formal definitions
-When analyzing the asymptotic runtime of algorithms, we frequently cannot compute the runtime exactly.
-Instead, we estimate it using Big $O$ and Big $&#937$.
-That is, Big $O$ is an upper bound on the runtime of a given algorithm, and Big $&#937$ is a lower bound on the runtime.
-This means that the algorithm cannot run slower than its Big $O$ runtime or faster than its Big $&#937$ in a particular situation.
-However, for some algorithms, the runtime can be precisely computed because it is always the same (therefore $Big O = Big &#937 = Big &#952$).
-
-#### Big–O (Upper Bound)
+O-notation is used to describe the asymptotic upper bound of the running time or space complexity of an algorithm.
 
 $f(n) = O(g(n))$, says that the growth rate of $f(n)$ is less than or equal $<=$ that of $g(n)$.
 
-#### Big–&#937; (Lower Bound)
-$f(n) = &#937;(g(n))$, says that the growth rate of $f(n)$ is greater than or equal to $>=$ that of $g(n)$.
+For example, if an algorithm has a time complexity of O(n), it means that the running time of the algorithm is upper-bounded by a linear function of the size of the input data.
 
-#### Big–&#952; (Same order)
-$f(n) = &#952;(g(n))$, says that the growth rate of $f(n)$ equals $=$ the growth rate of $g(n)$.
+#### Ω-Notation
 
-If we have $&#952;(n)$, then we also have $O(n)$ and  $&#937;(n)$.
+Ω-notation is used to describe the asymptotic lower bound of the running time or space complexity of an algorithm.
 
-### Rules for using big-O:
+$f(n) = Ω(g(n))$, says that the growth rate of $f(n)$ is greater than or equal to that of $g(n)$.
 
-1. Ignoring constant factors: $O(c f(n)) = O(f(n))$, where c is a constant; e.g. $O(5n) = O(n)$
-1. Ignoring smaller terms: If $a < b$ then $O(a+b) = O(b)$, for example $O(n^2 + n) = O(n^2)$
-1. Upper bound only: If $a < b$ then an $O(a)$ algorithm is also an $O(b)$ algorithm. For example, an $O(n)$ algorithm is also an $O(n^2)$ algorithm (but not vice versa).
-1. $n$ and $log n$ are "bigger" than any constant, for example $O(n + k) = O(n)$
+For example, if an algorithm has a time complexity of Ω(n), it means that the running time of the algorithm is lower-bounded by a linear function of the size of the input data.
 
-### Misconceptions
+#### Θ-Notation
 
-* Outside of academia, you will never be required to perform a formal proof to demonstrate the Big O of an algorithm.
-* It is a language used to describe existing algorithms and data structures.
-* The fact that an algorithm is O(n) does not imply that it will scale linearly. Only that it is bounded by afun ction of such a form.
-* It doesn't say anything about a specific run (which is usually dependent on other factors), only about general trends. So, if given favourably ordered data, an algorithm with worse complexity may outperform a "faster" algorithm.
-* Common overengineering practice is attempting to find a better (with smaller complexity) implementation of an existing working function when that function is not even close to being the application's bottleneck. 
+Θ-notation is used to describe the asymptotic average-case complexity of an algorithm.
 
-## The Running time of a program
+$f(n) = Θ(g(n))$, says that the growth rate of $f(n)$ is both upper-bounded and lower-bounded by the growth rate of $g(n)$.
 
-One problem can be usually solve in many different ways. When choosing the algorithm we should consider the following:
+For example, if an algorithm has a time complexity of Θ(n), it means that the running time of the algorithm is both upper-bounded and lower-bounded by a linear function of the size of the input data.
 
-1. We want an algorithm that is simple to comprehend, develop, and debug.
-1. We'd want an algorithm that makes good use of the computer's resources, preferably one that runs as quickly as feasible.
+It's important to note that these asymptotic notations only describe the growth rate of an algorithm as the size of the input data becomes very large. In practice, the actual running time of an algorithm may differ from its asymptotic complexity due to factors such as the specific input data, the hardware it is running on, and the implementation of the algorithm.
+
+### Examples of O-Notation
+
+* $O(1)$: Constant time complexity. The running time of the algorithm does not depend on the size of the input data. Examples include accessing an element in an array or retrieving a value from a hash table.
+* $O(log n)$: Logarithmic time complexity. The running time of the algorithm increases logarithmically with the size of the input data. Examples include binary search and inserting an element into a balanced binary search tree.
+* $O(n)$: Linear time complexity. The running time of the algorithm increases linearly with the size of the input data. Examples include linear search and iterating through an array.
+* $O(n log n)$: Linear logarithmic time complexity. The running time of the algorithm increases linearly with the size of the input data and logarithmically with the number of operations. Examples include merge sort and heapsort.
+* $O(n^2)$: Quadratic time complexity. The running time of the algorithm increases with the square of the size of the input data. Examples include bubble sort and selection sort.
+* $O(n^3)$: Cubic time complexity. The running time of the algorithm increases with the cube of the size of the input data. Examples include matrix multiplication and finding the transitive closure of a graph.
+* $O(2^n)$: Exponential time complexity. The running time of the algorithm increases exponentially with the size of the input data. Examples include the brute-force solution to the traveling salesman problem and generating all subsets of a set.
 
 ![big_o](https://user-images.githubusercontent.com/37275728/185381461-ec062561-1f55-4cf5-a3fa-d4cc0a2c06df.png)
 
+As you can see, the time complexity of an algorithm can have a significant impact on its performance. It is important to consider the time complexity of an algorithm when choosing which algorithm to use for a given problem.
+
+### Rules for using big-O:
+
+1. Ignoring constant factors: When analyzing the complexity of an algorithm, it is common to ignore constant factors because they do not affect the overall growth rate of the algorithm. For example, if an algorithm has a running time of $5n$ (where $n$ is the size of the input), it has the same complexity as an algorithm with a running time of $n$, because the constant factor of 5 does not affect the growth rate as $n$ gets larger.
+1. Ignoring smaller terms: When analyzing the complexity of an algorithm, it is also common to ignore terms that grow slower than the dominant term. For example, if an algorithm has a running time of $n^2 + n$, the dominant term is $n^2$, so the complexity of the algorithm is $O(n^2)$.
+1. Upper bound only: The Big O notation provides an upper bound on the growth rate of an algorithm's running time, so if an algorithm has a complexity of $O(a)$, it is also an $O(b)$ algorithm if $a < b$. However, if an algorithm has a complexity of $O(b)$, it is not necessarily an $O(a)$ algorithm if $a < b$, because the Big O notation does not provide a lower bound on the growth rate.
+1. $n$ and $log n$ are "bigger" than any constant: When analyzing the complexity of an algorithm, it is common to consider terms that grow at least as fast as $n$ or $log(n)$ to be "dominant" or "significant", because they grow faster than any constant term as $n$ gets larger. For example, in the complexity $O(n + k)$, the term $n$ is considered dominant because it grows at least as fast as $n$, so the complexity can be simplified to $O(n)$.
+
 ### Is it possible to develop O(1) algorithm for every problem?
 
-1. In fact, it is not even possible to formulate an algorithm for every problem. Example: https://en.m.wikipedia.org/wiki/Halting_problem
-2. Assuming the problem can be solved alogritmically, we can precompute the solutions for each and every possible input and store them in a massive hash table (access is $O(1)$ ). However, for many problems, this is not a feasible solution because the number of single possible inputs may be infinite. We simply do not always know the size of the problem ahead of time. 
-3. If precomputing is not an option, then $O(n)$ or even $O(nlogn)$ is the best we can get for many problems. For example, if we are given a list of numbers and we want to return the sum of those numbers, we must access each number in the list. There is no way to do better than $O(n)$. 
+* It is not always possible to develop an algorithm for every problem, even if the problem is solvable. For example, the Halting problem, which asks whether it is possible to determine whether a given computer program will halt or run forever, is undecidable, meaning that there is no algorithm that can solve it.
+* In some cases, it is possible to precompute the solutions to a problem and store them in a massive hash table or other data structure, which can provide constant-time access to the solutions. However, this is only feasible if the number of possible inputs is finite and small enough to fit in the available storage space. For many problems, the number of possible inputs may be infinite or too large to store, so precomputing is not a viable solution.
+* For many problems, the best we can do is an algorithm with a complexity of $O(n)$ or $O(nlogn)$, because the problem requires us to perform an operation on each element of an input of size $n$. For example, if we are given a list of numbers and we want to return the sum of those numbers, we must access each number in the list, which takes at least $O(n)$ time. In some cases, it may be possible to use a more efficient algorithm with a lower complexity, such as an $O(1)$ algorithm, if the problem has certain special properties that allow us to solve it more efficiently. However, this is not always possible.
 
-### When does an algorithm have O(logn) or O(nlogn) complexity? 
+### When does an algorithm have O(logn) or O(nlogn) complexity?
 
-Everyone knows that a single loop has linear complexity and nested loops have quadratic complexity.
-How then could we ever manage to achieve logarithmic complexity?
-It turns out that things aren't as simple as some tutorials make them out to be. 
+It is often said that a single loop has linear complexity and nested loops have quadratic complexity, but this is not always the case. The actual complexity of an algorithm depends on how the input size affects the number of iterations of the loop.
 
-Let's take a look at a standard example with a single loop and $O(1)$ complexity:
- 
-       while n > 0:
-           n -= 1
+Here are some examples of algorithms with different complexities:
 
-Let's modify it slightly to get $O(logn)$ complexity:
+1. The first algorithm has a complexity of $O(n)$, because the running time is directly proportional to the size of the input (in this case, $n$). Each iteration of the loop reduces the value of $n$ by 1, so the number of iterations is equal to the value of $n$ when the loop starts.
 
-        while n > 0:
-           n /= 2
+```
+ while n > 0:
+    n -= 1
+```
 
-Let's modify it slightly to get $O(nlogn)$ complexity:
+2. The second algorithm has a complexity of $O(log(n))$, because the running time is proportional to the number of times the loop can be iterated before the value of $n$ becomes 0. Each iteration of the loop halves the value of $n$, so the number of iterations is equal to the number of times $n$ can be halved before it becomes 0. This is the same as the number of times the integer value of $log(n)$ can be halved before it becomes 0, which is why the complexity is $O(log(n))$.
 
-        m = n
-        while m > 0:
-           k = n
-           while k > 0:
-              k /= 2
-           m -= 1
+```
+while n > 0:
+   n /= 2
+```
+
+3. The third algorithm has a complexity of $O(nlog(n))$, because the outer loop is iterated $n$ times and the inner loop is iterated $log(n)$ times for each iteration of the outer loop. The total number of iterations is therefore $n * log(n)$, which is why the complexity is $O(nlog(n))$.
+
+```
+m = n
+while m > 0:
+   k = n
+   while k > 0:
+      k /= 2
+   m -= 1
+```
+
+4. The fourth algorithm has a complexity of $O(log^2(n))$, because the outer loop is iterated $log(n)$ times and the inner loop is iterated $log(n)$ times for each iteration of the outer loop. The total number of iterations is therefore $log^2(n)$, which is why the complexity is $O(log^2(n))$.
+
+```
+m = n
+while m > 0:
+   k = n
+   while k > 0:
+      k /= 2
+   m /= 2
+```
+
+### Misconceptions
+
+* It is almost never necessary to formally prove the Big O complexity of an algorithm in practice, but understanding the theoretical complexity of an algorithm can be useful for choosing the most appropriate algorithm for a task and understanding its limitations and trade-offs.
+* While it is not necessary to define the Big O complexity of every piece of code, understanding the complexity of the algorithms and data structures you are using can help you make informed decisions about the scalability and efficiency of your code.
+* The Big O notation describes the upper bound on the growth rate of an algorithm's running time, but it does not necessarily predict the exact running time of an algorithm for a specific input size. It is a general way of comparing the scalability of different algorithms and does not take into account specific implementation details or the characteristics of the input data.
+* The actual running time of an algorithm for a given input size may be affected by factors such as the specific implementation of the algorithm, the characteristics of the input data, and the hardware and software environment.
+* Simple and readable code is often more important than optimizing for performance at the expense of complexity. Instead of trying to optimize every aspect of your code, it is often more effective to focus on identifying and addressing the actual bottlenecks.
 
 
-Let's modify it slightly to get $O(log^2n)$ complexity:
 
-        m = n
-        while m > 0:
-           k = n
-           while k > 0:
-              k /= 2
-           m /= 2
-       
+
