@@ -54,8 +54,8 @@ There are several ways to implement a linked list in different programming langu
 
 One common way to implement a linked list is to use a class that contains a value and a reference to the next element in the list. The class may also contain methods for performing operations on the list, such as adding or removing elements, or accessing the first or last element.
 
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/linked_list”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/linked_list”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/linked_list">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/linked_list">Python</a>
 
 ## Vector
 
@@ -100,8 +100,8 @@ Vectors are typically implemented using an array of elements, with additional me
 
 In some programming languages, vectors may be implemented using a linked list or other data structure under the hood. However, the Interface and time complexity of vectors should be similar regardless of the implementation details.
 
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/vector”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/vector”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/vector">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/vector">Python</a>
 
 ## Stack
 
@@ -137,8 +137,8 @@ In most programming languages, a stack can be easily implemented either with arr
 * A stack can be implemented with arrays in a way that the top element is always stored at the highest index of the array. This way, when we remove the top element, we can simply reduce the value of the top pointer by 1. The push operation can be done by incrementing the top pointer and placing the new element at the new top index. This implementation is simple, but it is not dynamic. Once the stack size is fixed, it cannot be changed.
 * A stack can be implemented with a linked list in a way that the top element is the head of the list. This way, when we remove the top element, we can simply change the head to point to the next element in the list. The push operation can be done by creating a new node and setting it as the new head of the list. This implementation is dynamic, because the stack size can be changed at any time. However, it requires the use of dynamic memory allocation, which can be slower and more complex than using arrays.
 
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/stack”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/stack”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/stack">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/stack">Python</a>
 
 ## Queue
 
@@ -171,8 +171,8 @@ A queue is a collection of entities that are maintained in a sequence and can be
 
 Queues can be implemented using arrays or linked lists. One way to implement a queue is to use a circular buffer, where the head and tail indices are incremented modulo the array size. Another way is to use a dynamic array, where the head and tail indices are incremented normally and the array is resized when it becomes full.
 
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/queue”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/simple_queue”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/queue">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/simple_queue">Python</a>
 
 ### Differences between stacks and queues
 
@@ -220,8 +220,8 @@ Since a heap is a complete binary tree, it can be efficiently represented using 
 1. The right child of an element with index `i` is placed at index `2*i + 1`.
 1. The parent of an element with index `i` is placed at index `floor(i/2)`.
     
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/heap”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/heap”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/heap">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/heap">Python</a>
 
 ## Binary search tree
 
@@ -284,8 +284,8 @@ To remove a value from the BST, we should do the following:
   - If the search value is less than the root value, remove it from the left sub-tree.
   - If the search value is greater than the root value, remove it from the right sub-tree.    
   
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/binary_search_tree”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/binary_search_tree”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/binary_search_tree">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/binary_search_tree">Python</a>
 
 ## AVL tree
 AVL trees (Adelson-Velsky and Landis trees) are self-balancing binary search trees. An AVL tree is a binary search tree that satisfies the following height-balanced property: for every node in the tree, the height of its left and right subtrees differ by at most 1.
@@ -339,8 +339,8 @@ To maintain the balance, AVL trees use what are known as rotation operations. Th
   - Perform a left rotation on the root node.
   - Update the heights of the affected nodes.
         
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/avl_tree”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/avl_tree”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/avl_tree">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/avl_tree">Python</a>
 
 ## Red-black tree
 A red-black tree is a self-balancing binary search tree that enforces a particular pattern of color assignment to the nodes. The height of the binary search tree determines how long it takes for BST operations to finish. In order to obtain the best results, we need keep the tree balanced. The main advantage of red-black trees is that they allow insertion and deletion operations to run in O(logn) time on average, while also ensuring that the tree remains balanced.
@@ -395,8 +395,8 @@ After performing these steps, the red-black tree should be balanced and all the 
 
 It is important to note that these rebalancing steps may need to be performed multiple times, depending on the structure of the tree and the location of the inserted or deleted node.
 
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/red_black_tree”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/red_black_tree”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/red_black_tree">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/red_black_tree">Python</a>
 
 ## Hash table
 
@@ -456,5 +456,5 @@ In chaining, each bucket is a linked list, and each key-value pair is inserted i
 
 In open addressing, the hash table is an array, and each key-value pair is stored in an array element. When a collision occurs, the hash table uses a probing sequence to find the next available array element to store the key-value pair. The most common probing sequences are linear probing and quadratic probing.
 
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/hash_table”>C++</a>
-* <a href=”https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hash_table”>Python</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/hash_table">C++</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hash_table">Python</a>
