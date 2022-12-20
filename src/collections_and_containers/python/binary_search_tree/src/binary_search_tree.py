@@ -1,13 +1,11 @@
-
-
 class Node:
     def __init__(self, data):
         self.data = data
         self.left = None
         self.right = None
 
+
 class BinarySearchTree:
-    
     def __init__(self):
         self.root = None
         self.n = 0
@@ -39,19 +37,6 @@ class BinarySearchTree:
         self.n -= 1
 
     def _remove(self, v, p):
-        '''
-        Search for value v in the tree rooted at p.
-        If the node containing v is found, remove it by:
-        1. If the node has no children, remove it by setting the parent's
-           reference to the node to None.
-        2. If the node has one child, remove it by setting the parent's reference
-           to the node to the node's child.
-        3. If the node has two children, replace the node's value with the
-              smallest value in the right subtree and remove the node containing
-              the smallest value in the right subtree.
-        4. The p is the root of the tree itself. Then the self.root needs to be 
-              set to None if there are no other nodes in the tree.
-        '''
         def _find_min(p):
             if p is None:
                 return None
@@ -75,8 +60,6 @@ class BinarySearchTree:
                 p.data = _find_min(p.right)
                 p.right = self._remove(p.data, p.right)
         return p
-
-
 
     def contains(self, v):
         return self._contains(v, self.root)
@@ -134,19 +117,18 @@ class BinarySearchTree:
         v.append(p.data)
         self._pre_order_traversal(p.left, v)
         self._pre_order_traversal(p.right, v)
-    
+
     def post_order_traversal(self):
         v = []
         self._post_order_traversal(self.root, v)
         return v
-    
+
     def _post_order_traversal(self, p, v):
         if p is None:
             return
         self._post_order_traversal(p.left, v)
         self._post_order_traversal(p.right, v)
         v.append(p.data)
-    
+
     def __str__(self):
         return str(self.in_order_traversal())
-

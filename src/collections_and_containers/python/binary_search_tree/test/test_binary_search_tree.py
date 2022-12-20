@@ -4,7 +4,6 @@ import unittest
 
 
 class TestBinarySearchTree(TestCase):
-
     def test_default_constructor(self):
         bst = BinarySearchTree()
         self.assertEqual(bst.size(), 0)
@@ -84,7 +83,6 @@ class TestBinarySearchTree(TestCase):
         self.assertTrue(bst.contains(3))
         self.assertTrue(bst.contains(7))
 
-
     def test_contains(self):
         bst = BinarySearchTree()
         bst.insert(0)
@@ -119,7 +117,7 @@ class TestBinarySearchTree(TestCase):
         self.assertFalse(bst.empty())
 
     def test_in_order_traversal(self):
-        '''
+        """
         Tree structure:
                 5
               /   \
@@ -127,7 +125,7 @@ class TestBinarySearchTree(TestCase):
             / \   / \
            2   4 6   8
         In-order traversal: 2 3 4 5 6 7 8
-        '''
+        """
         bst = BinarySearchTree()
         bst.insert(5)
         bst.insert(3)
@@ -143,7 +141,7 @@ class TestBinarySearchTree(TestCase):
         self.assertEqual(actual, expected)
 
     def test_pre_order_traversal(self):
-        '''
+        """
         Tree structure:
                 5
               /   \
@@ -151,7 +149,7 @@ class TestBinarySearchTree(TestCase):
             / \   / \
            2   4 6   8
         Pre-order traversal: 5 3 2 4 7 6 8
-        '''
+        """
         bst = BinarySearchTree()
         bst.insert(5)
         bst.insert(3)
@@ -167,7 +165,7 @@ class TestBinarySearchTree(TestCase):
         self.assertEqual(actual, expected)
 
     def test_post_order_traversal(self):
-        '''
+        """
         Tree structure:
                 5
               /   \
@@ -175,7 +173,7 @@ class TestBinarySearchTree(TestCase):
             / \   / \
            2   4 6   8
         Post-order traversal: 2 4 3 6 8 7 5
-        '''
+        """
         bst = BinarySearchTree()
         bst.insert(5)
         bst.insert(3)
@@ -190,5 +188,6 @@ class TestBinarySearchTree(TestCase):
 
         self.assertEqual(actual, expected)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

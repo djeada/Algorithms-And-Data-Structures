@@ -1,6 +1,4 @@
-
-
-'''
+"""
 #include <functional>
 #include <memory>
 #include <vector>
@@ -34,12 +32,14 @@ private:
   Node *tail;
   int n;
 };
-'''
+"""
+
 
 class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
+
 
 class LinkedList:
     def __init__(self):
@@ -61,11 +61,11 @@ class LinkedList:
         node.next = self.head
         self.head = node
         self.n += 1
-    
+
     def pop_back(self):
         if self.head is None:
             return None
-        
+
         last = self.head
         while last.next is not None:
             prev = last
@@ -75,14 +75,14 @@ class LinkedList:
             self.head = None
         else:
             prev.next = None
-        
+
         self.n -= 1
         return last.data
 
     def pop_front(self):
         if self.head is None:
             return None
-        
+
         node = self.head
         self.head = node.next
         self.n -= 1
@@ -96,7 +96,7 @@ class LinkedList:
     def back(self):
         if self.head is None:
             return None
-        
+
         node = self.head
         while node.next is not None:
             node = node.next
@@ -115,12 +115,12 @@ class LinkedList:
     def remove(self, v):
         if self.head is None:
             return
-        
+
         if self.head.data == v:
             self.head = self.head.next
             self.n -= 1
             return
-        
+
         node = self.head
         while node.next is not None:
             if node.next.data == v:
@@ -128,7 +128,7 @@ class LinkedList:
                 self.n -= 1
                 return
             node = node.next
-    
+
     def __iter__(self):
         node = self.head
         while node is not None:
@@ -137,6 +137,6 @@ class LinkedList:
 
     def __str__(self):
         return str(list(self))
-    
+
     def __repr__(self):
         return str(self)

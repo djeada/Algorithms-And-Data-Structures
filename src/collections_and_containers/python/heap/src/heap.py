@@ -1,64 +1,91 @@
-class Heap:
-    def __init__(self, size=10):
-        self.size = size
-        self.Heap = [0] * self.size
-        self.pos = -1
+import abc
 
-    def full(self):
-        if self.pos == self.size:
-            return True
+
+class Heap(abc.ABC):
+    def __init__(self, comp: callable):
+        self.data = []
+        self.comp = comp
+
+    def __copy__(self):
+        new_heap = self.__class__(self.comp)
+        new_heap.data = self.data[:]
+        return new_heap
+
+    def push(self, val):
+        self.data.append(val)
+        self._bubble_up(self.size() - 1)
+
+    def pop(self):
+        if self.empty():
+            raise IndexError("Cannot pop from an empty heap")
+        self._swap(0, self.size() - 1)
+        val = self.data.pop()
+        self._bubble_down(0)
+        return val
+
+    def peek(self):
+        if self.empty():
+            raise IndexError("Cannot peek at an empty heap")
+        return self.data[0]
+
+    def size(self):
+        return len(self.data)
+
+    def empty(self):
+        return self.size() == 0
+
+    def is_max_heap(self):
+        return self.comp(2, 1)
+
+    def is_min_heap(self):
+        return self.comp(1, 2)
+
+    def _bubble_up(self, index):
+        if index == 0:
+            return
+        parent = self._parent(index)
+        if self.comp(self.data[index], self.data[parent]):
+            self._swap(index, parent)
+            self._bubble_up(parent)
+
+    def _bubble_down(self, index):
+        left = self._left(index)
+        right = self._right(index)
+        smallest = index
+        if left < self.size() and self.comp(self.data[left], self.data[smallest]):
+            smallest = left
+        if right < self.size() and self.comp(self.data[right], self.data[smallest]):
+            smallest = right
+        if smallest != index:
+            self._swap(index, smallest)
+            self._bubble_down(smallest)
+
+    def _parent(self, index):
+        return (index - 1) // 2
+
+    def _left(self, index):
+        return 2 * index + 1
+
+    def _right(self, index):
+        return 2 * index + 2
+
+    def _swap(self, i, j):
+        self.data[i], self.data[j] = self.data[j], self.data[i]
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.data == other.data
         return False
 
-    def wstaw(self, item):
-        if self.full():
-            print("Heap is full!")
-            return
+    def __str__(self):
+        return str(self.data)
 
-        self.pos = self.pos + 1
-        self.Heap[self.pos] = item
-        self.repair_top(self.pos)
 
-    def sort(self):
-        for i in range(0, self.pos + 1):
-            temp = self.Heap[0]
-            self.Heap[0] = self.Heap[self.pos - i]
-            self.Heap[self.pos - i] = temp
-            self.repair_bottom(0, self.pos - i - 1)
+class MinHeap(Heap):
+    def __init__(self):
+        super().__init__(comp=lambda x, y: x < y)
 
-    def repair_top(self, i):
-        parent_pos = int((i - 1) / 2)
 
-        while parent_pos >= 0 and self.Heap[parent_pos] < self.Heap[i]:
-            temp = self.Heap[i]
-            self.Heap[i] = self.Heap[parent_pos]
-            self.Heap[parent_pos] = temp
-            i = parent_pos
-            parent_pos = (int)((i - 1) / 2)
-
-    def repair_bottom(self, i, end):
-        while i <= end:
-            left = 2 * i + 1
-            right = 2 * i + 2
-
-            if left < end:
-                idx_to_change = None
-
-                if right > end:
-                    idx_to_change = left
-
-                else:
-                    if self.Heap[left] > self.Heap[right]:
-                        idx_to_change = left
-                    else:
-                        idx_to_change = right
-
-                    if self.Heap[i] < self.Heap[idx_to_change]:
-                        temp = self.Heap[i]
-                        self.Heap[i] = self.Heap[idx_to_change]
-                        self.Heap[idx_to_change] = temp
-                    else:
-                        break
-
-                    i = idx_to_change
-            else:
-                break
+class MaxHeap(Heap):
+    def __init__(self):
+        super().__init__(comp=lambda x, y: x > y)
