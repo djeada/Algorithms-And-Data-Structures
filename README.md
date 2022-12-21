@@ -83,7 +83,7 @@ black .
 ## Notes
 
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/basic_concepts.md">Basic concepts.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/collections_and_containers.md">Collections and containers.</a>
+* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/data_structures.md">Data structures.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/graphs.md">Graph algorithms.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/backtracking.md">Backtracking.</a>
 * <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/dynamic_programming.md">Dynamic programming.</a>
@@ -92,7 +92,7 @@ black .
 
 ## List of projects
 
-### Collections
+### Data structures
 <table>
     <thead>
         <tr>
@@ -105,56 +105,56 @@ black .
         <tr>
             <td>1</td>
             <td>Linked List</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/linked_list/src/linked_list.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/linked_list/src/linked_list.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/linked_list">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/linked_list">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>Vector</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/vector/src/vector.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/vector/src/vector.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/vector">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/vector">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td>Stack</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/stack/src/stack.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/stack/src/stack.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/stack">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/stack">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Queue</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/queue/src/queue.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/queue/src/queue.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/queue">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/queue">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>Heap</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/heap/src/heap.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/heap/src/heap.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/heap">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/heap">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
             <td>Binary Search Tree</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/binary_search_tree/src/binary_search_tree.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/binary_search_tree/src/binary_search_tree.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/binary_search_tree">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/binary_search_tree">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
             <td>Avl Tree</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/avl_tree/src/avl_tree.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/avl_tree/src/avl_tree.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/avl_tree">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/avl_tree">Cpp</a></td>
         </tr>
         <tr>
             <td>8</td>
             <td>Red Black Tree</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/red_black_tree/src/red_black_tree.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/red_black_tree/src/red_black_tree.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/python/red_black_tree">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/red_black_tree">Cpp</a></td>
         </tr>
         <tr>
             <td>9</td>
             <td>Hash Table</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hash_table/src/hash_table.py">Python</a></td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/hash_table/src/hash_table.cpp">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hash_table">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/hash_table">Cpp</a></td>
         </tr>
     </tbody>
 </table>
@@ -179,14 +179,14 @@ black .
         <tr>
             <td>1</td>
             <td>Is Bipartite?</td>
-            <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/graph">Python</a></td>
-            <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/graph">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Data-Structures/blob/master/src/graphs/python/bipartite_graph">Python</a></td>
+            <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bipartite_graph">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>BFS</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bfs">Python</a></td>
-            <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs/src">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Data-Structures/tree/master/src/graphs/cpp/bfs">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
