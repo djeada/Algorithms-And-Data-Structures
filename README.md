@@ -123,7 +123,7 @@ black .
         <tr>
             <td>4</td>
             <td>Queue</td>
-            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/queue">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/simple_queue">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/collections_and_containers/cpp/queue">Cpp</a></td>
         </tr>
         <tr>
