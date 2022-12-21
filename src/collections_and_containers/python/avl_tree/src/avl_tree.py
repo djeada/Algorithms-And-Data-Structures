@@ -1,10 +1,11 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.balance_factor = 0
+
 class AvlTree:
-    class Node:
-        def __init__(self, value):
-            self.value = value
-            self.left = None
-            self.right = None
-            self.balance_factor = 0
 
     def __init__(self):
         self.root = None
@@ -13,7 +14,7 @@ class AvlTree:
     def insert(self, value):
         def insert(p):
             if not p:
-                return self.Node(value)
+                return Node(value)
 
             if value < p.value:
                 p.left = insert(p.left)

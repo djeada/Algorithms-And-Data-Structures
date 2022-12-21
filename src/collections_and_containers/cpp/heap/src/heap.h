@@ -2,18 +2,6 @@
 #include <memory>
 #include <vector>
 
-/*
-Template class for a heap data structure.
-
-Basis for MinHeap and MaxHeap classes.
-
-T: Type of data to be stored in the heap.
-
-internally stores data in a vector, and uses a function pointer to compare
-elements in the heap. This allows for the creation of a min heap or a max heap
-by passing in the appropriate comparison function.
-
-*/
 
 template <class T> class Heap {
 
