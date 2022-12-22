@@ -376,11 +376,17 @@ black .
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/longest_common_subsequence">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/longest_common_subsequence">Cpp</a></td>
         </tr>
+        <tr>
+            <td>13</td>
+            <td>Knuth-Morris-Pratt</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/kmp">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/kmp">Cpp</a></td>
+        </tr>
          <tr>
             <td>14</td>
             <td>Minimum insertions to form a palindrome</td>
-            <td><a href="">Python</a></td>
-            <td><a href="">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/minimum_insertions_for_palindrome">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/minimum_insertions_for_palindrome">Cpp</a></td>
         </tr>
     </tbody>
 </table>
