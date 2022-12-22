@@ -239,51 +239,57 @@ black .
     <tbody>
         <tr>
             <td>1</td>
-            <td>String Pattern</td>
-            <td><a href="">Python</a></td>
-            <td><a href="">Cpp</a></td>
+            <td>Permutations</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_permutations">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
-            <td>Permutations</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>Combinations</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_combinations">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
-            <td>Generating words</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>String Pattern</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/string_pattern">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
-            <td>K-colorable configurations</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>Generating words</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/generating_words">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
-            <td>Hamiltonian paths</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>K-colorable configurations</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/k_colorable_configurations">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
-            <td>K-partition</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>Hamiltonian paths</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/hamiltonian_paths">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
-            <td>Topological orderings</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>Knigt tour</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/knight_tour">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
         <tr>
             <td>8</td>
-            <td>Tic Tac Toe</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td>Topological orderings</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/topological_sort">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Tic-tac-toe (minimax)</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/minimax">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">Cpp</a></td>
         </tr>
     </tbody>
 </table>
