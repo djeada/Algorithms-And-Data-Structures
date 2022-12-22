@@ -441,74 +441,92 @@ black .
         <tr>
             <td>1</td>
             <td>Minimum remove to make valid parentheses</td>
-            <td><a href="">Python</a></td>
-            <td><a href="">Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/deletions_to_make_valid_parentheses">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/deletions_to_make_valid_parentheses">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
             <td>Is palindrome after at most one char delete?</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/is_palindrome_after_char_deletion">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/is_palindrome_after_char_deletion">Cpp</a></td>
         </tr>
         <tr>
             <td>3</td>
             <td><i>K</i> closest points to origin</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/k_closest_points">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/k_closest_points">Cpp</a></td>
         </tr>
         <tr>
             <td>4</td>
             <td>Subarray sum equals <i>K</i></td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/subarray_sum">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/subarray_sum">Cpp</a></td>
         </tr>
         <tr>
             <td>5</td>
             <td>Add numbers given as strings</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/add_string_numbers">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/add_string_numbers">Cpp</a></td>
         </tr>
         <tr>
             <td>6</td>
             <td>Dot product of two sparse vectors</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/sparse_vectors_product">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/sparse_vectors_product">Cpp</a></td>
         </tr>
         <tr>
             <td>7</td>
             <td>Range sum of BST </td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/range_sum_of_bst">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/range_sum_of_bst">Cpp</a></td>
         </tr>
         <tr>
             <td>8</td>
             <td>Product of array except self</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/array_product">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/array_product">Cpp</a></td>
         </tr>
         <tr>
             <td>9</td>
             <td>Convert BST to sorted doubly linked list</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/bst_to_list">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/bst_to_list">Cpp</a></td>
         </tr>
         <tr>
             <td>10</td>
             <td>Lowest common ancestor of a binary tree</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/lowest_common_ancestor">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/lowest_common_ancestor">Cpp</a></td>
         </tr>
         <tr>
             <td>11</td>
             <td>LRU Cache</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/lru_cache">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/lru_cache">Cpp</a></td>
         </tr>
         <tr>
             <td>12</td>
             <td>Randomize An Array</td>
-            <td><a>Python</a></td>
-            <td><a>Cpp</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/randomize_array">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/randomize_array">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>Binary Tree Right Side View</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/binary_tree_right_side_view">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/binary_tree_right_side_view">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>Design Browser History</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/design_browser_history">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/design_browser_history">Cpp</a></td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>Score After Flipping Matrix</td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/score_after_flipping_matrix">Python</a></td>
+            <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/score_after_flipping_matrix">Cpp</a></td>
         </tr>
     </tbody>
 </table>
