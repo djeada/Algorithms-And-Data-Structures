@@ -1,30 +1,26 @@
+from ..src.all_permutations import all_permutations
 import unittest
-
-import os
-import sys
-
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from all_permutations import all_permutations
 
 
 class TestAllPermutations(unittest.TestCase):
-    def test_1(self):
+    def test_two_elements(self):
         input_list = [1, 2]
-        result = [[1, 2], [2, 1]]
+        excepted = [[1, 2], [2, 1]]
+        actual = all_permutations(input_list)
 
-        self.assertEqual(sorted(all_permutations(input_list)), sorted(result))
+        self.assertListEqual(sorted(excepted), sorted(actual))
 
-    def test_2(self):
+    def test_three_elements(self):
         input_list = [3, 1, 2]
-        result = [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1], [3, 1, 2]]
+        excepted = [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1], [3, 1, 2]]
 
-        self.assertEqual(sorted(all_permutations(input_list)), sorted(result))
+        actual = all_permutations(input_list)
 
-    def test_3(self):
+        self.assertListEqual(sorted(excepted), sorted(actual))
+
+    def test_three_strings(self):
         input_list = ["A", "B", "C"]
-        result = [
+        excepted = [
             ["A", "B", "C"],
             ["A", "C", "B"],
             ["B", "A", "C"],
@@ -33,11 +29,13 @@ class TestAllPermutations(unittest.TestCase):
             ["C", "B", "A"],
         ]
 
-        self.assertEqual(sorted(all_permutations(input_list)), sorted(result))
+        actual = all_permutations(input_list)
 
-    def test_4(self):
+        self.assertListEqual(sorted(excepted), sorted(actual))
+
+    def test_four_elements(self):
         input_list = [3, 1, 2, 4]
-        result = [
+        excepted = [
             [3, 1, 2, 4],
             [3, 1, 4, 2],
             [3, 2, 1, 4],
@@ -64,7 +62,9 @@ class TestAllPermutations(unittest.TestCase):
             [4, 2, 1, 3],
         ]
 
-        self.assertEqual(sorted(all_permutations(input_list)), sorted(result))
+        actual = all_permutations(input_list)
+
+        self.assertListEqual(sorted(excepted), sorted(actual))
 
 
 if __name__ == "__main__":

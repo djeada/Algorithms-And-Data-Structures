@@ -1,59 +1,38 @@
 def generate_words(board, word_dict):
-
-    if len(board) < 1:
+    if not board:
         return tuple()
-
-    n, m = len(board), len(board[0])
-    generated_words = list()
-
-    def _neighbors(x, y):
-
-        result = []
-
-        if y + 1 < n and 0 <= x - 1:
-            result.append((x - 1, y + 1))
-
-        if 0 <= y - 1 and 0 <= x - 1:
-            result.append((x - 1, y - 1))
-
-        if 0 <= x - 1:
-            result.append((x - 1, y))
-
-        if y + 1 < n:
-            result.append((x, y + 1))
-
-        if 0 <= y - 1:
-            result.append((x, y - 1))
-
-        if y + 1 < n and x + 1 < m:
-            result.append((x + 1, y + 1))
-
-        if 0 <= y - 1 and x + 1 < m:
-            result.append((x + 1, y - 1))
-
-        if x + 1 < m:
-            result.append((x + 1, y))
-
-        return result
+        
+    def neighbors(x, y):
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                if dx == dy == 0:
+                    continue
+                if 0 <= x + dx < n and 0 <= y + dy < m:
+                    yield x + dx, y + dy
+    
+    def pair_to_key(pair):
+        return f"{pair[0]}, {pair[1]}"
 
     # DFS implementation
-    def _generate_words(i, j, word="", used=dict()):
-
-        used[f"{i}, {j}"] = True
+    def generate_words(i, j, word="", used=dict()):
+        used[pair_to_key((i, j))] = True
         word += board[i][j]
 
         if word in word_dict and word not in generated_words:
-            generated_words.append(word)
+            generated_words.add(word)
 
-        for x, y in _neighbors(i, j):
-            key = f"{x}, {y}"
+        for x, y in neighbors(i, j):
+            key = pair_to_key((x, y))
             if key not in used or not used[key]:
-                _generate_words(x, y, word, used)
+                generate_words(x, y, word, used)
 
-        used[f"{i}, {j}"] = False
+        used[pair_to_key((i, j))] = False
+
+    generated_words = set()
+    n, m = len(board), len(board[0])
 
     for i in range(n):
         for j in range(m):
-            _generate_words(i, j)
+            generate_words(i, j)
 
     return tuple(generated_words)

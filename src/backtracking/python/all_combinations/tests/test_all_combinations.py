@@ -1,53 +1,45 @@
+from ..src.all_combinations import all_combinations
 import unittest
-
-import os
-import sys
-
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from all_combinations import all_combinations
 
 
 class TestAllCombinations(unittest.TestCase):
-    def test_1(self):
+    def test_n4_k2(self):
         n = 4
         k = 2
-        result = [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
+        expected = [[0, 1],
+[0, 2],
+[0, 3],
+[0, 4],
+[1, 2],
+[1, 3],
+[1, 4],
+[2, 3],
+[2, 4],
+[3, 4],
+]
+        actual = all_combinations(n, k)
 
-        self.assertEqual(sorted(all_combinations(n, k)), sorted(result))
+        self.assertListEqual(sorted(expected), sorted(actual))
 
-    def test_2(self):
-        n = 3
-        k = 3
-        result = [[1, 2, 3]]
-
-        self.assertEqual(sorted(all_combinations(n, k)), sorted(result))
-
-    def test_3(self):
-        n = 5
-        k = 3
-        result = [
-            [1, 2, 3],
-            [1, 2, 4],
-            [1, 2, 5],
-            [1, 3, 4],
-            [1, 3, 5],
-            [1, 4, 5],
-            [2, 3, 4],
-            [2, 3, 5],
-            [2, 4, 5],
-            [3, 4, 5],
-        ]
-
-        self.assertEqual(sorted(all_combinations(n, k)), sorted(result))
-
-    def test_4(self):
+    def test_n2_k1(self):
         n = 2
-        k = 5
-        result = list()
+        k = 1
+        expected = [[0], [1], [2]]
 
-        self.assertEqual(sorted(all_combinations(n, k)), sorted(result))
+        actual = all_combinations(n, k)
+
+        self.assertListEqual(sorted(expected), sorted(actual))
+
+    def test_n10_k1(self):
+        n = 10
+        k = 1
+        expected = [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10]]
+
+
+        actual = all_combinations(n, k)
+
+        self.assertListEqual(sorted(expected), sorted(actual))
+
 
 
 if __name__ == "__main__":
