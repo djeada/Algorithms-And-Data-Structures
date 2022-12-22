@@ -26,9 +26,9 @@ To implement the backtracking algorithm, we can use a recursive function that ta
 
 The function can follow these steps:
 
-* If the length of output_list is equal to the length of input_list, it means that a permutation of all the elements has been found. In this case, the function can append the permutation to a list of results and return.
-* If the length of output_list is not equal to the length of input_list, the function can enter a loop that enumerates the elements of the input list.
-* For each element, the function can check if it is present in the output_list. If the element is not present, the function can call itself recursively with input_list and output_list + [element] (to add the element to the permutation).
+* If the length of `output_list` is equal to the length of `input_list`, it means that a permutation of all the elements has been found. In this case, the function can append the permutation to a list of results and return.
+* If the length of `output_list` is not equal to the length of `input_list`, the function can enter a loop that enumerates the elements of the input list.
+* For each element, the function can check if it is present in the `output_list`. If the element is not present, the function can call itself recursively with `input_list and output_list + [element]` (to add the element to the permutation).
 * After the loop, the function can return the list of results.
 
-The time complexity of this approach is O(n! * n), where n is the length of the input list.
+The time complexity of this approach is $O(n! * n)$, where n is the length of the input list.
