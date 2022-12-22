@@ -16,9 +16,7 @@ class TestMinimax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_two_moves_already_made(self):
-        board =  [[-1, 0, 0],
-         [ 0, 1, 0],
-         [ 0, 0, 0]]
+        board = [[-1, 0, 0], [0, 1, 0], [0, 0, 0]]
         player = -1
 
         expected = (0, 1)
@@ -27,9 +25,7 @@ class TestMinimax(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_draw(self):
-        board = [[-1, 1, -1],
-         [ 1,-1, 1],
-         [-1, 1,-1]]
+        board = [[-1, 1, -1], [1, -1, 1], [-1, 1, -1]]
         player = -1
 
         actual = find_best_move(board, player)
@@ -37,12 +33,9 @@ class TestMinimax(unittest.TestCase):
         self.assertIsNone(actual)
 
     def test_player_a_wins(self):
-        board = [[-1, 1, -1],
-         [ 1, 1, 0],
-         [-1, 0,-1]]
+        board = [[-1, 1, -1], [1, 1, 0], [-1, 0, -1]]
         player = -1
         expected = (1, 2)
         actual = find_best_move(board, player)
 
         self.assertEqual(expected, actual)
-

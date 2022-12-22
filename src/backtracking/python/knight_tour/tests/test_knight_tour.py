@@ -1,6 +1,7 @@
 from ..src.knight_tour import knight_tour
 import unittest
 
+
 class TestKnightTour(unittest.TestCase):
     def test_1(self):
         n = 1
@@ -44,7 +45,6 @@ class TestKnightTour(unittest.TestCase):
 
         self.assertTrue(expected_element in actual)
         self.assertEqual(len(actual), excepted_length)
-        
 
 
 if __name__ == "__main__":

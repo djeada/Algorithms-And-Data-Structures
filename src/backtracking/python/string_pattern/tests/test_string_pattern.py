@@ -23,6 +23,11 @@ class TestStringPattern(unittest.TestCase):
         pattern = "AA"
         self.assertFalse(string_pattern(string, pattern))
 
+    def test_negative_2(self):
+        string = "abcdefg"
+        pattern = "aa"
+        self.assertFalse(string_pattern(string, pattern))
+
 
 if __name__ == "__main__":
     unittest.main()

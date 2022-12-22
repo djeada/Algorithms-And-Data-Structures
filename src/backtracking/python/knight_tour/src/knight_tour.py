@@ -6,6 +6,7 @@ def transform_tour(tour, n):
     moves = [[move_map[(row, col)] for col in range(n)] for row in range(n)]
     return moves
 
+
 def find_tours(board, row, col, move_count, tour, tours):
     # base case: all squares on the board have been visited
     if move_count == len(board) * len(board[0]):
@@ -13,14 +14,28 @@ def find_tours(board, row, col, move_count, tour, tours):
         return
 
     # try all possible moves from the current position
-    for row_offset, col_offset in [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]:
+    for row_offset, col_offset in [
+        (2, 1),
+        (2, -1),
+        (-2, 1),
+        (-2, -1),
+        (1, 2),
+        (1, -2),
+        (-1, 2),
+        (-1, -2),
+    ]:
         new_row, new_col = row + row_offset, col + col_offset
-        if 0 <= new_row < len(board) and 0 <= new_col < len(board[0]) and board[new_row][new_col] is None:
+        if (
+            0 <= new_row < len(board)
+            and 0 <= new_col < len(board[0])
+            and board[new_row][new_col] is None
+        ):
             board[new_row][new_col] = move_count
             tour.append((new_row, new_col))
             find_tours(board, new_row, new_col, move_count + 1, tour, tours)
             tour.pop()
             board[new_row][new_col] = None
+
 
 def knight_tour(n):
     # initialize the board and the tours list

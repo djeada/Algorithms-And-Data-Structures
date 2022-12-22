@@ -1,44 +1,23 @@
 def string_pattern(string, pattern):
-    def _string_pattern(string, i, pattern, j, mapping=dict()):
-
-        n = len(string)
-        m = len(pattern)
-
-        if n < m:
-            return False
-
-        if i == n and j == m:
+    def dfs(string, i, pattern, j, mapping):
+        if i == len(string) and j == len(pattern):
             return True
-
-        if i == n or j == m:
+        if i == len(string) or j == len(pattern):
             return False
 
         curr = pattern[j]
-
         if curr in mapping:
-
             s = mapping[curr]
-            k = len(s)
-
-            substring = string[i:]
-
-            if i + k < n:
-                substring = string[i : i + k]
-
-            if substring != s:
+            if string[i : i + len(s)] != s:
                 return False
+            return dfs(string, i + len(s), pattern, j + 1, mapping)
 
-            return _string_pattern(string, i + k, pattern, j + 1, mapping)
-
-        for k in range(n - i):
-
+        for k in range(len(string) - i):
             mapping[curr] = string[i : i + k + 1]
-
-            if _string_pattern(string, i + k + 1, pattern, j + 1, mapping):
+            if dfs(string, i + k + 1, pattern, j + 1, mapping):
                 return True
-
             del mapping[curr]
 
         return False
 
-    return _string_pattern(string, 0, pattern, 0)
+    return dfs(string, 0, pattern, 0, {})

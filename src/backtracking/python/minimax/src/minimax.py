@@ -10,7 +10,10 @@ def is_player_winning(board, player):
             return True
 
     # check both diagonals
-    return all(board[i][i] == player for i in range(len(board))) or all(board[i][len(board) - 1 - i] == player for i in range(len(board)))
+    return all(board[i][i] == player for i in range(len(board))) or all(
+        board[i][len(board) - 1 - i] == player for i in range(len(board))
+    )
+
 
 def final_score(board):
     # check for a win by player A
@@ -24,6 +27,7 @@ def final_score(board):
     # no winner, return 0
     return 0
 
+
 def game_over(board):
     if is_player_winning(board, -1) or is_player_winning(board, 1):
         return True
@@ -35,13 +39,14 @@ def game_over(board):
 
     return True
 
+
 def minimax(board, player):
     # base case: the game has ended, return the score
     if game_over(board):
         return final_score(board)
 
     # initialize the best score
-    best_score = float('-inf') if player == 1 else float('inf')
+    best_score = float("-inf") if player == 1 else float("inf")
 
     # try all possible moves
     for row in range(3):
@@ -63,9 +68,10 @@ def minimax(board, player):
     # return the best score
     return best_score
 
+
 def find_best_move(board, player):
     # initialize the best score and the best move
-    best_score = float('-inf') if player == -1 else float('inf')
+    best_score = float("-inf") if player == -1 else float("inf")
     best_move = None
 
     # try all possible moves

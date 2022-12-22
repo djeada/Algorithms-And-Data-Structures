@@ -1,7 +1,7 @@
 def generate_words(board, word_dict):
     if not board:
         return tuple()
-        
+
     def neighbors(x, y):
         for dx in (-1, 0, 1):
             for dy in (-1, 0, 1):
@@ -9,7 +9,7 @@ def generate_words(board, word_dict):
                     continue
                 if 0 <= x + dx < n and 0 <= y + dy < m:
                     yield x + dx, y + dy
-    
+
     def pair_to_key(pair):
         return f"{pair[0]}, {pair[1]}"
 
