@@ -446,13 +446,13 @@ black .
     <tbody>
         <tr>
             <td>1</td>
-            <td>Minimum remove to make valid parentheses</td>
+            <td>Minimum deletions to make valid parentheses</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/deletions_to_make_valid_parentheses">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/deletions_to_make_valid_parentheses">Cpp</a></td>
         </tr>
         <tr>
             <td>2</td>
-            <td>Is palindrome after at most one char delete?</td>
+            <td>Is palindrome after at most one char deletion?</td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/is_palindrome_after_char_deletion">Python</a></td>
             <td><a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/is_palindrome_after_char_deletion">Cpp</a></td>
         </tr>
