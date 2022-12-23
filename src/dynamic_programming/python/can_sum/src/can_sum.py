@@ -1,20 +1,16 @@
 def can_sum_basic(target, numbers):
-
     if target == 0:
         return True
 
     if target < 0:
         return False
 
-    for i in numbers:
-        reminder = target - i
-        if can_sum_basic(reminder, numbers):
-            return True
-
-    return False
+    return any(can_sum_basic(target - i, numbers) for i in numbers)
 
 
-def can_sum_memo(target, numbers, memo=dict()):
+def can_sum_memo(target, numbers, memo=None):
+    if memo is None:
+        memo = {}
 
     if target == 0:
         return True
@@ -25,24 +21,19 @@ def can_sum_memo(target, numbers, memo=dict()):
     if target in memo:
         return memo[target]
 
-    for i in numbers:
-        reminder = target - i
-        memo[target] = can_sum_memo(reminder, numbers, memo)
-        if memo[target]:
-            return True
+    can_sum = any(can_sum_memo(target - i, numbers, memo) for i in numbers)
+    memo[target] = can_sum
 
-    return False
+    return can_sum
 
 
 def can_sum_table(target, numbers):
-
     table = [False] * (target + 1)
     table[0] = True
 
     for i in range(target):
         if table[i]:
-            numbers = [number for number in numbers if i + number <= target]
-            for number in numbers:
+            for number in [n for n in numbers if i + n <= target]:
                 if i + number > 0 and i + number <= target:
                     table[i + number] = True
 

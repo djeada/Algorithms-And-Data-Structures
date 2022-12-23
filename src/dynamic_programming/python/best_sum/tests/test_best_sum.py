@@ -1,90 +1,106 @@
 import unittest
 
-import os
-import sys
-
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from best_sum import best_sum_basic, best_sum_memo, best_sum_table
+from ..src.best_sum import (
+    find_shortest_combination_sum_basic,
+    find_shortest_combination_sum_memo,
+    find_shortest_combination_sum_table,
+)
 
 
-class TestBesSumBasic(unittest.TestCase):
-    def test_negative_1(self):
-        target = 5
+class TestFindShortestCombinationSum(unittest.TestCase):
+    def test_negative_target(self):
         numbers = [10, 15, 20]
-        result = None
-        self.assertEqual(best_sum_basic(target, numbers), result)
+        target = -1
+        result = find_shortest_combination_sum_basic(target, numbers)
+        self.assertEqual(result, None)
 
-    def test_negative_2(self):
-        target = 10
+    def test_no_combination_possible(self):
+        numbers = [10, 15, 20]
+        target = 5
+        result = find_shortest_combination_sum_basic(target, numbers)
+        self.assertEqual(result, None)
+
+    def test_no_combination_possible_2(self):
         numbers = [3, 6, 8, 9]
-        result = None
-        self.assertEqual(best_sum_basic(target, numbers), result)
+        target = 10
+        result = find_shortest_combination_sum_basic(target, numbers)
+        self.assertEqual(result, None)
 
-    def test_positive_1(self):
-        target = 8
+    def test_single_combination_possible(self):
         numbers = [2, 2, 4, 5]
-        result = [4, 4]
-        self.assertEqual(best_sum_basic(target, numbers), result)
+        target = 8
+        result = find_shortest_combination_sum_basic(target, numbers)
+        self.assertCountEqual(result, [4, 4])
 
-    def test_positive_2(self):
-        target = 9
+    def test_multiple_combinations_possible(self):
         numbers = [3, 8, 6]
-        result = [3, 6]
-        self.assertEqual(sorted(best_sum_basic(target, numbers)), sorted(result))
+        target = 9
+        result = find_shortest_combination_sum_basic(target, numbers)
+        self.assertCountEqual(result, [3, 6])
 
 
 class TestBestSumMemo(unittest.TestCase):
-    def test_negative_1(self):
-        target = 5
+    def test_negative_target(self):
         numbers = [10, 15, 20]
-        result = None
-        self.assertEqual(best_sum_memo(target, numbers), result)
+        target = -1
+        result = find_shortest_combination_sum_memo(target, numbers)
+        self.assertEqual(result, None)
 
-    def test_negative_2(self):
-        target = 10
+    def test_no_combination_possible(self):
+        numbers = [10, 15, 20]
+        target = 5
+        result = find_shortest_combination_sum_memo(target, numbers)
+        self.assertEqual(result, None)
+
+    def test_no_combination_possible_2(self):
         numbers = [3, 6, 8, 9]
-        result = None
-        self.assertEqual(best_sum_memo(target, numbers), result)
+        target = 10
+        result = find_shortest_combination_sum_memo(target, numbers)
+        self.assertEqual(result, None)
 
-    def test_positive_1(self):
-        target = 8
+    def test_single_combination_possible(self):
         numbers = [2, 2, 4, 5]
-        result = [4, 4]
-        self.assertEqual(best_sum_memo(target, numbers), result)
+        target = 8
+        result = find_shortest_combination_sum_memo(target, numbers)
+        self.assertCountEqual(result, [4, 4])
 
-    def test_positive_2(self):
-        target = 9
+    def test_multiple_combinations_possible(self):
         numbers = [3, 8, 6]
-        result = [3, 6]
-        self.assertEqual(sorted(best_sum_memo(target, numbers)), sorted(result))
+        target = 9
+        result = find_shortest_combination_sum_memo(target, numbers)
+        self.assertCountEqual(result, [3, 6])
 
 
 class TestBestSumTab(unittest.TestCase):
-    def test_negative_1(self):
-        target = 5
+    def test_negative_target(self):
         numbers = [10, 15, 20]
-        result = None
-        self.assertEqual(best_sum_table(target, numbers), result)
+        target = -1
+        result = find_shortest_combination_sum_table(target, numbers)
+        self.assertEqual(result, None)
 
-    def test_negative_2(self):
-        target = 10
+    def test_no_combination_possible(self):
+        numbers = [10, 15, 20]
+        target = 5
+        result = find_shortest_combination_sum_table(target, numbers)
+        self.assertEqual(result, None)
+
+    def test_no_combination_possible_2(self):
         numbers = [3, 6, 8, 9]
-        result = None
-        self.assertEqual(best_sum_table(target, numbers), result)
+        target = 10
+        result = find_shortest_combination_sum_table(target, numbers)
+        self.assertEqual(result, None)
 
-    def test_positive_1(self):
-        target = 8
+    def test_single_combination_possible(self):
         numbers = [2, 2, 4, 5]
-        result = [4, 4]
-        self.assertEqual(best_sum_table(target, numbers), result)
+        target = 8
+        result = find_shortest_combination_sum_table(target, numbers)
+        self.assertCountEqual(result, [4, 4])
 
-    def test_positive_2(self):
-        target = 9
+    def test_multiple_combinations_possible(self):
         numbers = [3, 8, 6]
-        result = [3, 6]
-        self.assertEqual(sorted(best_sum_table(target, numbers)), sorted(result))
+        target = 9
+        result = find_shortest_combination_sum_table(target, numbers)
+        self.assertCountEqual(result, [3, 6])
 
 
 if __name__ == "__main__":

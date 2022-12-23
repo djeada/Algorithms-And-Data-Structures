@@ -1,12 +1,7 @@
 import unittest
 
-import os
-import sys
 
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from count_construct import (
+from ..src.count_construct import (
     count_construct_basic,
     count_construct_memo,
     count_construct_table,

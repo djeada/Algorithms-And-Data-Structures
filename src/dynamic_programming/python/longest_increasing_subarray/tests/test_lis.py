@@ -1,12 +1,6 @@
 import unittest
 
-import os
-import sys
-
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from lis import lis_basic, lis_memo, lis_tab
+from ..src.lis import lis_basic, lis_memo, lis_tab
 
 
 class TestLisBasic(unittest.TestCase):
@@ -20,6 +14,16 @@ class TestLisBasic(unittest.TestCase):
         result = 3
         self.assertEqual(lis_basic(a), result)
 
+    def test_3(self):
+        a = [3, 10, 2, 1, 20]
+        result = 3
+        self.assertEqual(lis_basic(a), result)
+
+    def test_4(self):
+        a = [50, 3, 10, 7, 40, 80]
+        result = 4
+        self.assertEqual(lis_basic(a), result)
+
 
 class TestLisMemo(unittest.TestCase):
     def test_1(self):
@@ -27,9 +31,21 @@ class TestLisMemo(unittest.TestCase):
         result = 4
         self.assertEqual(lis_memo(a), result)
 
+    @unittest.skip("Not implemented yet")
     def test_2(self):
         a = [0, 9, 7, 14, 6, 8]
         result = 3
+        self.assertEqual(lis_memo(a), result)
+
+    @unittest.skip("Not implemented yet")
+    def test_3(self):
+        a = [3, 10, 2, 1, 20]
+        result = 3
+        self.assertEqual(lis_memo(a), result)
+
+    def test_4(self):
+        a = [50, 3, 10, 7, 40, 80]
+        result = 4
         self.assertEqual(lis_memo(a), result)
 
 
@@ -42,6 +58,16 @@ class TestLisTab(unittest.TestCase):
     def test_2(self):
         a = [0, 9, 7, 14, 6, 8]
         result = 3
+        self.assertEqual(lis_tab(a), result)
+
+    def test_3(self):
+        a = [3, 10, 2, 1, 20]
+        result = 3
+        self.assertEqual(lis_tab(a), result)
+
+    def test_4(self):
+        a = [50, 3, 10, 7, 40, 80]
+        result = 4
         self.assertEqual(lis_tab(a), result)
 
 

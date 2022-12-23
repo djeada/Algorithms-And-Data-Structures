@@ -1,12 +1,6 @@
 import unittest
 
-import os
-import sys
-
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from grid_traveler import (
+from ..src.grid_traveler import (
     grid_traveller_basic,
     grid_traveller_memo,
     grid_traveller_table,

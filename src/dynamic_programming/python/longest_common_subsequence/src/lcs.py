@@ -1,43 +1,36 @@
-def lcs_basic(a, b, m=None, n=None):
+def lcs_basic(a, b):
+    def recursion(a, b, m, n):
+        if not m or not n:
+            return 0
 
-    if m == None:
-        m = len(a)
+        if a[m - 1] == b[n - 1]:
+            return recursion(a, b, m - 1, n - 1) + 1
 
-    if n == None:
-        n = len(b)
+        return max(recursion(a, b, m, n - 1), recursion(a, b, m - 1, n))
 
-    if m == 0 or n == 0:
-        return 0
-
-    if a[m - 1] == b[n - 1]:
-        return lcs_basic(a, b, m - 1, n - 1) + 1
-
-    return max(lcs_basic(a, b, m, n - 1), lcs_basic(a, b, m - 1, n))
+    return recursion(a, b, len(a), len(b))
 
 
-def lcs_memo(a, b, m=None, n=None, memo=dict()):
+def lcs_memo(a, b):
+    def recursion(a, b, m, n, memo):
+        if m == 0 or n == 0:
+            return 0
 
-    if m == None:
-        m = len(a)
+        key = (m, n)
 
-    if n == None:
-        n = len(b)
+        if key in memo:
+            return memo[key]
 
-    if m == 0 or n == 0:
-        return 0
+        if a[m - 1] == b[n - 1]:
+            memo[key] = recursion(a, b, m - 1, n - 1, memo) + 1
+        else:
+            memo[key] = max(
+                recursion(a, b, m, n - 1, memo), recursion(a, b, m - 1, n, memo)
+            )
 
-    key = (m, n)
-
-    if key in memo:
         return memo[key]
 
-    if a[m - 1] == b[n - 1]:
-        memo[key] = lcs_memo(a, b, m - 1, n - 1, memo) + 1
-
-    else:
-        memo[key] = max(lcs_memo(a, b, m, n - 1, memo), lcs_memo(a, b, m - 1, n, memo))
-
-    return memo[key]
+    return recursion(a, b, len(a), len(b), dict())
 
 
 def lcs_tab(a, b):

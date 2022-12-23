@@ -1,90 +1,67 @@
 import unittest
 
-import os
-import sys
 
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
-
-from can_sum import can_sum_basic, can_sum_memo, can_sum_table
+from ..src.can_sum import can_sum_basic, can_sum_memo, can_sum_table
 
 
 class TestCanSumBasic(unittest.TestCase):
-    def test_negative_1(self):
+    def test_negative(self):
         numbers = [2, 2, 4]
         target = 7
-        result = False
-        self.assertEqual(can_sum_basic(target, numbers), result)
+        self.assertFalse(can_sum_basic(target, numbers))
 
-    def test_negative_2(self):
         numbers = [3, 5, 9, 10]
         target = 1
-        result = False
-        self.assertEqual(can_sum_basic(target, numbers), result)
+        self.assertFalse(can_sum_basic(target, numbers))
 
-    def test_positive_1(self):
+    def test_positive(self):
         numbers = [3, 3, 8, 9, 11]
         target = 20
-        result = True
-        self.assertEqual(can_sum_basic(target, numbers), result)
+        self.assertTrue(can_sum_basic(target, numbers))
 
-    def test_positive_2(self):
         numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         target = 25
-        result = True
-        self.assertEqual(can_sum_basic(target, numbers), result)
+        self.assertTrue(can_sum_basic(target, numbers))
 
 
 class TestCanSumMemo(unittest.TestCase):
-    def test_negative_1(self):
+    def test_negative(self):
         numbers = [2, 2, 4]
         target = 7
-        result = False
-        self.assertEqual(can_sum_memo(target, numbers), result)
+        self.assertFalse(can_sum_memo(target, numbers))
 
-    def test_negative_2(self):
         numbers = [3, 5, 9, 10]
         target = 1
-        result = False
-        self.assertEqual(can_sum_memo(target, numbers), result)
+        self.assertFalse(can_sum_memo(target, numbers))
 
-    def test_positive_1(self):
+    def test_positive(self):
         numbers = [3, 3, 8, 9, 11]
         target = 20
-        result = True
-        self.assertEqual(can_sum_memo(target, numbers), result)
+        self.assertTrue(can_sum_memo(target, numbers))
 
-    def test_positive_2(self):
         numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         target = 25
-        result = True
-        self.assertEqual(can_sum_memo(target, numbers), result)
+        self.assertTrue(can_sum_memo(target, numbers))
 
 
 class TestCanSumTab(unittest.TestCase):
-    def test_negative_1(self):
+    def test_negative(self):
         numbers = [2, 2, 4]
         target = 7
-        result = False
-        self.assertEqual(can_sum_table(target, numbers), result)
+        self.assertFalse(can_sum_table(target, numbers))
 
-    def test_negative_2(self):
         numbers = [3, 5, 9, 10]
         target = 1
-        result = False
-        self.assertEqual(can_sum_table(target, numbers), result)
+        self.assertFalse(can_sum_table(target, numbers))
 
-    def test_positive_1(self):
+    def test_positive(self):
         numbers = [3, 3, 8, 9, 11]
         target = 20
-        result = True
-        self.assertEqual(can_sum_table(target, numbers), result)
+        self.assertTrue(can_sum_table(target, numbers))
 
-    def test_positive_2(self):
         numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         target = 25
-        result = True
-        self.assertEqual(can_sum_table(target, numbers), result)
+        self.assertTrue(can_sum_table(target, numbers))
 
 
 if __name__ == "__main__":

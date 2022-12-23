@@ -1,46 +1,43 @@
 def count_construct_basic(target, word_bank):
-
-    if target == "":
+    if not target:
         return 1
 
-    totalCount = 0
-
+    count = 0
     for word in word_bank:
-        if len(target) >= len(word) and target[: len(word)] == word:
-            remainder = target[len(word) :]
-            totalCount += count_construct_basic(remainder, word_bank)
-
-    return totalCount
+        if target.startswith(word):
+            count += count_construct_basic(target[len(word) :], word_bank)
+    return count
 
 
-def count_construct_memo(target, word_bank, memo=dict()):
-
-    if target == "":
+def count_construct_memo(target, word_bank, memo=None):
+    if memo is None:
+        memo = {}
+    if not target:
         return 1
 
     if target in memo:
         return memo[target]
 
-    totalCount = 0
-
+    count = 0
     for word in word_bank:
-        if len(target) >= len(word) and target[: len(word)] == word:
-            remainder = target[len(word) :]
-            totalCount += count_construct_memo(remainder, word_bank, memo)
-
-    memo[target] = totalCount
-    return totalCount
+        if target.startswith(word):
+            count += count_construct_memo(target[len(word) :], word_bank, memo)
+    memo[target] = count
+    return count
 
 
 def count_construct_table(target, word_bank):
+    if not target:
+        return 1
 
-    table = [0] * (len(target) + 1)
-    table[0] = 1
+    n = len(target)
+    counts = [0] * (n + 1)
+    counts[0] = 1
 
-    for i in range(len(target)):
-        if table[i]:
-            for word in word_bank:
-                if target[i : i + len(word)] == word:
-                    table[i + len(word)] += table[i]
-
-    return table[-1]
+    for i in range(n):
+        if counts[i] == 0:
+            continue
+        for word in word_bank:
+            if target[i : i + len(word)] == word:
+                counts[i + len(word)] += counts[i]
+    return counts[n]

@@ -1,47 +1,40 @@
 def all_construct_basic(target, word_bank):
+    def recurse(target):
+        if not target:
+            return [[]]
 
-    if target == "":
-        return [[]]
+        result = []
+        for word in word_bank:
+            if target.startswith(word):
+                suffix_ways = recurse(target[len(word) :])
+                result.extend([way + [word] for way in suffix_ways])
 
-    result = list()
+        return result
 
-    for word in word_bank:
-        if len(target) >= len(word) and target[: len(word)] == word:
-            suffix = target[len(word) :]
-            suffix_ways = all_construct_basic(suffix, word_bank)
-            target_ways = [way + [word] for way in suffix_ways]
-
-            if target_ways:
-                result.extend(target_ways)
-
-    return result
+    return recurse(target)
 
 
-def all_construct_memo(target, word_bank, memo=dict()):
+def all_construct_memo(target, word_bank):
+    def recurse(target, memo):
+        if not target:
+            return [[]]
 
-    if target == "":
-        return [[]]
+        if target in memo:
+            return memo[target]
 
-    if target in memo:
-        return memo[target]
+        result = []
+        for word in word_bank:
+            if target.startswith(word):
+                suffix_ways = recurse(target[len(word) :], memo)
+                result.extend([way + [word] for way in suffix_ways])
 
-    result = list()
+        memo[target] = result
+        return result
 
-    for word in word_bank:
-        if len(target) >= len(word) and target[: len(word)] == word:
-            suffix = target[len(word) :]
-            suffix_ways = all_construct_memo(suffix, word_bank, memo)
-            target_ways = [way + [word] for way in suffix_ways]
-
-            if target_ways:
-                result.extend(target_ways)
-
-    memo[target] = result
-    return result
+    return recurse(target, {})
 
 
 def all_construct_table(target, word_bank):
-
     table = [[] for _ in range(len(target) + 1)]
     table[0] = [[]]
 
