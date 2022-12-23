@@ -1,8 +1,11 @@
 #include <vector>
 
 std::vector<unsigned int>
-bestSumBasic(const unsigned int target,
-             const std::vector<unsigned int> &numbers);
+bestSumBasic(unsigned int target, const std::vector<unsigned int> &numbers);
 
-std::vector<unsigned int> bestSumMemo(const unsigned int target,
+std::vector<unsigned int> bestSumMemo(unsigned int target,
                                       const std::vector<unsigned int> &numbers);
+
+std::vector<unsigned int>
+bestSumTabulation(unsigned int target,
+                  const std::vector<unsigned int> &numbers);

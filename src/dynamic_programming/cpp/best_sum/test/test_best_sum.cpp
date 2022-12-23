@@ -70,3 +70,33 @@ TEST(BestSumTest, TestPositiveMemo2) {
   std::vector<unsigned int> expectedResult = {3, 6};
   ASSERT_TRUE(equal(bestSumMemo(target, numbers), expectedResult));
 }
+
+TEST(BestSumTest, TestNegativeTabulation1) {
+  std::vector<unsigned int> numbers = {10, 15, 20};
+  unsigned int target = 5;
+
+  ASSERT_TRUE(bestSumTabulation(target, numbers).empty());
+}
+
+TEST(BestSumTest, TestNegativeTabulation2) {
+  std::vector<unsigned int> numbers = {3, 6, 8, 9};
+  unsigned int target = 10;
+
+  ASSERT_TRUE(bestSumTabulation(target, numbers).empty());
+}
+
+TEST(BestSumTest, TestPositiveTabulation1) {
+  std::vector<unsigned int> numbers = {2, 2, 4, 5};
+  unsigned int target = 8;
+
+  std::vector<unsigned int> expectedResult = {4, 4};
+  ASSERT_TRUE(equal(bestSumTabulation(target, numbers), expectedResult));
+}
+
+TEST(BestSumTest, TestPositiveTabulation2) {
+  std::vector<unsigned int> numbers = {3, 8, 6};
+  unsigned int target = 9;
+
+  std::vector<unsigned int> expectedResult = {3, 6};
+  ASSERT_TRUE(equal(bestSumTabulation(target, numbers), expectedResult));
+}

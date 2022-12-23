@@ -1,8 +1,8 @@
-add_library(all_construct "")
+add_library(minimum_insertions_for_palindrome "")
 
 target_sources(
-  all_construct
-  PRIVATE all_construct.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/all_construct.h)
+  minimum_insertions_for_palindrome
+  PRIVATE minimum_insertions_for_palindrome.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/minimum_insertions_for_palindrome.h)
 
-target_include_directories(all_construct PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(minimum_insertions_for_palindrome PUBLIC ${CMAKE_CURRENT_LIST_DIR})
