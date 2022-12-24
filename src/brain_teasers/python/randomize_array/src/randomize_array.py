@@ -5,6 +5,7 @@ Ensure that no two integers are in the same position as they were in the origina
 import random
 from typing import List
 
+
 def randomize_array(array: List[int]) -> List[int]:
     """
     Randomize an array of integers in place.
