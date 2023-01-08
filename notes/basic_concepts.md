@@ -122,21 +122,21 @@ Here are some examples of algorithms with different complexities:
 
 1. The first algorithm has a complexity of $O(n)$, because the running time is directly proportional to the size of the input (in this case, $n$). Each iteration of the loop reduces the value of $n$ by 1, so the number of iterations is equal to the value of $n$ when the loop starts.
 
-```
+```python
  while n > 0:
     n -= 1
 ```
 
 2. The second algorithm has a complexity of $O(log(n))$, because the running time is proportional to the number of times the loop can be iterated before the value of $n$ becomes 0. Each iteration of the loop halves the value of $n$, so the number of iterations is equal to the number of times $n$ can be halved before it becomes 0. This is the same as the number of times the integer value of $log(n)$ can be halved before it becomes 0, which is why the complexity is $O(log(n))$.
 
-```
+```python
 while n > 0:
    n /= 2
 ```
 
 3. The third algorithm has a complexity of $O(nlog(n))$, because the outer loop is iterated $n$ times and the inner loop is iterated $log(n)$ times for each iteration of the outer loop. The total number of iterations is therefore $n * log(n)$, which is why the complexity is $O(nlog(n))$.
 
-```
+```python
 m = n
 while m > 0:
    k = n
@@ -147,7 +147,7 @@ while m > 0:
 
 4. The fourth algorithm has a complexity of $O(log^2(n))$, because the outer loop is iterated $log(n)$ times and the inner loop is iterated $log(n)$ times for each iteration of the outer loop. The total number of iterations is therefore $log^2(n)$, which is why the complexity is $O(log^2(n))$.
 
-```
+```python
 m = n
 while m > 0:
    k = n
