@@ -7,6 +7,7 @@
 </div>
 
 This repository contains a collection of projects in C++ and Python that implement various data structures and algorithms. The projects are organized by language and topic, and include detailed explanations and examples to help you understand how they work.
+![algorithms](https://user-images.githubusercontent.com/37275728/213442579-155a1549-89ee-43d1-878b-9d1673524a5a.png)
 
 ## About
 
