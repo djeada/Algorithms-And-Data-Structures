@@ -1,44 +1,23 @@
-## Stack
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+## Subarray Sum
+This project contains a function that calculates the sum of all elements in a subarray of an input array. The start and end indices of the subarray are provided as arguments.
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
+## Examples
 
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
 ```
+Input: array=[1, 2, 3, 4], start=1, end=3
+Output: 5
+```
+
+```
+Input: array=[1, 2, 3, 4, 5, 6], start=2, end=5
+Output: 12
+```
+
+## Approach
+
+The function iterates through the subarray and adds the elements to a sum, which is returned at the end.
+
+## Complexity
+
+The time complexity of this function is $O(n)$, where $n$ is the number of elements in the subarray. The space complexity is $O(1)$, as the function only uses a single variable to store the sum.

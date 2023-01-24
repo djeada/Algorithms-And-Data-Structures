@@ -1,44 +1,22 @@
-## Stack
+## Sparse Vectors Product
+A function that calculates the product of two sparse vectors represented as dictionaries. A sparse vector is a vector with mostly zero elements, so it is stored as a dictionary with the non-zero element indices as keys and their corresponding values as the values.
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+## Examples
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
-
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
 ```
+Input: v1 = {0: 1, 2: 3}, v2 = {1: 5, 2: 4}
+Output: 12
+```
+
+```
+Input: v1 = {0: 3, 3: 1}, v2 = {1: 5, 2: 4}
+Output: 0
+```
+
+## Approach
+
+The function initializes the product to 0 and iterates through the elements of the first vector. For each element, if the index is also present in the second vector, the product of the values is added to the overall product.
+
+## Complexity
+
+The time complexity is $O(n)$, where $n$ is the number of elements in the first vector, since the function iterates through all the elements of the first vector. The space complexity is $O(1)$, since the function does not create any additional data structures.

@@ -1,44 +1,22 @@
-## Stack
+## Is Palindrome After Character Deletion
+This function is designed to determine whether a given string can be made into a palindrome by deleting at most one character.
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+## Examples
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
 
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
 ```
+Input: "racecar"
+Output: True
+```
+
+```
+Input: "hello"
+Output: False
+```
+## Approach
+
+The function uses two pointers, one at the beginning and one at the end of the string, to compare characters from opposite ends of the string. If the characters are the same, the pointers are moved inward. If the characters are different, the function checks whether deleting one of the characters will create a palindrome. If it does, the pointer corresponding to the deleted character is moved inward. If deleting either character does not create a palindrome, the function returns False. If the pointers meet in the middle of the string, the function returns True.
+
+## Complexity
+
+The time complexity of the function is $O(n)$, where $n$ is the length of the input string. This is because the function processes each character in the string exactly once. The space complexity is $O(1)$, as the function only uses a constant amount of space regardless of the size of the input string.

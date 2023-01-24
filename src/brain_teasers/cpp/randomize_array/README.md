@@ -1,44 +1,18 @@
-## Stack
+## Randomize Array
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+A function that takes an array as input and returns a randomly shuffled version of the array.
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
+## Examples
 
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
 ```
+Input: [1, 2, 3, 4, 5]
+Output: [2, 3, 5, 4, 1]
+```
+
+## Approach
+
+This function uses the Fisher-Yates shuffle algorithm to randomly shuffle the input array. The algorithm works by iterating through the array in reverse and swapping each element with a randomly selected element from the subarray to the left of the current element.
+
+## Complexity
+
+The time complexity of this function is $O(n)$, as it iterates through the input array once. The space complexity is $O(1)$, as it only requires a constant amount of additional space.

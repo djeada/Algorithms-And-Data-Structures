@@ -1,44 +1,23 @@
-## Stack
+## Minimum Number of Deletions to Make Parentheses Valid
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+This function is designed to solve the problem of determining the minimum number of deletions needed to make a string of parentheses valid. A string of parentheses is considered valid if it consists of pairs of opening and closing parentheses, with each opening parenthesis being matched with a corresponding closing parenthesis.
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
+## Examples
 
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
 ```
+Input: "()((())"
+Output: 1
+```
+
+```
+Input: "()(())"
+Output: 0
+```
+
+## Approach
+
+The function uses a stack to keep track of unmatched opening parentheses in the string. It begins by initializing an empty stack and a count of the number of deletions needed. It then loops through the string, character by character. If the current character is an opening parenthesis, it pushes it onto the stack. If the current character is a closing parenthesis, the function checks if the stack is empty. If it is, it increments the deletions count, as this closing parenthesis has no matching opening parenthesis. If the stack is not empty, the function pops the top element from the stack, effectively matching the closing parenthesis with an opening one. At the end of the loop, any remaining elements in the stack represent unmatched opening parentheses, so the function increments the deletions count by the number of elements in the stack.
+
+## Complexity
+
+The time complexity of the function is $O(n)$, where $n$ is the length of the input string. This is because the function processes each character in the string exactly once. The space complexity is also $O(n)$, as the stack can contain up to $n$ elements at any given time. This is because in the worst case, the stack will contain all of the opening parentheses in the string, if there are no closing parentheses or if all of the closing parentheses appear after all of the opening parentheses.

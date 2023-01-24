@@ -1,44 +1,51 @@
-## Stack
+## Range Sum of BST
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+This function calculates the sum of all values in a binary search tree that fall within a given range, L and R.
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
+## Examples
 
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
 ```
+Input Tree:
+    10
+   /  \
+  5   15
+ / \    \
+3   7    18
+
+L = 7
+R = 15
+Output: 32
+
+Explanation:
+
+The root node's value is 10. The left subtree has values 5, 3, and 7, and the right subtree has values 15 and 18.
+The range sum is the sum of all values in the left and right subtrees that fall within the range [7, 15], which is 32.
+```
+
+```
+Input Tree:
+    10
+   /  \
+  5   15
+ / \   / \
+3   7 13  18
+/   /
+1   6
+
+L = 6
+R = 10
+Output: 23
+
+Explanation:
+
+The root node's value is 10. The left subtree has values 5, 3, 7, 1, and 6, and the right subtree has values 15, 13, and 18.
+The range sum is the sum of all values in the left and right subtrees that fall within the range [6, 10], which is 23.
+```
+
+## Approach
+
+The function uses a recursive approach, where the base case is when the root is None (in which case it returns 0). If the root's value is outside the range, it returns the range sum of the left or right subtree (whichever is in range). Otherwise, it returns the root's value plus the range sum of the left and right subtrees.
+
+## Complexity
+
+The time complexity of this function is $O(n)$, where $n$ is the number of nodes in the tree. This is because the function needs to visit every node in the tree in order to calculate the range sum. The space complexity is also $O(n)$, as the function uses a recursive approach and the maximum depth of the recursion tree is equal to the height of the tree.

@@ -1,44 +1,32 @@
-## Stack
+## Add Numbers in String Form
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+This project provides a function for adding two string numbers together and returning the result as a string. This can be useful in cases where the numbers being added are too large to be represented as integers or floats in a programming language.
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
-
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
+## Examples
 ```
+Input:
+s1 = "12345"
+s2 = "67890"
+
+Output:
+"80235"
+```
+
+```
+Input:
+s1 = "123.45"
+s2 = "678.90"
+
+Output:
+"802.35"
+```
+
+## Approach
+
+The function first checks if either of the input strings is a float by checking if it contains a decimal point. If either string is a float, it determines the number of decimal places in each and adds zeros to the end of the other string to ensure that they have the same number of decimal places.
+
+Then, it iterates through the digits of the strings from the end, adding them together and keeping track of any carryover. Finally, it inserts a decimal point in the result string if necessary.
+
+## Complexity
+
+The function has a time complexity of $O(n)$, where n is the length of the longer input string. The space complexity is also $O(n)$, as the result string is created by adding digits to it one at a time.

@@ -1,44 +1,39 @@
-## Stack
+## Binary Tree Right Side View
+This function is designed to solve the problem of finding the right-side view of a binary tree. The right-side view of a binary tree is a list of the values of all the nodes visible from the right side of the tree.
 
-A stack is a linear data structure that follows the Last In First Out (LIFO) principle. It allows elements to be added (pushed) and removed (popped) from the top of the stack.
+## Examples
 
-This Stack project is a C++ implementation of a stack data structure using an array to store the elements and providing methods for manipulating the stack.
-
-## Interface
-
-The Stack class has the following methods:
-* `T pop()`: Removes and returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `void push(T element)* `: Adds the element element to the top of the stack.
-* `T top()`: Returns the element at the top of the stack. If the stack is empty, it throws an out_of_range exception.
-* `int size()`: Returns the number of elements in the stack.
-* `bool isEmpty()`: Returns true if the stack is empty, false otherwise.
-
-## Demo
-
-Here is an example of how to use the Stack class:
-
-```cpp
-#include <iostream>
-#include "src/stack.h"
-
-using namespace std;
-
-int main() {
-  // Create a new stack
-  Stack<int> s;
-
-  // Push some elements
-  s.push(1);
-  s.push(2);
-  s.push(3);
-
-  // Print the stack
-  while (!s.isEmpty()) {
-    cout << s.top() << " ";
-    s.pop();
-  }
-  cout << endl;
-
-  return 0;
-}
+Here are some examples of how the function can be used:
 ```
+Input:
+
+    1
+   / \
+  2   3
+ /   / \
+4   5   6
+
+Output: [1, 3, 6]
+```
+
+```
+Input:
+
+      1
+     / \
+    2   3
+   /     \
+  4       5
+ /         \
+6           7
+
+Output: [1, 3, 5, 7]
+```
+
+## Approach
+
+The function uses a breadth-first search approach to traverse the tree and find the right-side view. It begins by initializing a queue with the root node and a result list. Then, it enters a loop that continues until the queue is empty. In each iteration of the loop, it removes the first node from the queue and checks if it is the last node in its level. If it is, its value is added to the result list. The function then checks if the node has a left child and, if it does, adds it to the queue. It also checks if the node has a right child and, if it does, adds it to the queue.
+
+## Complexity
+
+The time complexity of the function is $O(n)$, where $n$ is the number of nodes in the tree. This is because the function processes each node in the tree exactly once. The space complexity is also $O(n)$, as the queue can contain up to $n$ nodes at any given time.
