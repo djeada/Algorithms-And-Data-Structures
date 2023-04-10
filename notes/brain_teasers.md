@@ -8,11 +8,11 @@ These notes provide general guidance and techniques for tackling programming bra
 
 Keep these general principles in mind when solving programming brain teasers:
 
-* For unfamiliar problems, start with a brute force solution. This can help you understand the problem and begin contemplating potential solutions. You can optimize your solution later.
+* If you don't know how to solve a problem, start with a simple solution even if it's not the most efficient. This will help you understand the problem and think about better solutions later.
 * Write unit tests. They can be invaluable in confirming that your solution is accurate and in detecting any bugs or issues.
 * Be mindful of your solution's time complexity. In competitive programming, time is often crucial, so strive for solutions with a time complexity of O(n) or better.
-* Always think about using hash tables (also known as dictionaries) for quick data access. These data structures enable you to access elements in O(1) time complexity, making them highly efficient for certain problem types.
-* To boost speed, consider what information can be stored to save time. For instance, you could use an auxiliary data structure to enhance your solution's time complexity.
+* Always think about using hash tables (also called dictionaries) to quickly find data. These are data structures that let you find things very fast, which is really good for some types of problems.
+* To make your solution faster, think about what information you can save to use later. You can use another type of data structure to make it faster.
 
 ## Data structures
 
