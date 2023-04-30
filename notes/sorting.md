@@ -23,8 +23,8 @@ Bubble sort is stable because items with the same value keep their original orde
 
 ### Time complexity
 
-* Worst case complexity: `O(n^2)`
-* Average case complexity: `O(n^2)`
+* Worst case complexity: $O(n^2)$
+* Average case complexity: $O(n^2)$
 
 ### Implementation
 
@@ -45,8 +45,8 @@ Selection sort is not stable because items with the same value can be swapped, c
 
 ### Time complexity
 
-* Worst case complexity: `O(n^2)`
-* Average case complexity: `O(n^2)`
+* Worst case complexity: $O(n^2)$
+* Average case complexity: $O(n^2)$
 
 ### Implementation
 
@@ -68,8 +68,8 @@ Insertion sort is stable because items with the same value keep their original o
 
 ### Time complexity
 
-* Worst case complexity: `O(n^2)`
-* Average case complexity: `O(n^2)`
+* Worst case complexity: $O(n^2)$
+* Average case complexity: $O(n^2)$
 
 ### Implementation
 
@@ -99,8 +99,8 @@ Quick sort is stable only if the partitioning ensures that the order of identica
 
 ### Time complexity
 
-* Worst case complexity: `O(n^2)`
-* Average case complexity: `O(nlogn)`
+* Worst case complexity: $O(n^2)$
+* Average case complexity: $O(nlogn)$
 
 ### Implementation
 
@@ -121,8 +121,8 @@ Heap sort is not a stable algorithm.
 
 ### Time complexity
 
-* Worst case complexity: `O(nlogn)`
-* Average case complexity: `O(nlogn)`
+* Worst case complexity: $O(nlogn)$
+* Average case complexity: $O(nlogn)$
 
 ### Implementation
 
