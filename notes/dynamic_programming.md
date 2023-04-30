@@ -1,155 +1,190 @@
-## Dynamic Programming
+## Easy Dynamic Programming
 
-Dynamic programming is a method for solving optimization problems by breaking them down into smaller subproblems, storing the solutions to these subproblems in a table, and using these stored solutions to solve larger problems. This approach can significantly reduce the time complexity of the algorithm, allowing it to solve problems much faster than a brute force solution.
+Dynamic programming is a way to solve problems by breaking them into smaller parts, storing the answers to those smaller parts, and using those answers to solve bigger problems. It can make a problem faster to solve than trying every possible answer.
 
-Dynamic programming works best for problems that have an optimal substructure, meaning that the optimal solution to a problem can be found by solving its subproblems optimally. This is particularly useful for problems that involve repeating subproblems, such as in the Fibonacci sequence or the knapsack problem.
+Dynamic programming works well for problems that can be solved by finding the best solution to smaller problems. This is especially helpful when the smaller problems are repeated, like in the Fibonacci sequence or the knapsack problem.
 
-There are three main approaches to implementing dynamic programming: brute force recursion, memoized recursion, and tabulation.
+There are three main ways to use dynamic programming: brute force recursion, memoized recursion, and tabulation.
 
 ### Brute Force Recursion
 
-Brute force recursion involves visualizing the problem as a tree of subproblems and implementing the tree using recursion. While this approach may be elegant and concise, it can suffer from exponential time complexity due to the repeated calculation of the same subproblems.
+Brute force recursion solves the problem by making a tree of smaller problems and using recursion. This can look simple, but it can be slow because the same smaller problems are solved many times.
 
 ### Memoized Recursion
 
-Memoized recursion involves adding a hash map to store already computed subproblems, allowing for faster lookup and avoiding unnecessary recalculation. This can significantly improve the time complexity of the algorithm.
+Memoized recursion uses a map to store answers to smaller problems. This makes it faster because you don't have to solve the same problem again.
 
 ### Tabulation
 
-Tabulation involves visualizing the problem as a table and setting the elements of the table based on previously calculated values. This bottom-up approach allows for faster computation but requires manual selection of the order in which subproblems are calculated.
+Tabulation uses a table to solve the problem. It starts with the smallest problems and works its way up. This is faster, but you have to choose the order of solving the problems yourself.
 
-### Why might we choose recursive solutions over iterative techniques with tabulation?
+### Why choose recursion over tabulation?
 
-Overall, it is faster, but we must manually choose the order in which the subproblems must be calculated. That is frequently troublesome in and of itself. This is straightforward for fibonacci, but it quickly becomes challenging for more complicated dynamic programming problems. As a result, when it is not the bottleneck of our program or we do not expect large inputs, we are typically satisfied with recursive solutions. 
+Recursion is often easier, but sometimes slower. When speed isn't important or the problem isn't too big, recursion is usually good enough.
 
-## Common terms explained
+## Common terms made simple
 
 ### Recursion
-Recursion is a method of solving a problem by defining a function that calls itself with a smaller version of the same problem. This allows the function to break the problem down into smaller and smaller pieces until it reaches a base case, at which point it can begin to build a solution by combining the solutions to the smaller subproblems. Recursion is often used to solve problems that can be decomposed into smaller subproblems that are repeated, such as in the Fibonacci sequence or the Tower of Hanoi.
+Recursion is a way to solve problems by using a function that calls itself with a smaller problem. The function keeps breaking the problem into smaller pieces until it can solve the smallest problem. Then, it builds the answer from the smallest problems. Recursion is used for problems that have smaller, repeated problems, like the Fibonacci sequence or the Tower of Hanoi.
 
-### Subset
-A subset is a collection of elements that belongs to a larger set. Every set is considered to be a subset of itself, and the empty set is a subset of every set. Subsets are often used in combinatorial mathematics to describe the possible combinations of elements that can be chosen from a larger set.
+```
+Factorial(5) = 5 * Factorial(4)
+= 5 * (4 * Factorial(3))
+= 5 * (4 * (3 * Factorial(2)))
+= 5 * (4 * (3 * (2 * Factorial(1))))
+= 5 * (4 * (3 * (2 * 1)))
+= 120
+```
 
-### Subarray
-A subarray is a contiguous portion of an array, or a sequence of elements within an array. A subarray is defined by its start and end indices, and can be extracted from the original array by using these indices to slice the array. Subarrays are often used in algorithms to perform operations on a portion of an array without affecting the rest of the array.
+#### Subset
+A subset is a collection of elements from a larger set. Every set is considered a subset of itself, and the empty set is a subset of every set. Subsets are often used in combinatorial mathematics to describe the possible combinations of elements chosen from a larger set.
 
-### Substring
-A substring is a contiguous sequence of characters within a string. Like a subarray, a substring is defined by its start and end indices, and can be extracted from the original string by using these indices to slice the string. Substrings are often used in algorithms to search for and manipulate specific sequences of characters within a string.
+Example:
 
-### Subsequence
-A subsequence is a sequence of elements within a larger sequence, such as a string or an array, that can be extracted by deleting some of the elements in the original sequence. A subsequence does not have to be contiguous, unlike a substring or a subarray, and the order of the elements in the subsequence may not be the same as the order in the original sequence. Subsequences are often used in algorithms to identify patterns or trends within a larger sequence of data.
+```
+Set A = {1, 2, 3}
 
-## List of problems
+Subsets of A = { }, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}
+```
 
-### Fibonacci
-Find the nth element of the Fibonacci sequence given a positive integer n.
+#### Subarray
+A subarray is a contiguous portion of an array or a sequence of elements within an array. A subarray is defined by its start and end indices and can be extracted from the original array using these indices.
 
-#### Implementation
+Example:
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/fibonacci/">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/fibonacci/">Python</a>
+```
+Array A = [1, 2, 3, 4, 5]
 
-### Grid traveller
-Determine the number of paths a traveler can take to reach the bottom right corner of a grid, starting from the top left corner, given the dimensions of the grid. The traveler can only move right or down at each step.
+Subarrays of A: [1], [1, 2], [1, 2, 3], [2], [2, 3], [2, 3, 4], [3], [3, 4], [3, 4, 5], [4], [4, 5], [5]
+```
 
-#### Implementation
+#### Substring
+A substring is a contiguous sequence of characters within a string. A substring is defined by its start and end indices and can be extracted from the original string using these indices.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/grid_traveler/">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/grid_traveler">Python</a>
+Example:
+
+```
+String S = "hello"
+
+Substrings of S: "h", "he", "hel", "hell", "hello", "e", "el", "ell", "ello", "l", "ll", "llo", "l", "lo", "o"
+```
+
+#### Subsequence
+A subsequence is a sequence of elements within a larger sequence (such as a string or an array) that can be extracted by deleting some of the elements in the original sequence. A subsequence doesn't have to be contiguous, unlike a substring or a subarray.
+
+Example:
+
+```
+String S = "abc"
+
+Subsequences of S: "", "a", "b", "c", "ab", "ac", "bc", "abc"
+```
+
+#### Code examples
+
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/fibonacci/)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/fibonacci/)
+
+### Grid Traveler
+Find the number of ways to get to the bottom right corner of a grid, starting at the top left corner, given the size of the grid. You can only move right or down.
+
+#### Code examples
+
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/grid_traveler)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/grid_traveler)
 
 ### Climbing stairs
 Determine the number of ways to reach the top of a n-step staircase by taking 1, 2, or 3 steps at a time, starting from the bottom.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/climb_stairs">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/climbing_stairs">Python</a>
-
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/climb_stairs)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/climbing_stairs)
 
 ### Can Sum
 Given a list of numbers and a target value, determine if it is possible to obtain the target value by selecting and adding one or more numbers from the list, potentially using the same number multiple times.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_sum">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_sum">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_sum)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_sum)
 
 ### How Sum
 If it is possible to obtain a given target value by selecting and adding one or more numbers from a list, determine which numbers should be chosen and in what combination to achieve the target value.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/how_sum">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/how_sum">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/how_sum)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/how_sum)
 
 ### Best Sum
 If it is possible to obtain a given target value by selecting and adding one or more numbers from a list, determine the smallest set of numbers that should be chosen to achieve the target value.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/best_sum">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/best_sum">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/best_sum)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/best_sum)
 
 ### Can Construct
 Given a list of strings and a target word, determine if it is possible to create the target word by concatenating one or more of the strings from the list, potentially using the same string multiple times.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_construct">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_construct">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_construct)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_construct)
 
 ### Count Construct
 If it is possible to create a target word by concatenating one or more strings from a given list, determine the number of possible sets of strings that can be chosen to construct the target word.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/count_construct">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/count_construct">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/count_construct)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/count_construct)
 
 ### All Constructs
 If it is possible to create a target word by concatenating one or more strings from a given list, determine the smallest set of strings that should be chosen to construct the target word.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/all_construct">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/all_construct">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/all_construct)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/all_construct)
 
 ### Coins
 Determine the minimum number of coins from a given set of denominations needed to reach a specific target amount.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/coin_change">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/coins">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/coin_change)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/coins)
 
 ### Longest common subsequence
 Given an array, find the longest sequence of elements that is present in the array as a contiguous subsequence in multiple places.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_common_subsequence">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_common_subsequence">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_common_subsequence)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_common_subsequence)
 
 ### Longest increasing subarray
 Given an array, find the longest contiguous subarray in which the elements are strictly increasing in value.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_increasing_subarray">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_increasing_subarray">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_increasing_subarray)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_increasing_subarray)
 
 ### Knuth-Morris-Pratt
 Given a text and a pattern, use the Knuth-Morris-Pratt (KMP) algorithm to find the occurrences of the pattern within the text and return their starting indices.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/kmp">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/kmp">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/kmp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/kmp)
 
 ### Minimum insertions to form a palindrome
 Given a string, determine the minimum number of characters that need to be inserted into the string in order to make it a palindrome.
 
 #### Implementation
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/minimum_insertions_for_palindrome">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/minimum_insertions_for_palindrome">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/minimum_insertions_for_palindrome)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/minimum_insertions_for_palindrome)
