@@ -1,4 +1,4 @@
-## Easy Dynamic Programming
+## Dynamic Programming
 
 Dynamic programming is a way to solve problems by breaking them into smaller parts, storing the answers to those smaller parts, and using those answers to solve bigger problems. It can make a problem faster to solve than trying every possible answer.
 
