@@ -1,6 +1,7 @@
 ## Recursive Functions
 
-A recursive function is a function that calls itself, either directly or indirectly, in its definition. It solves a problem by breaking it down into smaller subproblems, and then solves those subproblems by calling itself recursively.
+- A recursive function is a function that calls itself to break down a problem into smaller, more manageable parts.
+- It solves problems by splitting them into smaller subproblems and solving those subproblems using the same function.
 
 For example, consider the problem of computing the factorial of a number n ($n! = n * (n-1) * (n-2) * ... * 1$). One way to solve this problem is to use a recursive function:
 
@@ -16,7 +17,10 @@ In this example, the function calls itself with a smaller value of n until it re
 
 ## Depth-First Search (DFS)
 
-Depth-first search (DFS) is an algorithm for traversing a graph or a tree. It starts at the root (or some arbitrary node) and explores as far as possible along each branch before backtracking.
+- Depth-First Search (DFS) is an algorithm used for exploring graphs or trees.
+- It starts at the root or an arbitrary node and explores as far as possible along each branch before backtracking.
+- DFS uses a stack data structure to keep track of nodes that are to be visited.
+- It can be combined with backtracking techniques to explore all possible paths in a tree or graph and backtrack when reaching a dead end.
 
 For example, consider the following tree:
 
@@ -30,20 +34,9 @@ For example, consider the following tree:
 
 A depth-first search starting at A would first visit A, then B, and then backtrack to A and visit C, D, and E.
 
-DFS can be implemented using a stack data structure, where the nodes to be visited are pushed onto the stack and popped off in the reverse order that they were added. When a node is popped off the stack, its children are examined and pushed onto the stack if they have not been visited yet.
+## Backtracking
 
-DFS is often used in combination with backtracking, as it allows us to explore all possible paths in a tree or graph and backtrack when we reach a dead end.
-
-## When to use backtracking
-
-Backtracking is an efficient method to solve problems that have multiple solutions. It can also be used to find all possible solutions for a problem.
-
-### Examples
-
-* Finding all possible combinations of words formed by a set of characters.
-* Generating all possible permutations of a given set of numbers.
-* Solving the 8 queens puzzle.
-* Finding all possible paths from top-left to bottom-right of a matrix, given that you can only move right or down.
+Backtracking is a useful technique for solving constraint satisfaction problems and combinatorial optimization. It is efficient for certain types of problems, but it may be slow for large problems and require a large amount of memory.
 
 ### Advantages
 
@@ -55,23 +48,24 @@ Backtracking is an efficient method to solve problems that have multiple solutio
 * Can be slow for large problems.
 * May require a large amount of memory to store the search tree.
 
-### Conclusion
+#### Examples
 
-Backtracking is a useful technique for solving constraint satisfaction problems and combinatorial optimization. It is efficient for certain types of problems and can find all possible solutions, but it may be slow for large problems and require a large amount of memory.
+- Finding all possible combinations of words formed by a set of characters.
+- Generating all possible permutations of a given set of numbers.
+- Solving the 8 queens puzzle, where 8 queens must be placed on a chessboard without attacking each other.
+- Finding all possible paths from the top-left to the bottom-right of a matrix, given that you can only move right or down.
 
-## How to build a backtracking algorithm?
+### Building a Backtracking Algorithm
 
-To build a backtracking algorithm, follow these steps:
+1. Identify the base case(s) for the problem. These are the conditions where the algorithm should stop searching for solutions and return a result.
+2. Set up a recursive function that takes in the current state of the candidate solution and any relevant parameters.
+3. Within the function, check if the current state is a valid solution or if it has reached one of the base cases. If either of these conditions is met, return a result.
+4. If the current state is not a valid solution and the base case has not been reached, generate a list of potential next steps or "choices" that can be taken from the current state.
+5. Iterate through the list of choices and, for each choice, make the change to the current state and recursively call the function with the updated state.
+6. If the function returns a result for any of the choices, return that result. If the function returns without finding a result for any of the choices, return "no result" or backtrack to the previous state.
+7. Repeat this process until a valid solution is found or all possibilities have been exhausted.
 
-1. Identify the base case(s) for the problem. These are the conditions under which the algorithm should stop searching for solutions and return a result.
-1. Set up a recursive function that takes in the current state of the candidate solution and any relevant parameters.
-1. Within the function, check if the current state is a valid solution or if it has reached one of the base cases. If either of these conditions is met, return a result.
-1. If the current state is not a valid solution and the base case has not been reached, generate a list of potential next steps or "choices" that can be taken from the current state.
-1. Iterate through the list of choices and, for each choice, make the change to the current state and recursively call the function with the updated state.
-1. If the function returns a result for any of the choices, return that result. If the function returns without finding a result for any of the choices, return "no result" or backtrack to the previous state.
-1. Repeat this process until a valid solution is found or all possibilities have been exhausted.
-
-It is important to note that backtracking algorithms can be computationally expensive, as they may need to explore a large number of possibilities before finding a solution. However, they can be very effective for problems with a small search space or for problems where it is easy to quickly check if a candidate solution is valid.
+Remember that backtracking algorithms can be computationally expensive, as they may need to explore a large number of possibilities before finding a solution. However, they can be very effective for problems with a small search space or for problems where it is easy to quickly check if a candidate solution is valid.
 
 ## List of problems
 
