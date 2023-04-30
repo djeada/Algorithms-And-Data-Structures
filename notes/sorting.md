@@ -2,6 +2,9 @@
 
 In computer science, 'sorting' means arranging a collection of items in a specific order. We need to define an order for the items we want to sort. For numbers, we use the standard numerical order. For strings, we use the alphabetic order, like in dictionaries. Sorting can be applied to any type of object if the order is defined for them.
 
+### Stability
+Stability means that if two items are the same, they stay in the same order even after sorting. A stable sorting method doesn't mix up the order of equal items.
+
 ## Bubble Sort
 Bubble sort is easy to understand and implement. It is often used to teach sorting algorithms. The main idea is to go over the array with n elements n times. In each pass, we compare each element with its neighbor and swap them if they are not in order. Larger elements "bubble up" towards the end of the array. After n iterations, the array will be sorted.
 
