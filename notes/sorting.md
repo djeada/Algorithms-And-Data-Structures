@@ -75,7 +75,6 @@ Insertion sort is stable because items with the same value keep their original o
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/insertion_sort/src/insertion_sort.cpp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/insertion_sort/src/insertion_sort.py)
-github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/insertion_sort/src/insertion_sort.cpp)
 
 ## Quick Sort
 Quick sort divides the original array into two parts based on a selected value called the pivot. The first part has items smaller than the pivot, and the second part has items larger than or equal to the pivot. The partitioning process is repeated for each subgroup until all items are sorted.
