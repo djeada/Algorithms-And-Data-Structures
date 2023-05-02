@@ -110,7 +110,7 @@ Hash tables are efficient data structures that map keys to values using a hash f
 14. Cache-friendly: Hash tables can be cache-friendly by using open addressing, as it allows better utilization of CPU cache due to better locality of reference.
 15. Applications: Hash tables are useful in various applications, such as implementing symbol tables in compilers, storing user sessions in web applications, and caching frequently accessed data.
 
-### Algorithms
+## Algorithms
 
 Algorithms are step-by-step procedures to solve problems. Choosing the right algorithm is crucial for efficiency.
 
