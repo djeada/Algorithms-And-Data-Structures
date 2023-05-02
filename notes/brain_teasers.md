@@ -18,162 +18,213 @@ Keep these general principles in mind when solving programming brain teasers:
 
 ### Working with Arrays
 
-Arrays are frequently used in programming brain teasers. Here are some tips for working with arrays:
+Arrays store elements in a continuous block of memory. Tips for working with arrays:
 
-* Consider sorting the array first. This can make it easier to identify patterns and solve the problem. Use sorting algorithms with a time complexity of O(n log n), such as merge sort or quick sort.
-* If the array is already sorted, use a binary search algorithm with a time complexity of O(log n). This can efficiently find specific elements in the array.
-* Employ the two-pointer technique, which involves using two pointers to iterate through the array. This can help find pairs of elements that meet certain criteria, like having a specific sum.
-* Be aware of your solution's space complexity. If the array is very large, create a solution that doesn't require additional space or uses minimal extra space.
-* Use pointers to iterate through the array instead of a traditional for loop for faster and more memory-efficient operations.
-* If frequent insertions or deletions in the middle of an array are needed, consider using a linked list instead of an array.
-* Pay attention to the order of operations when working with arrays. Perform multiple operations in a way that minimizes element shifting within the array.
-* To find the maximum or minimum element in an array, use a divide-and-conquer approach, which often finds the maximum or minimum in O(n) time.
+1. Consider sorting first, using O(n log n) algorithms like merge or quick sort.
+2. For sorted arrays, use binary search with O(log n) complexity.
+3. Employ the two-pointer technique to find pairs meeting specific criteria.
+4. Be aware of space complexity, especially with large arrays.
+5. Use pointers instead of traditional loops for faster, memory-efficient operations.
+6. If frequent insertions/deletions are needed, consider using a linked list.
+7. Pay attention to the order of operations to minimize element shifting.
+8. Use divide-and-conquer to find maximum or minimum elements in O(n) time.
 
 ### Working with Strings
 
-Strings are another frequent data structure in programming brain teasers. Here are some tips for working with strings:
+Strings store sequences of characters. Here are some tips:
 
-* For a large number of strings, consider using a prefix tree (also known as a trie) for efficient storage and searching.
-* In Python, strings are immutable, meaning you can't change them in place. To modify a string, create a new string with the desired changes.
-* Use the str.format() method to build strings with dynamic content, allowing you to insert placeholders and fill them with variable values or expressions.
-* To concatenate a list of strings into a single string with a specified separator, use the str.join() method, which is often more efficient than manually concatenating strings in a loop.
-* Use the str.split() method to divide a string into a list of substrings based on a specified delimiter.
-* The re module in Python offers functions for working with regular expressions to match patterns, extract, or modify substrings in strings.
-* Python natively supports Unicode, a standardized character encoding representing most written languages. Include Unicode characters in string literals using special escape sequences (like \uxxxx).
-* The unicodedata module provides functions for working with Unicode data, such as determining a character's category or decomposing a character into its components.
-* Python's bytes type represents byte sequences used to store binary data or encode strings in specific character encodings. Convert between strings and bytes using the str.encode() and bytes.decode() methods.
+1. For many strings, use a prefix tree (trie) for efficient storage and searching.
+2. In Python, strings are immutable, so create new strings for modifications.
+3. Use str.format() to build strings with dynamic content.
+4. Concatenate strings efficiently with str.join().
+5. Divide strings into substrings with str.split().
+6. Use the re module for regular expressions in Python.
+7. Python supports Unicode characters with escape sequences.
+8. Use the unicodedata module for Unicode data manipulation.
+9. Convert between strings and bytes with str.encode() and bytes.decode().
 
-### Linked lists
-Keep these points in mind when working with linked lists:
+### Working with Linked Lists
 
-* Linked lists are linear data structures comprising a chain of nodes, each containing a value and a reference to the next node. The last node has a reference to None.
-* They can be singly-linked (each node refers to the next) or doubly-linked (each node refers to both the next and previous nodes).
-* Linked lists are dynamic data structures, which means they can grow and shrink in size as needed, making them suitable for situations with unknown data sizes.
-* They offer constant-time insertions and deletions but have linear-time search and access.
-* It's essential to track the head, tail, and size of the list, which can be stored as separate variables or list class properties.
-* Common operations include inserting, deleting, searching for elements, and traversing the list.
-* When implementing a linked list, consider edge cases like inserting or deleting the first or last element, or handling empty lists.
-* For problems requiring inserting nodes at the front of the list, use a dummy head to simplify the code and avoid edge cases where the list head needs updating.
-* To find the middle node or detect a cycle in a linked list, use a slow and fast pointer technique involving two pointers moving at different paces. If the fast pointer reaches the end before the slow one, the list isn't cyclic; if it catches up, there's a cycle.
-* Reverse a linked list to solve problems requiring reverse traversal by iteratively updating the next pointers of each node to point to the previous node.
-* Use a stack to simulate recursive calls for a linked list problem if a recursive solution exceeds the maximum call stack depth.
-* Often, it's necessary to track the previous node in addition to the current one. This can be achieved by using a "dummy" node pointing to the list head and updating the next pointer as the list is traversed.
+Linked lists store elements in nodes with references to the next (and sometimes previous) nodes. Keep these points in mind:
+
+1. Linked lists can be singly-linked or doubly-linked.
+2. They're dynamic and suitable for situations with unknown data sizes.
+3. Constant-time insertions/deletions, but linear-time search/access.
+4. Track head, tail, and size of the list.
+5. Common operations: insert, delete, search, and traverse.
+6. Consider edge cases like inserting/deleting first or last elements or handling empty lists.
+7. Use a dummy head for front insertions to simplify code.
+8. Use slow and fast pointers to find the middle node or detect cycles.
+9. Reverse a linked list by iteratively updating next pointers.
+10. Use a stack to simulate recursive calls if recursion exceeds maximum call stack depth.
+11. Track the previous node in addition to the current one using a "dummy" node.
 
 ### Working with Binary Trees
 
-Binary trees are a common data structure used in programming brain teasers. Here are some tips for working with binary trees:
+Binary trees are data structures where each node has up to two children. Tips for working with them:
 
-* When working with binary trees, you may need to perform operations such as search, insert, and predecessor.
-* There are three main traversal orders for binary trees: in-order, pre-order, and post-order. In-order traversal is done by visiting the left node, the root, and then the right node. Pre-order traversal is done by visiting the root, the left node, and then the right node. Post-order traversal is done by visiting the left node, the right node, and then the root.
-* You can construct a complete tree with an array by using a recursive function to create a TreeNode with the value at each index, and setting its left and right properties to the result of calling the function on the indices i * 2 + 1 and i * 2 + 2. The base case is when i becomes larger than the length of the array.
-* When working with binary trees, you'll typically want to use a binary search tree (BST) or a self-balancing BST such as an AVL tree. These types of trees are more efficient for inserting, searching, and deleting elements, and have a time complexity of O(logn).
+1. Perform operations like search, insert, and finding predecessors.
+2. Traverse in three orders: in-order (left, root, right), pre-order (root, left, right), and post-order (left, right, root).
+3. To create a complete tree from an array, use a recursive function with indices `i * 2 + 1` (left) and `i * 2 + 2` (right).
+4. For efficiency, use binary search trees (BST) or self-balancing BSTs like AVL trees, which have O(logn) time complexity.
 
 ### Working with n-ary Trees
 
-n-ary trees are trees that have no more than n children. Some common types of n-ary trees include trie trees and AVL trees. Here are some tips for working with these types of trees:
+n-ary trees are trees where nodes have up to n children. Some common types and tips:
 
-* Trie trees, also known as retrieval trees, are commonly used to store words or strings. They allow for fast lookup of specific words, but can use a lot of memory due to the fact that each node can point to up to 26 other nodes (one for each letter in the alphabet). The time complexity for both retrieval and insertion in a trie tree is O(n), where n is the length of the key being searched for or inserted.
-* AVL trees are self-balancing binary search trees that maintain a balance factor of no more than 1 (the difference in height between the left and right subtrees). This ensures that the tree has O(logn) time complexity for operations such as insertion, retrieval, and deletion. However, if the balance factor becomes greater than 1 during an insertion or deletion, a rebalance operation is needed, which has a time complexity of O(logn).
-* Red-black trees are another type of self-balancing tree that may be more efficient for scenarios with a large number of insertions and deletions. They have a slightly lower level of balance than AVL trees, but are generally faster due to the fact that they require fewer rotations.
-* When deciding between using a balanced BST or a hash map, consider whether you need to store ordered or unordered items. Hash maps are efficient for storing unordered items and have constant time lookup, while balanced BSTs are efficient for storing ordered items and allow for operations such as finding the value nearest to a certain value. The time complexity for lookup in a balanced BST is O(logn).
-    
+1. Trie trees: store words with fast lookup (O(n)) but high memory usage due to 26 possible child nodes (one per alphabet letter).
+2. AVL trees: self-balancing BSTs with O(logn) complexity. Rebalance if the balance factor is greater than 1 during insertion or deletion.
+3. Red-black trees: self-balancing trees, faster than AVL trees with many insertions/deletions due to fewer rotations.
+4. For storing ordered items, use balanced BSTs. For unordered items, use hash maps, which have constant lookup time.
+
 ### Working with Graphs
 
-Graphs are a common data structure used in programming brain teasers. Here are some tips for working with graphs:
+Graphs are versatile data structures with nodes and edges. Tips for working with them:
 
-* When storing a graph, there are a few different options to consider. These include an edge list (a list of edges between numbered nodes, with a weight if needed), an adjacency matrix (a V * V array with 0s and 1s indicating the presence of an edge), and an adjacency list (an array or hash table with a list of edges at each element, where the key is the node and the edges are the values).
-* Consider treating the problem as a graph problem and using breadth-first or depth-first traversal to solve it.
-* Use a stack if the problem involves parsing or traversals.
-* Consider using heaps whenever you need to take the minimum or maximum of a dynamic collection.
-* For directed graphs, it can be useful to store the graph using nodes as objects and edges as pointers (OOP). This can work well because you don't have to maintain the storage of an edge at each vertex and don't have to worry about becoming unsynchronized.
-* When working with directed graphs, you'll need to keep track of visited nodes to avoid getting stuck in infinite loops. One option is to use a set to keep track of visited nodes, as this allows for constant lookup time and easy initialization. Alternatively, you can use a visited array in your recursive stack to keep track of the current path and detect cycles.
-* When working with undirected graphs, you'll need to be careful to skip the parent node when calling the DFS on each neighbor to avoid detecting non-existent cycles.
-* To determine whether a graph is a tree, consider the following two conditions: (1) the graph is fully connected (i.e., for every pair of nodes in the graph, there is a path between them) and (2) the graph contains no cycles (i.e., there is exactly one path between each pair of nodes in the graph).
+1. Store graphs using edge lists (list of edges), adjacency matrices (V * V array), or adjacency lists (array or hash table of edges).
+2. Approach problems as graph problems and apply breadth-first or depth-first traversal.
+3. Use stacks for parsing or traversals, and heaps for dynamic collections with minimum/maximum retrieval.
+4. For directed graphs, store nodes as objects and edges as pointers. Keep track of visited nodes using a set or visited array.
+5. In undirected graphs, skip parent node when calling DFS on neighbors to avoid detecting non-existent cycles.
+6. To check if a graph is a tree, ensure it's fully connected (a path between every pair of nodes) and contains no cycles (only one path between each pair).
+7. Graph problems can be solved using algorithms like Dijkstra's (shortest path), Kruskal's (minimum spanning tree), and more.
+8. In some graph problems, you can utilize dynamic programming or greedy algorithms for optimization.
 
-### Hash tables
+### Hash Tables
 
-Here are some points to keep in mind while working with hash tables:
+Hash tables are efficient data structures that map keys to values using a hash function, providing constant-time operations. Here are some additional points and tricks to help you use hash tables effectively:
 
-* A hash table is a data structure that maps keys to values using a hash function. It allows for constant-time insertions, deletions, and searches, making it an efficient data structure for storing and retrieving data.
-* Hash tables use an array to store the data, and the hash function maps the keys to indices in the array. A collision occurs when two keys map to the same index, and must be resolved by storing the data in a different way at that index.
-* There are various techniques for resolving collisions, including chaining (using a linked list at each index to store the data), open addressing (probing through the array to find an empty slot), and linear probing (finding the next available slot in the array).
-* The choice of hash function is important for the efficiency of the hash table. A good hash function should distribute the keys evenly across the indices of the array and minimize the number of collisions.
-*  The load factor, or the ratio of the number of elements to the size of the array, can affect the performance of the hash table. A high load factor can increase the number of collisions and decrease the performance of the hash table.
-* Hash tables have constant-time insertions, deletions, and searches on average, but the worst-case time complexity for these operations can be linear.
-* In Python, the built-in dict data type is implemented using a hash table. The hash() function can be used to compute the hash value of an object, and the set() data type is implemented using a hash table.
+1. Constant-time operations: Hash tables offer constant-time insertions, deletions, and searches on average.
+2. Array storage: Hash tables use an array to store data, with the hash function mapping keys to indices in the array.
+3. Collisions: When two keys map to the same index, a collision occurs and needs to be resolved.
+4. Chaining: One technique to resolve collisions is chaining, which uses a linked list at each index to store the data.
+5. Open addressing: Another technique to resolve collisions is open addressing, where an empty slot is probed through the array.
+6. Linear probing: Linear probing is a specific type of open addressing that finds the next available slot in the array.
+7. Hash function choice: A good hash function should distribute keys evenly across the indices of the array, minimizing collisions.
+8. Load factor: The ratio of the number of elements to the size of the array, the load factor can impact the performance of the hash table.
+9. Worst-case time complexity: Although hash tables have constant-time operations on average, their worst-case time complexity can be linear.
+10. Python implementations: In Python, the built-in dict and set data types are implemented using hash tables, and the hash() function computes the hash value of an object.
+11. Custom hash functions: For custom objects, you can define your own hash function by implementing the `__hash__` method.
+12. Handling mutable keys: Avoid using mutable objects as keys, as their hash values can change, leading to unexpected behavior.
+13. Dynamic resizing: Implement dynamic resizing to maintain a reasonable load factor and optimize performance as the hash table grows or shrinks.
+14. Cache-friendly: Hash tables can be cache-friendly by using open addressing, as it allows better utilization of CPU cache due to better locality of reference.
+15. Applications: Hash tables are useful in various applications, such as implementing symbol tables in compilers, storing user sessions in web applications, and caching frequently accessed data.
 
-## Algorithms
+### Algorithms
 
-Algorithms are a set of steps or procedures used to solve a problem. There are various types of algorithms that can be used to solve different types of problems, and choosing the right algorithm is crucial for finding an efficient solution. Some common types of algorithms include:
+Algorithms are step-by-step procedures to solve problems. Choosing the right algorithm is crucial for efficiency.
 
-## Two pointers
+### Two Pointers
 
-The two pointer technique is a method used to traverse through a list or array with two pointers pointing to different elements. One pointer is usually at the start of the list and the other at the end. The pointers then move towards each other, depending on a certain condition. This technique is often used to solve problems involving subarrays or finding the maximum or minimum of a subarray.
+Two pointers technique traverses a list/array with two pointers pointing to different elements:
 
-* Begin by identifying the problem constraints and deciding which of the two pointer approaches (i.e. starting from the beginning, ending, or middle of the list) is most appropriate
-* Carefully consider the conditions under which you will increment or decrement the pointers, and ensure that these are consistent with the problem constraints
-* Pay attention to the bounds of your pointers to avoid going out of range of the list
+1. Identify problem constraints and choose the appropriate two-pointer approach.
+2. Consider conditions for incrementing or decrementing pointers.
+3. Pay attention to pointer bounds to avoid out-of-range errors.
 
 ### Recursion
 
-Recursion is a method of solving problems where the solution is based on solving smaller instances of the same problem. In other words, the solution to a problem is expressed in terms of itself. Recursion is a powerful technique that can be used to solve problems that are difficult to solve using other methods.
+Recursion solves problems by solving smaller instances of the same problem:
 
-To use recursion, you need to identify the base case, which is the smallest instance of the problem that can be solved directly. The base case is used to stop the recursion and provide a solution for the problem. The solution for the base case is then used to solve larger instances of the problem, by calling the function recursively.
+1. Identify the base case(s) to stop recursion and provide a solution.
+2. Call the function recursively, using the base case solution to solve larger instances.
 
-## Backtracking
+### Backtracking
 
-Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, that incrementally builds candidates to the solutions, and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution.
+Backtracking finds solutions by incrementally building candidates and abandoning them if they can't be completed:
 
-* Start by identifying the base case(s) of your problem, as these will be the stopping point for your recursive calls
-* Carefully consider the recursive case, and identify what steps need to be taken in order to break the problem down into smaller subproblems
-* Use a suitable data structure, such as a stack or queue, to store your potential solutions as you explore the different possibilities
-* Consider using pruning techniques to avoid exploring unnecessary paths and improve the efficiency of your solution
+1. Identify the base case(s) for stopping recursive calls.
+2. Break the problem down into smaller subproblems in the recursive case.
+3. Use suitable data structures (e.g., stack, queue) to store potential solutions.
+4. Apply pruning techniques to avoid exploring unnecessary paths and improve efficiency.
 
-## Dynamic Programming and Memoization
+### Dynamic Programming
 
-Dynamic programming is a method of solving problems by breaking them down into smaller subproblems and storing the solutions to these subproblems in order to avoid redundant calculations. There are two approaches to dynamic programming: top-down and bottom-up.
+Dynamic programming is a problem-solving technique that breaks problems into smaller subproblems and stores solutions to avoid redundant calculations. There are two approaches: top-down (memoization) and bottom-up.
 
-In the top-down approach, you start with the problem itself and break it down into smaller pieces in order to solve it. This approach is also known as memoization, as you use a cache to store already computed results in order to prevent redundant calculations. The top-down approach is often easier to code and more intuitive, but it may not be as efficient as the bottom-up approach in some cases.
+#### Top-down Approach (Memoization)
 
-In the bottom-up approach, you start with the smallest subproblems and build up to the final solution. This approach is often used when each subproblem must be solved at least once, as it ensures that all subproblems are solved in the correct order. The bottom-up approach may also be more efficient than the top-down approach in terms of memory usage because it avoids the need for recursive function calls, which can take up space on the call stack. In the bottom-up approach, the subproblems are solved and stored in a table or array, so there is no need to keep track of the intermediate state of the function during the recursive calls. This can be especially important in cases where the subproblems are large or there are many of them, as the call stack can quickly become overloaded. Additionally, the bottom-up approach allows for better control over the order in which the subproblems are solved, as it is possible to solve the subproblems in a specific order that ensures that the required information is available when it is needed. This can be particularly useful in cases where the subproblems have dependencies on one another.
+In the top-down approach, you start with the problem itself and break it down into smaller pieces to solve it. This approach is also known as memoization, as you use a cache (e.g., a dictionary or an array) to store already computed results in order to prevent redundant calculations. The top-down approach is often easier to code and more intuitive but may not be as efficient as the bottom-up approach in some cases.
 
-### Greedy algorithms
+Steps for the top-down approach:
 
-A greedy algorithm is an algorithmic paradigm that follows the problem-solving heuristic of making the locally optimal choice at each stage with the hope of finding a global optimum. In other words, a greedy algorithm makes the most optimal choice at each step, without considering the consequences of those choices on future steps.
+1. Define a recursive function to solve the problem.
+2. Identify the base case(s) that can be solved directly.
+3. Use a cache to store the results of subproblems that have already been solved.
+4. Check the cache before solving a subproblem; if the result is already cached, return it without recalculating.
+5. Solve subproblems by making recursive calls to the function, and store the results in the cache.
 
-One of the main advantages of greedy algorithms is that they are easy to understand and implement. However, they are not always the most efficient solution to a problem, as they may not always find the global optimum.
+#### Bottom-up Approach
+
+In the bottom-up approach, you start with the smallest subproblems and build up to the final solution. This approach is often used when each subproblem must be solved at least once, as it ensures that all subproblems are solved in the correct order. The bottom-up approach may also be more efficient than the top-down approach in terms of memory usage because it avoids the need for recursive function calls, which can take up space on the call stack.
+
+Steps for the bottom-up approach:
+
+1. Identify the smallest subproblems that can be solved directly.
+2. Create a table or an array to store the results of subproblems.
+3. Iterate through the table/array, solving each subproblem and storing the result.
+4. Build the solution for the larger problem using the results of the smaller subproblems.
+5. Return the final solution from the table/array.
+
+### Greedy Algorithms
+
+Greedy algorithms follow a problem-solving strategy of making the locally optimal choice at each stage, hoping to find a global optimum. They make the best choice at each step without considering the consequences of those choices on future steps.
+
+Advantages:
+
+* Easy to understand and implement.
+
+Disadvantages:
+
+* May not always find the most efficient or global optimum solution.
 
 ### Sorting
 
-There are many different sorting algorithms that can be used to order a list of items. It is important to know the strengths and weaknesses of each algorithm and choose the one that is most appropriate for the task at hand.
+Sorting algorithms are used to order a list of items. It's important to know each algorithm's strengths and weaknesses and choose the most appropriate one for your task.
 
 #### Insertion Sort
 
-Insertion sort is a simple sorting algorithm that works by iterating through the list and inserting each item in its correct place in the sorted portion of the list. It is best suited for lists that are already mostly sorted, as it has a time complexity of O(n) in this case. Insertion sort is stable, meaning that it preserves the original order of items with equal keys.
+A simple algorithm that iterates through the list, inserting each item in its correct place in the sorted portion of the list. Best for mostly sorted lists.
+
+* Time complexity: O(n) for mostly sorted lists
+* Stable
 
 #### Merge Sort
 
-Merge sort is a divide and conquer algorithm that works by recursively splitting the list into halves and then merging the sorted halves back together. It has a time complexity of O(n log n) and is stable.
+A divide-and-conquer algorithm that recursively splits the list into halves and merges the sorted halves back together.
+
+* Time complexity: O(n log n)
+* Stable
 
 #### Quick Sort
 
-Quick sort is another divide and conquer algorithm that works by selecting a pivot element and then partitioning the list around it. It has a time complexity of O(n log n) on average, but can be as bad as O(n^2) in the worst case. Quick sort is not stable.
+A divide-and-conquer algorithm that selects a pivot element and partitions the list around it.
+
+* Time complexity: O(n log n) on average, O(n^2) worst case
+* Not stable
 
 #### Other Sorting Algorithms
 
-Other commonly used sorting algorithms include heap sort, radix sort, and timsort (a hybrid of merge sort and insertion sort). In Python, the built-in list.sort() function uses timsort. There are also many other sorting algorithms that are less commonly used, such as bubble sort and selection sort.
+Other sorting algorithms include heap sort, radix sort, and timsort (a hybrid of merge sort and insertion sort). In Python, the built-in list.sort() function uses timsort.
 
 #### Choosing a Sorting Algorithm
 
-When choosing a sorting algorithm, it is important to consider the time complexity and stability of the algorithm, as well as any additional constraints or requirements of the task. In general, divide and conquer algorithms such as merge sort and quick sort have a good time complexity and are suitable for many tasks. However, insertion sort may be a better choice for lists that are already mostly sorted, and heap sort may be a good choice for sorting large lists that do not fit in memory.
+Consider the time complexity, stability, and specific task constraints or requirements when choosing a sorting algorithm.
 
 ### Bit Manipulation
-Bit manipulation is the act of altering or manipulating individual bits in a value stored in a computer's memory. This is often used in computer programming to perform low-level operations or to optimize code by minimizing the number of instructions used to perform a certain operation. Some common bit manipulation techniques include bit shifting, masking, and setting or clearing individual bits.
 
-* Be familiar with the binary representation of integers and how to perform basic operations such as shifting, ORing, ANDing, and XORing on them
-* Understand the difference between signed and unsigned integers and how to perform arithmetic shifts for signed integers
-* Know how to convert between binary and decimal representations, and be able to perform basic arithmetic operations in binary
-* Keep in mind the bitwise operators have a lower precedence than most other operators, so you may need to use parentheses to specify the order of operations.
+Bit manipulation refers to the act of modifying individual bits within a value stored in a computer's memory. It is often utilized for low-level operations or optimizing code by reducing the number of instructions needed to execute a particular operation.
+
+1. Binary representation: Be familiar with the binary representation of integers and understand how to perform basic operations such as shifting, ORing, ANDing, and XORing.
+2. Signed vs. unsigned integers: Grasp the difference between signed and unsigned integers and know how to perform arithmetic shifts for signed integers.
+3. Converting between representations: Learn to convert between binary and decimal representations and carry out basic arithmetic operations in binary.
+4. Operator precedence: Keep in mind that bitwise operators have lower precedence than most other operators, so you may need to use parentheses to specify the order of operations.
+5. Bitwise negation: Understand how to use the bitwise negation operator (~) to flip all bits in a binary number.
+6. Setting bits: Learn how to set specific bits within an integer using bitwise OR and the left shift operator.
+7. Clearing bits: Know how to clear specific bits within an integer using bitwise AND and the bitwise negation operator.
+8. Toggling bits: Learn to toggle specific bits within an integer using bitwise XOR.
+9. Bit masking: Use bit masking to extract specific bits from an integer.
+10. Bit tricks: Be aware of various bit manipulation tricks, such as using XOR to swap two variables without using a temporary variable or using bit manipulation to efficiently compute powers of two.
 
 ## List of problems
 
@@ -181,103 +232,104 @@ Bit manipulation is the act of altering or manipulating individual bits in a val
 
 Given a string of parentheses, determine the minimum number of parentheses that need to be removed to make the string valid. This can be solved using a stack data structure to track the open parentheses as we iterate through the string. If we encounter an open parenthesis, we add it to the stack. If we encounter a closing parenthesis, we check if there is a matching open parenthesis on the top of the stack. If there is, we pop the open parenthesis from the stack. If there is not, we add the closing parenthesis to a list of characters to remove. After we have processed the entire string, we remove the remaining open parentheses from the stack.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/deletions_to_make_valid_parentheses">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/deletions_to_make_valid_parentheses">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/deletions_to_make_valid_parentheses)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/deletions_to_make_valid_parentheses)
 
 ### Is palindrome after at most one char delete?
 
 Determinine whether a string can be transformed into a palindrome by deleting at most one character. This can be solved using a two pointer approach, where we start from both ends of the string and move towards the middle. If we encounter a pair of characters that are not equal, we have three options: delete the character at the left pointer, delete the character at the right pointer, or delete both characters. We check if any of these options results in a palindrome and return the result.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/is_palindrome_after_char_deletion">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/is_palindrome_after_char_deletion">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/is_palindrome_after_char_deletion)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/is_palindrome_after_char_deletion)
 
 ### K closest points to origin 	
 
 Find the K points in a list of points that are closest to the origin (0, 0). This can be solved using a min heap data structure, where we store the K closest points so far. As we iterate through the list of points, we compute the distance from each point to the origin and add it to the heap if it is among the K closest points so far.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/k_closest_points">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/k_closest_points">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/k_closest_points)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/k_closest_points)
 
 ### Subarray sum equals K 	
 
 Find a contiguous subarray of an array that has a sum of K. This can be solved using a sliding window approach, where we maintain a running sum of the elements in the window and move the window through the array until we find a subarray with the desired sum.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/subarray_sum">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/subarray_sum">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/subarray_sum)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/subarray_sum)
 
 ### Add numbers given as strings 	
 
 Add two numbers represented as strings. This can be solved by treating the strings as arrays of digits and using a carry variable to keep track of the carryover from one place value to the next.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/add_string_numbers">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/add_string_numbers">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/add_string_numbers)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/add_string_numbers)
 
 ### Dot product of two sparse vectors 	
 
 Compute the dot product of two sparse vectors, where a vector is represented as a list of (index, value) pairs. This can be solved by iterating through both vectors and adding up the products of the values at the same index.
  
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/sparse_vectors_product">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/sparse_vectors_product">Python</a>
+ 
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/sparse_vectors_product)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/sparse_vectors_product)
 
 ### Range sum of BST 	
 
 Compute the sum of the values of all the nodes in a binary search tree within a given range. This can be solved using a recursive in-order traversal of the tree, where we add the value of each node to the sum if it is within the range.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/range_sum_of_bst">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/range_sum_of_bst">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/range_sum_of_bst)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/range_sum_of_bst)
 
 ### Product of array except self 	
 
 Compute an array where each element is the product of all the other elements in the input array. This can be solved using two pass approach, where we first compute the product of all the elements before each index and then compute the product of all the elements after each index.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/array_product">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/array_product">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/array_product)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/array_product)
 
 ### Convert BST to sorted doubly linked list 
 
 Convert a binary search tree to a sorted doubly linked list. This can be solved using a recursive in-order traversal of the tree, where we build the linked list by adding each node to the end of the list as we visit it.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/bst_to_list">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/bst_to_list">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/bst_to_list)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/bst_to_list)
 
 ### Lowest common ancestor of a binary tree
 
 Find the lowest common ancestor (LCA) of two nodes in a binary tree. The LCA is the node in the tree that is the ancestor of both nodes and is the deepest node in the tree. To solve this problem, you can use a variety of techniques such as traversing the tree in a depth-first or breadth-first manner, or using a recursive approach to traverse the tree and find the LCA. You can also use a divide and conquer approach, where you split the tree into left and right subtrees and find the LCA in each subtree. Another approach is to use a hash table or a map to store the ancestors of each node and then use this information to find the LCA.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/lowest_common_ancestor">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/lowest_common_ancestor">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/lowest_common_ancestor)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/lowest_common_ancestor)
 
 ### LRU Cache 	
 
 Designing a cache data structure that stores a limited number of items and removes the least recently used items when the capacity is reached. This can be solved using a doubly linked list and a hash table. The doubly linked list is used to store the items in the cache in the order in which they were accessed, with the most recently accessed item at the front of the list and the least recently accessed item at the back. The hash table is used to store the keys and values of the items in the cache and to quickly retrieve items from the cache based on their keys.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/lru_cache">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/lru_cache">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/lru_cache)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/lru_cache)
 
 ### Randomize An Array 	
 
 Shuffle the elements of an array randomly. This can be solved using a random number generator and a Fisher-Yates shuffle algorithm. The Fisher-Yates shuffle algorithm works by starting at the end of the array and randomly swapping each element with an element preceding it. This results in a randomly shuffled array.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/randomize_array">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/randomize_array">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/randomize_array)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/randomize_array)
 
 ### Binary Tree Right Side View
 
 Given a binary tree, return an array containing the values of the nodes on the right side of the tree, when viewed from the right. One way to solve this problem might be to perform a breadth-first search on the tree, keeping track of the maximum depth of each node as it is visited. When visiting a node at a particular depth for the first time, add its value to the result array.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/binary_tree_right_side_view">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/binary_tree_right_side_view">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/binary_tree_right_side_view)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/binary_tree_right_side_view)
 
 ### Design Browser History
 
 Implement a browser history system that supports the following operations: visit a URL, go back to the previous URL, and go forward to the next URL. One potential approach to this problem could involve using a doubly-linked list to store the URLs visited, with a pointer to the current URL. Going back or forward would simply involve moving the pointer to the previous or next URL in the list.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/design_browser_history">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/design_browser_history">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/design_browser_history)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/design_browser_history)
 
 ### Score After Flipping Matrix
 
 Given a matrix of 0s and 1s, flip the rows and columns of the matrix such that the maximum possible score is achieved. The score is calculated as the number of 1s in the matrix. One way to solve this problem might be to use dynamic programming to compute the maximum score for each submatrix of the original matrix, taking into account whether the rows and columns of the submatrix should be flipped.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/score_after_flipping_matrix">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/score_after_flipping_matrix">Python</a>
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/cpp/score_after_flipping_matrix)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/brain_teasers/python/score_after_flipping_matrix)
