@@ -1,4 +1,4 @@
-## Easy-to-Understand Data Structures & Algorithms
+## Intro to Data Structures & Algorithms
 
 Data structures and algorithms are key parts of computer science. They help us keep track of and work with data. A data structure is how we save data on a computer, while an algorithm is a set of steps to solve a problem or do a task. Let's go over some basic ideas about data structures and algorithms, why they're important, and how we use them.
 
