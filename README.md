@@ -7,13 +7,14 @@
 </div>
 
 This repository contains a collection of projects in C++ and Python that implement various data structures and algorithms. The projects are organized by language and topic, and include detailed explanations and examples to help you understand how they work.
+
 ![algorithms](https://user-images.githubusercontent.com/37275728/213442579-155a1549-89ee-43d1-878b-9d1673524a5a.png)
 
 ## About
 
-As someone who has been captivated by Algorithms and Data Structures since my first encounter with the subject at university in 2015, I have come to value the importance of regularly revisiting the fundamentals. This is especially true when learning a new programming language, as it helps to build a strong foundation of understanding. With this in mind, I have decided to share my code and notes on Algorithms and Data Structures with the wider community.
+Ever since I first tackled Algorithms and Data Structures at university in 2015, I've found it super useful to regularly go back to the basics. This becomes even more important when you're trying to learn a new programming language - a strong foundation is key. To help others, I've decided to share my code and notes on the subject with everyone.
 
-My code is written in two of my favorite programming languages, C++ and Python, and I have made a conscious effort to adhere to modern best practices. Along with the code, I have also included comprehensive notes that I took while learning the topic. These notes are intended to provide additional context and understanding, and may be particularly helpful for those who are new to the subject.
+My code is written in two programming languages I really enjoy, C++ and Python. I've done my best to stick to the latest best practices. Alongside the code, you'll find the notes I made while learning. These notes give more context and could be really handy for anyone new to Algorithms and Data Structures.
 
 ## Requirements
 
