@@ -53,33 +53,33 @@ ASCII representation of the flowchart:
 
 ```
 ---------------------
-|  Start           |
+|  Start            |
 ---------------------
         |
         V
----------------------
+-----------------------------
 |  Declare num1, num2, sum  |
----------------------
+-----------------------------
         |
         V
----------------------
+------------------------
 |  Read num1 and num2  |
----------------------
+------------------------
         |
         V
----------------------
+-----------------------
 |  sum = num1 + num2  |
----------------------
+-----------------------
         |
         V
----------------------
+----------------------
 |  Print sum         |
----------------------
+----------------------
         |
         V
----------------------
+----------------------
 |  Stop              |
----------------------
+----------------------
 ```
 
 In contrast, a program is a concrete, language-dependent implementation of an algorithm. It must follow the syntax rules of the chosen language. For instance, the above algorithm can be implemented in Python as:
