@@ -1,66 +1,63 @@
+#!/bin/bash
+
+set -e
 
 find_cmake_subdirs() {
+    local start_dir="$1"
 
-    start_dir="$1"
- 
-    # Find all subdirectories with depth 1.
-    subdirs=$(find "$start_dir" -maxdepth 1 -type d)
+    # Find all subdirectories.
+    local subdirs=$(find "$start_dir" -type d)
 
     # Call the function recursively for each subdirectory that does not contain a CMakeLists.txt file.
     for subdir in $subdirs; do
         if [ ! -f "$subdir/CMakeLists.txt" ]; then
-            if [ "$subdir" != "$start_dir" ]; then
-                find_cmake_subdirs "$subdir"
-            fi
+            find_cmake_subdirs "$subdir"
         else
+            echo "Found C++ project at: $subdir"
             echo "$subdir"
         fi
     done
 }
 
 test_cpp_projects() {
-    subdirs=$(find_cmake_subdirs .)
-    current_dir=$(pwd)
+    local subdirs=$(find_cmake_subdirs .)
+    local current_dir=$(pwd)
 
     # Run tests for each subdirectory.
     for subdir in $subdirs; do
-        echo "Running tests for $subdir"
+        echo "Running tests for C++ project at: $subdir"
         cd "$subdir"
         mkdir -p build && cd build
         cmake .. && make
         ctest --verbose
-        cd .. && rm -rf build
+        cd ..
+        rm -rf build
         cd "$current_dir"
     done
 }
 
 find_python_subdirs() {
+    local start_dir="$1"
 
-    start_dir="$1"
- 
-    # Find all subdirectories with depth 1.
-    subdirs=$(find "$start_dir" -maxdepth 1 -type d)
+    # Find all subdirectories.
+    local subdirs=$(find "$start_dir" -type d)
 
-    # Call the function recursively for each subdirectory that does not contain a CMakeLists.txt file.
+    # Call the function recursively for each subdirectory that contains an __init__.py file.
     for subdir in $subdirs; do
-        if [ ! -f "$subdir/__init__.py" ]; then
-            if [ "$subdir" != "$start_dir" ]; then
-                find_python_subdirs "$subdir"
-            fi
-        else
+        if [ -f "$subdir/__init__.py" ]; then
+            echo "Found Python project at: $subdir"
             echo "$subdir"
         fi
     done
 }
 
 test_python_projects() {
-
-    subdirs=$(find_python_subdirs .)
-    current_dir=$(pwd)
+    local subdirs=$(find_python_subdirs .)
+    local current_dir=$(pwd)
 
     # Run tests for each subdirectory.
     for subdir in $subdirs; do
-        echo "Running tests for $subdir"
+        echo "Running tests for Python project at: $subdir"
         cd "$subdir"
         python3 -m unittest discover -v
         cd "$current_dir"
@@ -68,7 +65,6 @@ test_python_projects() {
 }
 
 main() {
-
     if [ "$#" -eq 0 ]; then
         echo "Running tests for all projects"
 
