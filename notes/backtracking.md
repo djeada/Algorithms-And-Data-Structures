@@ -1,9 +1,12 @@
 ## Recursive Functions
 
-- A recursive function is a function that calls itself to break down a problem into smaller, more manageable parts.
-- It solves problems by splitting them into smaller subproblems and solving those subproblems using the same function.
+Recursive functions are a unique type of function that has the ability to call itself in order to tackle complex problems by breaking them down into smaller and more manageable subproblems. The concept of recursion revolves around the principle of self-reference where the solution to the larger problem depends on solutions to smaller instances of the same problem.
 
-For example, consider the problem of computing the factorial of a number n ($n! = n * (n-1) * (n-2) * ... * 1$). One way to solve this problem is to use a recursive function:
+Key Features of Recursive Functions
+1. **Base Case:** The condition(s) under which the recursive function stops calling itself. This prevents the function from running indefinitely.
+2. **Recursive Case:** The part of the function where the function calls itself, working towards reaching the base case.
+
+Below is a Python code snippet showcasing the usage of a recursive function to calculate the factorial of a number:
 
 ```
 def factorial(n):
@@ -13,16 +16,18 @@ def factorial(n):
         return n * factorial(n-1)
 ```
 
-In this example, the function calls itself with a smaller value of n until it reaches the base case (n == 1). At that point, it returns the result (1) and the recursive calls start to unwind, returning the final result.
+What's happening here? When n isn't 1, the function calls itself with $n$ reduced by 1. This keeps happening until $n$ is 1. At this point, the function stops calling itself and starts multiplying all these numbers together, resulting in the factorial of the initial input number. 
 
 ## Depth-First Search (DFS)
 
-- Depth-First Search (DFS) is an algorithm used for exploring graphs or trees.
-- It starts at the root or an arbitrary node and explores as far as possible along each branch before backtracking.
-- DFS uses a stack data structure to keep track of nodes that are to be visited.
-- It can be combined with backtracking techniques to explore all possible paths in a tree or graph and backtrack when reaching a dead end.
+Depth-First Search (DFS) is a powerful algorithm that's often used for traversing or searching through graphs or trees. 
 
-For example, consider the following tree:
+Key Concept:
+
+- DFS operates under the principle of going as deep as possible from a starting point until it hits a dead end. Then, it backtracks and explores the next available path. Importantly, it leaves no node unvisited.
+- When multiple paths are available, as in a tree with multiple children for a node, DFS typically explores the leftmost path first. Why the left? Well, there's no inherent rule that it has to be left; it's a convention chosen due to its simplicity and the ability to consistently apply it across different data structures.
+- The algorithm uses a stack to remember nodes that are yet to be visited. A stack follows the "last in, first out" rule, which is perfect for DFS's backtracking approach - we need to return to the most recent unexplored node.
+- DFS and backtracking techniques can be used together, creating a powerful toolkit for solving problems like mazes, network routing, or searching through web pages for specific information.
 
 ```
    A
@@ -32,102 +37,185 @@ For example, consider the following tree:
    D   E
 ```
 
-A depth-first search starting at A would first visit A, then B, and then backtrack to A and visit C, D, and E.
+In a depth-first search starting from 'A', the algorithm first visits 'A'. Next, it dives deeper into the leftmost unvisited branch (in line with our convention), visiting 'B'. When it hits a dead end at 'B' (no other child nodes), it backtracks to 'A' and then moves to 'C'. From 'C', it continues its journey to 'D' and finally 'E'.
+
+So, the sequence of node visitation for this example would be A-B-C-D-E.
 
 ## Backtracking
 
-Backtracking is a useful technique for solving constraint satisfaction problems and combinatorial optimization. It is efficient for certain types of problems, but it may be slow for large problems and require a large amount of memory.
+Backtracking is a tried-and-true method for solving constraint satisfaction problems and problems involving combinatorial optimization. Although efficient for certain types of problems, it might slow down when dealing with large problems and could require significant memory.
 
 ### Advantages
 
-* Efficient for certain types of problems.
-* Can find all possible solutions for a problem.
+* For some problem types, backtracking can be a highly efficient method.
+* It can generate all feasible solutions for a given problem.
 
 ### Disadvantages
 
-* Can be slow for large problems.
-* May require a large amount of memory to store the search tree.
+* For large-scale problems, backtracking could be slower.
+* Maintaining the search tree in memory might require substantial space.
 
-#### Examples
+#### Real-world Examples
 
-- Finding all possible combinations of words formed by a set of characters.
-- Generating all possible permutations of a given set of numbers.
-- Solving the 8 queens puzzle, where 8 queens must be placed on a chessboard without attacking each other.
-- Finding all possible paths from the top-left to the bottom-right of a matrix, given that you can only move right or down.
+1. Figuring out all viable combinations of words that can be formed from a given set of characters.
+2. Generating all possible permutations of a designated set of numbers.
+3. The famous 8 queens puzzle: placing 8 queens on a chessboard in such a way that none can attack another.
+4. Finding all possible routes from the top-left corner to the bottom-right corner of a grid, given you can only move downwards or to the right.
 
-### Building a Backtracking Algorithm
+### Crafting a Backtracking Algorithm
 
-1. Identify the base case(s) for the problem. These are the conditions where the algorithm should stop searching for solutions and return a result.
-2. Set up a recursive function that takes in the current state of the candidate solution and any relevant parameters.
-3. Within the function, check if the current state is a valid solution or if it has reached one of the base cases. If either of these conditions is met, return a result.
-4. If the current state is not a valid solution and the base case has not been reached, generate a list of potential next steps or "choices" that can be taken from the current state.
-5. Iterate through the list of choices and, for each choice, make the change to the current state and recursively call the function with the updated state.
-6. If the function returns a result for any of the choices, return that result. If the function returns without finding a result for any of the choices, return "no result" or backtrack to the previous state.
-7. Repeat this process until a valid solution is found or all possibilities have been exhausted.
+Here's a step-by-step guide to building a backtracking algorithm:
 
-Remember that backtracking algorithms can be computationally expensive, as they may need to explore a large number of possibilities before finding a solution. However, they can be very effective for problems with a small search space or for problems where it is easy to quickly check if a candidate solution is valid.
+1. Identify the problem's base case(s) where the algorithm should halt its search for solutions and return a result.
+2. Design a recursive function that takes in the current state of the candidate solution and any related parameters.
+3. If the current state is a valid solution or a base case has been reached within the function, it should return a result.
+4. If the current state isn't a solution and the base case hasn't been reached, generate a list of potential next steps or "choices" that could be made from the present state.
+5. Loop through the list of choices. For each choice, modify the current state and recursively call the function with this updated state.
+6. If the function finds a result for any of the choices, return that result. If none of the choices produce a result, return "no result" or revert to the previous state (this is the "backtracking").
+7. Repeat this process until a valid solution is identified or all possibilities have been considered.
 
-## List of problems
+While backtracking algorithms can be demanding in terms of computational resources (since they might explore many possibilities before finding a solution), they can be incredibly effective for problems with a limited search space or problems where a candidate solution's validity can be swiftly checked.
+
+### Visualization
+Consider a maze, with the start at the top left and the goal at the bottom right. You can only move right or down. The "#" indicates a wall, and "." indicates an open space:
+
+```
+. . # . . .
+. # . . . .
+. . . . # .
+. # # # . .
+. . . # . .
+# # # # . .
+```
+
+1. The algorithm starts at the top-left corner of the maze at position `(0, 0)`. From here, it explores the neighboring cells.
+
+2. It first moves downwards, visiting `(1, 0)` and `(2, 0)`. This is because our algorithm is designed to prioritize moving down and right.
+
+3. From `(2, 0)`, it can't move down because there's either a wall (`#`) or the boundary of the maze. So, it moves to the right, visiting cells `(2, 1)`, `(2, 2)`, and `(2, 3)`.
+
+4. At `(2, 3)`, it encounters a wall on the right, so it can't continue in this direction. It then tries to move downwards but finds another wall there. So, it backtracks to move upwards to cell `(1, 3)`.
+
+5. From `(1, 3)`, it again tries moving rightwards as it's the preferred direction, visiting `(1, 4)` and `(1, 5)`.
+
+6. From `(1, 5)`, it cannot go right or up as there are either walls or visited cells, and it can't go left because that would be backtracking. So, it moves down to `(2, 5)`.
+
+7. It continues moving downwards, visiting `(3, 5)`, `(4, 5)`, and finally reaching the goal at `(5, 5)`.
+
+The backtracking is evident at step 4 when the algorithm realizes it has reached a dead end at `(2, 3)` and must backtrack to `(1, 3)` to explore unvisited cells. This step signifies the essence of the backtracking algorithm: trying out different possibilities and stepping back when encountering a block.
+
+Here is the code snippet in Python:
+
+```python
+# Function to find the path from start (0, 0) to goal
+def solve_maze(maze):
+    path = []
+    if explore_maze(maze, 0, 0, path):
+        return path
+    else:
+        return "No solution found!"
+
+
+# Recursive function to explore the maze
+def explore_maze(maze, x, y, path):
+    # If point is outside the maze, return False
+    if x < 0 or y < 0 or x >= len(maze) or y >= len(maze[0]):
+        return False
+
+    # If point is a wall or has been visited before, return False
+    if maze[x][y] == "#" or maze[x][y] == "V":
+        return False
+
+    # Mark point as visited
+    maze[x][y] = "V"
+    path.append((x, y))
+
+    # If point is the goal, return True
+    if x == len(maze) - 1 and y == len(maze[0]) - 1:
+        return True
+
+    # If any neighboring point is the goal, return True
+    if (
+        explore_maze(maze, x + 1, y, path)
+        or explore_maze(maze, x, y + 1, path)
+        or explore_maze(maze, x - 1, y, path)
+        or explore_maze(maze, x, y - 1, path)
+    ):
+        return True
+
+    # If no neighboring point is the goal, remove point from path and return False
+    path.pop()
+    return False
+
+
+for row in maze:
+    print(f'{"".join(row)}')
+
+print(solve_maze(maze))
+```
+
+## List of Problems
 
 ### Permutations
 
-Generate all possible permutations of a given list of elements.
+Create an algorithm to generate all possible permutations of a given list of elements.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_permutations">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_permutations)
 
 ### Combinations
 
-Generate all possible combinations of k elements from a given list of elements.
+Design an algorithm to generate all possible combinations of 'k' elements selected from a given list of elements.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_combinations">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_combinations">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_combinations)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_combinations)
 
 ### String Pattern
 
-Determine if a given string follows a given pattern, where the pattern can contain letters and wildcards representing any character.
+Develop a solution to determine whether a given string adheres to a specified pattern, where the pattern may contain letters and wildcard characters representing any character.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/string_pattern">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/string_pattern">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/string_pattern)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/string_pattern)
 
 ### Generating Words
 
-Generate all possible words that can be formed by a given list of characters and match a given pattern, where the pattern can contain letters and wildcards representing any character.
+Generate all possible words that can be formed by a given list of characters and match a specified pattern. The pattern may contain letters and wildcard characters representing any character.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/generating_words">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/generating_words">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/generating_words)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/generating_words)
 
 ### Hamiltonian Path
 
-Determine if a simple path exists in a given undirected or directed graph that visits every vertex exactly once. This problem, also known as the "traveling salesman problem," can be solved using a depth-first search algorithm that starts at a vertex and checks if all the vertices in the graph have been visited. If not, the algorithm backtracks and tries a different path.
+Create an algorithm that identifies whether a simple path exists within a provided undirected or directed graph. This path should visit every vertex exactly once. The problem is also known as the "traveling salesman problem" and can be addressed using a depth-first search algorithm.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/hamiltonian_paths">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/hamiltonian_paths">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/hamiltonian_paths)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/hamiltonian_paths)
 
 ### K-Colorable Configurations
 
-Find all the ways to color a given graph with K colors such that no two adjacent vertices have the same color. This problem can be solved using a depth-first search algorithm that starts at a vertex and tries different colors for it. The algorithm then recursively explores the rest of the graph, making sure that no two adjacent vertices have the same color. If the algorithm is able to color all the vertices, it adds the current configuration to the list of solutions. If the algorithm is unable to color a vertex, it backtracks and tries a different color.
+Find all the possible ways to color a given graph with 'k' colors such that no two adjacent vertices share the same color. 
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/k_colorable_configurations">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/k_colorable_configurations">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/k_colorable_configurations)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/k_colorable_configurations)
 
 ### Knight Tour
 
-Given a chessboard of size n x n, use a depth-first search algorithm to find all possible paths a knight can take to visit every square on the board exactly once. The algorithm starts at a square and tries all possible moves, adding each visited square to a tour. If the algorithm is able to visit all the squares, it adds the current tour to the list of solutions. If the algorithm is unable to visit a square, it backtracks and tries a different move. The algorithm can be optimized by using a heuristic that prioritizes moves that lead to squares that have not been visited yet.
+Find all potential paths a knight can take on a 'n' x 'n' chessboard to visit every square exactly once.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/knight_tour">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/knight_tour">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/knight_tour)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/knight_tour)
 
 ### Topological Orderings
 
-Find a topological ordering of the vertices in a given directed graph, if one exists. A topological ordering is an ordering of the vertices such that for every edge (u, v), u comes before v in the ordering.
+Determine a topological ordering of the vertices in a given directed graph, if one exists.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/topological_sort">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/topological_sort">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/topological_sort)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/topological_sort)
 
 ### Tic-Tac-Toe (Minimax)
 
-Determine the best move for a player to make in a tic-tac-toe board using the minimax algorithm. The minimax algorithm is a decision-making strategy that aims to maximize the player's score while minimizing the opponent's score.
+Determine the optimal move for a player in a game of tic-tac-toe using the minimax algorithm.
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/minimax">C++</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/minimax">Python</a>
+* [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/minimax)
+* [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/minimax)
+
