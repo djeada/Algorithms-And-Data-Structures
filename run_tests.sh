@@ -13,7 +13,7 @@ find_cmake_subdirs() {
         if [ ! -f "$subdir/CMakeLists.txt" ]; then
             find_cmake_subdirs "$subdir"
         else
-            echo "Found C++ project at: $subdir"
+            #echo "Found C++ project at: $subdir"
             echo "$subdir"
         fi
     done
@@ -45,7 +45,7 @@ find_python_subdirs() {
     # Call the function recursively for each subdirectory that contains an __init__.py file.
     for subdir in $subdirs; do
         if [ -f "$subdir/__init__.py" ]; then
-            echo "Found Python project at: $subdir"
+            #echo "Found Python project at: $subdir"
             echo "$subdir"
         fi
     done
@@ -106,3 +106,4 @@ main() {
 }
 
 main "$@"
+
