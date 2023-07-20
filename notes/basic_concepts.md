@@ -246,7 +246,7 @@ WHILE n > 0:
 ```
 
 Sure, let's elaborate on this and clarify some points:
-<pre>
+
 ### Possibility of $O(1)$ Complexity for Every Problem
 
 * Not every problem has an algorithm that can solve it, irrespective of the complexity. For instance, the Halting Problem is undecidable—no algorithm can accurately predict whether a given program will halt or run indefinitely on every possible input.
