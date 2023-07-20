@@ -224,38 +224,8 @@ The choice of an algorithm significantly impacts the application's performance, 
 - Not every problem has an algorithm that can solve it, irrespective of the complexity. For instance, the Halting Problem is undecidable—no algorithm can accurately predict whether a given program will halt or run indefinitely on every possible input.
 - Sometimes, we can create an illusion of $O(1)$ complexity by precomputing the results for all possible inputs and storing them in a lookup table (like a hash table). Then, we can solve the problem in constant time by directly retrieving the result from the table. This approach, known as memoization or caching, is limited by memory constraints and is only practical when the number of distinct inputs is small and manageable.
 - Often, the lower bound complexity for a class of problems is $O(n)$ or $O(nlogn)$. This bound represents problems where you at least have to examine each element once (as in the case of $O(n)$) or perform a more complex operation on every input (as in $O(nlogn)$), like sorting. Under certain conditions or assumptions, a more efficient algorithm might be achievable.
-- 
+  
 ### When do algorithms have O(logn) or O(nlogn) complexity?
-
-The exact time complexity of an algorithm usually stems from how the size of the input affects the execution flow of the algorithm—particularly the loop iterations. 
-
-Consider four example algorithms with differing complexities:
-
-1. **First Algorithm** ($O(n)$): Here, the running time is directly proportional to the input size ($n$), as each loop iteration reduces $n$ by 1. Hence, the number of iterations equals the initial value of $n$.
-
-```python
-WHILE n > 0:
-    n = n - 1
-```
-
-2. **Second Algorithm** ($O(log(n))$): In this case, the running time is proportional to the number of times the loop can iterate before $n$ reduces to 0. Each loop iteration halves the value of $n$. This equals the number of times you can halve $n$ before it becomes 0, which also corresponds to $log(n)$.
-
-```python
-WHILE n > 0:
-   n = n / 2
-```
-
-Sure, let's elaborate on this and clarify some points:
-
-### Possibility of $O(1)$ Complexity for Every Problem
-
-* Not every problem has an algorithm that can solve it, irrespective of the complexity. For instance, the Halting Problem is undecidable—no algorithm can accurately predict whether a given program will halt or run indefinitely on every possible input.
-
-* Sometimes, we can create an illusion of $O(1)$ complexity by precomputing the results for all possible inputs and storing them in a lookup table (like a hash table). Then, we can solve the problem in constant time by directly retrieving the result from the table. This approach, known as memoization or caching, is limited by memory constraints and is only practical when the number of distinct inputs is small and manageable.
-
-* Often, the lower bound complexity for a class of problems is $O(n)$ or $O(nlogn)$. This bound represents problems where you at least have to examine each element once (as in the case of $O(n)$) or perform a more complex operation on every input (as in $O(nlogn)$), like sorting. Under certain conditions or assumptions, a more efficient algorithm might be achievable.
-
-### Understanding the Origins of $O(logn)$ and $O(nlogn)$ Complexities
 
 The exact time complexity of an algorithm usually stems from how the size of the input affects the execution flow of the algorithm—particularly the loop iterations. 
 
