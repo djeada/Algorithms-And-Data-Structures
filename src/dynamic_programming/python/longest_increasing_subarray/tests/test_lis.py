@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.lis import lis_basic, lis_memo, lis_tab
+from src.lis import lis_basic, lis_memo, lis_tab
 
 
 class TestLisBasic(unittest.TestCase):

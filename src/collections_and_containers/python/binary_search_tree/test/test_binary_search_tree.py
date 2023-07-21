@@ -1,4 +1,4 @@
-from ..src.binary_search_tree import BinarySearchTree
+from src.binary_search_tree import BinarySearchTree
 from unittest import TestCase
 import unittest
 

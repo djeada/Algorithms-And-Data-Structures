@@ -1,4 +1,4 @@
-from ..src.stack import Stack
+from src.stack import Stack
 from unittest import TestCase
 import unittest
 

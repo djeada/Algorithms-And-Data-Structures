@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.score_after_flipping_matrix import score_after_flipping_matrix
+from src.score_after_flipping_matrix import score_after_flipping_matrix
 
 
 class TestScoreAfterFlippingMatrix(unittest.TestCase):

@@ -24,7 +24,7 @@ Here is an example of how to use the Vector class:
 
 ```cpp
 #include <iostream>
-#include "src/vector.h"
+#includesrc/vector.h"
 
 using namespace std;
 

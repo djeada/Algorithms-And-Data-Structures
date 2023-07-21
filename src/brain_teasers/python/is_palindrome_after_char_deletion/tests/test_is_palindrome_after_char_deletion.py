@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.is_palindrome_after_char_deletion import is_palindrome_after_char_deletion
+from src.is_palindrome_after_char_deletion import is_palindrome_after_char_deletion
 
 
 class TestIsPalindromeAfterCharDeletion(unittest.TestCase):

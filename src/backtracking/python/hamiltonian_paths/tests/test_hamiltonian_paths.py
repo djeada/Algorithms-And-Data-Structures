@@ -1,5 +1,5 @@
 import unittest
-from ..src.hamiltonian_paths import Graph, find_hamiltonian_paths
+from src.hamiltonian_paths import Graph, find_hamiltonian_paths
 
 
 class TestHamiltonianPaths(unittest.TestCase):

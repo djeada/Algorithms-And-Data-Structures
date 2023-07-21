@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.array_product import product_of_array_except_self
+from src.array_product import product_of_array_except_self
 
 
 class TestArrayProduct(unittest.TestCase):

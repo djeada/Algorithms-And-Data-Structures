@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.how_sum import how_sum_basic, how_sum_memo, how_sum_table
+from src.how_sum import how_sum_basic, how_sum_memo, how_sum_table
 
 
 class TestHowSumBasic(unittest.TestCase):

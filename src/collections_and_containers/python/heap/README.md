@@ -20,7 +20,7 @@ The Heap class has the following methods:
 Here is an example of how to use the Heap class:
 
 ```python
-from src.heap import Heap
+frosrc.heap import Heap
 
 # Create a new heap
 h = Heap()

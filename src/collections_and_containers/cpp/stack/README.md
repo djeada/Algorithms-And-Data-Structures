@@ -19,7 +19,7 @@ Here is an example of how to use the Stack class:
 
 ```cpp
 #include <iostream>
-#include "src/stack.h"
+#includesrc/stack.h"
 
 using namespace std;
 

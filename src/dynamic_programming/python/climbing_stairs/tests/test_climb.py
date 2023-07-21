@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.climb import (
+from src.climb import (
     count_ways_to_climb_basic,
     count_ways_to_climb_memo,
     count_ways_to_climb_table,

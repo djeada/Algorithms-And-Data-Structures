@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.kmp import search
+from src.kmp import search
 
 
 class TestKMP(unittest.TestCase):

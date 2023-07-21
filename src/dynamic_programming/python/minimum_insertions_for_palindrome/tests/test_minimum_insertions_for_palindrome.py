@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.minimum_insertions_for_palindrome import (
+from src.minimum_insertions_for_palindrome import (
     minimum_insertions_for_palindrome_basic,
     minimum_insertions_for_palindrome_memo,
     minimum_insertions_for_palindrome_tab,

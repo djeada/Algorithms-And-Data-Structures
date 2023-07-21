@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.can_construct import (
+from src.can_construct import (
     can_construct_basic,
     can_construct_memo,
     can_construct_table,

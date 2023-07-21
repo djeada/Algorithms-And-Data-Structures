@@ -18,7 +18,7 @@ The HashTable class has the following methods:
 Here is an example of how to use the HashTable class:
 
 ```python
-from src.hash_table import HashTable
+frosrc.hash_table import HashTable
 
 # Create a new hash table
 ht = HashTable(lambda key: sum(ord(c) for c in key))

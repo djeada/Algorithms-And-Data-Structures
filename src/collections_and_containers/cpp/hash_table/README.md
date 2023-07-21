@@ -20,7 +20,7 @@ Here is an example of how to use the HashTable class:
 
 ```cpp
 #include <iostream>
-#include "src/hash_table.h"
+#includesrc/hash_table.h"
 
 using namespace std;
 

@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.lowest_common_ancestor import lowest_common_ancestor, TreeNode
+from src.lowest_common_ancestor import lowest_common_ancestor, TreeNode
 
 
 class TestLowestCommonAncestor(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.lcs import lcs_basic, lcs_memo, lcs_tab
+from src.lcs import lcs_basic, lcs_memo, lcs_tab
 
 
 class TestLCSBasic(unittest.TestCase):

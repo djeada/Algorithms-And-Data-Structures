@@ -21,7 +21,7 @@ The Queue class has the following methods:
 Here is an example of how to use the Queue class:
 
 ```python
-from src.simple_queue import Queue
+frosrc.simple_queue import Queue
 
 # Create a new queue
 q = Queue()

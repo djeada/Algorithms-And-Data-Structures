@@ -22,7 +22,7 @@ The BinarySearchTree class has the following methods:
 Here is an example of how to use the BinarySearchTree class:
 
 ```python
-from src.binary_search_tree import BinarySearchTree
+frosrc.binary_search_tree import BinarySearchTree
 
 # Create a new binary search tree
 tree = BinarySearchTree()

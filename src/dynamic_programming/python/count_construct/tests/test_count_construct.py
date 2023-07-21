@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.count_construct import (
+from src.count_construct import (
     count_construct_basic,
     count_construct_memo,
     count_construct_table,

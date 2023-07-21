@@ -1,5 +1,5 @@
 import unittest
-from ..src.topological_sort import Graph, topological_sort
+from src.topological_sort import Graph, topological_sort
 
 
 class TestTopologicalSort(unittest.TestCase):

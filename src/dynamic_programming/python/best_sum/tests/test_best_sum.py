@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.best_sum import (
+from src.best_sum import (
     find_shortest_combination_sum_basic,
     find_shortest_combination_sum_memo,
     find_shortest_combination_sum_table,

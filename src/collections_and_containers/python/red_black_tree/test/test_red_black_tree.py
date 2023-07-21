@@ -1,4 +1,4 @@
-from ..src.red_black_tree import RedBlackTree
+from src.red_black_tree import RedBlackTree
 from unittest import TestCase
 import unittest
 

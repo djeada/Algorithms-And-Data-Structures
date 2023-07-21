@@ -1,4 +1,4 @@
-from ..src.all_permutations import all_permutations
+from src.all_permutations import all_permutations
 import unittest
 
 

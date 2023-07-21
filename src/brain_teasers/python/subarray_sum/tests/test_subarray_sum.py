@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.subarray_sum import subarray_sum
+from src.subarray_sum import subarray_sum
 
 
 class TestSubarraySum(unittest.TestCase):

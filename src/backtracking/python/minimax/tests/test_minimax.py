@@ -1,5 +1,5 @@
 import unittest
-from ..src.minimax import minimax, find_best_move
+from src.minimax import minimax, find_best_move
 
 
 class TestMinimax(unittest.TestCase):

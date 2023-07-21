@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.deletions_to_make_valid_parentheses import (
+from src.deletions_to_make_valid_parentheses import (
     deletions_to_make_valid_parentheses,
 )
 

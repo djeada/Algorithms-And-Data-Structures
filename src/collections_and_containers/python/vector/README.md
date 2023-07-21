@@ -19,7 +19,7 @@ The Vector class has the following methods:
 Here is an example of how to use the Vector class:
 
 ```python
-from src.vector import Vector
+frosrc.vector import Vector
 
 # Create a new vector
 v = Vector()

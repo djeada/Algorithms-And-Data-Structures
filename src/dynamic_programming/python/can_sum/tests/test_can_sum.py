@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.can_sum import can_sum_basic, can_sum_memo, can_sum_table
+from src.can_sum import can_sum_basic, can_sum_memo, can_sum_table
 
 
 class TestCanSumBasic(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.all_construct import (
+from src.all_construct import (
     all_construct_basic,
     all_construct_memo,
     all_construct_table,

@@ -1,5 +1,5 @@
 import unittest
-from ..src.string_pattern import string_pattern
+from src.string_pattern import string_pattern
 
 
 class TestStringPattern(unittest.TestCase):

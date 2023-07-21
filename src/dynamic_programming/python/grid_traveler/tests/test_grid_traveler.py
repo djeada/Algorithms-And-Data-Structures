@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.grid_traveler import (
+from src.grid_traveler import (
     grid_traveller_basic,
     grid_traveller_memo,
     grid_traveller_table,

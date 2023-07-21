@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.range_sum_of_bst import range_sum_of_bst, TreeNode
+from src.range_sum_of_bst import range_sum_of_bst, TreeNode
 
 
 class TestRangeSumOfBst(unittest.TestCase):

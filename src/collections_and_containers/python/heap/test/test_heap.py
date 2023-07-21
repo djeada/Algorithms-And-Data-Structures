@@ -1,4 +1,4 @@
-from ..src.heap import Heap, MaxHeap, MinHeap
+from src.heap import Heap, MaxHeap, MinHeap
 from unittest import TestCase
 import unittest
 

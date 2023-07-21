@@ -1,4 +1,4 @@
-from ..src.vector import Vector
+from src.vector import Vector
 from unittest import TestCase
 import unittest
 

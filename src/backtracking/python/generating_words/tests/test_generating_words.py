@@ -1,4 +1,4 @@
-from ..src.generate_words import generate_words
+from src.generate_words import generate_words
 import unittest
 
 

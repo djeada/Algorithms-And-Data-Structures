@@ -1,5 +1,5 @@
 import unittest
-from ..src.k_colorable_configurations import find_k_colorable_configurations, Graph
+from src.k_colorable_configurations import find_k_colorable_configurations, Graph
 
 
 class TestKColorableConfigurations(unittest.TestCase):

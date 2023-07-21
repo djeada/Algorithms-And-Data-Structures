@@ -21,7 +21,7 @@ Here is an example of how to use the Heap class:
 
 ```cpp
 #include <iostream>
-#include "src/heap.h"
+#includesrc/heap.h"
 
 using namespace std;
 

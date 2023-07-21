@@ -22,7 +22,7 @@ The AvlTree class has the following methods:
 Here is an example of how to use the AvlTree class:
 
 ```python
-from src.avl_tree import AvlTree
+frosrc.avl_tree import AvlTree
 
 # Create a new avl tree
 tree = AvlTree()

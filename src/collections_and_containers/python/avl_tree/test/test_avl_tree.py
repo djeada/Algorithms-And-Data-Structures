@@ -1,4 +1,4 @@
-from ..src.avl_tree import AvlTree
+from src.avl_tree import AvlTree
 from unittest import TestCase
 import unittest
 

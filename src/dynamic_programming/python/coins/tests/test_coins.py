@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.coins import coin_change_basic, coin_change_memo, coin_change_tab
+from src.coins import coin_change_basic, coin_change_memo, coin_change_tab
 
 
 class TestCoinChangeBasic(unittest.TestCase):

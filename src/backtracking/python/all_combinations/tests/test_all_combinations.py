@@ -1,4 +1,4 @@
-from ..src.all_combinations import all_combinations
+from src.all_combinations import all_combinations
 import unittest
 
 

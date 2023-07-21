@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.randomize_array import randomize_array
+from src.randomize_array import randomize_array
 
 
 class TestRandomizeArray(unittest.TestCase):

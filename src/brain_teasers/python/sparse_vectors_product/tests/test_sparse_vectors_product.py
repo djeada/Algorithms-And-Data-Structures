@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.sparse_vectors_product import sparse_vectors_product
+from src.sparse_vectors_product import sparse_vectors_product
 
 
 class TestSparseVectorsProduct(unittest.TestCase):

@@ -24,7 +24,7 @@ Here is an example of how to use the LinkedList class:
 
 ```cpp
 #include <iostream>
-#include "src/linked_list.h"
+#includesrc/linked_list.h"
 
 using namespace std;
 

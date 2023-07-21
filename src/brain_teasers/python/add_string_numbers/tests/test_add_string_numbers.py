@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.add_string_numbers import add_string_numbers
+from src.add_string_numbers import add_string_numbers
 
 
 class TestAddStringNumbers(unittest.TestCase):

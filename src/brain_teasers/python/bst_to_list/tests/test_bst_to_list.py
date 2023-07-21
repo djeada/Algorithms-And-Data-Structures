@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.bst_to_list import bst_to_double_linked_list, TreeNode
+from src.bst_to_list import bst_to_double_linked_list, TreeNode
 
 
 class TestBstToList(unittest.TestCase):

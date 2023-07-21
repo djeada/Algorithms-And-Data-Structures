@@ -1,4 +1,4 @@
-from ..src.hash_table import HashTable
+from src.hash_table import HashTable
 from unittest import TestCase
 import unittest
 

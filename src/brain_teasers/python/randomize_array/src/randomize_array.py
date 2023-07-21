@@ -13,12 +13,15 @@ def randomize_array(array: List[int]) -> List[int]:
     :param array: List of integers to randomize.
     :return: Randomized list of integers.
     """
-
-    for i in range(len(array) - 1, 0, -1):
-        index = random.randint(0, i)
-        if index != i:
-            array[index] ^= array[i]
-            array[i] ^= array[index]
-            array[index] ^= array[i]
-
-    return array
+    n = len(array)
+    # Check if all elements are identical or array is of length 1
+    if n == 1 or all(x == array[0] for x in array):
+        return array
+    else:
+        new_array = array.copy()  # Create a copy of the array so we don't mutate the original
+        for i in range(n):
+            # Select a random index that's not equal to the current one
+            swap_with = random.choice([x for x in range(n) if x != i and new_array[x] != array[i]])
+            # Swap elements
+            new_array[i], new_array[swap_with] = new_array[swap_with], new_array[i]
+        return new_array

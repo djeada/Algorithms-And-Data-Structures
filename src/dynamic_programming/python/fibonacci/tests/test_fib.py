@@ -1,7 +1,7 @@
 import unittest
 
 
-from ..src.fib import fib_basic, fib_memo, fib_tab
+from src.fib import fib_basic, fib_memo, fib_tab
 
 
 class TestFibBasic(unittest.TestCase):

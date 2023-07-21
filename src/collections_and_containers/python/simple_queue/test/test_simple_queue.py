@@ -1,4 +1,4 @@
-from ..src.simple_queue import Queue
+from src.simple_queue import Queue
 from unittest import TestCase
 import unittest
 

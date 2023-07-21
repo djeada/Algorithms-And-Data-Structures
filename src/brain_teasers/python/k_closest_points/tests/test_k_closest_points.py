@@ -1,6 +1,6 @@
 import unittest
 
-from ..src.k_closest_points import k_closest_points
+from src.k_closest_points import k_closest_points
 
 
 class TestKClosestPoints(unittest.TestCase):

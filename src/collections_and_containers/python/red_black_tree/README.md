@@ -28,7 +28,7 @@ The RedBlackTree class has the following methods:
 Here is an example of how to use the RedBlackTree class:
 
 ```python
-from src.red_black_tree import RedBlackTree
+frosrc.red_black_tree import RedBlackTree
 
 # Create a new red-black tree
 tree = RedBlackTree()

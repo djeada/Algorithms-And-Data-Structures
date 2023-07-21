@@ -22,7 +22,7 @@ The LinkedList class has the following methods:
 Here is an example of how to use the LinkedList class:
 
 ```python
-from src.linked_list import LinkedList
+frosrc.linked_list import LinkedList
 
 # Create a new linked list
 lst = LinkedList()

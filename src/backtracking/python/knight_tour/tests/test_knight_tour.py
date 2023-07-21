@@ -1,4 +1,4 @@
-from ..src.knight_tour import knight_tour
+from src.knight_tour import knight_tour
 import unittest
 
 
