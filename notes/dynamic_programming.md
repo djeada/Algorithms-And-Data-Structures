@@ -1,26 +1,86 @@
-## Dynamic Programming
+# Dynamic Programming: An Advanced Problem-Solving Strategy
 
-Dynamic programming is a way to solve problems by breaking them into smaller parts, storing the answers to those smaller parts, and using those answers to solve bigger problems. It can make a problem faster to solve than trying every possible answer.
+Dynamic Programming (DP) is a method used in computer science for solving complex problems by breaking them down into simpler, more manageable sub-problems. By solving these sub-problems once, storing their solutions, and reusing these solutions, dynamic programming ensures efficient problem-solving. It transforms potentially exponential-time problems into more manageable polynomial-time problems.
 
-Dynamic programming works well for problems that can be solved by finding the best solution to smaller problems. This is especially helpful when the smaller problems are repeated, like in the Fibonacci sequence or the knapsack problem.
+## Key Properties for Dynamic Programming
 
-There are three main ways to use dynamic programming: brute force recursion, memoized recursion, and tabulation.
+Two fundamental properties make a problem suitable for a dynamic programming solution: **optimal substructure** and **overlapping sub-problems**. 
+
+1. **Optimal Substructure**: A problem has an optimal substructure if an optimal solution can be constructed efficiently from the optimal solutions of its subproblems. For example, the shortest path between two cities, say City A and City C, going through City B, can be found by combining the shortest path from City A to City B and the shortest path from City B to City C.
+
+2. **Overlapping Sub-problems**: A problem has overlapping sub-problems if the problem can be broken down into subproblems which are reused several times. For instance, in the calculation of the Fibonacci sequence, to compute the 5th Fibonacci number, one must calculate the 3rd and 4th Fibonacci numbers, which in turn require calculating the 2nd, 1st, and 0th numbers, showing a repetition of subproblems.
+
+## Implementation Techniques
+
+Dynamic programming can be implemented via three main strategies: **Brute Force Recursion**, **Memoized Recursion**, and **Tabulation**.
 
 ### Brute Force Recursion
 
-Brute force recursion solves the problem by making a tree of smaller problems and using recursion. This can look simple, but it can be slow because the same smaller problems are solved many times.
+In this approach, problems are divided into smaller sub-problems using recursion, and these are solved independently. However, because the same sub-problems might be solved multiple times, this can lead to inefficiency. Imagine trying to find a path in a maze; one might end up visiting the same points multiple times, leading to wasted effort.
 
-### Memoized Recursion
+```
+      Fib(5)
+       |
+--------------------------------------------------
+|                                                |
+Fib(4)                                         Fib(3)
+|                                                |
+-------------------------------                  -------------
+|                             |                  |           |
+Fib(3)                      Fib(2)             Fib(2)     Fib(1)
+|                             |                  |
+--------------              ------             ------
+|            |             |      |           |      |  
+Fib(2)      Fib(1)       Fib(1) Fib(0)       Fib(1) Fib(0)
+|             
+---------     
+|       | 
+Fib(1) Fib(0)
+```
 
-Memoized recursion uses a map to store answers to smaller problems. This makes it faster because you don't have to solve the same problem again.
+### Memoized Recursion (Top-Down Dynamic Programming)
 
-### Tabulation
+To improve upon brute force recursion, memoized recursion stores the results of already solved sub-problems to avoid redundancy. It's like taking notes while solving a complex problem - if you encounter the same subproblem again, you simply look up your notes instead of solving it again. For instance, while climbing a stair-case, if you calculate and store the number of ways to reach each step, you can use these results to easily calculate the number of ways to reach the top.
 
-Tabulation uses a table to solve the problem. It starts with the smallest problems and works its way up. This is faster, but you have to choose the order of solving the problems yourself.
+Here, we only fill in entries as we encounter them during the recursive calls. We don't need to calculate Fib(n) for all n, only for the ones that are actually used.
 
-### Why choose recursion over tabulation?
+```
+ Memoization Table for Fibonacci Sequence:
+ --------------------------------------
+ | n  | Fib(n)                         |
+ --------------------------------------
+ | 1  | 1                              |
+ | 2  | 1                              |
+ | 3  | 2  (from Fib(2) + Fib(1))      |
+ | 4  | 3  (from Fib(3) + Fib(2))      |
+ | 5  | 5  (from Fib(4) + Fib(3))      |
+ --------------------------------------
+```
 
-Recursion is often easier, but sometimes slower. When speed isn't important or the problem isn't too big, recursion is usually good enough.
+### Tabulation (Bottom-Up Dynamic Programming)
+
+Tabulation takes a more proactive approach, solving all related sub-problems right from the start, storing their results in a table, and building up the final solution from these results. It's like filling out a complex form, where you fill out all the individual sections (sub-problems) first, and finally use them to complete the entire form (main problem). If you were building a pyramid of blocks, a tabulation approach would have you systematically build up from the base.
+
+In the tabulation approach, we systematically fill in the table from the smallest subproblems up to the problem of interest.
+
+```
+ Tabulation Table for Fibonacci Sequence:
+ --------------------------------------
+ | n  | Fib(n)                         |
+ --------------------------------------
+ | 1  | 1                              |
+ | 2  | 1                              |
+ | 3  | 2  (from Fib(2) + Fib(1))      |
+ | 4  | 3  (from Fib(3) + Fib(2))      |
+ | 5  | 5  (from Fib(4) + Fib(3))      |
+ | 6  | 8  (from Fib(5) + Fib(4))      |
+ | 7  | 13 (from Fib(6) + Fib(5))      |
+ --------------------------------------
+```
+
+### Choosing Between Recursion and Tabulation
+
+The choice between recursion and tabulation is often a matter of trade-offs. Recursion is usually simpler and more intuitive, but it can be slower for large inputs due to repeated calculations and function call overhead. Tabulation, on the other hand, can be faster and more efficient because it eliminates the need for recursion, but it can be less intuitive and requires understanding the problem thoroughly to figure out the correct sequence of solving sub-problems.
 
 ## Common terms made simple
 
@@ -80,21 +140,20 @@ String S = "abc"
 Subsequences of S: "", "a", "b", "c", "ab", "ac", "bc", "abc"
 ```
 
-#### Code examples
+### Fibonacci Sequence
+The Fibonacci sequence is a series of numbers where a number is the sum of the two preceding ones, starting with 0 and 1. It's a classic example of recursive algorithms and dynamic programming.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/fibonacci/)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/fibonacci/)
 
 ### Grid Traveler
-Find the number of ways to get to the bottom right corner of a grid, starting at the top left corner, given the size of the grid. You can only move right or down.
-
-#### Code examples
+Grid Traveler problem entails finding the total number of ways to traverse a grid (m x n) from the top-left to the bottom-right corner, provided you can only move right or down.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/grid_traveler)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/grid_traveler)
 
 ### Climbing stairs
-Determine the number of ways to reach the top of a n-step staircase by taking 1, 2, or 3 steps at a time, starting from the bottom.
+The Climbing Stairs problem involves determining the number of distinct ways to reach the top of a staircase that has 'n' steps, with the condition that you can climb either 1, 2, or 3 steps at a time.
 
 #### Implementation
 
@@ -102,7 +161,7 @@ Determine the number of ways to reach the top of a n-step staircase by taking 1,
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/climbing_stairs)
 
 ### Can Sum
-Given a list of numbers and a target value, determine if it is possible to obtain the target value by selecting and adding one or more numbers from the list, potentially using the same number multiple times.
+The Can Sum problem involves determining if it's possible to achieve a target sum using any number of elements from a specific list of numbers. Each number from the list can be used multiple times.
 
 #### Implementation
 
@@ -110,81 +169,61 @@ Given a list of numbers and a target value, determine if it is possible to obtai
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_sum)
 
 ### How Sum
-If it is possible to obtain a given target value by selecting and adding one or more numbers from a list, determine which numbers should be chosen and in what combination to achieve the target value.
-
-#### Implementation
+The How Sum problem extends the Can Sum problem by identifying which elements from the list can sum up to the target.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/how_sum)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/how_sum)
 
 ### Best Sum
-If it is possible to obtain a given target value by selecting and adding one or more numbers from a list, determine the smallest set of numbers that should be chosen to achieve the target value.
-
-#### Implementation
+The Best Sum problem further extends the How Sum problem by finding the smallest combination of numbers that add up to exactly the target sum.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/best_sum)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/best_sum)
 
 ### Can Construct
-Given a list of strings and a target word, determine if it is possible to create the target word by concatenating one or more of the strings from the list, potentially using the same string multiple times.
-
-#### Implementation
+The Best Sum problem further extends the How Sum problem by finding the smallest combination of numbers that add up to exactly the target sum.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_construct)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_construct)
 
 ### Count Construct
-If it is possible to create a target word by concatenating one or more strings from a given list, determine the number of possible sets of strings that can be chosen to construct the target word.
-
-#### Implementation
+The Count Construct problem expands on the Can Construct problem by determining the number of ways a target string can be constructed using a list of substrings.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/count_construct)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/count_construct)
 
 ### All Constructs
-If it is possible to create a target word by concatenating one or more strings from a given list, determine the smallest set of strings that should be chosen to construct the target word.
-
-#### Implementation
+The All Constructs problem is a variation of the Count Construct problem, which identifies all the possible combinations of strings from a list that can be used to form the target string.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/all_construct)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/all_construct)
 
 ### Coins
-Determine the minimum number of coins from a given set of denominations needed to reach a specific target amount.
-
-#### Implementation
+The Coins problem aims to find the minimum number of coins that make a given value, given an infinite supply of each of coin denominations.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/coin_change)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/coins)
 
 ### Longest common subsequence
-Given an array, find the longest sequence of elements that is present in the array as a contiguous subsequence in multiple places.
-
-#### Implementation
+The Longest Common Subsequence problem involves finding the longest subsequence that two sequences have in common.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_common_subsequence)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_common_subsequence)
 
 ### Longest increasing subarray
-Given an array, find the longest contiguous subarray in which the elements are strictly increasing in value.
-
-#### Implementation
+The Longest Increasing Subarray problem involves identifying the longest contiguous subarray in which the elements are strictly increasing.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_increasing_subarray)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_increasing_subarray)
 
 ### Knuth-Morris-Pratt
-Given a text and a pattern, use the Knuth-Morris-Pratt (KMP) algorithm to find the occurrences of the pattern within the text and return their starting indices.
-
-#### Implementation
+KMP is a pattern searching algorithm that searches for occurrences of a "word" within a main "text string". It uses preprocessing over the pattern to achieve linear time complexity.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/kmp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/kmp)
 
 ### Minimum insertions to form a palindrome
-Given a string, determine the minimum number of characters that need to be inserted into the string in order to make it a palindrome.
-
-#### Implementation
+This problem involves finding the minimum number of insertions needed to transform a given string into a palindrome.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/minimum_insertions_for_palindrome)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/minimum_insertions_for_palindrome)
