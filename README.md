@@ -28,59 +28,99 @@ The following requirements are necessary to build and run the code in this repos
 
 No additional libraries or modules are required.
 
-## Running the examples
-Each algorithm implementation has its own subdirectory, including the source code, unit tests, and build configuration files. Each subdirectory is a separate project that should be built and tested individually.
+## Running the Examples
 
-### C++
+This repository is organized into distinct algorithm implementations, each contained in its own subdirectory. These subdirectories provide the source code, unit tests, and build configuration files necessary for each algorithm. Because each algorithm forms a separate project, you should handle the build and test processes individually.
 
-To build and test a C++ project, follow these steps:
+### Building and Testing C++ Projects
 
-1. Navigate to the project directory.
-1. Create a build directory and enter it: `mkdir -p build && cd build`
-1. Generate the build files with CMake: `cmake ..`
-1. Build the project: `make`
-1. Run the unit tests: `ctest --verbose`
+Building and testing C++ projects involve a sequence of steps. Here's a detailed walkthrough:
 
-### Python
+1. **Navigate to the project directory:** Start by moving into the directory containing the specific project you want to build and test.
 
-To test a Python project, use the following command from the project directory:
+2. **Create and navigate into the build directory:**
 
-```bash
+```
+mkdir -p build && cd build
+```
+
+This command creates a new directory named `build` (if it doesn't already exist) and then navigates into it. The `build` directory is where the output files of the build process will be stored.
+
+3. **Generate the build files with CMake:**
+
+```
+cmake ..
+```
+
+This command runs CMake to generate the build files. `..` tells CMake to look for the `CMakeLists.txt` file in the directory above `build`.
+
+4. **Build the project:**
+
+```
+make
+```
+
+This command compiles the source code using the instructions specified in the `CMakeLists.txt` file.
+
+5. **Run the unit tests:**
+
+```
+ctest --verbose
+```
+
+The `ctest --verbose` command executes the unit tests and uses the verbose flag to provide a detailed output.
+
+### Testing Python Projects
+
+To test a Python project, execute the following command in the project directory:
+
+```
 python -m unittest discover -v
 ```
 
-### Using the utility script
+This command uses Python's built-in `unittest` module to discover and run the tests. The `-v` (verbose) flag is used to get more detailed output from the tests.
 
-You can also use the `run_tests.sh` utility script to run the unit tests for all subprojects. To do so, execute the following command from the root directory of the repository:
+### Using the Utility Script
 
-```bash
+For convenience, this repository includes a utility script named `run_tests.sh`. This script runs the unit tests for all subprojects. To use the script, execute the following command from the repository's root directory:
+
+```
 ./run_tests.sh
 ```
 
-## Formatting conventions
+## Code Formatting Conventions
 
-### C++
+Consistent code formatting is essential for maintaining readability and understanding of the codebase. Therefore, we have adopted specific formatting guidelines for each programming language used in this repository.
 
-We follow the <a href="https://google.github.io/styleguide/cppguide.html">Google C++ Style Guide</a> and use clang-format to automatically format the code.
+### C++ Formatting
 
-```bash
-find . -regex '.*\.\(cpp\|hpp\|cu\|c\|h\)' -exec clang-format -style=file -i {} \;
+We adhere to the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html). To automatically format the code, we use `clang-format`. Use the following command to format your code:
+
+```
+find . -regex '.*\\.(cpp|hpp|cu|c|h)' -exec clang-format -style=file -i {} \\;
 ```
 
-### CMake
-For CMake files, we use <a href="https://github.com/cheshirekow/cmake_format">cmake-format</a> to ensure a consistent style. To format a CMakeLists.txt file, use the following command:
+This command recursively finds all files with `.cpp`, `.hpp`, `.cu`, `.c`, or `.h` extensions and formats them using `clang-format`.
 
-```bash
+### CMake Formatting
+
+CMake files should have a consistent style as well. For this, we use `cmake-format`. To format a `CMakeLists.txt` file, execute the following command:
+
+```
 cmake-format CMakeLists.txt -i
 ```
 
-### Python
+This command applies the `cmake-format` to the `CMakeLists.txt` file.
 
-We follow the <a href="https://peps.python.org/pep-0008/">PEP 8 - Style Guide for Python Code</a> and use black to automatically format the code.
+### Python Formatting
 
-```bash
+We follow the [PEP 8 - Style Guide for Python Code](https://peps.python.org/pep-0008/) for Python projects and use `black` to automatically format the code. Use the following command to format your Python code:
+
+```
 black .
 ```
+
+This command formats all Python files in the current directory and its subdirectories using `black`.
 
 ## Notes
 
