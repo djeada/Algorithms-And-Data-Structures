@@ -1,4 +1,4 @@
-# Dynamic Programming: An Advanced Problem-Solving Strategy
+# Dynamic Programming
 
 Dynamic Programming (DP) is a method used in computer science for solving complex problems by breaking them down into simpler, more manageable sub-problems. By solving these sub-problems once, storing their solutions, and reusing these solutions, dynamic programming ensures efficient problem-solving. It transforms potentially exponential-time problems into more manageable polynomial-time problems.
 
