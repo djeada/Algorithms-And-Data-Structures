@@ -49,11 +49,11 @@ Here, we only fill in entries as we encounter them during the recursive calls. W
  --------------------------------------
  | n  | Fib(n)                         |
  --------------------------------------
- | 1  | 1                              |
- | 2  | 1                              |
- | 3  | 2  (from Fib(2) + Fib(1))      |
- | 4  | 3  (from Fib(3) + Fib(2))      |
  | 5  | 5  (from Fib(4) + Fib(3))      |
+ | 4  | 3  (from Fib(3) + Fib(2))      |
+ | 3  | 2  (from Fib(2) + Fib(1))      |
+ | 2  | 1                              |
+ | 1  | 1                              |
  --------------------------------------
 ```
 
