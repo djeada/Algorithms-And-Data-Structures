@@ -23,6 +23,10 @@ Importantly, the last node in the linked list points to a null value, effectivel
 
 Linked lists can be highly valuable when the data doesn't require contiguous storage in memory or when the exact size of the data is undetermined at the time of memory allocation. While they can serve as an alternative to arrays, it's essential to note that linked lists generally have slower access times and are more challenging to manipulate due to their non-contiguous storage and absence of direct access to individual elements.
 
+```
+[HEAD]-->[1| ]-->[2| ]-->[3| ]-->[4| ]-->[NULL]
+```
+
 ### Common Applications
 
 Linked lists find utility in a wide variety of areas including, but not limited to:
@@ -73,6 +77,12 @@ In computer science, a _vector_ can be thought of as a dynamic array with the ab
 
 Vectors are often favored over low-level arrays due to their augmented feature set and integrated safety mechanisms. These characteristics contribute to their easier usability and overall reliability.
 
+```
+-------------------------
+| 0 | 1 | 2 | 3 | 4 | 5 |
+-------------------------
+```
+
 ### Practical Applications
 
 Vectors can be leveraged for a wide array of tasks, such as:
@@ -119,6 +129,14 @@ In some programming languages, vectors might internally use other data structure
 
 A _stack_ is a fundamental data structure that models a First-In-Last-Out (FILO) or Last-In-First-Out (LIFO) strategy. In essence, the most recently added element (the top of the stack) is the first one to be removed. This data structure is widely utilized across various programming languages to execute a range of operations, such as arithmetic computations, character printing, and more.
 
+```
+[5]  <- top
+[4]
+[3]
+[2]
+[1]  <- bottom
+```
+
 ### Key Interface Methods
 
 Typical operations associated with a stack include:
@@ -162,6 +180,14 @@ The choice between arrays and linked lists often depends on the specific require
 ## Queues
 
 A _queue_ is a fundamental data structure that stores elements in a sequence, with modifications made by adding elements to the end (enqueuing) and removing them from the front (dequeuing). The queue follows a First In First Out (FIFO) strategy, implying that the oldest elements are processed first.
+
+```
+[1]  <- front
+[2]
+[3]
+[4]
+[5]  <- rear
+```
 
 ### Core Interface Methods
 
@@ -210,7 +236,7 @@ Queues can be implemented using various underlying data structures, including ar
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/queue)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/simple_queue)
 
-## A Specialized Tree-Based Data Structure
+## Heaps
 
 A _heap_ is a specialized tree-based data structure that satisfies the heap property. There are two main types of heaps: _max-heaps_ and _min-heaps_. 
 
@@ -218,6 +244,14 @@ A _heap_ is a specialized tree-based data structure that satisfies the heap prop
 - In a _min-heap_, the keys of parent nodes are always less than or equal to those of the children, with the minimum key present at the root node. 
 
 Heaps are always complete binary trees, which means they are filled at all levels, except the last, which is filled from left to right. This structure ensures that the heap remains balanced.
+
+```
+        [100]
+       /     \
+    [19]     [36]
+   /   \     /   \
+ [17] [3]  [25]  [1]
+```
 
 ### Key Methods of the Heap Interface
 
@@ -267,6 +301,14 @@ This layout keeps the parent-child relationships consistent and makes navigation
 
 A Binary Search Tree (BST) is a type of binary tree where each node has up to two children and maintains a specific ordering property among its values. For every node, the values of all nodes in its left subtree are less than its own value, and the values of all nodes in its right subtree are greater than its own value. In a well-balanced BST, this property enables efficient lookup, addition, and deletion operations, ideally distributing the nodes evenly across the left and right subtrees. Note that BSTs typically disallow duplicate values.
 
+```
+        [1]
+       /   \
+     [2]   [3]
+    /   \     \
+  [4]   [5]   [6]
+```
+
 ### Key Operations of the BST Interface
 
 The fundamental operations provided by a BST are:
@@ -300,6 +342,14 @@ Insertion, deletion, and search operations are often implemented recursively to 
 ## AVL Trees
 
 Named after its inventors, G.M. Adelson-Velsky and E.M. Landis, AVL trees are a subtype of binary search trees (BSTs) that self-balance. Unlike regular BSTs, AVL trees maintain a stringent balance by ensuring the height difference between the left and right subtrees of any node is at most one. This tight control on balance guarantees optimal performance for lookups, insertions, and deletions, making AVL trees highly efficient.
+
+```
+       [20]       
+      /    \
+   [10]    [30]
+  /   \     /   \
+[5]  [15] [25]  [35]
+```
 
 ### Key Characteristics of AVL Trees
 
@@ -359,6 +409,14 @@ These rotations ensure that AVL trees maintain their crucial property of balance
 
 Red-Black trees are a type of self-balancing binary search trees, with each node bearing an additional attribute: color. Each node in a Red-Black tree is colored either red or black, and these color attributes follow specific rules to maintain the tree's balance. This balance ensures that fundamental tree operations such as insertions, deletions, and searches remain efficient.
 
+```
+          (30B)      
+         /     \
+     (20R)    (40B)
+    /   \      /   \
+(10B) (25B) (35B) (50B)
+```
+
 ### Key Properties of Red-Black Trees
 
 Red-Black trees abide by the following essential properties:
@@ -416,6 +474,18 @@ These careful rotations and recoloring steps enable Red-Black trees to maintain 
 
 Hash tables, often referred to as hash maps or dictionaries, are a type of data structure that employs a hash function to pair keys with their corresponding values. This mechanism enables efficient insertion, deletion, and lookup of items within a collection, making hash tables a fundamental tool in many computing scenarios. They are typically used in contexts where swift lookup and insertion operations are critical, such as in database management and networking applications.
 
+```
++-----------------+
+| Key | Value     |
+|-----|-----------|
+| K1  | V1        |
+| K2  | V2        |
+| K3  | V3        |
+| K4  | V4        |
+| ... | ...       |
++-----------------+
+```
+
 ### Key Applications of Hash Tables
 
 Hash tables are ubiquitous across various domains, including:
@@ -471,9 +541,41 @@ Collisions occur when two or more keys hash to the same slot. There are two comm
 
 With chaining, each slot or bucket in the hash table acts as a linked list. Each new key-value pair is appended to its designated list. While this approach allows for efficient insertions and deletions, the worst-case time complexity for lookups escalates to `O(n)`, where `n` is the number of keys stored.
 
+The following is an example:
+
+```
+index  Bucket
+---------------------
+0      -> ["apple"]
+1      -> ["banana", "mango"]
+2      -> ["cherry"]
+3      -> []
+4      -> ["dates", "elderberry", "fig"]
+...
+```
+
+In the above example, "banana" and "mango" hash to the same index (1), so they are stored in the same linked list.
+
 ##### Open Addressing
 
 In open addressing, the hash table is an array, and each key-value pair is stored directly in an array slot. When a collision arises, the hash table searches for the next available slot according to a predefined probe sequence. Common probing techniques include linear probing, where the table checks each slot one by one, and quadratic probing, which checks slots based on a quadratic function of the distance from the original hash.
+
+Here's an example using linear probing:
+
+```
+index  Bucket
+---------------------
+0      -> "apple"
+1      -> "cherry"
+2      -> "banana"  (originally hashed to 1, moved due to collision)
+3      -> "mango"   (originally hashed to 1, moved due to collision)
+4      -> "dates"
+5      -> "elderberry"
+6      -> "fig"
+...
+```
+
+In this case, "banana" and "mango" were hashed to index 1, but since it was already occupied by "cherry", they were moved to the next available slots (2 and 3, respectively).
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/hash_table)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/hash_table)
