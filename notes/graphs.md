@@ -33,15 +33,15 @@ Understanding these systems through the lens of graphs enables more effective an
 
 Graph theory has its own rich vocabulary that allows us to precisely discuss and define various graph structures and concepts. Here's a primer:
 
-- **Graph**: A graph \(G\) is a mathematical structure containing a set \(V(G)\) of **vertices** (also known as points or nodes) along with a set \(E(G)\) of pairs of these vertices. These pairs, denoted as \({x, y} \in E(G)\), are termed **edges** (or links or lines).
+- **Graph**: A graph $(G)$ is a mathematical structure containing a set $(V(G))$ of **vertices** (also known as points or nodes) along with a set $(E(G))$ of pairs of these vertices. These pairs, denoted as $({x, y} \in E(G))$, are termed **edges** (or links or lines).
 
-- **Adjacent**: If \({x, y} \in E(G)\), then \(x\) and \(y\) are said to be adjacent. The number of vertices adjacent to a vertex \(v\) defines its **degree**. Interestingly, the total degrees of all vertices in a graph is always even.
+- **Adjacent**: If $({x, y} \in E(G))$, then $(x)$ and $(y)$ are said to be adjacent. The number of vertices adjacent to a vertex $(v)$ defines its **degree**. Interestingly, the total degrees of all vertices in a graph is always even.
 
-- **Path**: A path of length \(n\) is a series of vertices \(v_1 \sim v_2 \sim \dots \sim v_{n+1}\) such that \((v_i, v_{i+1}) \in E(G)\) with all vertices in the sequence being distinct.
+- **Path**: A path of length $(n)$ is a series of vertices $(v_1 \sim v_2 \sim \dots \sim v_{n+1})$ such that $((v_i, v_{i+1}) \in E(G))$ with all vertices in the sequence being distinct.
 
-- **Cycle**: This is a special type of path where \(v_1 = v_{n+1}\), and all other vertices from \(v_1\) to \(v_n\) are unique.
+- **Cycle**: This is a special type of path where $(v_1 = v_{n+1})$, and all other vertices from $(v_1)$ to $(v_n)$ are unique.
 
-- **Distance**: Represents the length of the shortest path between two vertices. If you're assessing the distance between vertices \(x\) and \(y\), you're looking for the most direct route connecting them.
+- **Distance**: Represents the length of the shortest path between two vertices. If you're assessing the distance between vertices $(x)$ and $(y)$, you're looking for the most direct route connecting them.
 
 - **Simple Graph**: A graph with no self-loops (edges connected at both ends to the same vertex) and at most one edge between any two vertices.
 
@@ -58,7 +58,7 @@ Graph theory has its own rich vocabulary that allows us to precisely discuss and
     - **Weakly Connected**: A path exists from vertex A to B or B to A for any vertices A and B.
     - **Strongly Connected**: Paths exist in both directions between every pair of vertices.
 
-- **Neighbors and Incident**: Vertices A and B, if connected by an edge \(e\), are neighbors. This edge \(e\) is incident to both A and B. When two edges have a shared vertex (like edges from A to B and B to C), they are **adjacent**.
+- **Neighbors and Incident**: Vertices A and B, if connected by an edge $(e)$, are neighbors. This edge $(e)$ is incident to both A and B. When two edges have a shared vertex (like edges from A to B and B to C), they are **adjacent**.
 
 ## Representation of Graphs in Computer Memory
 
