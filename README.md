@@ -80,13 +80,15 @@ python -m unittest discover -v
 
 This command uses Python's built-in `unittest` module to discover and run the tests. The `-v` (verbose) flag is used to get more detailed output from the tests.
 
-### Using the Utility Script
+### Using the Testing Utility Script
 
-For convenience, this repository includes a utility script named `run_tests.sh`. This script runs the unit tests for all subprojects. To use the script, execute the following command from the repository's root directory:
+For convenience, this repository includes a utility script named `run_tests.sh`. Execute the following commands from the repository's root to run tests in all subprojects:
 
-```
-./run_tests.sh
-```
+- **To run _all_ unit tests:** `./run_tests.sh`
+- **To run all _Python_ tests:** `./run_tests.sh --python`
+- **To run all _C++_ tests:** `./run_tests.sh --cpp`
+- **To read all options from terminal:** `./run_tests.sh --help`
+
 
 ## Code Formatting Conventions
 
