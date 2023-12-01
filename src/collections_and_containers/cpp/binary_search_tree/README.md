@@ -24,7 +24,7 @@ Here is an example of how to use the BinarySearchTree class:
 
 ```cpp
 #include <iostream>
-#includesrc/binary_search_tree.h"
+#include "src/binary_search_tree.h"
 
 using namespace std;
 
