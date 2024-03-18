@@ -89,7 +89,6 @@ For convenience, this repository includes a utility script named `run_tests.sh`.
 - **To run all _C++_ tests:** `./run_tests.sh --cpp`
 - **To read all options from terminal:** `./run_tests.sh --help`
 
-
 ## Code Formatting Conventions
 
 Consistent code formatting is essential for maintaining readability and understanding of the codebase. Therefore, we have adopted specific formatting guidelines for each programming language used in this repository.
@@ -581,34 +580,42 @@ This command formats all Python files in the current directory and its subdirect
     </tbody>
 </table>
 
+## How to Contribute
+
+We encourage contributions that enhance the repository's value. To contribute:
+
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ## References
 
-* L. V. Narashima Prasad, E. Kishna Rao Patro "<i>Lecture Notes on Data Structures using C</i>" 
-* Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein. "<i>Introduction to Algorithms, 3rd Edition (The MIT Press)</i>"
-* Steven Halim "<i>Competitive Programming 3</i>" 
-* Narasimha Karumanchi "<i>Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles</i>" 
-* Brian Kernighan, Dennis Ritchie "<i>The C Programming Language</i>" 
-* Steven Skiena, Miguel Revilla "<i>Programming Challenges: The Programming Contest Training Manual</i>" 
-* Antti Laaksonen "<i>  Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science) </i>" 
-* Nite Nimajneb "<i>The Hitchhiker’s Guide to the Programming Contests</i>" 
-* http://cslibrary.stanford.edu/
-* https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/
-* https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm
-* https://www.cs.bham.ac.uk/~jxb/DSA/
-* https://www.ics.uci.edu/~eppstein/161/syl.html
-* http://www.columbia.edu/~cs2035/oldcourses.html
-* https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/
-* https://sp19.datastructur.es/
-* https://www.csc.kth.se/~viggo/problemlist
-* https://cp-algorithms.com/
-* https://www.personal.kent.edu/~rmuhamma/Compgeometry/compgeom.html
-* https://codeahoy.com/learn/cprogramming/toc/
+### Books
+- L. V. Narashima Prasad, E. Kishna Rao Patro, *Lecture Notes on Data Structures using C*
+- Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein, *Introduction to Algorithms, 3rd Edition (The MIT Press)*
+- Steven Halim, *Competitive Programming 3*
+- Narasimha Karumanchi, *Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles*
+- Brian Kernighan, Dennis Ritchie, *The C Programming Language*
+- Steven Skiena, Miguel Revilla, *Programming Challenges: The Programming Contest Training Manual*
+- Antti Laaksonen, *Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science)*
+- Nite Nimajneb, *The Hitchhiker’s Guide to the Programming Contests*
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+### Online Courses and Resources
+- [Stanford CS Library](http://cslibrary.stanford.edu/)
+- [MIT OCW: Advanced Data Structures - Spring 2012](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/)
+- [MIT OCW: Introduction to Computational Thinking and Data Science - Fall 2016](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm)
+- [Data Structures and Algorithms by University of Birmingham](https://www.cs.bham.ac.uk/~jxb/DSA/)
+- [UC Irvine - Data Structures and Algorithms](https://www.ics.uci.edu/~eppstein/161/syl.html)
+- [Columbia University - Old Computer Science Courses](http://www.columbia.edu/~cs2035/oldcourses.html)
+- [University of Auckland - Computer Science Lectures](https://www.cs.auckland.ac.nz/courses/compsci220s1t/lectures/lecturenotes/GG-lectures/)
+- [UC Berkeley - Data Structures, Spring 2019](https://sp19.datastructur.es/)
+- [KTH Royal Institute of Technology - Problem Solving and Programming under Pressure](https://www.csc.kth.se/~viggo/problemlist)
+- [CP Algorithms](https://cp-algorithms.com/)
+- [Computational Geometry by Kent State University](https://www.personal.kent.edu/~rmuhamma/Compgeometry/compgeom.html)
+- [CodeAhoy - Learn C Programming](https://codeahoy.com/learn/cprogramming/toc/)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
