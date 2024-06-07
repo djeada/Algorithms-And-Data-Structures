@@ -619,3 +619,8 @@ We encourage contributions that enhance the repository's value. To contribute:
 ## License
 
 This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=djeada/Algorithms-And-Data-Structures&type=Date)](https://star-history.com/#djeada/Algorithms-And-Data-Structures&Date)
+
