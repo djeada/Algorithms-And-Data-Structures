@@ -4,74 +4,98 @@ In various spheres of life, we encounter systems comprising elements intricately
 
 Some prevalent real-world examples include:
 
-- **Transportation Systems**:
-  * **Underground Tunnel Networks**: Subways and transportation systems below the city surface.
-  * **Railway Map**: Train routes connecting different towns and cities.
-  * **Cities Linked by Flights**: Air travel routes between global destinations.
-
-- **Utility Systems**:
-  * **Network of Pipes**: Piping systems transporting water, gas, or oil.
-  * **Electrical Grids**: Networks distributing electricity across regions.
-
-- **Molecular Structures**:
-  * **Carbon Atoms in a Molecule**: Chemical compounds and the bonds between their constituent atoms.
-
-- **Information and Technology**:
-  * **Internet**: Webpages interlinked through hyperlinks or networks of computers.
-  * **Task Scheduling**: Dependencies among tasks that determine their sequence or priority.
-
-- **Social and Epidemiological Studies**:
-  * **Spread of a Disease**: Understanding how diseases propagate through populations.
-  * **Social Networks**: People connected through friendships, family ties, or professional relationships.
-
-- **Geopolitics**:
-  * **Countries and their Political Alliances**: Diplomatic ties, trade partnerships, or defense pacts between nations.
+- Underground tunnel networks (subways and transportation systems below the city surface)
+- Railway maps (train routes connecting different towns and cities)
+- Cities linked by flights (air travel routes between global destinations)
+- Networks of pipes (piping systems transporting water, gas, or oil)
+- Electrical grids (networks distributing electricity across regions)
+- Carbon atoms in a molecule (chemical compounds and the bonds between their constituent atoms)
+- Internet (webpages interlinked through hyperlinks or networks of computers)
+- Task scheduling (dependencies among tasks that determine their sequence or priority)
+- Spread of a disease (understanding how diseases propagate through populations)
+- Social networks (people connected through friendships, family ties, or professional relationships)
+- Countries and their political alliances (diplomatic ties, trade partnerships, or defense pacts between nations)
 
 Understanding these systems through the lens of graphs enables more effective analysis, optimization, and prediction of system behavior. The data structure termed "graph" in computer science and mathematics provides the tools and constructs necessary for such modeling.
 
 ## Graph Terminology
 
-Graph theory has its own rich vocabulary that allows us to precisely discuss and define various graph structures and concepts. Here's a primer:
+Graph theory has a rich vocabulary that allows for precise discussion and definition of various graph structures and concepts. Here's an explanation of key terms:
 
-- **Graph**: A graph $(G)$ is a mathematical structure containing a set $(V(G))$ of **vertices** (also known as points or nodes) along with a set $(E(G))$ of pairs of these vertices. These pairs, denoted as $({x, y} \in E(G))$, are termed **edges** (or links or lines).
+- A **graph** $G$ is a mathematical structure consisting of a set $V(G)$ of vertices (also known as points or nodes) and a set $E(G)$ of pairs of these vertices. These pairs, denoted as $\{x, y\} \in E(G)$, are called edges (or links or lines).
 
-- **Adjacent**: If $({x, y} \in E(G))$, then $(x)$ and $(y)$ are said to be adjacent. The number of vertices adjacent to a vertex $(v)$ defines its **degree**. Interestingly, the total degrees of all vertices in a graph is always even.
+- If $\{x, y\} \in E(G)$, then $x$ and $y$ are said to be **adjacent**. The number of vertices adjacent to a vertex $v$ defines its degree. Interestingly, the total degrees of all vertices in a graph is always even.
 
-- **Path**: A path of length $(n)$ is a series of vertices $(v_1 \sim v_2 \sim \dots \sim v_{n+1})$ such that $((v_i, v_{i+1}) \in E(G))$ with all vertices in the sequence being distinct.
+- A **path** of length $n$ is a series of vertices $v_1 \sim v_2 \sim \dots \sim v_{n+1}$ such that $(v_i, v_{i+1}) \in E(G)$ with all vertices in the sequence being distinct.
 
-- **Cycle**: This is a special type of path where $(v_1 = v_{n+1})$, and all other vertices from $(v_1)$ to $(v_n)$ are unique.
+- A **cycle** is a special type of path where $v_1 = v_{n+1}$, and all other vertices from $v_1$ to $v_n$ are unique.
 
-- **Distance**: Represents the length of the shortest path between two vertices. If you're assessing the distance between vertices $(x)$ and $(y)$, you're looking for the most direct route connecting them.
+- Distance represents the length of the shortest path between two vertices. When assessing the distance between vertices $x$ and $y$, you are looking for the most direct route connecting them.
 
-- **Simple Graph**: A graph with no self-loops (edges connected at both ends to the same vertex) and at most one edge between any two vertices.
+- A **simple graph** is a graph with no self-loops (edges connected at both ends to the same vertex) and at most one edge between any two vertices.
 
-- **Directed Graph (Digraph)**: Here, edges have direction. They are an ordered pair of vertices, often called **arcs**. In contrast, **undirected graphs** lack directionality—meaning an edge from vertex A to vertex B is the same as one from B to A.
+- In a **directed graph** (digraph), edges have direction. They are an ordered pair of vertices, often called arcs. In contrast, undirected graphs lack directionality, meaning an edge from vertex $A$ to vertex $B$ is the same as one from $B$ to $A$.
 
-- **Weighted Graph**: Assigns a weight to each edge, typically a non-negative integer. 
-  * **Binary weight**: Represents presence (1) or absence (0) of a connection between nodes.
-  * **Numeric weight**: Indicates the strength or cost of a connection.
-  * **Normalized weight**: Ensures that all outgoing edges from a node sum to one, often used in probabilistic contexts.
+- A **weighted graph** assigns a weight to each edge, typically a non-negative integer. A binary weight represents the presence (1) or absence (0) of a connection between nodes. A numeric weight indicates the strength or cost of a connection. A normalized weight ensures that all outgoing edges from a node sum to one, often used in probabilistic contexts.
 
-- **Connectivity**:
-  * **Undirected Graph**: A graph is termed **connected** if every vertex pair is linked by some path.
-  * **Directed Graph**: Differently defined:
-    - **Weakly Connected**: A path exists from vertex A to B or B to A for any vertices A and B.
-    - **Strongly Connected**: Paths exist in both directions between every pair of vertices.
+- In terms of **connectivity**, an undirected graph is termed connected if every vertex pair is linked by some path. In a directed graph, weakly connected means a path exists from vertex $A$ to $B$ or $B$ to $A$ for any vertices $A$ and $B$. Strongly connected means paths exist in both directions between every pair of vertices.
 
-- **Neighbors and Incident**: Vertices A and B, if connected by an edge $(e)$, are neighbors. This edge $(e)$ is incident to both A and B. When two edges have a shared vertex (like edges from A to B and B to C), they are **adjacent**.
+- **Vertices** $A$ and $B$, if connected by an edge $e$, are neighbors. This edge $e$ is incident to both $A$ and $B$. When two edges share a vertex (like edges from $A$ to $B$ and $B$ to $C$), they are adjacent.
+
+- The concept of an **isolated vertex** refers to a vertex with no edges connected to it. This means the vertex has a degree of zero since it is not adjacent to any other vertex.
+
+- **Subgraphs** are smaller graphs formed from a subset of the vertices and edges of a larger graph. If $G$ is a graph, a subgraph $H$ is a graph such that the vertex set of $H$ is a subset of the vertex set of $G$ and the edge set of $H$ is a subset of the edge set of $G$.
+
+- A **spanning tree** of a graph $G$ is a subgraph that includes all the vertices of $G$ and is a single connected tree. A spanning tree has exactly $|V| - 1$ edges where $|V|$ is the number of vertices in the graph.
+
+- **Bipartite graphs** are graphs whose vertices can be divided into two disjoint sets such that no two vertices within the same set are adjacent. Formally, a graph $G$ is bipartite if there exists a partition $V(G) = V_1 \cup V_2$ where $V_1$ and $V_2$ are disjoint and every edge connects a vertex in $V_1$ to a vertex in $V_2$.
+
+- A **complete graph** is a simple graph in which there is an edge between every pair of vertices. If a complete graph has $n$ vertices, it is denoted by $K_n$ and has $\frac{n(n-1)}{2}$ edges.
+
+- **Planar graphs** can be drawn on a plane without any edges crossing. A graph is planar if it can be embedded in the plane, meaning it can be drawn on a flat surface such that its edges intersect only at their endpoints.
+
+- The **Eulerian path** is a path in a graph that visits every edge exactly once. If such a path exists and starts and ends at different vertices, it is an Eulerian path. If it starts and ends at the same vertex, it is an Eulerian circuit. A graph has an Eulerian circuit if and only if all vertices have an even degree, and it is connected. A graph has an Eulerian path if it has exactly zero or two vertices of odd degree, and it is connected.
+
+- The **Hamiltonian path** is a path in a graph that visits every vertex exactly once. If such a path exists and starts and ends at different vertices, it is a Hamiltonian path. If it starts and ends at the same vertex, it is a Hamiltonian circuit. Determining whether a Hamiltonian path or circuit exists in a graph is a well-known NP-complete problem.
+
+- **Graph isomorphism** refers to a condition where two graphs $G$ and $H$ are considered isomorphic if there is a one-to-one correspondence between their vertex sets and their edge sets that preserves adjacency. In other words, $G$ and $H$ are structurally identical but may have different vertex and edge labels.
+
+- **Degree sequence** is a list of the degrees of the vertices in a graph, usually written in non-increasing order. The degree sequence is a graph invariant, meaning it is the same for any isomorphic graphs.
+
+- **Graph coloring** is the assignment of labels (colors) to vertices of a graph such that no two adjacent vertices share the same color. The minimum number of colors needed to color a graph $G$ is known as its chromatic number.
+
+- **Tree** is a connected, acyclic graph. In a tree, any two vertices are connected by exactly one path, and adding any edge to a tree will create a cycle. Trees have several important properties and applications in computer science, particularly in data structures and algorithms.
+
+- **Forest** is a disjoint set of trees. It is an acyclic graph that may consist of multiple disconnected components, each being a tree.
+
+- **Cut vertices and cut edges** refer to vertices and edges whose removal increases the number of connected components of the graph. A cut vertex (or articulation point) is a vertex that, if removed, would split the graph into two or more disconnected subgraphs. A cut edge (or bridge) is an edge that, if removed, would increase the number of connected components.
+
+- **Matching** in a graph is a set of edges without common vertices. A maximum matching is a matching that contains the largest possible number of edges. If every vertex of the graph is incident to exactly one edge of the matching, it is called a perfect matching.
+
+- **Independent set** is a set of vertices in a graph, no two of which are adjacent. The size of the largest independent set is called the independence number of the graph.
+
+- **Clique** is a subset of vertices such that every two distinct vertices are adjacent. The size of the largest clique in a graph is called the clique number.
+
+- **Vertex cover** is a set of vertices such that each edge of the graph is incident to at least one vertex of the set. The size of the smallest vertex cover is called the vertex cover number.
+
+- **Dominating set** is a set of vertices such that each vertex in the graph is either in the dominating set or adjacent to a vertex in the dominating set. The size of the smallest dominating set is called the domination number.
+
+- **Planarity testing** determines whether a graph can be drawn in a plane without edge crossings. Kuratowski's theorem provides a criterion for planarity based on the presence of subgraphs homeomorphic to $K_5$ (complete graph on five vertices) or $K_{3,3}$ (complete bipartite graph on six vertices, three in each set).
+
+- **Graph algorithms** encompass a variety of procedures and techniques used to solve problems related to graphs. Examples include depth-first search (DFS), breadth-first search (BFS), Dijkstra's algorithm for shortest paths, Kruskal's and Prim's algorithms for minimum spanning trees, and the Bellman-Ford algorithm for shortest paths in graphs with negative weights.
 
 ## Representation of Graphs in Computer Memory
 
-Graphs, with their versatile applications in numerous domains, necessitate efficient storage and manipulation mechanisms in computer memory. Commonly, the representation choice depends on the graph's characteristics (e.g., sparsity) and the specific operations to be performed. Among the many methods available, the **adjacency matrix** and the **adjacency list** stand out as the most prevalent.
+Graphs, with their versatile applications in numerous domains, necessitate efficient storage and manipulation mechanisms in computer memory. The choice of representation often depends on the graph's characteristics, such as sparsity, and the specific operations to be performed. Among the various methods available, the adjacency matrix and the adjacency list are the most prevalent.
 
 ### Adjacency Matrix
 
-An adjacency matrix offers a two-dimensional matrix approach to represent a graph \(G\). Given \(V\) vertices, we have a \(V \times V\) matrix \(A\). The matrix's rows and columns correspond to the graph's vertices, and each cell \(A_{ij}\) holds:
+An adjacency matrix represents a graph \( G \) as a two-dimensional matrix. Given \( V \) vertices, it utilizes a \( V \times V \) matrix \( A \). The rows and columns correspond to the graph's vertices, and each cell \( A_{ij} \) holds:
 
-- `1` if there's an edge between vertex \(i\) and vertex \(j\), or
-- `0` if no such edge exists.
+- `1` if there is an edge between vertex \( i \) and vertex \( j \)
+- `0` if no such edge exists
 
-For graphs with edge weights, \(A_{ij}\) contains the weight of the edge between vertices \(i\) and \(j\).
+For graphs with edge weights, \( A_{ij} \) contains the weight of the edge between vertices \( i \) and \( j \).
 
 **Example**:
 
@@ -85,7 +109,7 @@ For graphs with edge weights, \(A_{ij}\) contains the weight of the edge between
 Here, the matrix indicates a graph with vertices A to D. For instance, vertex A connects with vertices B and D, hence the respective 1s in the matrix.
 
 **Benefits**:
-- Fixed-time (O(1)) edge existence checks.
+- Fixed-time (\(O(1)\)) edge existence checks.
 - Particularly suitable for dense graphs, where the edge-to-vertex ratio is high.
 
 **Drawbacks**:
@@ -94,7 +118,7 @@ Here, the matrix indicates a graph with vertices A to D. For instance, vertex A 
 
 ### Adjacency List
 
-In contrast, the adjacency list employs a collection (often an array or a linked list) to catalog the neighbors of each vertex. Each vertex points to its own list, enumerating its direct neighbors.
+An adjacency list uses a collection (often an array or a linked list) to catalog the neighbors of each vertex. Each vertex points to its own list, enumerating its direct neighbors.
 
 **Example**:
 
@@ -108,30 +132,32 @@ D -> [A, C]
 This list reflects the same graph as our matrix example. Vertex A's neighbors, for instance, are B and D.
 
 **Benefits**:
+
 - Space-efficient for sparse graphs, where edges are relatively fewer.
 - Facilitates faster traversal of a vertex's neighbors since the direct neighbors are listed without extraneous checks.
 
 **Drawbacks**:
-- Edge existence checks can take up to O(V) time in the worst case.
+
+- Edge existence checks can take up to \(O(V)\) time in the worst case.
 - Potentially consumes more space for dense graphs.
 
 In practice, the choice between these (and other) representations often hinges on the graph's characteristics and the specific tasks or operations envisioned.
 
 ## Planarity
 
-Planarity is a fundamental concept in graph theory that examines whether a graph can be sketched on a flat surface without any of its edges overlapping. This idea holds significant importance in areas such as circuit design, urban planning, and geography.
+Planarity is a fundamental concept in graph theory that examines whether a graph can be drawn on a flat surface without any of its edges overlapping. This idea holds significant importance in areas such as circuit design, urban planning, and geography.
 
 ### What is a Planar Graph?
 
-A graph is termed "planar" if there exists a representation of it on a two-dimensional plane, where its edges intersect only at their vertices and nowhere in between. The capacity to redraw a graph without overlapping edges, even if initially sketched with intersections, is crucial to its planarity.
+A graph is termed "planar" if there exists a representation of it on a two-dimensional plane where its edges intersect only at their vertices and nowhere in between. The ability to redraw a graph without overlapping edges, even if initially sketched with intersections, is crucial to its planarity.
 
-### Planar Embedding: A Closer Look
+### Planar Embedding
 
-A "planar embedding" pertains to a specific drawing or representation of a graph on a plane that doesn't feature any crossing edges. While a graph might initially be depicted with overlapping edges, it's the ability to reconfigure it into a non-overlapping form that classifies it as planar.
+A "planar embedding" pertains to a specific drawing or representation of a graph on a plane that doesn't feature any crossing edges. While a graph might initially be depicted with overlapping edges, its ability to be reconfigured into a non-overlapping form classifies it as planar.
 
-### Diving into Examples
+### Examples
 
-To comprehend planarity more tangibly, let's explore some examples:
+To understand planarity more tangibly, let's explore some examples:
 
 1. **Cycle Graphs**: Graphs like triangles, squares, or hexagons, which are simple loops or cycles, are intrinsically planar. These shapes can always be illustrated without intersecting edges.
 
@@ -141,17 +167,17 @@ A-----B
 C-----D
 ```
 
-3. **Complete Graph with Four Vertices (K4)**: This graph sees every vertex connected to all other vertices. Despite its complexity, K4 remains planar, bearing resemblance to a tetrahedron.
+2. **Complete Graph with Four Vertices (\(K_4\))**: This graph has every vertex connected to all other vertices. Despite its complexity, \(K_4\) remains planar and resembles a tetrahedron.
 
 ```
-   A
-  /|\
- B-+-C
-  \|/
-   D
+   A--------
+  / \      |
+ B---C     |
+  \ /      |
+   D--------
 ```
 
-3. **Complete Graph with Five Vertices (K5)**: Contrarily, K5 cannot be sketched without crossing edges, thus classifying it as non-planar.
+3. **Complete Graph with Five Vertices (\(K_5\))**: Unlike \(K_4\), \(K_5\) cannot be sketched without crossing edges, thus classifying it as non-planar.
 
 ```
       -  A  -
@@ -162,21 +188,23 @@ C-----D
     \ D-----E /
 ```
 
-In the K5 graph, edges like AD and AE are overlapping with BC.
+In the \(K_5\) graph, edges like AD and AE overlap with BC.
 
 ### Strategies for Assessing Planarity
 
 While small graphs allow for manual examination for planarity, larger ones necessitate more sophisticated methods:
 
-1. **Visual Inspection**: For simpler graphs, manual rearrangement of vertices and edges might reveal a planar embedding.
+I. For simpler graphs, manual rearrangement of vertices and edges might reveal a planar embedding.
 
-2. **Theoretical Foundations**:
-    * **Kuratowski’s Theorem**: A graph is planar if and only if it lacks a subgraph that can be transformed into K5 (a complete graph with five vertices) or K3,3 (a bipartite graph with dual trios of vertices).
-    * **Wagner's Theorem**: Another foundational principle focusing on graph minors and subgraphs, akin to Kuratowski's approach.
+II. Theoretical Foundations:
 
-3. **Algorithms**:
-    * **Hopcroft-Tarjan Algorithm**: A renowned linear-time procedure for discerning planarity.
-    * **Boyer-Myrvold Planarity Testing**: Another efficient linear-time method for the same purpose.
+- **Kuratowski’s Theorem**: A graph is planar if and only if it lacks a subgraph that can be transformed into \(K_5\) (a complete graph with five vertices) or \(K_{3,3}\) (a bipartite graph with dual trios of vertices).
+- **Wagner's Theorem**: Another foundational principle focusing on graph minors and subgraphs, akin to Kuratowski's approach.
+
+III. **Algorithms**:
+
+- **Hopcroft-Tarjan Algorithm**: A renowned linear-time procedure for discerning planarity.
+- **Boyer-Myrvold Planarity Testing**: Another efficient linear-time method for the same purpose.
 
 ## Traversals
 
