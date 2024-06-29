@@ -90,14 +90,14 @@ Graphs, with their versatile applications in numerous domains, necessitate effic
 
 ### Adjacency Matrix
 
-An adjacency matrix represents a graph \( G \) as a two-dimensional matrix. Given \( V \) vertices, it utilizes a \( V \times V \) matrix \( A \). The rows and columns correspond to the graph's vertices, and each cell \( A_{ij} \) holds:
+An adjacency matrix represents a graph $G$ as a two-dimensional matrix. Given $V$ vertices, it utilizes a $V \times V$ matrix $A$. The rows and columns correspond to the graph's vertices, and each cell $A_{ij}$ holds:
 
-- `1` if there is an edge between vertex \( i \) and vertex \( j \)
+- `1` if there is an edge between vertex $i$ and vertex $j$
 - `0` if no such edge exists
 
-For graphs with edge weights, \( A_{ij} \) contains the weight of the edge between vertices \( i \) and \( j \).
+For graphs with edge weights, $A_{ij}$ contains the weight of the edge between vertices $i$ and $j$.
 
-**Example**:
+Example:
 
 |   | A | B | C | D |
 |---|---|---|---|---|
@@ -109,10 +109,12 @@ For graphs with edge weights, \( A_{ij} \) contains the weight of the edge betwe
 Here, the matrix indicates a graph with vertices A to D. For instance, vertex A connects with vertices B and D, hence the respective 1s in the matrix.
 
 **Benefits**:
-- Fixed-time (\(O(1)\)) edge existence checks.
+
+- Fixed-time ($O(1)$) edge existence checks.
 - Particularly suitable for dense graphs, where the edge-to-vertex ratio is high.
 
 **Drawbacks**:
+
 - Consumes more space for sparse graphs.
 - Traversing neighbors can be slower due to the need to check all vertices.
 
@@ -120,7 +122,7 @@ Here, the matrix indicates a graph with vertices A to D. For instance, vertex A 
 
 An adjacency list uses a collection (often an array or a linked list) to catalog the neighbors of each vertex. Each vertex points to its own list, enumerating its direct neighbors.
 
-**Example**:
+Example:
 
 ```
 A -> [B, D]
@@ -138,7 +140,7 @@ This list reflects the same graph as our matrix example. Vertex A's neighbors, f
 
 **Drawbacks**:
 
-- Edge existence checks can take up to \(O(V)\) time in the worst case.
+- Edge existence checks can take up to $O(V)$ time in the worst case.
 - Potentially consumes more space for dense graphs.
 
 In practice, the choice between these (and other) representations often hinges on the graph's characteristics and the specific tasks or operations envisioned.
@@ -167,9 +169,10 @@ A-----B
 C-----D
 ```
 
-2. **Complete Graph with Four Vertices (\(K_4\))**: This graph has every vertex connected to all other vertices. Despite its complexity, \(K_4\) remains planar and resembles a tetrahedron.
+2. **Complete Graph with Four Vertices ($K_4$)**: This graph has every vertex connected to all other vertices. Despite its complexity, $K_4$ remains planar and resembles a tetrahedron.
 
 ```
+#
    A--------
   / \      |
  B---C     |
@@ -177,9 +180,10 @@ C-----D
    D--------
 ```
 
-3. **Complete Graph with Five Vertices (\(K_5\))**: Unlike \(K_4\), \(K_5\) cannot be sketched without crossing edges, thus classifying it as non-planar.
+3. **Complete Graph with Five Vertices ($K_5$)**: Unlike $K_4$, $K_5$ cannot be sketched without crossing edges, thus classifying it as non-planar.
 
 ```
+#
       -  A  -
     /  /   \  \
   /   |     |   \
@@ -188,7 +192,7 @@ C-----D
     \ D-----E /
 ```
 
-In the \(K_5\) graph, edges like AD and AE overlap with BC.
+In the $K_5$ graph, edges like AD and AE overlap with BC.
 
 ### Strategies for Assessing Planarity
 
@@ -198,7 +202,7 @@ I. For simpler graphs, manual rearrangement of vertices and edges might reveal a
 
 II. Theoretical Foundations:
 
-- **Kuratowski’s Theorem**: A graph is planar if and only if it lacks a subgraph that can be transformed into \(K_5\) (a complete graph with five vertices) or \(K_{3,3}\) (a bipartite graph with dual trios of vertices).
+- **Kuratowski’s Theorem**: A graph is planar if and only if it lacks a subgraph that can be transformed into $K_5$ (a complete graph with five vertices) or $K_{3,3}$ (a bipartite graph with dual trios of vertices).
 - **Wagner's Theorem**: Another foundational principle focusing on graph minors and subgraphs, akin to Kuratowski's approach.
 
 III. **Algorithms**:
@@ -208,7 +212,7 @@ III. **Algorithms**:
 
 ## Traversals
 
-Traversing a graph involves visiting all of its vertices in a systematic way. We need an approach that guarantees we don't miss any edges or vertices. Unlike trees, graphs don't have a root vertex, so there's no obvious starting point for a traversal. We assume that we're given, or we randomly select, a starting vertex _i_.
+Traversing a graph involves visiting all of its vertices in a systematic way. We need an approach that guarantees we don't miss any edges or vertices. Unlike trees, graphs don't have a root vertex, so there's no obvious starting point for a traversal. We assume that we're given, or we randomly select, a starting vertex $i$.
 
 Note: The order in which vertices are visited in both breadth-first search (BFS) and depth-first search (DFS) depends on the implementation. If our starting vertex A has three neighbors (C, F, and G), there's no strict rule for processing one before the others. Therefore, it's better to talk about _a_ result of these algorithms rather than _the_ result.
 
@@ -223,8 +227,8 @@ To efficiently keep track of the traversal, BFS employs two primary data structu
 
 #### Algorithm Steps:
 
-1. Begin from a starting vertex, _i_.
-2. Mark the vertex _i_ as visited.
+1. Begin from a starting vertex, $i$.
+2. Mark the vertex $i$ as visited.
 3. Explore each of its neighbors. If the neighbor hasn't been visited yet, mark it as visited and enqueue it in `unexplored`.
 4. Dequeue the front vertex from `unexplored` and repeat step 3.
 5. Continue this process until the `unexplored` queue becomes empty.
@@ -245,14 +249,14 @@ Queue: Empty          Visited: A, B, C, D, E
 
 In this example, BFS started at the top of the graph and worked its way down, visiting nodes in order of their distance from the starting node. The ASCII representation provides a step-by-step visualization of BFS using a queue and a list of visited nodes.
 
-#### Applications of BFS
+#### Applications
 
 BFS is not only used for simple graph traversal. Its applications span multiple domains:
 
-1. **Shortest Path**: BFS can determine the shortest path in an unweighted graph from a source to all other nodes.
-2. **Connected Components**: To find all connected components in an undirected graph, you can run BFS on every unvisited node.
-3. **Network Broadcasting**: BFS mirrors the propagation in broadcasting networks, where a message is forwarded to neighboring nodes, and they subsequently forward it to their neighbors.
-4. **Cycle Detection**: If during BFS traversal, an already visited node is encountered (and it's not the parent of the current node in traversal), then there exists a cycle in the graph.
+1. BFS can determine the **shortest path** in an unweighted graph from a source to all other nodes.
+2. To find all **connected components** in an undirected graph, you can run BFS on every unvisited node.
+3. BFS mirrors the propagation in broadcasting networks, where a message is forwarded to neighboring nodes, and they subsequently forward it to their neighbors.
+4. If during BFS traversal, an already visited node is encountered (and it's not the parent of the current node in traversal), then there exists a cycle in the graph.
 
 #### Implementation
 
@@ -268,11 +272,11 @@ To implement DFS, we use two main data structures:
 * A stack, either implicitly using the call stack through recursion or explicitly using a data structure. This stack is responsible for tracking vertices that are to be explored.
 * A hash table or set called `visited` to ensure nodes aren't revisited.
 
-#### Algorithm Steps:
+#### Algorithm Steps
 
-1. Begin from a starting vertex, _i_.
-2. Mark vertex _i_ as visited.
-3. Visit an unvisited neighbor of _i_, mark it as visited, and move to that vertex.
+1. Begin from a starting vertex, $i$.
+2. Mark vertex $i$ as visited.
+3. Visit an unvisited neighbor of $i$, mark it as visited, and move to that vertex.
 4. Repeat the above step until the current vertex has no unvisited neighbors.
 5. Backtrack to the previous vertex and explore other unvisited neighbors.
 6. Continue this process until you've visited all vertices connected to the initial start vertex.
@@ -293,14 +297,14 @@ Stack: Empty          Visited: A, B, D, C, E
 
 In this example, DFS explored as deep as possible along the left side (branch with B and D) of the graph before backtracking and moving to the right side (branch with C and E). The ASCII representation provides a step-by-step visualization of DFS using a stack and a list of visited nodes.
 
-#### Applications of DFS
+#### Applications
 
 DFS, with its inherent nature of diving deep, has several intriguing applications:
 
-1. **Topological Sorting**: Used in scheduling tasks, where one task should be completed before another starts.
-2. **Connected Components**: To find all strongly connected components in a directed graph.
-3. **Pathfinding**: DFS can be employed to find a path between two nodes, though it might not guarantee the shortest path.
-4. **Cycle Detection**: If during DFS traversal, an already visited node is encountered (and it's not the direct parent of the current node in traversal), then there's a cycle in the graph.
+1. Topological Sorting is used in scheduling tasks, where one task should be completed before another starts.
+2. To find all strongly connected components in a directed graph.
+3. DFS can be employed to find a path between two nodes, though it might not guarantee the shortest path.
+4. If during DFS traversal, an already visited node is encountered (and it's not the direct parent of the current node in traversal), then there's a cycle in the graph.
 
 #### Implementation
 
@@ -328,12 +332,14 @@ Dijkstra's algorithm is a cornerstone in graph theory, designed to compute the s
 
 #### Algorithm Steps:
 
-1. Initialize `distances[A] = 0` and `distances[v] = ∞` for all other vertices `v`.
-2. For each vertex `v` in the graph:
-   * Select the vertex `u` with the minimum `distances[u]` and `finished[u]` being false.
-   * Set `finished[u]` to true.
-   * For each neighbor `w` of `u`:
-     * If `distances[u] + weights[u][w] < distances[w]`, then update `distances[w] = distances[u] + weights[u][w]`.
+I. Initialize `distances[A] = 0` and `distances[v] = ∞` for all other vertices `v`.
+
+II. For each vertex `v` in the graph:
+
+- Select the vertex `u` with the minimum `distances[u]` and `finished[u]` being false.
+- Set `finished[u]` to true.
+- For each neighbor `w` of `u`:
+  - If `distances[u] + weights[u][w] < distances[w]`, then update `distances[w] = distances[u] + weights[u][w]`.
 
 ## Step by Step Example
 
@@ -351,18 +357,17 @@ D-E: 2
 
 The adjacency matrix for the graph is:
 
-```
-   A  B  C  D  E
-A [0, 4, 2, ∞, ∞]
-B [4, 0, 1, 5, ∞]
-C [2, 1, 0, 8, 10]
-D [∞, 5, 8, 0, 2]
-E [∞, ∞, 10, 2, 0]
-```
+|   | A | B | C | D | E |
+|---|---|---|---|---|---|
+| **A** | 0 | 4 | 2 | ∞ | ∞ |
+| **B** | 4 | 0 | 1 | 5 | ∞ |
+| **C** | 2 | 1 | 0 | 8 | 10 |
+| **D** | ∞ | 5 | 8 | 0 | 2 |
+| **E** | ∞ | ∞ | 10 | 2 | 0 |
 
 Dijkstra's algorithm starting from A would proceed as follows:
 
-Step 1: Initialize the shortest paths from A to all other nodes as infinite (∞) and A to A as 0.
+I. Initialize the shortest paths from A to all other nodes as infinite (∞) and A to A as 0.
 
 ```
 A: 0
@@ -372,7 +377,7 @@ D: ∞
 E: ∞
 ```
 
-Step 2: Start with A. Update all its neighbors:
+II. Start with A. Update all its neighbors:
 
 ```
 A: 0
@@ -382,7 +387,7 @@ D: ∞
 E: ∞
 ```
 
-Step 3: Pick the smallest unvisited vertex, which is C. Update its neighbors:
+III. Pick the smallest unvisited vertex, which is C. Update its neighbors:
 
 ```
 A: 0
@@ -392,7 +397,7 @@ D: ∞
 E: 10
 ```
 
-Step 4: Next smallest unvisited vertex is B. Update its neighbors:
+IV. Next smallest unvisited vertex is B. Update its neighbors:
 
 ```
 A: 0
@@ -402,7 +407,7 @@ D: 8 (via B)
 E: 10
 ```
 
-Step 5: Next smallest unvisited vertex is D. Update its neighbors:
+V. Next smallest unvisited vertex is D. Update its neighbors:
 
 ```
 A: 0
@@ -412,7 +417,7 @@ D: 8
 E: 10
 ```
 
-Step 6: E remains, but no update is possible.
+VI. E remains, but no update is possible.
 
 Final shortest paths from A:
 
@@ -434,15 +439,15 @@ D [8]
 E [10]
 ```
 
-#### Optimizing Time Complexity:
+#### Optimizing Time Complexity
 
 While the basic implementation of Dijkstra's algorithm runs in `O(n^2)` time, its time complexity can be significantly reduced using a priority queue. By leveraging the queue to extract the vertex with the minimum distance, the complexity becomes `O((V+E) log V)` for a graph with `V` vertices and `E` edges.
 
-#### Notable Applications:
+#### Applications
 
-* **Internet Routing**: It's used to find the most efficient path for data packets.
-* **Navigation Systems**: Mapping software like Google Maps or Waze use variations of Dijkstra to compute driving directions.
-* **Network Design**: In telecommunication networks, it helps in determining paths with minimum cost.
+* It's used in internet routing to find the most efficient path for data packets.
+* Mapping software like Google Maps or Waze use variations of Dijkstra to compute driving directions.
+* In telecommunication networks, it helps in determining paths with minimum cost.
 
 #### Implementation
 
@@ -465,12 +470,16 @@ The Bellman-Ford algorithm is a graph search algorithm that finds the shortest p
 
 #### Algorithm Steps:
 
-1. Initialize `distances[A] = 0` for the starting vertex and `distances[v] = ∞` for all other vertices.
-2. Repeat `V-1` times (where `V` is the number of vertices):
-   * For each edge `(u, v)` with weight `w`:
-     * If `distances[u] + w < distances[v]`, then update `distances[v] = distances[u] + w` and update the predecessor of `v` to `u`.
-3. For each edge `(u, v)` with weight `w`:
-   * If `distances[u] + w < distances[v]`, there is a negative weight cycle, and the shortest path is not well-defined.
+I. Initialize `distances[A] = 0` for the starting vertex and `distances[v] = ∞` for all other vertices.
+
+II. Repeat `V-1` times (where `V` is the number of vertices):
+
+- For each edge `(u, v)` with weight `w`:
+  - If `distances[u] + w < distances[v]`, then update `distances[v] = distances[u] + w` and update the predecessor of `v` to `u`.
+
+III. For each edge `(u, v)` with weight `w`:
+
+- If `distances[u] + w < distances[v]`, there is a negative weight cycle, and the shortest path is not well-defined.
 
 ## Step by Step Example
 
@@ -490,14 +499,13 @@ E-E: 9
 
 The adjacency matrix for the graph would be:
 
-```
-   A  B  C  D  E
-A [0, 6, 7, ∞, ∞]
-B [∞, 0, 8, -4, 5]
-C [∞, ∞, 0, ∞, -3]
-D [2, ∞, 7, 0, ∞]
-E [∞, ∞, ∞, ∞, 9]
-```
+|   | A | B | C | D | E |
+|---|---|---|---|---|---|
+| **A** | 0 | 6 | 7 | ∞ | ∞ |
+| **B** | ∞ | 0 | 8 | -4 | 5 |
+| **C** | ∞ | ∞ | 0 | ∞ | -3 |
+| **D** | 2 | ∞ | 7 | 0 | ∞ |
+| **E** | ∞ | ∞ | ∞ | ∞ | 9 |
 
 Now, let's run Bellman-Ford algorithm starting from vertex A:
 
@@ -510,7 +518,7 @@ dist[B] = dist[C] = dist[D] = dist[E] = ∞
 
 For each vertex, update the distance to every other vertex.
 
-Iteration 1:
+I. Iteration 1:
 
 Based on A's neighbors:
 
@@ -519,7 +527,7 @@ dist[B] = 6
 dist[C] = 7
 ```
 
-Iteration 2:
+II. Iteration 2:
 
 Based on B's neighbors:
 
@@ -535,7 +543,7 @@ Based on C's neighbors:
 dist[E] = 7 - 3 = 4
 ```
 
-Iteration 3:
+III. Iteration 3:
 
 Based on D's neighbors:
 
@@ -544,7 +552,7 @@ dist[A] = 2 + 2 = 4
 dist[C] = 2 + 7 = 9 (But C's distance is already 7, so no change)
 ```
 
-Iteration 4:
+IV. Iteration 4:
 
 No changes this round.
 
@@ -558,17 +566,17 @@ dist[D] = 2
 dist[E] = 4
 ```
 
-#### Special Characteristics:
+#### Special Characteristics
 
-* **Handling Negative Weights**: One of the major advantages of the Bellman-Ford algorithm is its ability to handle negative weights, though it cannot handle negative weight cycles (cycles in the graph where the overall sum of the edge weights is negative).
+* One of the major advantages of the Bellman-Ford algorithm is its ability to handle negative weights, though it cannot handle negative weight cycles (cycles in the graph where the overall sum of the edge weights is negative).
 
-* **Time Complexity**: The basic implementation of the Bellman-Ford algorithm has a time complexity of `O(V*E)`, where `V` is the number of vertices and `E` is the number of edges. This makes it less efficient than Dijkstra's algorithm for some scenarios, but its ability to handle negative weights is a distinct advantage.
+* The basic implementation of the Bellman-Ford algorithm has a time complexity of `O(V*E)`, where `V` is the number of vertices and `E` is the number of edges. This makes it less efficient than Dijkstra's algorithm for some scenarios, but its ability to handle negative weights is a distinct advantage.
 
-#### Applications:
+#### Applications
 
-* **Arbitrage Opportunities**: Used in financial markets to detect arbitrage opportunities in currency exchange.
-* **Computer Networking**: To determine the best path to forward data packets.
-* **Game Development**: In games that involve terrain and movement costs.
+* Used in financial markets to detect arbitrage opportunities in currency exchange.
+* To determine the best path to forward data packets.
+* In games that involve terrain and movement costs.
 
 #### Implementation
 
@@ -579,12 +587,28 @@ dist[E] = 4
 
 A* is an informed search algorithm, or a best-first search, widely used in pathfinding and graph traversal. The idea is to navigate the graph by choosing the path that promises the shortest distance to the goal at each step, using heuristic knowledge.
 
-#### Input & Output:
+#### Input & Output
 
 * **Input**: A graph, a start vertex `A`, a goal vertex `B`, and a heuristic function `h(v)`, which estimates the cost from vertex `v` to goal vertex `B`.
 * **Output**: The shortest path from `A` to `B`, if one exists.
 
-#### Containers and Data Structures:
+#### Algorithm Steps
+
+I. Add the starting node to the `openSet`.
+
+II. While the `openSet` is not empty:
+
+- Get the node `current` in `openSet` having the lowest `f(n)`.
+- If `current` is the goal node, reconstruct the path and return it.
+- Remove `current` from `openSet` and add to `closedSet`.
+- For each neighbor `n` of `current`:
+  - If `n` is in `closedSet`, skip it.
+  - If `n` is not in `openSet`, add it and compute its `g(n)`, `h(n)`, and `f(n)`.
+  - If a better path to `n` is found, update `cameFrom` for `n`.
+
+III. If the algorithm terminates without finding the goal, no path exists.
+
+#### Used Data Structures
 
 * `g(n)`: The cost of the cheapest path from the start vertex to vertex `n` currently known.
 * `h(n)`: Heuristic estimate of the cost from vertex `n` to the goal.
@@ -592,19 +616,6 @@ A* is an informed search algorithm, or a best-first search, widely used in pathf
 * An `openSet`, initialized with the starting vertex, represents the set of nodes to be evaluated.
 * A `closedSet` representing the nodes already evaluated.
 * A `cameFrom` data structure, which keeps track of the best path as the algorithm progresses.
-
-#### Algorithm Steps:
-
-1. Add the starting node to the `openSet`.
-2. While the `openSet` is not empty:
-   * Get the node `current` in `openSet` having the lowest `f(n)`.
-   * If `current` is the goal node, reconstruct the path and return it.
-   * Remove `current` from `openSet` and add to `closedSet`.
-   * For each neighbor `n` of `current`:
-     * If `n` is in `closedSet`, skip it.
-     * If `n` is not in `openSet`, add it and compute its `g(n)`, `h(n)`, and `f(n)`.
-     * If a better path to `n` is found, update `cameFrom` for `n`.
-3. If the algorithm terminates without finding the goal, no path exists.
 
 #### Step by Step Example
 
@@ -630,14 +641,13 @@ h(E) = 0
 
 The adjacency matrix for the graph would look like:
 
-```
-   A  B  C  D  E
-A [0, 1, 2, ∞, ∞]
-B [∞, 0, ∞, 3, ∞]
-C [∞, ∞, 0, 2, ∞]
-D [∞, ∞, ∞, 0, 1]
-E [∞, ∞, ∞, ∞, 0]
-```
+|   | A | B | C | D | E |
+|---|---|---|---|---|---|
+| **A** | 0 | 1 | 2 | ∞ | ∞ |
+| **B** | ∞ | 0 | ∞ | 3 | ∞ |
+| **C** | ∞ | ∞ | 0 | 2 | ∞ |
+| **D** | ∞ | ∞ | ∞ | 0 | 1 |
+| **E** | ∞ | ∞ | ∞ | ∞ | 0 |
 
 Now, let's run the A* algorithm starting from vertex A with the goal of reaching vertex E:
 
@@ -657,7 +667,7 @@ While OpenList is not empty:
     Otherwise, move n from the OpenList to the ClosedList.
 ```
 
-Expand Node A:
+I. Expand Node A:
 
 ```
 A -> B : f(B) = g(A) + cost(A, B) + h(B) = 0 + 1 + 2 = 3
@@ -665,20 +675,20 @@ A -> C : f(C) = g(A) + cost(A, C) + h(C) = 0 + 2 + 2 = 4
 The node with the lowest f value is B. So, expand B next.
 ```
 
-Expand Node B:
+II. Expand Node B:
 
 ```
 B -> D : f(D) = g(B) + cost(B, D) + h(D) = 1 + 3 + 1 = 5
 Now, C has the lowest f value. So, expand C next.
 ```
 
-Expand Node C:
+III. Expand Node C:
 
 ```
 C -> D : f(D) = g(C) + cost(C, D) + h(D) = 2 + 2 + 1 = 5 (No improvement on the path to D)
 ```
 
-Expand Node D:
+IV. Expand Node D:
 
 ```
 D -> E : f(E) = g(D) + cost(D, E) + h(E) = 5 + 1 + 0 = 6
@@ -687,16 +697,16 @@ E is the goal node. The algorithm stops here.
 
 The path found by A* is: `A -> B -> D -> E` with a total cost of 5.
 
-#### Special Characteristics:
+#### Special Characteristics
 
-* **Optimality**: When using an admissible heuristic (one that never overestimates the true cost), A* is guaranteed to return the shortest possible path.
-* **Efficiency**: The efficiency of A* depends on the heuristic. A good heuristic will explore fewer nodes than a poor one.
+* When using an admissible heuristic (one that never overestimates the true cost), A* is guaranteed to return the shortest possible path.
+* The efficiency of A* depends on the heuristic. A good heuristic will explore fewer nodes than a poor one.
 
-#### Applications:
+#### Applications
 
-* **Video Games**: Widely used in games to determine the path a character should take to reach a destination.
-* **Robotics**: For navigation and movement planning.
-* **Geographical Maps**: To determine the shortest path between two locations.
+* Widely used in games to determine the path a character should take to reach a destination.
+* For navigation and movement planning.
+* To determine the shortest path between two locations.
 
 #### Implementation
 
@@ -730,13 +740,16 @@ Prim's Algorithm is a greedy algorithm used to find a minimum spanning tree (MST
 
 #### Algorithm Steps:
 
-1. Start with an arbitrary node as the initial MST node.
-2. While there are nodes not yet included in the MST:
-   * Pick a vertex `v` not in the MST with the smallest key value.
-   * Include `v` in `mstSet[]`.
-   * For each neighboring vertex `u` of `v` not in the MST:
-     * If the weight of edge `(u, v)` is less than `key[u]`, update `key[u]` and set `parent[u]` to `v`.
-3. The MST is formed using the `parent[]` array.
+I. Start with an arbitrary node as the initial MST node.
+
+II. While there are nodes not yet included in the MST:
+
+- Pick a vertex `v` not in the MST with the smallest key value.
+- Include `v` in `mstSet[]`.
+- For each neighboring vertex `u` of `v` not in the MST:
+  - If the weight of edge `(u, v)` is less than `key[u]`, update `key[u]` and set `parent[u]` to `v`.
+
+III.. The MST is formed using the `parent[]` array.
 
 #### Step by Step Example
 
@@ -754,14 +767,13 @@ D-E: 2
 
 The adjacency matrix for the graph would look like:
 
-```
-   A  B  C  D  E
-A [0, 2, 3, ∞, ∞]
-B [2, 0, ∞, 1, 3]
-C [3, ∞, 0, 4, 5]
-D [∞, 1, 4, 0, 2]
-E [∞, 3, 5, 2, 0]
-```
+|   | A | B | C | D | E |
+|---|---|---|---|---|---|
+| **A** | 0 | 2 | 3 | ∞ | ∞ |
+| **B** | 2 | 0 | ∞ | 1 | 3 |
+| **C** | 3 | ∞ | 0 | 4 | 5 |
+| **D** | ∞ | 1 | 4 | 0 | 2 |
+| **E** | ∞ | 3 | 5 | 2 | 0 |
 
 Now, let's run Prim's algorithm starting from vertex A:
 
@@ -774,28 +786,28 @@ Vertices not included: B, C, D, E
 
 Step-by-Step Execution:
 
-Starting from vertex A, the closest vertex is B with a weight of 2.
+I. Starting from vertex A, the closest vertex is B with a weight of 2.
 
 ```
 Chosen vertices: A, B
 Vertices not included: C, D, E
 ```
 
-From the chosen vertices A and B, the closest vertex is D (from B) with a weight of 1.
+II. From the chosen vertices A and B, the closest vertex is D (from B) with a weight of 1.
 
 ```
 Chosen vertices: A, B, D
 Vertices not included: C, E
 ```
 
-Continuing from the chosen vertices, the closest vertex is E (from D) with a weight of 2.
+III. Continuing from the chosen vertices, the closest vertex is E (from D) with a weight of 2.
 
 ```
 Chosen vertices: A, B, D, E
 Vertices not included: C
 ```
 
-From the chosen vertices, the closest remaining vertex is C (from A) with a weight of 3.
+IV. From the chosen vertices, the closest remaining vertex is C (from A) with a weight of 3.
 
 ```
 Chosen vertices: A, B, D, E, C
@@ -804,16 +816,16 @@ And with that, all vertices have been included in the Minimum Spanning Tree (MST
 
 The edges selected by Prim's algorithm in this case are: A-B, B-D, D-E, and A-C, with a total weight of 8.
 
-#### Special Characteristics:
+#### Special Characteristics
 
-* **Greedy Nature**: At every step, it considers the smallest weight edge to add to the MST.
-* **Complexity**: With a priority queue, its time complexity can be reduced to `O(E log V)`, where `E` is the number of edges and `V` is the number of vertices.
+* At every step, it considers the smallest weight edge to add to the MST.
+* With a priority queue, its time complexity can be reduced to `O(E log V)`, where `E` is the number of edges and `V` is the number of vertices.
 
-#### Applications:
+#### Applications
 
-* **Network Design**: Used in scenarios like designing a telecommunication network to ensure all cities are connected while reducing the total length of cable.
-* **Transportation Networks**: Building roads, tunnels, or bridges while minimizing costs.
-* **Utility Networks**: Designing water, electrical, or internet infrastructure to connect all houses or buildings at a minimum cost.
+* Used in scenarios like designing a telecommunication network to ensure all cities are connected while reducing the total length of cable.
+* Building roads, tunnels, or bridges while minimizing costs.
+* Designing water, electrical, or internet infrastructure to connect all houses or buildings at a minimum cost.
 
 #### Implementation
 
@@ -835,12 +847,16 @@ Kruskal's Algorithm is another method to find the minimum spanning tree (MST) of
 
 #### Algorithm Steps:
 
-1. Sort all the edges in increasing order based on their weights.
-2. Initialize an empty forest (a set of trees).
-3. Iterate through the sorted edges. For each edge `(u, v)`:
-   * If `u` and `v` are in different trees (or disjoint sets), add the edge to the forest and union `u` and `v` to be in the same set.
-   * If they are in the same set, skip the edge as it would form a cycle.
-4. The forest formed after processing all edges is the MST.
+I. Sort all the edges in increasing order based on their weights.
+
+II. Initialize an empty forest (a set of trees).
+
+III. Iterate through the sorted edges. For each edge `(u, v)`:
+
+  - If `u` and `v` are in different trees (or disjoint sets), add the edge to the forest and union `u` and `v` to be in the same set.
+  - If they are in the same set, skip the edge as it would form a cycle.
+
+IV. The forest formed after processing all edges is the MST.
 
 #### Step by Step Example
 
@@ -858,76 +874,76 @@ D-E: 2
 
 Here is the adjacency matrix for the graph:
 
-```
-   A  B  C  D  E
-A [0, 2, 3, ∞, ∞]
-B [2, 0, ∞, 1, 3]
-C [3, ∞, 0, 4, 5]
-D [∞, 1, 4, 0, 2]
-E [∞, 3, 5, 2, 0]
-```
+|   | A | B | C | D | E |
+|---|---|---|---|---|---|
+| **A** | 0 | 2 | 3 | ∞ | ∞ |
+| **B** | 2 | 0 | ∞ | 1 | 3 |
+| **C** | 3 | ∞ | 0 | 4 | 5 |
+| **D** | ∞ | 1 | 4 | 0 | 2 |
+| **E** | ∞ | 3 | 5 | 2 | 0 |
 
 Kruskal's algorithm sorts all the edges in ascending order and starts picking them from the smallest, ensuring that a cycle isn't formed.
 
 Step-by-Step Execution:
 
-```
-Sort all edges:
-    B-D: 1
-    A-B: 2
-    D-E: 2
-    A-C: 3
-    B-E: 3
-    C-D: 4
-    C-E: 5
+I. Sort all edges:
+
+``` 
+B-D: 1
+A-B: 2
+D-E: 2
+A-C: 3
+B-E: 3
+C-D: 4
+C-E: 5
 ```
 
-Pick the smallest edge, B-D with a weight of 1.
+II. Pick the smallest edge, B-D with a weight of 1.
 
 ```
 Included edges: B-D
 Total weight: 1
 ```
 
-The next edge, A-B with a weight of 2, does not form a cycle. Include it.
+III. The next edge, A-B with a weight of 2, does not form a cycle. Include it.
 
 ```
 Included edges: B-D, A-B
 Total weight: 3
 ```
 
-The edge D-E with a weight of 2 is chosen next and does not form a cycle.
+IV. The edge D-E with a weight of 2 is chosen next and does not form a cycle.
 
 ```
 Included edges: B-D, A-B, D-E
 Total weight: 5
 ```
 
-The edge A-C with a weight of 3 does not form a cycle. Include it.
+V. The edge A-C with a weight of 3 does not form a cycle. Include it.
 
 ```
 Included edges: B-D, A-B, D-E, A-C
 Total weight: 8
 ```
 
-The next edge, B-E would form a cycle with the previously chosen edges, so it's skipped.
+VI. The next edge, B-E would form a cycle with the previously chosen edges, so it's skipped.
 
-Continuing, C-D would also form a cycle, so it's skipped.
+VII. Continuing, C-D would also form a cycle, so it's skipped.
 
-The edge C-E would also form a cycle. At this point, all the vertices are connected, so the algorithm terminates.
+VIII. The edge C-E would also form a cycle. At this point, all the vertices are connected, so the algorithm terminates.
 
 The final Minimum Spanning Tree formed by Kruskal's algorithm includes the edges: B-D, A-B, D-E, and A-C with a total weight of 8.
 
-#### Special Characteristics:
+#### Special Characteristics
 
-* **Greedy Nature**: The algorithm always picks the smallest edge that doesn't cause a cycle.
-* **Complexity**: With a good disjoint-set implementation, the time complexity is close to `O(E log E)` (or `O(E log V)`), where `E` is the number of edges and `V` is the number of vertices.
+* The algorithm always picks the smallest edge that doesn't cause a cycle.
+* With a good disjoint-set implementation, the time complexity is close to `O(E log E)` (or `O(E log V)`), where `E` is the number of edges and `V` is the number of vertices.
 
-#### Applications:
+#### Applications
 
-* **Network Design**: Useful for designing telecommunication or computer networks to ensure all nodes are connected while minimizing total wire length or latency.
-* **Spatial Networks**: Such as connecting homes to utility sources in a way that minimizes the total infrastructure cost.
-* **Transportation Networks**: Like road systems to connect all locations with the shortest possible roads.
+* Useful for designing telecommunication or computer networks to ensure all nodes are connected while minimizing total wire length or latency.
+* Such as connecting homes to utility sources in a way that minimizes the total infrastructure cost.
+* Like road systems to connect all locations with the shortest possible roads.
 
 #### Implementation
 
