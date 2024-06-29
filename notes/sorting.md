@@ -30,14 +30,16 @@ Consider the following pairs of characters and their indices:
 When we sort these pairs alphabetically by character using a stable sorting method, pairs with the same character retain their original order in terms of indices.
 
 1. Sort the character 'A':
-   ```
-   [A0] [A3] [C1] [B2] [B4]
-   ```
+
+```
+[A0] [A3] [C1] [B2] [B4]
+```
 
 2. Next, sort the character 'B', retaining the original order of indices:
-   ```
-   [A0] [A3] [B2] [B4] [C1]
-   ```
+
+```
+[A0] [A3] [B2] [B4] [C1]
+```
 
 So, the stable sorted sequence is:
 
@@ -50,14 +52,16 @@ So, the stable sorted sequence is:
 When we sort these pairs alphabetically by character using an unstable sorting method, pairs with the same character may not retain their original order in terms of indices.
 
 1. Sort the character 'A':
-   ```
-   [A3] [A0] [C1] [B2] [B4]
-   ```
+
+```
+[A3] [A0] [C1] [B2] [B4]
+```
 
 2. Next, sort the character 'B', without retaining the original order of indices:
-   ```
-   [A3] [A0] [B4] [B2] [C1]
-   ```
+
+```
+[A3] [A0] [B4] [B2] [C1]
+```
 
 So, the unstable sorted sequence is:
 
