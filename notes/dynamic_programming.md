@@ -82,148 +82,168 @@ In the tabulation approach, we systematically fill in the table from the smalles
 
 The choice between recursion and tabulation is often a matter of trade-offs. Recursion is usually simpler and more intuitive, but it can be slower for large inputs due to repeated calculations and function call overhead. Tabulation, on the other hand, can be faster and more efficient because it eliminates the need for recursion, but it can be less intuitive and requires understanding the problem thoroughly to figure out the correct sequence of solving sub-problems.
 
-## Common terms made simple
+
+## Common Terms Made Simple
 
 ### Recursion
-Recursion is a way to solve problems by using a function that calls itself with a smaller problem. The function keeps breaking the problem into smaller pieces until it can solve the smallest problem. Then, it builds the answer from the smallest problems. Recursion is used for problems that have smaller, repeated problems, like the Fibonacci sequence or the Tower of Hanoi.
+
+Recursion is a problem-solving technique where a function calls itself to solve smaller instances of the same problem. The function continues to break down the problem into more manageable pieces until it reaches the simplest form, known as the base case, which it can solve directly. After reaching the base case, the function then builds up the solution to the original problem by combining the results of the smaller problems. Recursion is particularly useful for problems that can be divided into similar subproblems, such as the Fibonacci sequence or the Tower of Hanoi.
+
+Example: Calculating the factorial of a number using recursion.
 
 ```
 Factorial(5) = 5 * Factorial(4)
-= 5 * (4 * Factorial(3))
-= 5 * (4 * (3 * Factorial(2)))
-= 5 * (4 * (3 * (2 * Factorial(1))))
-= 5 * (4 * (3 * (2 * 1)))
-= 120
+             = 5 * (4 * Factorial(3))
+             = 5 * (4 * (3 * Factorial(2)))
+             = 5 * (4 * (3 * (2 * Factorial(1))))
+             = 5 * (4 * (3 * (2 * 1)))
+             = 120
 ```
 
-#### Subset
-A subset is a collection of elements from a larger set. Every set is considered a subset of itself, and the empty set is a subset of every set. Subsets are often used in combinatorial mathematics to describe the possible combinations of elements chosen from a larger set.
+### Subset
 
-Example:
+A subset is a collection of elements that are all drawn from a larger set. Every set is considered to be a subset of itself, and the empty set is a subset of every set. Subsets are fundamental in combinatorial mathematics, where they help describe the different possible groupings of elements that can be selected from a larger set. 
 
-```
-Set A = {1, 2, 3}
+Example: 
 
-Subsets of A = { }, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}
-```
-
-#### Subarray
-A subarray is a contiguous portion of an array or a sequence of elements within an array. A subarray is defined by its start and end indices and can be extracted from the original array using these indices.
-
-Example:
+Given Set `A = {1, 2, 3}`, the subsets of `A` are:
 
 ```
-Array A = [1, 2, 3, 4, 5]
-
-Subarrays of A: [1], [1, 2], [1, 2, 3], [2], [2, 3], [2, 3, 4], [3], [3, 4], [3, 4, 5], [4], [4, 5], [5]
+{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}
 ```
 
-#### Substring
-A substring is a contiguous sequence of characters within a string. A substring is defined by its start and end indices and can be extracted from the original string using these indices.
+### Subarray
 
-Example:
+A subarray is a contiguous segment of an array. It consists of a sequence of elements that are adjacent to each other within the original array. The start and end indices define the subarray and determine which elements are included. Unlike subsets, the elements in a subarray maintain their order and contiguity from the original array.
 
-```
-String S = "hello"
+Example: 
 
-Substrings of S: "h", "he", "hel", "hell", "hello", "e", "el", "ell", "ello", "l", "ll", "llo", "l", "lo", "o"
-```
-
-#### Subsequence
-A subsequence is a sequence of elements within a larger sequence (such as a string or an array) that can be extracted by deleting some of the elements in the original sequence. A subsequence doesn't have to be contiguous, unlike a substring or a subarray.
-
-Example:
+Given Array `A = [1, 2, 3, 4, 5]`, the subarrays of `A` include:
 
 ```
-String S = "abc"
-
-Subsequences of S: "", "a", "b", "c", "ab", "ac", "bc", "abc"
+[1], [1, 2], [1, 2, 3], [2], [2, 3], [2, 3, 4], [3], [3, 4], [3, 4, 5], [4], [4, 5], [5]
 ```
+
+### Substring
+
+A substring is a contiguous sequence of characters within a string. Like subarrays, substrings maintain the order and contiguity of the characters from the original string. The start and end indices define the substring, and they determine which characters are included.
+
+Example: 
+
+Given String `S = "hello"`, the substrings of `S` include:
+
+```
+"h", "he", "hel", "hell", "hello", "e", "el", "ell", "ello", "l", "ll", "llo", "l", "lo", "o"
+```
+
+### Subsequence
+
+A subsequence is a sequence that can be derived from another sequence (such as a string or an array) by deleting some or none of the elements without changing the order of the remaining elements. Unlike substrings and subarrays, a subsequence does not need to be contiguous. This means that elements can be selected from anywhere in the original sequence, as long as their relative order is preserved.
+
+Example: 
+
+Given String `S = "abc"`, the subsequences of `S` include:
+
+```
+"", "a", "b", "c", "ab", "ac", "bc", "abc"
+```
+
+## List of Problems
 
 ### Fibonacci Sequence
-The Fibonacci sequence is a series of numbers where a number is the sum of the two preceding ones, starting with 0 and 1. It's a classic example of recursive algorithms and dynamic programming.
+
+The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, starting with 0 and 1. This sequence is a classic example used to demonstrate recursive algorithms and dynamic programming techniques.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/fibonacci/)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/fibonacci/)
 
 ### Grid Traveler
-Grid Traveler problem entails finding the total number of ways to traverse a grid (m x n) from the top-left to the bottom-right corner, provided you can only move right or down.
+
+The Grid Traveler problem involves finding the total number of ways to traverse an `m x n` grid from the top-left corner to the bottom-right corner, with the constraint that you can only move right or down.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/grid_traveler)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/grid_traveler)
 
-### Climbing stairs
-The Climbing Stairs problem involves determining the number of distinct ways to reach the top of a staircase that has 'n' steps, with the condition that you can climb either 1, 2, or 3 steps at a time.
+### Climbing Stairs
 
-#### Implementation
+The Climbing Stairs problem requires determining the number of distinct ways to reach the top of a staircase with 'n' steps, given that you can climb either 1, 2, or 3 steps at a time.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/climb_stairs)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/climbing_stairs)
 
 ### Can Sum
-The Can Sum problem involves determining if it's possible to achieve a target sum using any number of elements from a specific list of numbers. Each number from the list can be used multiple times.
 
-#### Implementation
+The Can Sum problem involves determining if it is possible to achieve a target sum using any number of elements from a given list of numbers. Each number in the list can be used multiple times.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_sum)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_sum)
 
 ### How Sum
-The How Sum problem extends the Can Sum problem by identifying which elements from the list can sum up to the target.
+
+The How Sum problem extends the Can Sum problem by identifying which elements from the list can be combined to sum up to the target value.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/how_sum)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/how_sum)
 
 ### Best Sum
+
 The Best Sum problem further extends the How Sum problem by finding the smallest combination of numbers that add up to exactly the target sum.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/best_sum)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/best_sum)
 
 ### Can Construct
-The Best Sum problem further extends the How Sum problem by finding the smallest combination of numbers that add up to exactly the target sum.
+
+The Can Construct problem involves determining if a target string can be constructed from a given list of substrings.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/can_construct)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/can_construct)
 
 ### Count Construct
+
 The Count Construct problem expands on the Can Construct problem by determining the number of ways a target string can be constructed using a list of substrings.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/count_construct)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/count_construct)
 
 ### All Constructs
-The All Constructs problem is a variation of the Count Construct problem, which identifies all the possible combinations of strings from a list that can be used to form the target string.
+
+The All Constructs problem is a variation of the Count Construct problem, which identifies all the possible combinations of substrings from a list that can be used to form the target string.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/all_construct)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/all_construct)
 
 ### Coins
-The Coins problem aims to find the minimum number of coins that make a given value, given an infinite supply of each of coin denominations.
+
+The Coins problem aims to find the minimum number of coins needed to make a given value, provided an infinite supply of each coin denomination.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/coin_change)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/coins)
 
-### Longest common subsequence
-The Longest Common Subsequence problem involves finding the longest subsequence that two sequences have in common.
+### Longest Common Subsequence
+
+The Longest Common Subsequence problem involves finding the longest subsequence that two sequences have in common, where a subsequence is derived by deleting some or no elements without changing the order of the remaining elements.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_common_subsequence)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_common_subsequence)
 
-### Longest increasing subarray
-The Longest Increasing Subarray problem involves identifying the longest contiguous subarray in which the elements are strictly increasing.
+### Longest Increasing Subarray
+
+The Longest Increasing Subarray problem involves identifying the longest contiguous subarray where the elements are strictly increasing.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/longest_increasing_subarray)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/longest_increasing_subarray)
 
 ### Knuth-Morris-Pratt
-KMP is a pattern searching algorithm that searches for occurrences of a "word" within a main "text string". It uses preprocessing over the pattern to achieve linear time complexity.
+
+The Knuth-Morris-Pratt (KMP) algorithm is a pattern searching algorithm that looks for occurrences of a "word" within a main "text string" using preprocessing over the pattern to achieve linear time complexity.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/kmp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/kmp)
 
-### Minimum insertions to form a palindrome
-This problem involves finding the minimum number of insertions needed to transform a given string into a palindrome.
+### Minimum Insertions to Form a Palindrome
+
+This problem involves finding the minimum number of insertions needed to transform a given string into a palindrome. The goal is to make the string read the same forwards and backwards with the fewest insertions possible.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/cpp/minimum_insertions_for_palindrome)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/dynamic_programming/python/minimum_insertions_for_palindrome)
