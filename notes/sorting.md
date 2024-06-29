@@ -15,7 +15,55 @@ Stability, in the context of sorting, refers to preserving the relative order of
 - In an **unstable** sorting algorithm, their order might be reversed in the sorted output.
 - In a **stable** sorting algorithm, their relative order remains unchanged.
 
-For example, consider a sequence of colored balls, each with a number. If we sort them based on their number using a stable sorting method, two balls with the same number will retain their original order in terms of color.
+Sure, let's use an example with characters and their indices to illustrate both stable and unstable sorting.
+
+#### Example
+
+Consider the following pairs of characters and their indices:
+
+```
+[A0] [C1] [B2] [A3] [B4]
+```
+
+#### Stable Sort
+
+When we sort these pairs alphabetically by character using a stable sorting method, pairs with the same character retain their original order in terms of indices.
+
+1. Sort the character 'A':
+   ```
+   [A0] [A3] [C1] [B2] [B4]
+   ```
+
+2. Next, sort the character 'B', retaining the original order of indices:
+   ```
+   [A0] [A3] [B2] [B4] [C1]
+   ```
+
+So, the stable sorted sequence is:
+
+```
+[A0] [A3] [B2] [B4] [C1]
+```
+
+#### Unstable Sort
+
+When we sort these pairs alphabetically by character using an unstable sorting method, pairs with the same character may not retain their original order in terms of indices.
+
+1. Sort the character 'A':
+   ```
+   [A3] [A0] [C1] [B2] [B4]
+   ```
+
+2. Next, sort the character 'B', without retaining the original order of indices:
+   ```
+   [A3] [A0] [B4] [B2] [C1]
+   ```
+
+So, the unstable sorted sequence is:
+
+```
+[A3] [A0] [B4] [B2] [C1]
+```
 
 This characteristic is particularly valuable in scenarios where we might perform multiple rounds of sorting based on different criteria.
 
