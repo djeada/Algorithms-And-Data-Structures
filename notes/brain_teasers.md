@@ -33,6 +33,7 @@ Arrays are fundamental data structures that store elements in a contiguous block
 ### Working with Strings
 
 Strings, being sequences of characters, have a unique set of operations and considerations. Here are some tips and techniques for working with strings:
+
 - Using Tries for efficient string operations is advantageous, particularly for applications like Auto-Complete where prefix matching is needed. Tries, also known as prefix trees, allow for efficient retrieval of strings with a common prefix.
 - The immutability of strings in Python means that once a string is created, it cannot be changed. Any operation that seems to modify a string will create a new one instead, leading to increased memory usage if new strings are frequently created.
 - Building strings dynamically using the `str.format()` method is beneficial for constructing strings with dynamic content. This method provides a way to substitute placeholders with values, allowing for the creation of complex formatted strings easily.
