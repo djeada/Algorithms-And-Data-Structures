@@ -207,7 +207,7 @@ If we designate $f(n)$ as the actual complexity and $g(n)$ as the function in Bi
 
 For instance, if an algorithm has a time complexity of $O(n)$, it signifies that the algorithm's running time does not grow more rapidly than a linear function of the input size, in the worst-case scenario.
 
-#### Big Omega Notation (Ω-notation)
+##### Big Omega Notation (Ω-notation)
 
 The Big Omega notation provides an asymptotic lower bound that expresses the best-case scenario for the time or space complexity of an algorithm.
 
