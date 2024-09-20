@@ -2,7 +2,7 @@
 
 Data structures and algorithms are foundational concepts in computer science, playing an essential role in designing efficient software. A data structure defines how we store and organize data on a computer, while an algorithm delineates a step-by-step procedure to perform a task or solve a problem. This article introduces the fundamental aspects of data structures and algorithms, their importance, and how they are applied in computing.
 
-## Data Structures
+### Data Structures
 
 A data structure organizes data on a computer in a manner that enables efficient access and modification. The choice of the appropriate data structure depends on the specific use case and can significantly impact the performance of an application. Here are some common data structures:
 Sure, here are the simplified explanations with the formal terms included:
@@ -21,19 +21,19 @@ Sure, here are the simplified explanations with the formal terms included:
 
 ![ds](https://user-images.githubusercontent.com/37275728/185381435-9335db5b-8c9a-4e74-87dc-deac3c0356f1.png)
 
-## Algorithms
+### Algorithms
 
 Algorithms are step-by-step instructions to solve specific problems or perform tasks. They are everywhere in fields like computer science, mathematics, and engineering. To evaluate how good an algorithm is, we often look at its efficiency in terms of time complexity (how long it takes to run) and space complexity (how much memory it uses).
 
 Think of an algorithm like a recipe for cooking. It consists of a series of steps to follow to achieve a specific result. Here are the key characteristics of a good algorithm:
 
-* **Input:** The data that the algorithm works with. Just like ingredients in a recipe.
-* **Output:** The result produced by the algorithm, similar to the dish you end up with after following a recipe.
-* **Definiteness:** Every step in the algorithm should be clear and precisely defined, so there’s no confusion about what to do next.
-* **Finiteness:** The algorithm must eventually stop after a certain number of steps, just like a recipe has a clear end when the dish is ready.
-* **Effectiveness:** Each step of the algorithm should be simple and executable, meaning that it can actually be done and helps towards getting the final result.
+- The data that an algorithm works with is referred to as its **input**, much like the ingredients required to prepare a dish in a recipe.
+- Just as a recipe leads to a completed dish, the algorithm produces an **output**, which represents the final result after processing the input.
+- It is essential that every step of the algorithm is defined with clarity and precision, ensuring that there is no ambiguity in the process, a concept known as **definiteness**.
+- Similar to how a recipe has a defined end point when the dish is ready, an algorithm must have **finiteness**, meaning it will stop after a specific number of steps.
+- For an algorithm to be **effective**, each step should be simple, executable, and directly contribute toward reaching the final result, just as every action in a recipe is purposeful and achievable.
 
-### Algorithms vs. Programs
+#### Algorithms vs. Programs
 
 Understanding the difference between an algorithm and a program is essential. Here’s a simple explanation with formal terms included:
 
@@ -94,11 +94,11 @@ print("The sum is", sum)
 
 Here’s a key point to remember: algorithms are abstract steps that always terminate after a finite number of steps. In contrast, some programs can run indefinitely until an external action stops them. For example, an operating system is a program designed to run continuously in a loop until the computer is turned off.
 
-### Types of Algorithms
+#### Types of Algorithms
 
 Algorithms can be classified into various types based on the problems they solve and the strategies they use. Here are some common categories with consistent explanations and examples:
 
-- **Sorting Algorithms:** These algorithms arrange data in a specific order, such as ascending or descending. Examples include bubble sort, insertion sort, selection sort, and merge sort.
+I. **Sorting Algorithms** arrange data in a specific order, such as ascending or descending. Examples include bubble sort, insertion sort, selection sort, and merge sort.
 
 Example: Bubble Sort
 
@@ -115,7 +115,7 @@ After 3rd Pass: [3, 2, 4, 5, 8]
 After 4th Pass: [2, 3, 4, 5, 8] (Sorted)
 ```
 
-* **Search Algorithms:** These algorithms are designed to find a specific item or value within a collection of data. Examples include linear search, binary search, and depth-first search.
+II. **Search Algorithms** are designed to find a specific item or value within a collection of data. Examples include linear search, binary search, and depth-first search.
 
 Example: Binary Search
 
@@ -138,7 +138,7 @@ New mid element: 11
 The remaining element is 33, which is the target.
 ```
 
-* **Graph Algorithms:** These algorithms address problems related to graphs, such as finding the shortest path between nodes or determining if a graph is connected. Examples include Dijkstra's algorithm and the Floyd-Warshall algorithm.
+**Graph Algorithms** address problems related to graphs, such as finding the shortest path between nodes or determining if a graph is connected. Examples include Dijkstra's algorithm and the Floyd-Warshall algorithm.
 
 Example: Dijkstra's Algorithm
 
@@ -164,7 +164,7 @@ Starting from A:
 - Shortest path to D: A -> B -> C -> D (4)
 ```
 
-* **String Algorithms:** These algorithms deal with problems related to strings, such as finding patterns or matching sequences. Examples include the Knuth-Morris-Pratt (KMP) algorithm and the Boyer-Moore algorithm.
+**String Algorithms** deal with problems related to strings, such as finding patterns or matching sequences. Examples include the Knuth-Morris-Pratt (KMP) algorithm and the Boyer-Moore algorithm.
 
 Example: Boyer-Moore Algorithm
 
@@ -180,13 +180,12 @@ Steps:
 Pattern matched starting at index 10 in the text.
 ```
 
-
-## Essential Algorithms for Software Engineers
+#### Essential Algorithms for Software Engineers
 
 * As a software engineer, mastering every algorithm isn't expected or necessary. Instead, it is more valuable to be proficient in leveraging libraries and packages that encapsulate widely-used algorithms. However, the ability to discern the most effective algorithm for a particular task based on its efficiency, the nature of the problem, and other relevant factors is crucial. 
 * Understanding algorithms can significantly augment your problem-solving capabilities, particularly when you're beginning your programming journey. It provides a strong foundation in logical thinking, exposes you to various strategies for problem-solving, and helps you appreciate the nuances involved in choosing the most appropriate solution. After grasping the fundamentals of algorithms, the focus generally shifts towards using pre-built libraries and packages for problem-solving rather than creating algorithms from scratch.
 
-## Understanding Algorithmic Complexity
+### Understanding Algorithmic Complexity
 
 Algorithmic complexity helps us understand the computational resources (time or space) an algorithm needs as the input size increases. Here’s a breakdown of different types of complexity:
 
@@ -196,11 +195,11 @@ Algorithmic complexity helps us understand the computational resources (time or 
 * **Space complexity** represents the total amount of memory an algorithm needs relative to the input size. This becomes important when memory resources are limited and the algorithm's efficiency is crucial.
 * **Time complexity** measures the computational time an algorithm takes as the input size grows. This is the most frequently analyzed type of complexity because the speed of an algorithm often determines its usability.
 
-### Analyzing Algorithm Growth Rates
+#### Analyzing Algorithm Growth Rates
 
 Understanding how the running time or space complexity of an algorithm scales with increasing input size is pivotal in algorithm analysis. To describe this rate of growth, we employ several mathematical notations that offer insights into the algorithm's efficiency under different conditions.
 
-#### Big O Notation (O-notation)
+##### Big O Notation (O-notation)
 
 The Big O notation represents an asymptotic upper bound, indicating the worst-case scenario for an algorithm's time or space complexity. Essentially, it signifies an upper limit on the growth of a function.
 
@@ -216,7 +215,7 @@ If $f(n) = Ω(g(n))$, this means that $f(n)$ grows at a rate that is at least as
 
 For example, if an algorithm has a time complexity of $Ω(n)$, it implies that the running time is at the bare minimum proportional to the input size in the best-case scenario.
 
-#### Theta Notation (Θ-notation)
+##### Theta Notation (Θ-notation)
 
 Theta notation offers a representation of the average-case scenario for an algorithm's time or space complexity. It sets an asymptotically tight bound, implying that the function grows neither more rapidly nor slower than the bound.
 
@@ -224,23 +223,17 @@ Stating $f(n) = Θ(g(n))$ signifies that $f(n)$ grows at the same rate as $g(n)$
 
 Remember, these notations primarily address the growth rate as the input size becomes significantly large. While they offer a high-level comprehension of an algorithm's performance, the actual running time in practice can differ based on various factors, such as the specific input data, the hardware or environment where the algorithm is operating, and the precise way the algorithm is implemented in the code.
 
-### Diving into Big O Notation Examples
+#### Diving into Big O Notation Examples
 
 Big O notation is a practical tool for comparing the worst-case scenario of algorithm complexities. Here are examples of various complexities:
 
-* **$O(1)$**: Constant time complexity. Regardless of the input size, the algorithm performs its task in a fixed amount of time. For example, retrieving an item by its index from an array or accessing a key-value pair in a hash map.
-
-* **$O(log n)$**: Logarithmic time complexity. The time taken by the algorithm increases logarithmically with input size, meaning the time taken doubles for each doubling of the input size. Binary search and balanced binary tree operations are typical examples.
-
-* **$O(n)$**: Linear time complexity. The running time of the algorithm scales linearly with the input size. This is characteristic of simple, single-pass processes such as iterating over an array or a linked list.
-
-* **$O(n log n)$**: Log-linear time complexity. The running time grows linearly with the input size, but also logarithmically due to the operations performed. Algorithms such as QuickSort, MergeSort, and HeapSort fall in this category.
-
-* **$O(n^2)$**: Quadratic time complexity. The running time grows with the square of the input size. Nested iterations often have this complexity, with Bubble Sort and Insertion Sort as notable examples.
-
-* **$O(n^3)$**: Cubic time complexity. The running time scales with the cube of the input size. This is common with algorithms involving three nested loops, such as certain naive matrix multiplication algorithms.
-
-* **$O(2^n)$**: Exponential time complexity. The running time doubles with each addition to the input data set. This behavior is seen in many brute-force algorithms, like generating all subsets of a set or the naive solution to the Travelling Salesman Problem.
+- The time complexity **$O(1)$**, known as constant time complexity, means that regardless of the input size, the algorithm performs its task in a fixed amount of time. A common example of this is retrieving an item by its index from an array or accessing a key-value pair in a hash map.
+- When an algorithm has **$O(log n)$** time complexity, it operates logarithmically, meaning the time taken increases logarithmically with input size. As the input size doubles, the time taken only increases marginally. Binary search and operations on balanced binary trees are typical examples.
+- An algorithm with **$O(n)$** time complexity exhibits linear behavior, where the running time scales directly with the input size. This is seen in simple, single-pass processes like iterating over an array or a linked list.
+- In cases of **$O(n log n)$** time complexity, also called log-linear complexity, the running time grows both linearly and logarithmically with the input size. Sorting algorithms such as QuickSort, MergeSort, and HeapSort are prime examples of this complexity.
+- With **$O(n^2)$** time complexity, the running time increases quadratically, often due to nested loops. Algorithms like Bubble Sort and Insertion Sort fall into this category.
+- When an algorithm has **$O(n^3)$** time complexity, its running time scales cubically with the input size. This is common in algorithms involving three nested loops, such as naive matrix multiplication.
+- **$O(2^n)$** represents exponential time complexity, where the running time doubles with each additional unit of input size. This is typical in brute-force algorithms like generating all subsets of a set or solving the Travelling Salesman Problem using a naive approach.
 
 The graph below illustrates the growth of these different time complexities:
 
@@ -248,43 +241,40 @@ The graph below illustrates the growth of these different time complexities:
 
 The choice of an algorithm significantly impacts the application's performance, making the understanding of time complexity crucial.
 
-### Interpreting Big O Notation: Key Rules
+#### Interpreting Big O Notation: Key Rules
 
-1. **Neglect Constant Factors**: In Big O notation, we are interested in the rate of growth, not the exact number of operations. Therefore, constant factors are typically ignored. For example, the function $5n$ is represented as $O(n)$, discarding the constant factor of 5.
+- We focus on the rate of growth rather than the exact number of operations, which is why constant factors are typically ignored. For example, the function $5n$ is expressed as **$O(n)$**, neglecting the constant factor of 5.
+- When an algorithm has multiple terms, only the term with the fastest growth rate is considered important. For example, if the running time is $n^2 + n$, the time complexity simplifies to **$O(n^2)$**, since $n^2$ grows faster than $n$.
+- Big O notation describes an upper limit on the growth rate of a function, meaning that if an algorithm has a time complexity of **$O(n)$**, it can also be described as $O(n^2)$ or higher. However, an algorithm with **$O(n^2)$** complexity cannot be described as **$O(n)$**, because Big O does not imply a lower bound on growth.
+- Terms that grow as fast as or faster than **$n$** or **$log n$** dominate constant terms. For example, in the complexity **$O(n + k)$**, the term **$n$** dominates, simplifying the overall complexity to **$O(n)$**.
 
-2. **Omit Smaller Terms**: For functions with multiple terms, only the term with the fastest growth rate is considered significant. If an algorithm's running time is $n^2 + n$, its time complexity would be $O(n^2)$, as $n^2$ grows faster than $n$.
-
-3. **Consider Upper Bounds**: Big O notation defines an upper limit on the growth rate of a function. If an algorithm has a time complexity of $O(n)$, it can also be described as $O(n^2)$, $O(n^3)$, and so on. But, it does not mean that an algorithm with $O(n^2)$ complexity is also $O(n)$, because Big O notation does not provide a lower bound on growth.
-
-4. **$n$ and $log n$ Dominate Constants**: In Big O notation, terms that grow at least as fast as $n$ or $log n$ are dominant over constant terms. For instance, in the complexity $O(n + k)$, the $n$ term is dominant, resulting in a simplified complexity of $O(n)$.
-
-### Can every problem have an O(1) algorithm?
+#### Can every problem have an O(1) algorithm?
 
 - Not every problem has an algorithm that can solve it, irrespective of the complexity. For instance, the Halting Problem is undecidable—no algorithm can accurately predict whether a given program will halt or run indefinitely on every possible input.
 - Sometimes, we can create an illusion of $O(1)$ complexity by precomputing the results for all possible inputs and storing them in a lookup table (like a hash table). Then, we can solve the problem in constant time by directly retrieving the result from the table. This approach, known as memoization or caching, is limited by memory constraints and is only practical when the number of distinct inputs is small and manageable.
 - Often, the lower bound complexity for a class of problems is $O(n)$ or $O(nlogn)$. This bound represents problems where you at least have to examine each element once (as in the case of $O(n)$) or perform a more complex operation on every input (as in $O(nlogn)$), like sorting. Under certain conditions or assumptions, a more efficient algorithm might be achievable.
   
-### When do algorithms have O(logn) or O(nlogn) complexity?
+#### When do algorithms have O(logn) or O(nlogn) complexity?
 
 The exact time complexity of an algorithm usually stems from how the size of the input affects the execution flow of the algorithm—particularly the loop iterations. 
 
 Consider four example algorithms with differing complexities:
 
-1. **First Algorithm** ($O(n)$): Here, the running time is directly proportional to the input size ($n$), as each loop iteration reduces $n$ by 1. Hence, the number of iterations equals the initial value of $n$.
+I. **First Algorithm** $O(n)$: Here, the running time is directly proportional to the input size ($n$), as each loop iteration reduces $n$ by 1. Hence, the number of iterations equals the initial value of $n$.
 
 ```python
 WHILE n > 0:
     n = n - 1
 ```
 
-2. **Second Algorithm** ($O(log(n))$): In this case, the running time is proportional to the number of times the loop can iterate before $n$ reduces to 0. Each loop iteration halves the value of $n$. This equals the number of times you can halve $n$ before it becomes 0, which also corresponds to $log(n)$.
+II. **Second Algorithm** $O(log(n))$: In this case, the running time is proportional to the number of times the loop can iterate before $n$ reduces to 0. Each loop iteration halves the value of $n$. This equals the number of times you can halve $n$ before it becomes 0, which also corresponds to $log(n)$.
 
 ```python
 WHILE n > 0:
    n = n / 2
 ```
 
-3. **Third Algorithm** ($O(nlog(n))$): Here, the outer loop iterates $n$ times, and the inner loop iterates $log(n)$ times for each outer loop iteration. Hence, the total number of iterations is $n * log(n)$.
+III. **Third Algorithm** $O(nlog(n))$: Here, the outer loop iterates $n$ times, and the inner loop iterates $log(n)$ times for each outer loop iteration. Hence, the total number of iterations is $n * log(n)$.
 
 ```python
 m = n
@@ -295,7 +285,7 @@ WHILE m > 0:
    m = m - 1
 ```
 
-4. **Fourth Algorithm** ($O(log^2(n))$): In this scenario, the outer loop iterates $log(n)$ times, and the inner loop also iterates $log(n)$ times for each outer loop iteration. Consequently, the total number of iterations equals $log^2(n)$.
+IV. **Fourth Algorithm** $O(log^2(n))$: In this scenario, the outer loop iterates $log(n)$ times, and the inner loop also iterates $log(n)$ times for each outer loop iteration. Consequently, the total number of iterations equals $log^2(n)$.
 
 ```python
 m = n
