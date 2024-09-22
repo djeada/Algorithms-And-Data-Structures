@@ -604,6 +604,7 @@ We encourage contributions that enhance the repository's value. To contribute:
 
 ### Online Courses and Resources
 - [Stanford CS Library](http://cslibrary.stanford.edu/)
+- [Stanford Introduction to Programming Contests](http://stanford.edu/class/cs97si/)
 - [MIT OCW: Advanced Data Structures - Spring 2012](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/)
 - [MIT OCW: Introduction to Computational Thinking and Data Science - Fall 2016](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-0002-introduction-to-computational-thinking-and-data-science-fall-2016/lecture-slides-and-files/index.htm)
 - [Data Structures and Algorithms by University of Birmingham](https://www.cs.bham.ac.uk/~jxb/DSA/)
