@@ -76,9 +76,9 @@ def fibonacci(n, memo={}):
 
 **Algorithm Steps**:
 
-1. **Initialize the Table**: Set up a table to hold the results of subproblems, initializing base cases.
-2. **Iterative Computation**: Use loops to fill the table, ensuring that subproblems are solved before they are needed.
-3. **Construct Solution**: Use the filled table to construct the solution to the original problem.
+1. **Initialize the table** by setting up a structure to store the results of subproblems, and ensure that base cases are properly initialized to handle the simplest instances of the problem.
+2. **Iterative computation** is carried out using loops to fill the table, making sure that each subproblem is solved in the correct order before being used to solve larger subproblems.
+3. **Construct the solution** by referencing the filled table, using the stored values to derive the final solution to the original problem efficiently.
 
 **Example**: Computing Fibonacci Numbers with Tabulation
 
@@ -95,8 +95,8 @@ def fibonacci(n):
 
 **Analysis**:
 
-- **Time Complexity**: $O(n)$, as we iterate from $2$ to $n$.
-- **Space Complexity**: $O(n)$, for the table storing Fibonacci numbers.
+- The **time complexity** is \( O(n) \), since the algorithm iterates from 2 to \( n \), computing each Fibonacci number sequentially.
+- The **space complexity** is \( O(n) \), due to the storage required for the table that holds the Fibonacci numbers up to \( n \).
 
 ### Comparison of Memoization and Tabulation
 
@@ -128,23 +128,20 @@ LCS(i - 1, j - 1) + 1 & \text{if } x_i = y_j \\
 
 We can implement the LCS problem using either memoization or tabulation. With tabulation, we build a two-dimensional table $LCS[0..m][0..n]$ iteratively.
 
-**Time Complexity**: $O(mn)$
-
-**Space Complexity**: $O(mn)$, which can be reduced to $O(n)$ with optimized storage.
+- The **time complexity** is \( O(mn) \), as the algorithm processes a grid or matrix of size \( m \times n \), iterating through each cell.
+- The **space complexity** is \( O(mn) \), due to the table storing intermediate results, but this can be reduced to \( O(n) \) by optimizing the storage to only keep necessary data for the current and previous rows.
 
 ### State Representation
 
 Properly defining the state is crucial for dynamic programming.
 
-- **State Variables**: Parameters that uniquely define a subproblem.
-- **State Transition**: Rules that define how to move from one state to another.
+- **State variables** are the parameters that uniquely define each subproblem, helping to break down the problem into smaller, manageable components.
+- **State transition** refers to the rules or formulas that describe how to move from one state to another, typically using the results of smaller subproblems to solve larger ones.
 
 **Example**: 0/1 Knapsack Problem
 
-- **Problem Statement**: Given $n$ items with weights $w_i$ and values $v_i$, and a knapsack capacity $W$, maximize the total value without exceeding the capacity.
-
-- **State Representation**: $dp[i][w]$ represents the maximum value achievable with the first $i$ items and capacity $w$.
-
+- The **problem statement** focuses on selecting \( n \) items, each with a weight \( w_i \) and value \( v_i \), while ensuring the total weight stays within the knapsack capacity \( W \), in order to maximize the total value.
+- In **state representation**, \( dp[i][w] \) represents the maximum value that can be achieved using the first \( i \) items with a total weight capacity of \( w \).
 - **State Transition**:
 
 $$ dp[i][w] = \begin{cases}
@@ -156,9 +153,8 @@ dp[i - 1][w] & \text{if } w_i > w \\
 
 We fill the table $dp[0..n][0..W]$ iteratively based on the state transition.
 
-**Time Complexity**: $O(nW)$
-
-**Space Complexity**: $O(nW)$, can be optimized to $O(W)$ since each row depends only on the previous row.
+- The **time complexity** is \( O(nW) \), where \( n \) is the number of items and \( W \) is the capacity of the knapsack, as the algorithm iterates through both items and weights.
+- The **space complexity** is \( O(nW) \), but this can be optimized to \( O(W) \) because each row in the table depends only on the values from the previous row, allowing for space reduction.
 
 ## Advanced Dynamic Programming Concepts
 
@@ -207,8 +203,8 @@ with base case $0! = 1$.
 
 **Mathematical Properties**:
 
-- **Total Subsets**: A set with $n$ elements has $2^n$ subsets.
-- **Power Set**: The set of all subsets of $S$, denoted as $\mathcal{P}(S)$.
+- The **total subsets** of a set with \( n \) elements is \( 2^n \), as each element can either be included or excluded from a subset.
+- The **power set** of a set \( S \), denoted as \( \mathcal{P}(S) \), is the set of all possible subsets of \( S \), including the empty set and \( S \) itself.
 
 **Relevance to DP**:
 
