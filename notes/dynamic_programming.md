@@ -1,152 +1,317 @@
 # Dynamic Programming
 
-Dynamic Programming (DP) is a method used in computer science for solving complex problems by breaking them down into simpler, more manageable sub-problems. By solving these sub-problems once, storing their solutions, and reusing these solutions, dynamic programming ensures efficient problem-solving. It transforms potentially exponential-time problems into more manageable polynomial-time problems.
+Dynamic Programming (DP) is a fundamental algorithmic technique used to solve optimization problems by breaking them down into simpler subproblems. The core idea is to solve each subproblem only once and store its solution—typically using a memory-based data structure (array, table, or map)—thus avoiding the computational overhead of recomputing the same solutions multiple times. This approach is particularly powerful for problems exhibiting the properties of **optimal substructure** and **overlapping subproblems**.
 
-## Key Properties for Dynamic Programming
+Originally developed by Richard Bellman in the 1950s, dynamic programming has since become an essential tool in fields such as computer science, economics, and operations research. It provides a structured approach to problem-solving that can transform exponential-time algorithms into polynomial-time solutions, greatly improving computational efficiency.
 
-Two fundamental properties make a problem suitable for a dynamic programming solution: **optimal substructure** and **overlapping sub-problems**. 
+## Fundamental Principles of Dynamic Programming
 
-1. **Optimal Substructure**: A problem has an optimal substructure if an optimal solution can be constructed efficiently from the optimal solutions of its subproblems. For example, the shortest path between two cities, say City A and City C, going through City B, can be found by combining the shortest path from City A to City B and the shortest path from City B to City C.
+To effectively apply dynamic programming, a problem must satisfy two key properties:
 
-2. **Overlapping Sub-problems**: A problem has overlapping sub-problems if the problem can be broken down into subproblems which are reused several times. For instance, in the calculation of the Fibonacci sequence, to compute the 5th Fibonacci number, one must calculate the 3rd and 4th Fibonacci numbers, which in turn require calculating the 2nd, 1st, and 0th numbers, showing a repetition of subproblems.
+### 1. Optimal Substructure
 
-## Implementation Techniques
+**Definition**: A problem exhibits **optimal substructure** if an optimal solution to the problem contains optimal solutions to its subproblems. Formally, if the optimal solution $S_n$ for problem size $n$ can be constructed from optimal solutions $S_k$ for smaller sizes $k < n$, then the problem has an optimal substructure.
 
-Dynamic programming can be implemented via three main strategies: **Brute Force Recursion**, **Memoized Recursion**, and **Tabulation**.
+**Mathematical Representation**:
 
-### Brute Force Recursion
+Consider a problem where we want to find the optimal value $V(n)$ for a given parameter $n$. If there exists a function $f$ such that:
 
-In this approach, problems are divided into smaller sub-problems using recursion, and these are solved independently. However, because the same sub-problems might be solved multiple times, this can lead to inefficiency. Imagine trying to find a path in a maze; one might end up visiting the same points multiple times, leading to wasted effort.
+$$ V(n) = \min_{k} \{ f(V(k), V(n - k)) \} $$
 
-```
-      Fib(5)
-       |
---------------------------------------------------
-|                                                |
-Fib(4)                                         Fib(3)
-|                                                |
--------------------------------                  -------------
-|                             |                  |           |
-Fib(3)                      Fib(2)             Fib(2)     Fib(1)
-|                             |                  |
---------------              ------             ------
-|            |             |      |           |      |  
-Fib(2)      Fib(1)       Fib(1) Fib(0)       Fib(1) Fib(0)
-|             
----------     
-|       | 
-Fib(1) Fib(0)
-```
+then the problem exhibits optimal substructure.
 
-### Memoized Recursion (Top-Down Dynamic Programming)
+**Example**: Shortest Path in Graphs
 
-To improve upon brute force recursion, memoized recursion stores the results of already solved sub-problems to avoid redundancy. It's like taking notes while solving a complex problem - if you encounter the same subproblem again, you simply look up your notes instead of solving it again. For instance, while climbing a stair-case, if you calculate and store the number of ways to reach each step, you can use these results to easily calculate the number of ways to reach the top.
+In the context of graph algorithms, suppose we want to find the shortest path from vertex $A$ to vertex $C$. If $B$ is an intermediate vertex on the shortest path from $A$ to $C$, then the shortest path from $A$ to $C$ is the concatenation of the shortest path from $A$ to $B$ and the shortest path from $B$ to $C$.
 
-Here, we only fill in entries as we encounter them during the recursive calls. We don't need to calculate Fib(n) for all n, only for the ones that are actually used.
+### 2. Overlapping Subproblems
 
-```
- Memoization Table for Fibonacci Sequence:
- --------------------------------------
- | n  | Fib(n)                         |
- --------------------------------------
- | 5  | 5  (from Fib(4) + Fib(3))      |
- | 4  | 3  (from Fib(3) + Fib(2))      |
- | 3  | 2  (from Fib(2) + Fib(1))      |
- | 2  | 1                              |
- | 1  | 1                              |
- --------------------------------------
-```
+**Definition**: A problem has **overlapping subproblems** if it can be broken down into subproblems that are reused multiple times. This means that the recursive solution involves solving the same subproblem repeatedly.
 
-### Tabulation (Bottom-Up Dynamic Programming)
+**Mathematical Representation**:
 
-Tabulation takes a more proactive approach, solving all related sub-problems right from the start, storing their results in a table, and building up the final solution from these results. It's like filling out a complex form, where you fill out all the individual sections (sub-problems) first, and finally use them to complete the entire form (main problem). If you were building a pyramid of blocks, a tabulation approach would have you systematically build up from the base.
+Let $S(n)$ be the set of subproblems for problem size $n$. If there exists $s \in S(n)$ such that $s$ appears in $S(k)$ for multiple $k$, the problem has overlapping subproblems.
 
-In the tabulation approach, we systematically fill in the table from the smallest subproblems up to the problem of interest.
+**Example**: Fibonacci Numbers
 
-```
- Tabulation Table for Fibonacci Sequence:
- --------------------------------------
- | n  | Fib(n)                         |
- --------------------------------------
- | 1  | 1                              |
- | 2  | 1                              |
- | 3  | 2  (from Fib(2) + Fib(1))      |
- | 4  | 3  (from Fib(3) + Fib(2))      |
- | 5  | 5  (from Fib(4) + Fib(3))      |
- | 6  | 8  (from Fib(5) + Fib(4))      |
- | 7  | 13 (from Fib(6) + Fib(5))      |
- --------------------------------------
+The recursive computation of Fibonacci numbers $F(n) = F(n - 1) + F(n - 2)$ involves recalculating the same Fibonacci numbers multiple times. For instance, to compute $F(5)$, we need to compute $F(4)$ and $F(3)$, both of which require computing $F(2)$ and $F(1)$ multiple times.
+
+## Dynamic Programming Techniques
+
+There are two primary methods for implementing dynamic programming algorithms:
+
+### 1. Memoization (Top-Down Approach)
+
+**Concept**: Memoization involves solving the problem recursively while storing the results of solved subproblems in a data structure (typically a hash table or array). Before computing a subproblem, the algorithm checks if the result is already known and returns the cached result if it is.
+
+**Algorithm Steps**:
+
+1. Identify the parameters that uniquely define a subproblem and create a **recursive function** using these parameters.
+2. Establish **base cases** to terminate recursion.
+3. Initialize a data structure to **store** computed subproblem results.
+4. Before computing a subproblem, **check if its result is already stored**.
+5. If not already computed, **compute the subproblem's result** and store it.
+
+**Example**: Computing Fibonacci Numbers with Memoization
+
+```python
+def fibonacci(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        memo[n] = n
+    else:
+        memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+    return memo[n]
 ```
 
-### Choosing Between Recursion and Tabulation
+**Analysis**:
 
-The choice between recursion and tabulation is often a matter of trade-offs. Recursion is usually simpler and more intuitive, but it can be slower for large inputs due to repeated calculations and function call overhead. Tabulation, on the other hand, can be faster and more efficient because it eliminates the need for recursion, but it can be less intuitive and requires understanding the problem thoroughly to figure out the correct sequence of solving sub-problems.
+- **Time Complexity**: $O(n)$, since each number up to $n$ is computed once.
+- **Space Complexity**: $O(n)$, due to the memoization structure.
 
+### 2. Tabulation (Bottom-Up Approach)
 
-## Common Terms Made Simple
+**Concept**: Tabulation involves solving all smaller subproblems first and then combining them to solve larger subproblems. It typically uses iteration and a table (array) to store solutions to subproblems, building up to the solution of the original problem.
+
+**Algorithm Steps**:
+
+1. **Initialize the Table**: Set up a table to hold the results of subproblems, initializing base cases.
+2. **Iterative Computation**: Use loops to fill the table, ensuring that subproblems are solved before they are needed.
+3. **Construct Solution**: Use the filled table to construct the solution to the original problem.
+
+**Example**: Computing Fibonacci Numbers with Tabulation
+
+```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    fib_table = [0] * (n + 1)
+    fib_table[0], fib_table[1] = 0, 1
+    for i in range(2, n + 1):
+        fib_table[i] = fib_table[i - 1] + fib_table[i - 2]
+    return fib_table[n]
+```
+
+**Analysis**:
+
+- **Time Complexity**: $O(n)$, as we iterate from $2$ to $n$.
+- **Space Complexity**: $O(n)$, for the table storing Fibonacci numbers.
+
+### Comparison of Memoization and Tabulation
+
+| Aspect              | Memoization (Top-Down)                                     | Tabulation (Bottom-Up)                                    |
+|---------------------|------------------------------------------------------------|-----------------------------------------------------------|
+| **Approach**        | Recursive                                                  | Iterative                                                 |
+| **Storage**         | Stores solutions as needed                                 | Pre-fills table with solutions to all subproblems         |
+| **Overhead**        | Function call overhead due to recursion                    | Minimal overhead due to iteration                         |
+| **Flexibility**     | May be easier to implement for complex recursive problems  | May require careful ordering of computations              |
+| **Space Efficiency**| Potentially higher due to recursion stack and memoization  | Can be more space-efficient with careful table design     |
+
+## Implementation Techniques with Mathematical Rigor
+
+Dynamic programming problems are often formulated using recurrence relations, which express the solution to a problem in terms of its subproblems.
+
+### Formulating Recurrence Relations
+
+**Example**: Longest Common Subsequence (LCS)
+
+Given two sequences $X = x_1, x_2, ..., x_m$ and $Y = y_1, y_2, ..., y_n$, the length of their LCS can be defined recursively:
+
+$$ LCS(i, j) = \begin{cases}
+0 & \text{if } i = 0 \text{ or } j = 0 \\
+LCS(i - 1, j - 1) + 1 & \text{if } x_i = y_j \\
+\max(LCS(i - 1, j), LCS(i, j - 1)) & \text{if } x_i \neq y_j
+\end{cases} $$
+
+**Implementation**:
+
+We can implement the LCS problem using either memoization or tabulation. With tabulation, we build a two-dimensional table $LCS[0..m][0..n]$ iteratively.
+
+**Time Complexity**: $O(mn)$
+
+**Space Complexity**: $O(mn)$, which can be reduced to $O(n)$ with optimized storage.
+
+### State Representation
+
+Properly defining the state is crucial for dynamic programming.
+
+- **State Variables**: Parameters that uniquely define a subproblem.
+- **State Transition**: Rules that define how to move from one state to another.
+
+**Example**: 0/1 Knapsack Problem
+
+- **Problem Statement**: Given $n$ items with weights $w_i$ and values $v_i$, and a knapsack capacity $W$, maximize the total value without exceeding the capacity.
+
+- **State Representation**: $dp[i][w]$ represents the maximum value achievable with the first $i$ items and capacity $w$.
+
+- **State Transition**:
+
+$$ dp[i][w] = \begin{cases}
+dp[i - 1][w] & \text{if } w_i > w \\
+\max(dp[i - 1][w], dp[i - 1][w - w_i] + v_i) & \text{if } w_i \leq w
+\end{cases} $$
+
+**Implementation**:
+
+We fill the table $dp[0..n][0..W]$ iteratively based on the state transition.
+
+**Time Complexity**: $O(nW)$
+
+**Space Complexity**: $O(nW)$, can be optimized to $O(W)$ since each row depends only on the previous row.
+
+## Advanced Dynamic Programming Concepts
+
+### Memory Optimization
+
+In some cases, we can optimize space complexity by noting dependencies between states.
+
+**Example**: Since $dp[i][w]$ depends only on $dp[i - 1][w]$ and $dp[i - 1][w - w_i]$, we can use a one-dimensional array and update it in reverse.
+
+```python
+dp = [0] * (W + 1)
+for i in range(1, n + 1):
+    for w in range(W, w_i - 1, -1):
+        dp[w] = max(dp[w], dp[w - w_i] + v_i)
+```
+
+### Dealing with Non-Overlapping Subproblems
+
+If a problem does not have overlapping subproblems but does have optimal substructure, it may be more appropriate to use **Divide and Conquer** rather than dynamic programming.
+
+**Example**: Merge Sort algorithm divides the list into halves, sorts each half, and then merges the sorted halves.
+
+## Common Terms in Dynamic Programming Context
 
 ### Recursion
 
-Recursion is a problem-solving technique where a function calls itself to solve smaller instances of the same problem. The function continues to break down the problem into more manageable pieces until it reaches the simplest form, known as the base case, which it can solve directly. After reaching the base case, the function then builds up the solution to the original problem by combining the results of the smaller problems. Recursion is particularly useful for problems that can be divided into similar subproblems, such as the Fibonacci sequence or the Tower of Hanoi.
+**Definition**: A process where a function calls itself directly or indirectly to solve a smaller instance of the same problem until it reaches a base case.
 
-Example: Calculating the factorial of a number using recursion.
+**Mathematical Perspective**:
 
-```
-Factorial(5) = 5 * Factorial(4)
-             = 5 * (4 * Factorial(3))
-             = 5 * (4 * (3 * Factorial(2)))
-             = 5 * (4 * (3 * (2 * Factorial(1))))
-             = 5 * (4 * (3 * (2 * 1)))
-             = 120
-```
+A recursive function $f(n)$ satisfies:
+
+$$ f(n) = g(f(k), f(n - k)) $$
+
+for some function $g$ and smaller subproblem size $k < n$.
+
+**Example**: Computing $n!$:
+
+$$ n! = n \times (n - 1)! $$
+
+with base case $0! = 1$.
 
 ### Subset
 
-A subset is a collection of elements that are all drawn from a larger set. Every set is considered to be a subset of itself, and the empty set is a subset of every set. Subsets are fundamental in combinatorial mathematics, where they help describe the different possible groupings of elements that can be selected from a larger set. 
+**Definition**: For a set $S$, a subset $T$ is a set where every element of $T$ is also an element of $S$. Denoted as $T \subseteq S$.
 
-Example: 
+**Mathematical Properties**:
 
-Given Set `A = {1, 2, 3}`, the subsets of `A` are:
+- **Total Subsets**: A set with $n$ elements has $2^n$ subsets.
+- **Power Set**: The set of all subsets of $S$, denoted as $\mathcal{P}(S)$.
 
-```
-{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}
-```
+**Relevance to DP**:
+
+Subsets often represent different states or configurations in combinatorial problems, such as the subset-sum problem.
 
 ### Subarray
 
-A subarray is a contiguous segment of an array. It consists of a sequence of elements that are adjacent to each other within the original array. The start and end indices define the subarray and determine which elements are included. Unlike subsets, the elements in a subarray maintain their order and contiguity from the original array.
+**Definition**: A contiguous segment of an array $A$. A subarray is defined by a starting index $i$ and an ending index $j$, with $0 \leq i \leq j < n$, where $n$ is the length of the array.
 
-Example: 
+**Mathematical Representation**:
 
-Given Array `A = [1, 2, 3, 4, 5]`, the subarrays of `A` include:
+$$ \text{Subarray } A[i..j] = [A_i, A_{i+1}, ..., A_j] $$
 
-```
-[1], [1, 2], [1, 2, 3], [2], [2, 3], [2, 3, 4], [3], [3, 4], [3, 4, 5], [4], [4, 5], [5]
-```
+**Example**:
+
+Given $A = [3, 5, 7, 9]$, the subarray from index $1$ to $2$ is $[5, 7]$.
+
+**Relevance to DP**:
+
+Subarray problems include finding the maximum subarray sum (Kadane's algorithm), where dynamic programming efficiently computes optimal subarrays.
 
 ### Substring
 
-A substring is a contiguous sequence of characters within a string. Like subarrays, substrings maintain the order and contiguity of the characters from the original string. The start and end indices define the substring, and they determine which characters are included.
+**Definition**: A contiguous sequence of characters within a string $S$. Analogous to subarrays in arrays.
 
-Example: 
+**Mathematical Representation**:
 
-Given String `S = "hello"`, the substrings of `S` include:
+A substring $S[i..j]$ is:
 
-```
-"h", "he", "hel", "hell", "hello", "e", "el", "ell", "ello", "l", "ll", "llo", "l", "lo", "o"
-```
+$$ S_iS_{i+1}...S_j $$
+
+with $0 \leq i \leq j < \text{length}(S)$.
+
+**Example**:
+
+For $S = "dynamic"$, the substring from index $2$ to $4$ is $"nam"$.
+
+**Relevance to DP**:
+
+Substring problems include finding the longest palindromic substring or the longest common substring between two strings.
 
 ### Subsequence
 
-A subsequence is a sequence that can be derived from another sequence (such as a string or an array) by deleting some or none of the elements without changing the order of the remaining elements. Unlike substrings and subarrays, a subsequence does not need to be contiguous. This means that elements can be selected from anywhere in the original sequence, as long as their relative order is preserved.
+**Definition**: A sequence derived from another sequence by deleting zero or more elements without changing the order of the remaining elements.
 
-Example: 
+**Mathematical Representation**:
 
-Given String `S = "abc"`, the subsequences of `S` include:
+Given sequence $S$, subsequence $T$ is:
 
-```
-"", "a", "b", "c", "ab", "ac", "bc", "abc"
-```
+$$ T = [S_{i_1}, S_{i_2}, ..., S_{i_k}] $$
+
+where $0 \leq i_1 < i_2 < ... < i_k < n$.
+
+**Example**:
+
+For $S = [a, b, c, d]$, $[a, c, d]$ is a subsequence.
+
+**Relevance to DP**:
+
+The Longest Common Subsequence (LCS) problem is a classic dynamic programming problem.
+
+**LCS Dynamic Programming Formulation**:
+
+Let $X = x_1 x_2 ... x_m$ and $Y = y_1 y_2 ... y_n$. Define $L[i][j]$ as the length of the LCS of $X[1..i]$ and $Y[1..j]$.
+
+**Recurrence Relation**:
+
+$$ L[i][j] = \begin{cases}
+0 & \text{if } i = 0 \text{ or } j = 0 \\
+L[i - 1][j - 1] + 1 & \text{if } x_i = y_j \\
+\max(L[i - 1][j], L[i][j - 1]) & \text{if } x_i \neq y_j
+\end{cases} $$
+
+**Implementation**:
+
+We build a two-dimensional table $L[0..m][0..n]$ using the above recurrence.
+
+**Time Complexity**: $O(mn)$
+
+## Practical Considerations in Dynamic Programming
+
+### Identifying DP Problems
+
+Not all problems are amenable to dynamic programming. To determine if DP is appropriate:
+
+- Can the problem's optimal solution be constructed from optimal solutions to its subproblems?
+- Are the same subproblems being solved multiple times?
+
+### State Design and Transition
+
+- Choose variables that capture the essence of subproblems.
+- Clearly define how to move from one state to another.
+
+### Complexity Optimization
+
+- Reduce the storage requirements by identifying and storing only necessary states.
+- Prune unnecessary computations, possibly using techniques like memoization with pruning.
+
+### Common Pitfalls
+
+- Leads to missing subproblems or incorrect dependencies.
+- Can cause incorrect results or infinite recursion.
+- Failing to handle special inputs can result in errors.
 
 ## List of Problems
 
