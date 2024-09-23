@@ -250,7 +250,7 @@ Below is a detailed comparison of commonly used sorting algorithms:
 - It’s important to **understand the data** when selecting a sorting algorithm. Factors such as the size of the dataset, its distribution, and the data type being sorted can significantly influence the choice of algorithm.
 - If the **stability requirement** is important, meaning the relative order of equal elements must be preserved, you should opt for stable sorting algorithms like Merge Sort or Tim Sort.
 - When memory is a concern, **in-place sorting** algorithms, such as Quick Sort or Heap Sort, are preferable because they require minimal additional memory.
-- Consider the **time complexity trade-offs** when choosing a sorting algorithm. While Quick Sort is generally fast, its performance can degrade to \( O(n^2) \) in the worst case if not implemented carefully.
+- Consider the **time complexity trade-offs** when choosing a sorting algorithm. While Quick Sort is generally fast, its performance can degrade to $O(n^2)$ in the worst case if not implemented carefully.
 - **Hybrid approaches** like Tim Sort, which combines Merge Sort and Insertion Sort, are designed to optimize performance by leveraging the strengths of multiple sorting techniques.
 
 ### Practical Applications
@@ -258,7 +258,7 @@ Below is a detailed comparison of commonly used sorting algorithms:
 - **Merge Sort** is particularly useful for sorting linked lists since it does not require random access to the elements.
 - **Quick Sort** is often chosen for general-purpose sorting due to its efficiency in the average case and its ability to sort in-place.
 - **Counting Sort** and **Radix Sort** are effective when sorting integers within a known and limited range, offering linear-time complexity under the right conditions.
-- **Heap Sort** is a good option when memory usage is restricted and a guaranteed \( O(n \log n) \) time complexity is necessary.
+- **Heap Sort** is a good option when memory usage is restricted and a guaranteed $O(n \log n)$ time complexity is necessary.
 - **Insertion Sort** is ideal for very small datasets or as a subroutine in more complex algorithms due to its simplicity and efficiency on nearly sorted data.
 
 ## Bit Manipulation
@@ -267,7 +267,7 @@ Bit manipulation involves algorithms that operate directly on bits, the basic un
 
 ### Fundamental Concepts
 
-- A solid grasp of **binary representation** is essential for working with bitwise operations. In binary, each digit (or bit) represents a power of 2, starting with the least significant bit (LSB) on the right, which corresponds to \( 2^0 \), and increasing as you move left.
+- A solid grasp of **binary representation** is essential for working with bitwise operations. In binary, each digit (or bit) represents a power of 2, starting with the least significant bit (LSB) on the right, which corresponds to $2^0$, and increasing as you move left.
 - **Signed and unsigned integers** differ in how they represent numbers. **Unsigned integers** can only represent non-negative values, while **signed integers** use the most significant bit (MSB) as a sign bit, with 0 representing positive numbers and 1 representing negative numbers, typically using two's complement representation.
 - **Bitwise operators** are key tools for manipulating individual bits. The **AND (`&`)** operator produces 1 only when both corresponding bits are 1, making it useful for masking bits. The **OR (`|`)** operator sets a bit to 1 if at least one of the corresponding bits is 1, often used for setting bits.
 - The **XOR (`^`)** operator produces 1 when the bits are different, useful for toggling bits or swapping values. The **NOT (`~`)** operator flips all bits, performing a bitwise negation.
@@ -275,10 +275,10 @@ Bit manipulation involves algorithms that operate directly on bits, the basic un
 
 ### Bit Manipulation Techniques
 
-- To **set a bit** at position \( n \) to 1, the operation `number |= (1 << n)` can be used. This works by left-shifting 1 by \( n \) positions to create a mask with only the \( n \)-th bit set, and then applying bitwise OR to modify the original number.
-- To **clear a bit** at position \( n \), use the operation `number &= ~(1 << n)`. Here, 1 is left-shifted by \( n \) and negated to form a mask where only the \( n \)-th bit is 0, and applying bitwise AND clears that bit.
-- To **toggle a bit** at position \( n \), the operation `number ^= (1 << n)` is used. By left-shifting 1 by \( n \) and applying XOR, the target bit at \( n \) is flipped.
-- To **check if a bit** at position \( n \) is set to 1, the operation `(number & (1 << n)) != 0` is employed. It works by left-shifting 1 by \( n \) and applying bitwise AND; a non-zero result indicates the bit is set.
+- To **set a bit** at position $n$ to 1, the operation `number |= (1 << n)` can be used. This works by left-shifting 1 by $n$ positions to create a mask with only the $n$-th bit set, and then applying bitwise OR to modify the original number.
+- To **clear a bit** at position $n$, use the operation `number &= ~(1 << n)`. Here, 1 is left-shifted by $n$ and negated to form a mask where only the $n$-th bit is 0, and applying bitwise AND clears that bit.
+- To **toggle a bit** at position $n$, the operation `number ^= (1 << n)` is used. By left-shifting 1 by $n$ and applying XOR, the target bit at $n$ is flipped.
+- To **check if a bit** at position $n$ is set to 1, the operation `(number & (1 << n)) != 0` is employed. It works by left-shifting 1 by $n$ and applying bitwise AND; a non-zero result indicates the bit is set.
 - To **clear the least significant bit (LSB)**, the operation `number &= (number - 1)` is effective. Subtracting 1 flips all bits from the LSB onward, and applying AND clears the lowest set bit.
 - To **isolate the least significant bit**, the operation `isolated_bit = number & (-number)` is used. In two’s complement, `-number` is the bitwise complement plus one, so ANDing it with `number` isolates the LSB.
 - To **count the set bits** (Hamming weight) in a number, Kernighan's Algorithm is applied using the following code:
@@ -317,7 +317,7 @@ This sequence of XOR operations swaps the values of `a` and `b` without needing 
 
 - **Left shifting** (`<<`) is a useful technique for **multiplying by powers of two**. For instance, `number << 3` multiplies `number` by \(2^3 = 8\), which is a fast alternative to regular multiplication.
 - Similarly, **right shifting** (`>>`) can be used for **dividing by powers of two**. For example, `number >> 2` divides `number` by \(2^2 = 4\), making it an efficient way to handle division for unsigned integers or logical shifts.
-- To **extract specific bits** from a number, you can use a combination of shifting and masking. For instance, to extract bits from position \( p \) to \( p + n - 1 \), the operation `(number >> p) & ((1 << n) - 1)` can be applied. This shifts the target bits to the right and uses a mask to isolate only those bits.
+- To **extract specific bits** from a number, you can use a combination of shifting and masking. For instance, to extract bits from position $p$ to $p + n - 1$, the operation `(number >> p) & ((1 << n) - 1)` can be applied. This shifts the target bits to the right and uses a mask to isolate only those bits.
 
 ### Cautions and Best Practices
 
