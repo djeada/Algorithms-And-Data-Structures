@@ -438,7 +438,7 @@ The backtracking occurs when a node has no valid branches (no safe positions in 
 - Using heuristics to choose the order of columns to try first.
 - Converting the recursive solution to an iterative one using explicit stacks to handle larger values of $N$ without stack overflow.
 
-### Example: Solve Maze
+### Example: Maze Solver
 
 Given a maze represented as a 2D grid, find a path from the starting point to the goal using backtracking. The maze consists of open paths and walls, and movement is allowed in four directions: up, down, left, and right (no diagonal moves). The goal is to determine a sequence of moves that leads from the start to the goal without crossing any walls.
 
