@@ -1,214 +1,393 @@
+# Backtracking
+
+Backtracking is a systematic method for solving problems that incrementally build candidates to the solutions and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution. This approach is often used for constraint satisfaction problems, combinatorial optimization, and puzzles like the N-Queens problem or Sudoku.
+
 ## Recursive Functions
 
-Recursive functions are a unique type of function that has the ability to call itself in order to tackle complex problems by breaking them down into smaller and more manageable subproblems. The concept of recursion revolves around the principle of self-reference where the solution to the larger problem depends on solutions to smaller instances of the same problem.
+Recursive functions are functions that call themselves directly or indirectly to solve a problem by breaking it down into smaller, more manageable subproblems. This concept is fundamental in computer science and mathematics, as it allows for elegant solutions to complex problems through repeated application of a simple process.
 
-Key Concept:
+### Key Concepts:
 
-1. **Base Case:** The condition(s) under which the recursive function stops calling itself. This prevents the function from running indefinitely.
-2. **Recursive Case:** The part of the function where the function calls itself, working towards reaching the base case.
+1. **Base Case (Termination Condition)** is the condition under which the recursion stops. It prevents infinite recursion by providing an explicit solution for the simplest instance of the problem.
+2. **Recursive Case** is the part of the function where it calls itself with a modified parameter, moving towards the base case.
+
+### Mathematical Foundation:
+
+Recursion closely relates to mathematical induction, where a problem is solved by assuming that the solution to a smaller instance of the problem is known and building upon it.
+
+A recursive function can often be expressed using a recurrence relation:
+
+$$ f(n) = 
+   \begin{cases} 
+      g(n) & \text{if } n = \text{base case} \\
+      h(f(n - 1), n) & \text{otherwise}
+   \end{cases}
+$$
+
+where:
+
+- $g(n)$ is the base case value,
+- $h$ is a function that defines how to build the solution from the smaller instance.
 
 ### Example: Calculating Factorial
 
-Below is a Python code snippet showcasing the usage of a recursive function to calculate the factorial of a number:
+The factorial of a non-negative integer $n$ is the product of all positive integers less than or equal to $n$. Mathematically, it is defined as:
+
+$$ n! = 
+   \begin{cases}
+      1 & \text{if } n = 0 \\
+      n \times (n - 1)! & \text{if } n > 0
+   \end{cases}
+$$
+
+#### Python Implementation:
 
 ```python
 def factorial(n):
-    if n == 1:
-        return 1
+    if n == 0:
+        return 1  # Base case: 0! = 1
     else:
-        return n * factorial(n-1)
+        return n * factorial(n - 1)  # Recursive case
 ```
 
-Let's consider the factorial of 5:
+#### Detailed Computation for $n = 5$:
 
-1. `n` is not 1, so the function proceeds to the recursive case. It calls `factorial(4)`.
-2. `n` is not 1, so the function proceeds to the recursive case. It calls `factorial(3)`.
-3. `n` is not 1, so the function proceeds to the recursive case. It calls `factorial(2)`.
-4. `n` is not 1, so the function proceeds to the recursive case. It calls `factorial(1)`.
-5. `n` is 1, so the function returns 1.
+Let's trace the recursive calls for `factorial(5)`:
 
-Now, the function starts returning from the recursive calls:
+1. **Call**: `factorial(5)`
+   - Since $5 \neq 0$, compute $5 \times factorial(4)$.
+2. **Call**: `factorial(4)`
+   - Compute $4 \times factorial(3)$.
+3. **Call**: `factorial(3)`
+   - Compute $3 \times factorial(2)$.
+4. **Call**: `factorial(2)`
+   - Compute $2 \times factorial(1)$.
+5. **Call**: `factorial(1)`
+   - Compute $1 \times factorial(0)$.
+6. **Call**: `factorial(0)`
+   - Base case reached: return $1$.
 
-1. Returns `2 * factorial(1)` which is `2 * 1 = 2`. 
-2. Returns `3 * factorial(2)` which is `3 * 2 = 6`.
-3. Returns `4 * factorial(3)` which is `4 * 6 = 24`.
-4. Returns `5 * factorial(4)` which is `5 * 24 = 120`.
+Now, we backtrack and compute the results:
 
-Thus, `factorial(5)` results in 120.
+1. `factorial(1)` returns $1 \times 1 = 1$.
+2. `factorial(2)` returns $2 \times 1 = 2$.
+3. `factorial(3)` returns $3 \times 2 = 6$.
+4. `factorial(4)` returns $4 \times 6 = 24$.
+5. `factorial(5)` returns $5 \times 24 = 120$.
+
+Thus, $5! = 120$.
+
+### Visualization with Recursion Tree:
+
+Each recursive call can be visualized as a node in a tree:
+
+```
+factorial(5)
+|
++-- factorial(4)
+    |
+    +-- factorial(3)
+        |
+        +-- factorial(2)
+            |
+            +-- factorial(1)
+                |
+                +-- factorial(0)
+```
+
+The leaves represent the base case, and the tree unwinds as each recursive call returns.
+
+### Important Considerations:
+
+- **Termination:** Ensure that all recursive paths eventually reach a base case.
+- **Stack Depth:** Each recursive call adds a new frame to the call stack. Deep recursion can lead to stack overflow.
+- **Efficiency:** Recursive solutions can be elegant but may not always be the most efficient in terms of time and space.
+
+---
 
 ## Depth-First Search (DFS)
 
-Depth-First Search (DFS) is a powerful algorithm often used for traversing or searching through graphs or trees. 
+Depth-First Search is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores as far as possible along each branch before backtracking.
 
-Key Concepts:
+### Key Concepts:
 
-- *DFS operates under the principle of going as deep as possible from a starting point until it hits a dead end. Then, it backtracks and explores the next available path, ensuring no node is left unvisited.
-- When multiple paths are available, such as in a tree with multiple children for a node, DFS typically explores the leftmost path first. This is a convention chosen for simplicity and consistency across different data structures.
-- The algorithm uses a stack to remember nodes that are yet to be visited. A stack follows the "last in, first out" rule, which aligns perfectly with DFS's backtracking approach, allowing it to return to the most recent unexplored node.
-- DFS and backtracking techniques can be used together, creating a powerful toolkit for solving problems like mazes, network routing, or searching through web pages for specific information.
+- **Traversal Strategy:** DFS explores a branch to its deepest point before moving to another branch.
+- **Implementation:** Can be implemented using recursion or an explicit stack data structure.
+- **Applications:** Used in topological sorting, finding connected components, solving puzzles, and more.
 
-### Example Tree
+### Algorithm Steps:
+
+1. **Start at the Root Node:**
+   - Mark the node as visited.
+2. **Explore Each Branch:**
+   - For each unvisited neighbor, recursively perform DFS.
+3. **Backtrack:**
+   - When all neighbors are visited, return to the previous node.
+
+### Pseudocode:
+
+```pseudo
+DFS(node):
+    mark node as visited
+    for each neighbor in node.neighbors:
+        if neighbor is not visited:
+            DFS(neighbor)
+```
+
+### Example: Tree Traversal
+
+Consider the following tree:
 
 ```
-   A
-  / \
- B   C
-    / \
-   D   E
+       A
+      / \
+     B   C
+        / \
+       D   E
 ```
 
-In a depth-first search starting from 'A', the algorithm follows these steps:
+Traversal using DFS starting from node 'A':
 
-1. Start at the root node 'A'.
-2. Dive deeper into the leftmost unvisited branch, visiting 'B'.
-3. After reaching 'B' (a dead end), backtrack to 'A'.
-4. Explore the next available path, moving to 'C'.
-5. Continue the journey to 'D', the left child of 'C'.
-6. Finally, visit 'E', the right child of 'C'.
+1. Visit 'A'.
+2. Move to 'B'.
+   - 'B' has no unvisited neighbors; backtrack to 'A'.
+3. Move to 'C'.
+4. Move to 'D'.
+   - 'D' has no unvisited neighbors; backtrack to 'C'.
+5. Move to 'E'.
+   - 'E' has no unvisited neighbors; backtrack to 'C', then 'A'.
 
-So, the sequence of node visitation for this example would be: **A, B, C, D, E**.
+Traversal order: A → B → C → D → E
 
-### DFS Implementation in Python
-
-Here's a simple Python implementation of DFS for a tree structure:
+### Implementation in Python:
 
 ```python
 class Node:
     def __init__(self, value):
         self.value = value
-        self.left = None
-        self.right = None
+        self.children = []
+        self.visited = False
 
 def dfs(node):
-    if node is not None:
-        print(node.value)  # Visit the node
-        dfs(node.left)     # Recursively visit the left subtree
-        dfs(node.right)    # Recursively visit the right subtree
+    node.visited = True
+    print(node.value)
+    for child in node.children:
+        if not child.visited:
+            dfs(child)
 
-# Create the tree
-root = Node('A')
-root.left = Node('B')
-root.right = Node('C')
-root.right.left = Node('D')
-root.right.right = Node('E')
+# Create nodes
+node_a = Node('A')
+node_b = Node('B')
+node_c = Node('C')
+node_d = Node('D')
+node_e = Node('E')
+
+# Build the tree
+node_a.children = [node_b, node_c]
+node_c.children = [node_d, node_e]
 
 # Perform DFS
-dfs(root)
+dfs(node_a)
 ```
+
+### Analysis:
+
+- **Time Complexity:** $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges.
+- **Space Complexity:** $O(V)$, due to the recursion stack and the visited flag.
+
+### Applications:
+
+- **Cycle Detection in Graphs**
+- **Topological Sorting**
+- **Solving Mazes and Puzzles**
+- **Connected Components in Networks**
+
+---
 
 ## Backtracking
 
-Backtracking is a tried-and-true method for solving constraint satisfaction problems and problems involving combinatorial optimization. Although efficient for certain types of problems, it might slow down when dealing with large problems and could require significant memory.
+Backtracking is an algorithmic technique for solving problems recursively by trying to build a solution incrementally, removing solutions that fail to satisfy the constraints at any point.
 
-### Advantages
+### Key Concepts:
 
-* For some problem types, backtracking can be a highly efficient method.
-* It can generate all feasible solutions to a given problem.
+- **Partial Solutions:** Building solutions one piece at a time and evaluating them against the constraints.
+- **Constraints Checking:** Early detection of invalid solutions to prune the search space.
+- **Backtracking:** When a partial solution cannot be extended to a complete solution, the algorithm backtracks to try different options.
 
-### Disadvantages
+### General Algorithm Framework:
 
-* For large-scale problems, backtracking can be slower.
-* Maintaining the search tree in memory might require substantial space.
+1. **Define the Solution Space:** Understand the possible configurations of the solution.
 
-#### Real-world Examples
+2. **Recursive Function:**
+   - Start with an empty solution.
+   - At each step, try to add a new component to the solution.
 
-1. Figuring out all viable combinations of words that can be formed from a given set of characters.
-2. Generating all possible permutations of a designated set of numbers.
-3. The famous 8 queens puzzle: placing 8 queens on a chessboard in such a way that none can attack another.
-4. Finding all possible routes from the top-left corner to the bottom-right corner of a grid, given you can only move downwards or to the right.
+3. **Constraints Checking:**
+   - After adding a component, check if the partial solution is valid.
+   - If not valid, backtrack.
 
-### Crafting a Backtracking Algorithm
+4. **Base Case:**
+   - If the partial solution is complete and valid, record or output it.
 
-Here's a step-by-step guide to building a backtracking algorithm:
+5. **Backtracking:**
+   - If all options are exhausted at a level, remove the last component and backtrack to the previous level.
 
-1. Identify the problem's base case(s) where the algorithm should halt its search for solutions and return a result.
-2. Design a recursive function that takes in the current state of the candidate solution and any related parameters.
-3. If the current state is a valid solution or a base case has been reached within the function, it should return a result.
-4. If the current state isn't a solution and the base case hasn't been reached, generate a list of potential next steps or "choices" that could be made from the present state.
-5. Loop through the list of choices. For each choice, modify the current state and recursively call the function with this updated state.
-6. If the function finds a result for any of the choices, return that result. If none of the choices produce a result, return "no result" or revert to the previous state (this is the "backtracking").
-7. Repeat this process until a valid solution is identified or all possibilities have been considered.
+### Example: N-Queens Problem
 
-While backtracking algorithms can be demanding in terms of computational resources (since they might explore many possibilities before finding a solution), they can be incredibly effective for problems with a limited search space or problems where a candidate solution's validity can be swiftly checked.
+#### Problem Statement:
 
-### Visualization
+Place $N$ queens on an $N \times N$ chessboard such that no two queens threaten each other.
 
-Consider a maze with the start at the top left and the goal at the bottom right. You can only move right or down. The "#" indicates a wall, and "." indicates an open space:
+#### Constraints:
 
-```
-. . # . . .
-. # . . . .
-. . . . # .
-. # # # . .
-. . . # . .
-# # # # . .
-```
+- No two queens share the same row, column, or diagonal.
 
-1. The algorithm starts at the top-left corner of the maze at position `(0, 0)`. From here, it explores the neighboring cells.
+#### Solution Representation:
 
-2. It first moves downwards, visiting `(1, 0)` and `(2, 0)`. This is because our algorithm prioritizes moving down and right.
+- Use a list or array where the index represents the row and the value represents the column position of the queen.
 
-3. From `(2, 0)`, it can't move down because there's either a wall (`#`) or the boundary of the maze. So, it moves to the right, visiting cells `(2, 1)`, `(2, 2)`, and `(2, 3)`.
-
-4. At `(2, 3)`, it encounters a wall on the right, so it can't continue in this direction. It then tries to move downwards but finds another wall there. So, it backtracks to move upwards to cell `(1, 3)`.
-
-5. From `(1, 3)`, it again tries moving rightwards as it's the preferred direction, visiting `(1, 4)` and `(1, 5)`.
-
-6. From `(1, 5)`, it cannot go right or up as there are either walls or visited cells, and it can't go left because that would be backtracking. So, it moves down to `(2, 5)`.
-
-7. It continues moving downwards, visiting `(3, 5)`, `(4, 5)`, and finally reaching the goal at `(5, 5)`.
-
-The backtracking happens at step 4 when the algorithm realizes it has reached a dead end at `(2, 3)` and must backtrack to `(1, 3)` to explore unvisited cells. This step signifies the essence of the backtracking algorithm: trying out different possibilities and stepping back when encountering a block.
-
-Here is the code snippet in Python:
+#### Python Implementation:
 
 ```python
-# Function to find the path from start (0, 0) to goal
-def solve_maze(maze):
+def solve_n_queens(N):
+    solutions = []
+    board = [-1] * N  # board[row] = column position of queen in that row
+
+    def is_safe(row, col):
+        for i in range(row):
+            if (board[i] == col or
+                board[i] - i == col - row or
+                board[i] + i == col + row):
+                return False
+        return True
+
+    def place_queen(row):
+        if row == N:
+            solutions.append(board.copy())
+            return
+        for col in range(N):
+            if is_safe(row, col):
+                board[row] = col
+                place_queen(row + 1)
+                board[row] = -1  # Backtrack
+
+    place_queen(0)
+    return solutions
+
+# Example usage:
+solutions = solve_n_queens(4)
+print(f"Number of solutions: {len(solutions)}")
+for sol in solutions:
+    print(sol)
+```
+
+#### Explanation:
+
+- **Recursive Function `place_queen`:** Tries to place a queen in a row.
+- **Safety Check `is_safe`:** Ensures the queen does not conflict with previously placed queens.
+- **Backtracking:** If placing a queen leads to no solution, remove it and try the next position.
+
+### Visualization of Backtracking Tree:
+
+At each node, the algorithm tries a new position for a queen. If it reaches a dead end, it backtracks to the previous node and tries the next position.
+
+### Applications:
+
+1. **Sudoku Solving:** Filling a grid while adhering to the constraints.
+2. **Permutation and Combination Generation:** Generating all possible arrangements.
+3. **Graph Coloring:** Coloring a graph with minimal colors without adjacent same colors.
+4. **Puzzle Solving:** Solving puzzles like crosswords or cryptograms.
+
+### Advantages:
+
+- **Completeness:** Finds all possible solutions.
+- **Flexibility:** Can be adapted to a wide range of problems.
+- **Simplicity:** Conceptually straightforward.
+
+### Disadvantages:
+
+- **Time Complexity:** Often exponential; can be slow for large problem sizes.
+- **Memory Usage:** Recursive calls can consume a lot of memory.
+
+### Optimization Techniques:
+
+- **Pruning:** Eliminate paths early that cannot lead to a solution.
+- **Heuristics:** Use problem-specific knowledge to improve efficiency.
+- **Constraint Propagation:** Deduce variable domains to reduce the search space.
+
+---
+
+### Maze Solving Example
+
+#### Problem Statement:
+
+Find a path from the starting point to the goal in a maze represented by a 2D grid.
+
+#### Maze Representation:
+
+- **Grid Cells:**
+  - `.` (dot) represents an open path.
+  - `#` (hash) represents a wall or obstacle.
+- **Allowed Moves:** Up, down, left, right (no diagonal movement).
+
+#### Python Implementation:
+
+```python
+def solve_maze(maze, start, goal):
+    rows, cols = len(maze), len(maze[0])
     path = []
-    if explore_maze(maze, 0, 0, path):
+
+    def is_valid(x, y):
+        return (0 <= x < rows and 0 <= y < cols and maze[x][y] == '.')
+
+    def explore(x, y):
+        if not is_valid(x, y):
+            return False
+        if (x, y) == goal:
+            path.append((x, y))
+            return True
+        maze[x][y] = 'V'  # Mark as visited
+        path.append((x, y))
+        # Try all possible directions
+        if (explore(x + 1, y) or
+            explore(x - 1, y) or
+            explore(x, y + 1) or
+            explore(x, y - 1)):
+            return True
+        path.pop()
+        maze[x][y] = '.'  # Unmark visited
+        return False
+
+    if explore(*start):
         return path
     else:
-        return "No solution found!"
+        return None
 
-
-# Recursive function to explore the maze
-def explore_maze(maze, x, y, path):
-    # If point is outside the maze, return False
-    if x < 0 or y < 0 or x >= len(maze) or y >= len(maze[0]):
-        return False
-
-    # If point is a wall or has been visited before, return False
-    if maze[x][y] == "#" or maze[x][y] == "V":
-        return False
-
-    # Mark point as visited
-    maze[x][y] = "V"
-    path.append((x, y))
-
-    # If point is the goal, return True
-    if x == len(maze) - 1 and y == len(maze[0]) - 1:
-        return True
-
-    # If any neighboring point is the goal, return True
-    if (
-        explore_maze(maze, x + 1, y, path)
-        or explore_maze(maze, x, y + 1, path)
-        or explore_maze(maze, x - 1, y, path)
-        or explore_maze(maze, x, y - 1, path)
-    ):
-        return True
-
-    # If no neighboring point is the goal, remove point from path and return False
-    path.pop()
-    return False
-
-
-for row in maze:
-    print(f'{"".join(row)}')
-
-print(solve_maze(maze))
+# Sample maze
+maze = [
+    ['.', '.', '#', '.', '.', '.'],
+    ['.', '#', '.', '.', '.', '.'],
+    ['.', '.', '.', '.', '#', '.'],
+    ['.', '#', '#', '#', '.', '.'],
+    ['.', '.', '.', '#', '.', '.'],
+    ['#', '#', '#', '#', '.', '.']
+]
+start = (0, 0)
+goal = (5, 5)
+solution = solve_maze(maze, start, goal)
+if solution:
+    print("Path to goal:")
+    for step in solution:
+        print(step)
+else:
+    print("No path found.")
 ```
+
+Explanation:
+
+- The `explore` function recursively searches for a path to the goal.
+- Cells are marked to prevent revisiting.
+- If a path doesn't lead to the goal, the function backtracks and tries other directions.
 
 ## List of Problems
 
