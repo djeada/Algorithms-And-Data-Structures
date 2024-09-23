@@ -240,41 +240,16 @@ Mastering algorithms is crucial for solving complex programming problems efficie
 
 ### Graph Algorithms
 
-- **Breadth-First Search (BFS)**:
+Below is a detailed comparison of commonly used graph algorithms:
 
-  - **Uses**: Finding the shortest path in unweighted graphs, level-order traversal.
-  
-  - **Implementation**: Use a queue to process nodes in a FIFO manner.
-
-- **Depth-First Search (DFS)**:
-
-  - **Uses**: Topological sorting, cycle detection, path finding.
-  
-  - **Implementation**: Use recursion or a stack to explore as deep as possible before backtracking.
-
-- **Dijkstra's Algorithm**:
-
-  - **Uses**: Shortest path in weighted graphs with non-negative weights.
-  
-  - **Implementation**: Use a min-heap to select the next node with the smallest tentative distance.
-
-- **Bellman-Ford Algorithm**:
-
-  - **Uses**: Shortest path in graphs with negative weights, detecting negative cycles.
-  
-  - **Implementation**: Relax all edges \( |V| - 1 \) times, where \( |V| \) is the number of vertices.
-
-- **Floyd-Warshall Algorithm**:
-
-  - **Uses**: All pairs shortest paths.
-  
-  - **Implementation**: Use a 2D matrix to store distances, update distances considering each vertex as an intermediate point.
-
-- **Union-Find Data Structure**:
-
-  - **Uses**: Keeping track of disjoint sets, cycle detection in Kruskal's algorithm.
-  
-  - **Implementation**: Optimize with path compression and union by rank.
+| **Algorithm/Technique**        | **Uses**                                                   | **Implementation**                                                                               |
+|---------------------------------|-------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| **Breadth-First Search (BFS)**  | Finding the shortest path in unweighted graphs, level-order traversal. | Use a queue to process nodes in a First In, First Out (FIFO) manner.                              |
+| **Depth-First Search (DFS)**    | Topological sorting, cycle detection, pathfinding.          | Use recursion or a stack to explore as deep as possible before backtracking.                      |
+| **Dijkstra's Algorithm**        | Shortest path in weighted graphs with non-negative weights. | Use a min-heap (priority queue) to select the next node with the smallest tentative distance.      |
+| **Bellman-Ford Algorithm**      | Shortest path in graphs with negative weights, detecting negative cycles. | Relax all edges V-1 times, where V is the number of vertices.                                     |
+| **Floyd-Warshall Algorithm**    | All pairs shortest paths.                                   | Use a 2D matrix to store distances, updating distances by considering each vertex as an intermediate point. |
+| **Union-Find Data Structure**   | Keeping track of disjoint sets, cycle detection in Kruskal's algorithm. | Optimize with path compression and union by rank for efficient merging of sets and lookups.        |
 
 ## Sorting Algorithms
 
