@@ -8,9 +8,9 @@ When tackling programming puzzles, consider the following comprehensive strategi
 
 - When tackling a problem, it is often beneficial to begin by **implementing a straightforward solution** to gain a basic understanding of its intricacies. This approach provides insight into potential bottlenecks and serves as a foundation for further optimization.
 - Writing **unit tests is essential** to validate the correctness of your solution by ensuring it works for various input scenarios. They play a crucial role in identifying logical errors and edge cases early on, while also enabling regression testing after making changes to the code.
-- It is important to **evaluate the time and space complexity** of your algorithm, particularly in competitive programming or interviews. Striving for optimal time complexity, such as \( O(n) \), is crucial while also keeping an eye on space complexity to avoid unnecessary memory usage.
+- It is important to **evaluate the time and space complexity** of your algorithm, particularly in competitive programming or interviews. Striving for optimal time complexity, such as $O(n)$, is crucial while also keeping an eye on space complexity to avoid unnecessary memory usage.
 - **Selecting the right data structure** can significantly impact your solution's performance. Understanding the strengths and weaknesses of different data structures allows you to make the most efficient choice for a given problem.
-- **Using hash tables** is often a good strategy when fast lookup operations are required. With an average-case complexity of \( O(1) \), hash tables are useful for counting frequencies, checking duplicates, or mapping keys to values.
+- **Using hash tables** is often a good strategy when fast lookup operations are required. With an average-case complexity of $O(1)$, hash tables are useful for counting frequencies, checking duplicates, or mapping keys to values.
 - **Memoization and dynamic programming** can be employed for problems with overlapping subproblems, helping to avoid redundant computations and significantly improve efficiency by caching results.
 - For complex problems, it can be helpful to **break the problem down into smaller subproblems**. Solving these subproblems individually can make the overall problem easier to manage and understand.
 - In some situations, you may need to **consider both recursive and iterative approaches** to solving the problem. While recursion may feel more natural for certain problems, an iterative solution could offer better efficiency or avoid stack overflow issues.
@@ -25,11 +25,11 @@ Understanding and effectively using data structures is fundamental in programmin
 
 Arrays are fundamental data structures that store elements in contiguous memory locations, allowing efficient random access. Here are strategies for working with arrays:
 
-- **Sorting arrays** can greatly simplify many types of problems by bringing order to the data. Algorithms like Quick Sort and Merge Sort are efficient choices, with average and worst-case time complexities of \( O(n \log n) \). However, for nearly sorted arrays or smaller datasets, **Insertion Sort** might be a more efficient option.
-- In **sorted arrays**, binary search is an efficient method for locating elements or determining insertion points. This technique operates with a time complexity of \( O(\log n) \), but care must be taken in handling mid-point calculations, particularly in languages prone to **integer overflow** due to fixed-size integer types.
+- **Sorting arrays** can greatly simplify many types of problems by bringing order to the data. Algorithms like Quick Sort and Merge Sort are efficient choices, with average and worst-case time complexities of $O(n \log n)$. However, for nearly sorted arrays or smaller datasets, **Insertion Sort** might be a more efficient option.
+- In **sorted arrays**, binary search is an efficient method for locating elements or determining insertion points. This technique operates with a time complexity of $O(\log n)$, but care must be taken in handling mid-point calculations, particularly in languages prone to **integer overflow** due to fixed-size integer types.
 - The **two-pointer technique** is an approach that uses two indices to traverse the array, often from opposite ends. This technique is particularly useful for problems involving pairs or triplets, such as finding pairs that sum to a target value, and can optimize space and time.
 - The **sliding window technique** is highly effective for problems that involve subarrays or substrings, such as finding the longest substring without repeating characters. This method efficiently maintains a dynamic subset of the array while iterating through it.
-- **Prefix sums** allow for efficient range sum queries by preprocessing the array in \( O(n) \) time. Similarly, **difference arrays** can be used to handle range update queries efficiently, reducing the need to update individual elements one by one.
+- **Prefix sums** allow for efficient range sum queries by preprocessing the array in $O(n)$ time. Similarly, **difference arrays** can be used to handle range update queries efficiently, reducing the need to update individual elements one by one.
 - In scenarios where space is limited, **in-place operations** are preferred because they modify the array without using additional memory. It’s important to be cautious with side effects to ensure that in-place modifications do not inadvertently affect other parts of the program.
 - When **handling duplicates**, it’s crucial to account for their impact on your algorithm. For example, when using the two-pointer technique, duplicates may need to be skipped to prevent redundant calculations or incorrect results.
 - **Memory considerations** are important when working with large arrays, as they can consume substantial amounts of memory. It's vital to be mindful of the space complexity, especially in constrained environments, to prevent excessive memory usage.
@@ -38,8 +38,8 @@ Arrays are fundamental data structures that store elements in contiguous memory 
 
 Strings, as sequences of characters, often require special handling due to their immutable nature in some languages and the variety of operations performed on them.
 
-- In languages with **immutable strings**, concatenating strings using the `+` operator inside a loop can lead to inefficient \( O(n^2) \) time complexity. To achieve \( O(n) \) time for concatenation, use a `StringBuilder` in Java or the `''.join(list_of_strings)` method in Python.
-- **String search algorithms** like Knuth-Morris-Pratt (KMP), Rabin-Karp, or Boyer-Moore provide efficient ways to find patterns within strings, significantly improving on the naive \( O(nm) \) method, where \( n \) is the length of the text and \( m \) is the length of the pattern.
+- In languages with **immutable strings**, concatenating strings using the `+` operator inside a loop can lead to inefficient $O(n^2)$ time complexity. To achieve $O(n)$ time for concatenation, use a `StringBuilder` in Java or the `''.join(list_of_strings)` method in Python.
+- **String search algorithms** like Knuth-Morris-Pratt (KMP), Rabin-Karp, or Boyer-Moore provide efficient ways to find patterns within strings, significantly improving on the naive $O(nm)$ method, where $n$ is the length of the text and $m$ is the length of the pattern.
 - **Tries (prefix trees)** are useful for storing dynamic sets of strings and allow efficient retrieval of strings sharing a common prefix. They are commonly applied in tasks such as autocomplete systems, spell checking, and IP routing.
 - **Regular expressions** offer powerful tools for complex pattern matching and text manipulation, but care must be taken to construct efficient patterns. Poorly designed regular expressions can lead to exponential time complexity, affecting performance.
 - When handling strings, it is important to be mindful of **Unicode and character encoding** (e.g., ASCII, UTF-8), particularly when dealing with internationalization or data from external sources to ensure correct string processing.
@@ -50,8 +50,8 @@ Strings, as sequences of characters, often require special handling due to their
 Linked lists are dynamic data structures consisting of nodes that contain data and references to the next (and possibly previous) nodes.
 
 - **Choosing the appropriate list type** depends on the problem's needs. Singly linked lists are ideal for scenarios where traversal is only in one direction, minimizing memory usage. On the other hand, doubly linked lists are better suited for cases where traversal in both directions is required or where efficient insertions and deletions from both ends are needed.
-- **Insertions and deletions in linked lists** are highly efficient at known positions, particularly at the head or tail, with operations typically taking \( O(1) \) time. When deleting nodes, it is crucial to maintain a reference to the previous node to update pointers properly and avoid breaking the list.
-- **Reversing a singly linked list** can be achieved by iterating through the list and adjusting the `next` pointers of each node to point to the previous one. This process can be completed in \( O(n) \) time with only \( O(1) \) additional space, making it highly efficient.
+- **Insertions and deletions in linked lists** are highly efficient at known positions, particularly at the head or tail, with operations typically taking $O(1)$ time. When deleting nodes, it is crucial to maintain a reference to the previous node to update pointers properly and avoid breaking the list.
+- **Reversing a singly linked list** can be achieved by iterating through the list and adjusting the `next` pointers of each node to point to the previous one. This process can be completed in $O(n)$ time with only $O(1)$ additional space, making it highly efficient.
 - **Detecting cycles in a linked list** can be done using Floyd’s Tortoise and Hare algorithm, where a slow pointer and a fast pointer traverse the list at different speeds. If there is a cycle, the fast pointer will eventually meet the slow pointer.
 - It's important to handle **edge cases** in linked lists, such as dealing with empty lists, single-node lists, or lists with cycles. Always check for null pointers to prevent runtime exceptions or crashes, especially in languages that don't automatically handle such errors.
 - In environments where **memory management** is manual, it's essential to explicitly deallocate memory for nodes once they are no longer in use. This prevents memory leaks and ensures that your program runs efficiently without unnecessary memory consumption.
@@ -61,10 +61,10 @@ Linked lists are dynamic data structures consisting of nodes that contain data a
 Trees are hierarchical data structures with a root node and child nodes. Binary trees are a specific type where each node has at most two children.
 
 - **Tree traversals** are fundamental for working with binary trees, including in-order, pre-order, and post-order traversals. These can be implemented both recursively and iteratively, with stacks being used for the iterative versions to simulate the recursive call stack.
-- **Binary Search Trees (BSTs)** are structured so that the left subtree contains nodes with keys smaller than the parent node, while the right subtree contains nodes with larger keys. This property allows efficient search, insertion, and deletion operations, typically in \( O(\log n) \) time for balanced trees.
-- **Balancing trees** like AVL trees and Red-Black trees ensure that tree height remains logarithmic, allowing operations such as search, insert, and delete to remain efficient at \( O(\log n) \) time. These trees achieve balance through rotations after insertions or deletions.
+- **Binary Search Trees (BSTs)** are structured so that the left subtree contains nodes with keys smaller than the parent node, while the right subtree contains nodes with larger keys. This property allows efficient search, insertion, and deletion operations, typically in $O(\log n)$ time for balanced trees.
+- **Balancing trees** like AVL trees and Red-Black trees ensure that tree height remains logarithmic, allowing operations such as search, insert, and delete to remain efficient at $O(\log n)$ time. These trees achieve balance through rotations after insertions or deletions.
 - **Heaps** are specialized tree structures where, in a max-heap, every parent node is greater than or equal to its children. Heaps are most commonly used to implement priority queues, as they allow efficient access to the highest or lowest priority element.
-- **Binary heaps**, typically implemented using arrays, are an efficient way to represent heaps in memory. They support operations such as insertions, deletions, and heapify in \( O(\log n) \) time, while **Heap Sort**, which uses binary heaps, is an in-place sorting algorithm with a time complexity of \( O(n \log n) \).
+- **Binary heaps**, typically implemented using arrays, are an efficient way to represent heaps in memory. They support operations such as insertions, deletions, and heapify in $O(\log n)$ time, while **Heap Sort**, which uses binary heaps, is an in-place sorting algorithm with a time complexity of $O(n \log n)$.
 - When solving **common tree problems**, be comfortable with tasks such as finding the lowest common ancestor of two nodes, calculating the depth or height of a tree, and performing level-order traversals using breadth-first search (BFS) methods.
 
 ### Working with Graphs
@@ -74,7 +74,7 @@ Graphs consist of vertices (nodes) and edges connecting them, used to represent 
 I. **Graph Representations**:
 
 - An **adjacency list** is a structure where each element corresponds to a node and contains a list of adjacent nodes. It is particularly efficient for representing sparse graphs, where not all nodes are connected to many others.
-- An **adjacency matrix** is a 2D array in which the entry \( (i, j) \) indicates whether there is an edge (and possibly the weight of that edge) between nodes \( i \) and \( j \). This method is more suitable for dense graphs where many nodes are interconnected.
+- An **adjacency matrix** is a 2D array in which the entry $(i, j)$ indicates whether there is an edge (and possibly the weight of that edge) between nodes $i$ and $j$. This method is more suitable for dense graphs where many nodes are interconnected.
 
 II. **Graph Traversal Algorithms**:
 
@@ -90,7 +90,7 @@ IV. **Shortest Path Algorithms**:
 
 - **Dijkstra's Algorithm** finds the shortest path from a source node to all other nodes in a graph with non-negative edge weights. It uses a priority queue (min-heap) to efficiently select the node with the smallest tentative distance.
 - **Bellman-Ford Algorithm** can handle graphs with negative edge weights and detects negative weight cycles. It works by repeatedly relaxing all edges in the graph.
-- **Floyd-Warshall Algorithm** computes shortest paths between all pairs of nodes. It is suitable for dense graphs but has a higher time complexity of \( O(n^3) \), making it less efficient for sparse graphs.
+- **Floyd-Warshall Algorithm** computes shortest paths between all pairs of nodes. It is suitable for dense graphs but has a higher time complexity of $O(n^3)$, making it less efficient for sparse graphs.
 
 V. **Minimum Spanning Trees (MST)**:
 
@@ -104,7 +104,7 @@ VI. **Network Flow Algorithms**:
 
 VII. **Other Important Concepts**:
 
-- **Topological sorting** is applied to directed acyclic graphs (DAGs) and produces a linear ordering of vertices such that for every directed edge \( uv \), vertex \( u \) appears before \( v \) in the ordering.
+- **Topological sorting** is applied to directed acyclic graphs (DAGs) and produces a linear ordering of vertices such that for every directed edge $uv$, vertex $u$ appears before $v$ in the ordering.
 - **Strongly Connected Components (SCCs)** can be identified in directed graphs using algorithms such as Kosaraju's or Tarjan's, which efficiently decompose the graph into its SCCs.
 - **Graph coloring and bipartite graphs** involve assigning colors to nodes such that no two adjacent nodes share the same color. BFS or DFS can be used to check if a graph is bipartite (i.e., 2-colorable), while backtracking or greedy methods may be used for more general graph coloring problems.
 
@@ -112,21 +112,12 @@ VII. **Other Important Concepts**:
 
 Hash tables store key-value pairs for efficient lookup, insertion, and deletion.
 
-- **Choosing a Good Hash Function**: The hash function should distribute keys uniformly to minimize collisions. For custom objects, override hash functions carefully to maintain consistency.
-
-- **Handling Collisions**:
-
-  - **Chaining**: Store colliding elements in a linked list at each index.
-  
-  - **Open Addressing**: Find another slot using probing methods (linear, quadratic, or double hashing).
-
-- **Load Factor and Resizing**: Monitor the load factor (number of elements divided by the number of buckets). Resize and rehash when the load factor exceeds a threshold to maintain performance.
-
-- **Immutable Keys**: Use immutable objects as keys to prevent issues with key mutation after insertion.
-
-- **Applications**: Use hash tables for frequency counts, caching, indexing, and implementing associative arrays.
-
-- **Time Complexity**: While hash tables have \( O(1) \) average-case time complexity, be aware that the worst-case can degrade to \( O(n) \) if many collisions occur.
+- When **choosing a good hash function**, ensure it distributes keys uniformly across the table to reduce the likelihood of collisions. For custom objects, it's important to override hash functions carefully, ensuring they are consistent and align with the object’s equality logic.
+- To deal with **collisions**, two main methods are commonly used: **Chaining**, where multiple elements that hash to the same index are stored in a linked list or another structure at that index. **Open addressing**, which resolves collisions by finding another empty slot through probing methods, such as linear probing, quadratic probing, or double hashing.
+- The **load factor and resizing** are important aspects of hash table management. The load factor, which is the ratio of the number of elements to the number of buckets, should be monitored. When the load factor exceeds a certain threshold (often around 0.7), it's time to resize and rehash the table to maintain performance.
+- Always use **immutable keys** in a hash table to avoid complications from key mutation. If a key changes after insertion, it can corrupt the structure of the hash table and lead to retrieval failures.
+- Hash tables have numerous **applications**, including frequency counting, caching, indexing, and implementing associative arrays like dictionaries or maps in various programming languages.
+- While hash tables offer **$O(1)$ average-case time complexity**, it’s crucial to understand that the worst-case time complexity can degrade to \(O(n)\) if the hash function leads to many collisions, particularly when the load factor is too high.
 
 ## Algorithms
 
@@ -134,109 +125,90 @@ Mastering algorithms is crucial for solving complex programming problems efficie
 
 ### Two-Pointer Technique
 
-- **When to Use**: Use when dealing with sorted arrays or when you need to find pairs or triplets that satisfy a condition.
+I. The **two-pointer technique** is ideal when working with sorted arrays or when the task involves finding pairs or triplets that meet a certain condition, such as summing to a target value.
 
-- **Implementation Tips**:
+II. **Implementation tips** for the two-pointer technique include:
 
-  - **Initialization**: Set two pointers at appropriate positions (e.g., start and end of the array).
-  
-  - **Movement Logic**: Move pointers based on the comparison of their sum/product with the target value.
-  
-  - **Avoiding Duplicates**: Skip over duplicate elements if necessary to avoid redundant results.
+- **Initialization**, where two pointers are placed at specific positions, typically at the start and end of the array.
+- The **movement logic** dictates how the pointers move based on the comparison of the sum or product of the elements they point to with the target value.
+- **Avoiding duplicates** is crucial, especially when finding multiple solutions, so you should skip over repeated elements to prevent redundant results.
 
-- **Example**: Finding all pairs in a sorted array that sum to a specific value.
+III. An example of this technique is finding all pairs in a sorted array that sum to a given value.
 
 ### Recursion
 
-- **Principles**:
+I. **Recursion** works by breaking a problem into smaller instances of itself, with each call reducing the size of the problem.
 
-  - **Base Case**: Define a clear base case to terminate recursion.
-  
-  - **Recursive Case**: Ensure each recursive call progresses toward the base case.
-  
-  - **Correctness**: Ensure the logic correctly represents the problem's structure.
+II. Key **principles** of recursion include:
 
-- **Considerations**:
+- Defining a clear **base case** to ensure that recursion terminates when the simplest version of the problem is solved.
+- Ensuring that the **recursive case** moves toward the base case by reducing the problem’s size or complexity with each call.
+- Verifying the **correctness** of your recursion logic to ensure it mirrors the structure of the problem.
 
-  - **Stack Overflow**: Be cautious of maximum recursion depth limits. For deep recursion, consider converting to an iterative solution or using tail recursion optimization if supported.
-  
-  - **Memoization**: Cache results of recursive calls to avoid redundant computations in problems with overlapping subproblems.
+III. Consider **stack overflow** when recursion depth is too great. You can either switch to an iterative approach or use tail recursion optimization (if supported by the language). **Memoization** is another technique to improve efficiency by caching results of recursive calls to avoid redundant computations.
 
 ### Backtracking
 
-- **When to Use**: Suitable for problems requiring exploration of all possible configurations (e.g., puzzles like Sudoku, N-Queens, combinatorial problems).
+I. **Backtracking** is well-suited for problems that require exploring all potential configurations, such as puzzles like Sudoku, the N-Queens problem, or combinatorial tasks.
 
-- **Implementation Tips**:
+II. **Implementation tips** for backtracking include:
 
-  - **State Representation**: Clearly define how to represent the current state.
-  
-  - **Constraints Checking**: Before proceeding, check if the current state satisfies the problem's constraints to prune invalid paths early.
-  
-  - **Recursive Exploration**: Recursively explore each valid option, modifying the state accordingly.
-  
-  - **Backtracking**: After exploring a path, undo the last change (backtrack) before trying the next option.
-  
-  - **Optimization**: Use heuristics to prioritize promising paths.
+- Clearly defining how to represent the **current state** of the problem.
+- Using **constraints checking** before progressing to ensure that the current path meets the problem's criteria, which helps prune invalid paths early.
+- Recursively **exploring** valid options by modifying the state and recursively diving deeper into the solution space.
+- After exploring each path, **backtracking** involves undoing the last change and trying the next alternative, ensuring all possible solutions are considered.
+- Consider **optimizations** such as using heuristics to explore more promising paths first.
 
-- **Example**: Solving the N-Queens problem by placing queens row by row and backtracking when a conflict is detected.
+III. A classic example is solving the **N-Queens problem**, where queens are placed row by row, and conflicts are resolved by backtracking when necessary.
 
 ### Dynamic Programming
 
-- **Principles**: Used for optimization problems where the problem can be broken down into overlapping subproblems with optimal substructure.
-
-- **Approaches**:
-
-  - **Top-Down (Memoization)**: Use recursion with caching to store results of subproblems.
+I. **Dynamic programming** is used to solve optimization problems by breaking them down into overlapping subproblems with an optimal substructure, meaning solutions to smaller subproblems can be reused to solve larger problems.
   
-  - **Bottom-Up (Tabulation)**: Build a table iteratively from the smallest subproblems up to the original problem.
+II. There are two primary **approaches** to dynamic programming:
 
-- **Key Steps**:
+- The **top-down approach (memoization)** involves using recursion while caching the results of subproblems to avoid redundant computations.
+- The **bottom-up approach (tabulation)** builds a solution iteratively by solving the smallest subproblems first and using their solutions to solve larger subproblems.
+  
+III. The **key steps** in dynamic programming include:
 
-  - **Define Subproblems**: Break the problem into smaller, manageable parts.
-  
-  - **Identify State Variables**: Determine what parameters uniquely define each subproblem.
-  
-  - **Recurrence Relation**: Establish how to compute the solution of a subproblem using solutions to smaller subproblems.
-  
-  - **Initialization**: Set up base cases for the DP table or memoization cache.
-  
-  - **Iteration Order**: For bottom-up approaches, determine the order to fill the DP table.
+- **Defining the subproblems** to break the main problem into manageable parts.
+- **Identifying the state variables** that uniquely define each subproblem.
+- Establishing a **recurrence relation** to compute the solution of each subproblem based on smaller subproblems.
+- Proper **initialization** of base cases in a table or memoization cache.
+- Determining the correct **iteration order** to fill the DP table for bottom-up approaches.
 
-- **Space Optimization**: Reduce space complexity by noticing that only a limited portion of the DP table is needed at any time.
-
-- **Example**: The classic Fibonacci sequence, Knapsack problem, or finding the minimum edit distance between two strings.
+IV. **Space optimization** is often possible by realizing that only a few recent states are needed, reducing space complexity.
+  
+V. Classic examples include problems like the Fibonacci sequence, the Knapsack problem, or calculating the minimum edit distance between two strings.
 
 ### Greedy Algorithms
 
-- **When to Use**: Suitable when making the locally optimal choice at each step leads to a global optimum.
-
-- **Characteristics**:
-
-  - **Optimal Substructure**: The optimal solution contains optimal solutions to subproblems.
+I. **Greedy algorithms** are used when making a locally optimal choice at each step leads to a globally optimal solution.
   
-  - **Greedy Choice Property**: A globally optimal solution can be arrived at by making locally optimal choices.
+II. The two key **characteristics** of greedy algorithms are:
 
-- **Implementation Tips**:
+- **Optimal substructure**, meaning the overall solution incorporates optimal solutions to subproblems.
+- The **greedy choice property**, where making the best local decision at each step results in the globally best solution.
 
-  - **Sorting**: Often necessary to sort the data based on some criterion before applying the greedy approach.
-  
-  - **Proof of Correctness**: Not all problems can be solved greedily. Ensure the greedy choice leads to an optimal solution by providing a proof or counterexamples.
+III. Common **implementation tips** for greedy algorithms include:
 
-- **Examples**: Activity selection problem, Huffman coding, Prim's and Kruskal's algorithms for MST.
+- **Sorting** the input data according to a specific criterion before applying the greedy strategy.
+- Always ensure the greedy choice leads to an optimal solution by providing a **proof of correctness** or counterexamples.
+
+IV. Examples of greedy algorithms include the activity selection problem, Huffman coding, and algorithms for finding minimum spanning trees (Prim's and Kruskal's).
 
 ### Divide and Conquer
 
-- **Principles**: Divide the problem into smaller subproblems, solve them independently, and combine their solutions.
-
-- **Implementation Tips**:
-
-  - **Recursion**: Often implemented recursively, where each recursive call handles a subproblem.
+I. The **divide and conquer** strategy solves problems by dividing them into smaller subproblems, solving those independently, and then combining their solutions.
   
-  - **Combine Step**: Pay special attention to how subproblem solutions are combined.
-  
-  - **Base Cases**: Define base cases where the problem is small enough to be solved directly.
+II. **Implementation tips** for divide and conquer:
 
-- **Examples**: Merge Sort, Quick Sort, Binary Search.
+- Use **recursion** to divide the problem, with each recursive call handling a subproblem.
+- Pay attention to the **combine step**, as the efficiency of combining subproblem solutions can affect the overall performance.
+- Define **base cases** for small subproblems that can be solved directly without further division.
+
+III. Examples of divide and conquer algorithms include Merge Sort, Quick Sort, and Binary Search.
 
 ### Graph Algorithms
 
@@ -261,33 +233,33 @@ Below is a detailed comparison of commonly used sorting algorithms:
 
 | **Algorithm**       | **Average Time Complexity** | **Worst-Case Time Complexity** | **Space Complexity** | **Stability** | **Best Use Case**                            | **Notes**                                   |
 |---------------------|-----------------------------|-------------------------------|----------------------|---------------|----------------------------------------------|---------------------------------------------|
-| **Bubble Sort**     | \( O(n^2) \)                | \( O(n^2) \)                  | \( O(1) \)           | Stable        | Educational purposes, small datasets         | Simple but inefficient for large datasets   |
-| **Insertion Sort**  | \( O(n^2) \)                | \( O(n^2) \)                  | \( O(1) \)           | Stable        | Nearly sorted or small datasets              | Efficient for small or nearly sorted datasets |
-| **Selection Sort**  | \( O(n^2) \)                | \( O(n^2) \)                  | \( O(1) \)           | Unstable      | Small datasets, when memory is limited       | Inefficient for large datasets             |
-| **Merge Sort**      | \( O(n \log n) \)           | \( O(n \log n) \)             | \( O(n) \)           | Stable        | Large datasets, linked lists                 | Requires additional memory for merging     |
-| **Quick Sort**      | \( O(n \log n) \)           | \( O(n^2) \)                  | \( O(\log n) \)      | Unstable      | Large datasets, general-purpose sorting      | Pivot selection strategy affects performance |
-| **Heap Sort**       | \( O(n \log n) \)           | \( O(n \log n) \)             | \( O(1) \)           | Unstable      | Large datasets, in-place sorting             | Efficient with minimal memory usage        |
-| **Radix Sort**      | \( O(nk) \)                 | \( O(nk) \)                   | \( O(n + k) \)       | Stable        | Large datasets with integer keys             | Non-comparative sorting algorithm          |
-| **Counting Sort**   | \( O(n + k) \)              | \( O(n + k) \)                | \( O(k) \)           | Stable        | Small range of integer keys                  | Efficient when range \( k \) is small      |
-| **Tim Sort**        | \( O(n \log n) \)           | \( O(n \log n) \)             | \( O(n) \)           | Stable        | Real-world data, hybrid sorting              | Default sorting algorithm in Python        |
-| **Bucket Sort**     | \( O(n + k) \)              | \( O(n^2) \)                  | \( O(n) \)           | Stable        | Uniformly distributed data                   | Divides elements into buckets              |
-| **Shell Sort**      | \( O(n \log n) \) to \( O(n^2) \) | \( O(n^2) \)            | \( O(1) \)           | Unstable      | Medium-sized datasets                        | Improves upon Insertion Sort               |
+| **Bubble Sort**     | $O(n^2)$                | $O(n^2)$                  | $O(1)$           | Stable        | Educational purposes, small datasets         | Simple but inefficient for large datasets   |
+| **Insertion Sort**  | $O(n^2)$                | $O(n^2)$                  | $O(1)$           | Stable        | Nearly sorted or small datasets              | Efficient for small or nearly sorted datasets |
+| **Selection Sort**  | $O(n^2)$                | $O(n^2)$                  | $O(1)$           | Unstable      | Small datasets, when memory is limited       | Inefficient for large datasets             |
+| **Merge Sort**      | $O(n \log n)$           | $O(n \log n)$             | $O(n)$           | Stable        | Large datasets, linked lists                 | Requires additional memory for merging     |
+| **Quick Sort**      | $O(n \log n)$           | $O(n^2)$                  | $O(\log n)$      | Unstable      | Large datasets, general-purpose sorting      | Pivot selection strategy affects performance |
+| **Heap Sort**       | $O(n \log n)$           | $O(n \log n)$             | $O(1)$           | Unstable      | Large datasets, in-place sorting             | Efficient with minimal memory usage        |
+| **Radix Sort**      | $O(nk)$                 | $O(nk)$                   | $O(n + k)$       | Stable        | Large datasets with integer keys             | Non-comparative sorting algorithm          |
+| **Counting Sort**   | $O(n + k)$              | $O(n + k)$                | $O(k)$           | Stable        | Small range of integer keys                  | Efficient when range $k$ is small      |
+| **Tim Sort**        | $O(n \log n)$           | $O(n \log n)$             | $O(n)$           | Stable        | Real-world data, hybrid sorting              | Default sorting algorithm in Python        |
+| **Bucket Sort**     | $O(n + k)$              | $O(n^2)$                  | $O(n)$           | Stable        | Uniformly distributed data                   | Divides elements into buckets              |
+| **Shell Sort**      | $O(n \log n)$ to $O(n^2)$ | $O(n^2)$            | $O(1)$           | Unstable      | Medium-sized datasets                        | Improves upon Insertion Sort               |
 
 ### General Tips for Sorting Algorithms
 
-- **Understand the Data**: Choose the sorting algorithm based on the nature of the data (size, distribution, data type).
-- **Stability Requirement**: If the relative order of equal elements needs to be preserved, choose a stable sorting algorithm.
-- **In-Place Requirement**: If additional memory usage is a concern, prefer in-place sorting algorithms like Quick Sort or Heap Sort.
-- **Time Complexity Trade-offs**: Be aware of the worst-case scenarios; for instance, Quick Sort can degrade to \( O(n^2) \) if not implemented carefully.
-- **Hybrid Approaches**: Consider hybrid algorithms like Tim Sort, which combine the strengths of multiple algorithms.
+- It’s important to **understand the data** when selecting a sorting algorithm. Factors such as the size of the dataset, its distribution, and the data type being sorted can significantly influence the choice of algorithm.
+- If the **stability requirement** is important, meaning the relative order of equal elements must be preserved, you should opt for stable sorting algorithms like Merge Sort or Tim Sort.
+- When memory is a concern, **in-place sorting** algorithms, such as Quick Sort or Heap Sort, are preferable because they require minimal additional memory.
+- Consider the **time complexity trade-offs** when choosing a sorting algorithm. While Quick Sort is generally fast, its performance can degrade to \( O(n^2) \) in the worst case if not implemented carefully.
+- **Hybrid approaches** like Tim Sort, which combines Merge Sort and Insertion Sort, are designed to optimize performance by leveraging the strengths of multiple sorting techniques.
 
 ### Practical Applications
 
-- **Merge Sort**: Preferred for sorting linked lists because it doesn't require random access to data.
-- **Quick Sort**: Often the go-to for general-purpose sorting due to its average-case efficiency and in-place sorting.
-- **Counting and Radix Sort**: Useful when sorting integers within a known, small range.
-- **Heap Sort**: Suitable when memory space is limited and a guaranteed \( O(n \log n) \) time is required.
-- **Insertion Sort**: Ideal for small datasets or as a subroutine in more complex algorithms.
+- **Merge Sort** is particularly useful for sorting linked lists since it does not require random access to the elements.
+- **Quick Sort** is often chosen for general-purpose sorting due to its efficiency in the average case and its ability to sort in-place.
+- **Counting Sort** and **Radix Sort** are effective when sorting integers within a known and limited range, offering linear-time complexity under the right conditions.
+- **Heap Sort** is a good option when memory usage is restricted and a guaranteed \( O(n \log n) \) time complexity is necessary.
+- **Insertion Sort** is ideal for very small datasets or as a subroutine in more complex algorithms due to its simplicity and efficiency on nearly sorted data.
 
 ## Bit Manipulation
 
@@ -295,132 +267,66 @@ Bit manipulation involves algorithms that operate directly on bits, the basic un
 
 ### Fundamental Concepts
 
-- **Binary Representation**: Understanding how numbers are represented in binary is fundamental. Each digit (bit) represents an increasing power of 2, starting from the least significant bit (LSB) on the right.
-
-- **Signed vs. Unsigned Integers**:
-  - *Unsigned Integers*: Represent only non-negative numbers (0 and positive integers).
-  - *Signed Integers*: Use the most significant bit (MSB) as the sign bit (0 for positive, 1 for negative) in systems using two's complement representation.
-
-- **Bitwise Operators**:
-  - **AND (`&`)**: Yields 1 if both bits are 1; otherwise, 0.
-  - **OR (`|`)**: Yields 1 if at least one bit is 1; otherwise, 0.
-  - **XOR (`^`)**: Yields 1 if bits are different; otherwise, 0.
-  - **NOT (`~`)**: Flips all bits (bitwise negation).
-  - **Left Shift (`<<`)**: Shifts bits to the left, filling with zeros from the right.
-  - **Right Shift (`>>`)**:
-    - *Logical Shift*: Shifts bits to the right, filling with zeros from the left (used with unsigned integers).
-    - *Arithmetic Shift*: Preserves the sign bit when shifting (used with signed integers).
+- A solid grasp of **binary representation** is essential for working with bitwise operations. In binary, each digit (or bit) represents a power of 2, starting with the least significant bit (LSB) on the right, which corresponds to \( 2^0 \), and increasing as you move left.
+- **Signed and unsigned integers** differ in how they represent numbers. **Unsigned integers** can only represent non-negative values, while **signed integers** use the most significant bit (MSB) as a sign bit, with 0 representing positive numbers and 1 representing negative numbers, typically using two's complement representation.
+- **Bitwise operators** are key tools for manipulating individual bits. The **AND (`&`)** operator produces 1 only when both corresponding bits are 1, making it useful for masking bits. The **OR (`|`)** operator sets a bit to 1 if at least one of the corresponding bits is 1, often used for setting bits.
+- The **XOR (`^`)** operator produces 1 when the bits are different, useful for toggling bits or swapping values. The **NOT (`~`)** operator flips all bits, performing a bitwise negation.
+- The **left shift (`<<`)** operation shifts bits to the left, filling with zeros from the right, effectively multiplying the number by powers of two. Conversely, **right shift (`>>`)** operations shift bits to the right, with two variations: **logical shifts**, which fill with zeros from the left (used for unsigned integers), and **arithmetic shifts**, which preserve the sign bit, used for signed integers.
 
 ### Bit Manipulation Techniques
 
-1. **Setting a Bit**:
-   - *Objective*: Set a bit at position \( n \) to 1.
-   - *Operation*: `number |= (1 << n);`
-   - *Explanation*: Left-shift 1 by \( n \) positions to create a mask where only the \( n \)-th bit is 1, then use bitwise OR to set that bit in `number`.
+- To **set a bit** at position \( n \) to 1, the operation `number |= (1 << n)` can be used. This works by left-shifting 1 by \( n \) positions to create a mask with only the \( n \)-th bit set, and then applying bitwise OR to modify the original number.
+- To **clear a bit** at position \( n \), use the operation `number &= ~(1 << n)`. Here, 1 is left-shifted by \( n \) and negated to form a mask where only the \( n \)-th bit is 0, and applying bitwise AND clears that bit.
+- To **toggle a bit** at position \( n \), the operation `number ^= (1 << n)` is used. By left-shifting 1 by \( n \) and applying XOR, the target bit at \( n \) is flipped.
+- To **check if a bit** at position \( n \) is set to 1, the operation `(number & (1 << n)) != 0` is employed. It works by left-shifting 1 by \( n \) and applying bitwise AND; a non-zero result indicates the bit is set.
+- To **clear the least significant bit (LSB)**, the operation `number &= (number - 1)` is effective. Subtracting 1 flips all bits from the LSB onward, and applying AND clears the lowest set bit.
+- To **isolate the least significant bit**, the operation `isolated_bit = number & (-number)` is used. In two’s complement, `-number` is the bitwise complement plus one, so ANDing it with `number` isolates the LSB.
+- To **count the set bits** (Hamming weight) in a number, Kernighan's Algorithm is applied using the following code:
 
-2. **Clearing a Bit**:
-   - *Objective*: Set a bit at position \( n \) to 0.
-   - *Operation*: `number &= ~(1 << n);`
-   - *Explanation*: Left-shift 1 by \( n \) positions and negate it to create a mask where all bits are 1 except the \( n \)-th bit, then use bitwise AND to clear that bit in `number`.
+```c
+int count = 0;
+while (number) {
+    number &= (number - 1);
+    count++;
+}
+```
 
-3. **Toggling a Bit**:
-   - *Objective*: Flip the bit at position \( n \).
-   - *Operation*: `number ^= (1 << n);`
-   - *Explanation*: Left-shift 1 by \( n \) positions and use bitwise XOR to toggle the \( n \)-th bit.
+This works by repeatedly clearing the LSB and incrementing the count.
 
-4. **Checking a Bit**:
-   - *Objective*: Determine if the bit at position \( n \) is 1.
-   - *Operation*: `(number & (1 << n)) != 0`
-   - *Explanation*: Left-shift 1 by \( n \) positions and use bitwise AND; if the result is non-zero, the bit is set.
+- To **check if a number is a power of two**, the condition `(number != 0) && ((number & (number - 1)) == 0)` is used. This works because powers of two have only one set bit, and subtracting 1 flips all bits after that set bit, resulting in zero when ANDed.
+- To **swap two variables** without using a temporary variable, the following sequence is used:
 
-5. **Clearing the Least Significant Bit (LSB)**:
-   - *Operation*: `number &= (number - 1);`
-   - *Explanation*: Subtracting 1 flips all bits from the LSB up to the first set bit; ANDing this with the original number clears the LSB.
+```c
+a ^= b;
+b ^= a;
+a ^= b;
+```
 
-6. **Isolating the Least Significant Bit**:
-   - *Operation*: `isolated_bit = number & (-number);`
-   - *Explanation*: In two's complement, `-number` is the bitwise complement plus one; ANDing it with `number` isolates the lowest set bit.
+This sequence of XOR operations swaps the values of `a` and `b` without needing extra space.
 
-7. **Counting Set Bits (Hamming Weight)**:
-   - *Method*: Use Kernighan's Algorithm.
-   - *Operation*:
-     ```c
-     int count = 0;
-     while (number) {
-         number &= (number - 1);
-         count++;
-     }
-     ```
-   - *Explanation*: Repeatedly clear the LSB and increment the count until `number` becomes zero.
-
-8. **Checking if a Number is a Power of Two**:
-   - *Operation*: `(number != 0) && ((number & (number - 1)) == 0)`
-   - *Explanation*: Powers of two have only one set bit; subtracting 1 flips all bits after the set bit, so ANDing with the original gives zero.
-
-9. **Swapping Variables Without a Temporary Variable**:
-   - *Operations*:
-     ```c
-     a ^= b;
-     b ^= a;
-     a ^= b;
-     ```
-   - *Explanation*: Uses XOR to swap values without extra space; ensure `a` and `b` are not the same memory location.
-
-10. **Reversing Bits**:
-    - *Operation*: Reverse the order of bits in a number.
-    - *Method*: Use bitwise operations and shifting to swap bits from opposite ends moving towards the center.
+- To **reverse the bits** in a number, bitwise operations and shifting can be used to swap bits from opposite ends, moving towards the center of the number. This is commonly achieved using a loop or bit manipulation techniques to systematically reverse bit positions.
 
 ### Bit Masks
 
-- **Definition**: A bitmask is a binary pattern used to select or manipulate specific bits within a byte or word.
-
-- **Common Uses**:
-  - **Feature Flags**: Use bits to represent boolean options or settings.
-  - **Permission Sets**: Represent permissions (read, write, execute) in file systems.
-  - **State Representation**: Efficiently store multiple boolean states in a single integer.
-
-- **Creating a Mask**:
-  - *Example*: To create a mask for bits 0 and 3: `mask = (1 << 0) | (1 << 3);`
+- A **bitmask** is a binary pattern used to select or manipulate specific bits within a byte or word, enabling efficient operations on particular bits of a number.
+- **Common uses of bitmasks** include applications such as feature flags, where each bit represents a boolean option or setting, and permission sets in file systems, where bits represent different permissions like read, write, or execute.
+- **State representation** is another common use, where multiple boolean states are stored in a single integer, allowing efficient space usage and manipulation of these states.
+- To **create a bitmask** that selects specific bits, you can combine shifts and bitwise OR. For example, to create a mask for bits 0 and 3, the operation `mask = (1 << 0) | (1 << 3)` will set only those bits to 1.
 
 ### Bit Shifting Tricks
 
-- **Multiplication and Division by Powers of Two**:
-  - *Left Shift (`<<`)*: Multiplies an integer by \( 2^n \).
-    - *Example*: `number << 3` multiplies `number` by 8.
-  - *Right Shift (`>>`)*: Divides an integer by \( 2^n \) (for unsigned integers or logical shift).
-    - *Example*: `number >> 2` divides `number` by 4.
-
-- **Extracting Specific Bits**:
-  - *Objective*: Extract bits from position \( p \) to \( p + n - 1 \).
-  - *Operation*: `(number >> p) & ((1 << n) - 1);`
-  - *Explanation*: Shift the desired bits to the right and mask out the higher bits.
-
-### Practical Applications
-
-- **Optimization**: Bit manipulation can optimize algorithms by reducing time complexity or memory usage, especially in low-level programming or performance-critical code.
-
-- **Cryptography**: Algorithms like AES and SHA use extensive bit manipulation.
-
-- **Graphics Programming**: Manipulating pixels and colors often involves bitwise operations.
-
-- **Networking**: Protocols use bit fields to pack data efficiently.
-
-- **Competitive Programming**: Problems involving subsets, combinations, and permutations can often be solved efficiently using bits to represent sets.
+- **Left shifting** (`<<`) is a useful technique for **multiplying by powers of two**. For instance, `number << 3` multiplies `number` by \(2^3 = 8\), which is a fast alternative to regular multiplication.
+- Similarly, **right shifting** (`>>`) can be used for **dividing by powers of two**. For example, `number >> 2` divides `number` by \(2^2 = 4\), making it an efficient way to handle division for unsigned integers or logical shifts.
+- To **extract specific bits** from a number, you can use a combination of shifting and masking. For instance, to extract bits from position \( p \) to \( p + n - 1 \), the operation `(number >> p) & ((1 << n) - 1)` can be applied. This shifts the target bits to the right and uses a mask to isolate only those bits.
 
 ### Cautions and Best Practices
 
-- **Operator Precedence**: Bitwise operators have lower precedence than arithmetic and relational operators. Use parentheses to ensure the correct order of operations.
-
-- **Signed vs. Unsigned Shifts**:
-  - *Arithmetic Shift (`>>`)*: Preserves the sign bit in signed integers.
-  - *Logical Shift (`>>>` in some languages like Java)*: Shifts zeros into the high-order bits.
-
-- **Portability**: Bit manipulation code can be non-portable due to differences in integer sizes and endianness across systems.
-
-- **Overflow and Underflow**: Be cautious with shifts that might cause bits to be shifted beyond the size of the data type.
-
-- **Readability**: Excessive bit manipulation can make code hard to read and maintain. Include comments and consider using macros or inline functions.
-
+- In programming, it is important to note that **bitwise operators** have lower precedence than arithmetic and relational operators, so parentheses should be used to ensure the correct order of operations.
+- When working with shifts, be aware that **arithmetic shifts** (using `>>`) preserve the sign bit in signed integers, which is crucial when working with negative numbers.
+- Some languages, like Java, also support **logical shifts**, represented as `>>>`, which shift zeros into the high-order bits regardless of the sign of the number.
+- **Portability** can be a concern in bit manipulation code because differences in integer sizes and endianness across various systems may affect how the code behaves.
+- Be careful to avoid **overflow and underflow** when performing shifts, as shifting bits beyond the size of the data type can lead to unintended results.
+- While bit manipulation can be powerful, excessive use can hurt **readability**. To make the code easier to maintain, it’s a good practice to include comments and, where appropriate, use macros or inline functions.
 
 ## List of problems
 
