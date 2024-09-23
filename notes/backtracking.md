@@ -6,7 +6,7 @@ Backtracking is a systematic method for solving problems that incrementally buil
 
 Recursive functions are functions that call themselves directly or indirectly to solve a problem by breaking it down into smaller, more manageable subproblems. This concept is fundamental in computer science and mathematics, as it allows for elegant solutions to complex problems through repeated application of a simple process.
 
-### Key Concepts:
+Main idea:
 
 1. **Base Case (Termination Condition)** is the condition under which the recursion stops. It prevents infinite recursion by providing an explicit solution for the simplest instance of the problem.
 2. **Recursive Case** is the part of the function where it calls itself with a modified parameter, moving towards the base case.
@@ -40,7 +40,7 @@ $$ n! =
    \end{cases}
 $$
 
-#### Python Implementation:
+Python Implementation:
 
 ```python
 def factorial(n):
@@ -97,32 +97,29 @@ factorial(5)
 
 The leaves represent the base case, and the tree unwinds as each recursive call returns.
 
-### Important Considerations:
+**Important Considerations:**
 
-- **Termination:** Ensure that all recursive paths eventually reach a base case.
-- **Stack Depth:** Each recursive call adds a new frame to the call stack. Deep recursion can lead to stack overflow.
-- **Efficiency:** Recursive solutions can be elegant but may not always be the most efficient in terms of time and space.
+- When using recursion, ensure **termination** by designing the recursive function such that all possible paths eventually reach a base case. This prevents infinite recursion.
+- Be mindful of **stack depth**, as each recursive call adds a new frame to the call stack. Too many recursive calls, especially in deep recursion, can result in a stack overflow error.
+- Consider **efficiency** when choosing a recursive approach. While recursive solutions can be elegant and clean, they may not always be optimal in terms of time and space, particularly when dealing with large input sizes or deep recursive calls.
 
 ## Depth-First Search (DFS)
 
 Depth-First Search is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores as far as possible along each branch before backtracking.
 
-### Key Concepts:
+Main idea:
 
-- **Traversal Strategy:** DFS explores a branch to its deepest point before moving to another branch.
-- **Implementation:** Can be implemented using recursion or an explicit stack data structure.
-- **Applications:** Used in topological sorting, finding connected components, solving puzzles, and more.
+- The **traversal strategy** of Depth-First Search (DFS) involves exploring each branch of a graph or tree to its deepest point before backtracking to explore other branches.
+- **Implementation** of DFS can be achieved either through recursion, which implicitly uses the call stack, or by using an explicit stack data structure to manage the nodes.
+- **Applications** of DFS include tasks such as topological sorting, identifying connected components in a graph, solving puzzles like mazes, and finding paths in trees or graphs.
 
 ### Algorithm Steps:
 
-1. **Start at the Root Node:**
-   - Mark the node as visited.
-2. **Explore Each Branch:**
-   - For each unvisited neighbor, recursively perform DFS.
-3. **Backtrack:**
-   - When all neighbors are visited, return to the previous node.
+- **Start at the root node** by marking it as visited to prevent revisiting it during the traversal.
+- **Explore each branch** by recursively performing DFS on each unvisited neighbor, diving deeper into the graph or tree structure.
+- **Backtrack** once all neighbors of a node are visited, returning to the previous node to continue exploring other branches.
 
-### Pseudocode:
+Pseudocode:
 
 ```pseudo
 DFS(node):
@@ -146,18 +143,15 @@ Consider the following tree:
 
 Traversal using DFS starting from node 'A':
 
-1. Visit 'A'.
-2. Move to 'B'.
-   - 'B' has no unvisited neighbors; backtrack to 'A'.
-3. Move to 'C'.
-4. Move to 'D'.
-   - 'D' has no unvisited neighbors; backtrack to 'C'.
-5. Move to 'E'.
-   - 'E' has no unvisited neighbors; backtrack to 'C', then 'A'.
+- **Visit 'A'** to begin the traversal, marking it as visited.
+- **Move to 'B'**, but since 'B' has no unvisited neighbors, **backtrack to 'A'** to explore other branches.
+- **Move to 'C'**, continuing the traversal to the next unvisited node.
+- **Move to 'D'**, but as 'D' has no unvisited neighbors, **backtrack to 'C'**.
+- **Move to 'E'**, but since 'E' also has no unvisited neighbors, **backtrack to 'C'**, and then further **backtrack to 'A'** to complete the exploration.
 
 Traversal order: A → B → C → D → E
 
-### Implementation in Python:
+Implementation in Python:
 
 ```python
 class Node:
@@ -188,17 +182,17 @@ node_c.children = [node_d, node_e]
 dfs(node_a)
 ```
 
-### Analysis:
+Analysis:
 
-- **Time Complexity:** $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges.
-- **Space Complexity:** $O(V)$, due to the recursion stack and the visited flag.
+- The **time complexity** of Depth-First Search (DFS) is $O(V + E)$, where $V$ represents the number of vertices and $E$ represents the number of edges in the graph.
+- The **space complexity** is $O(V)$, primarily due to the space used by the recursion stack or an explicit stack, as well as the memory required for tracking visited nodes.
 
-### Applications:
+### Applications
 
-- **Cycle Detection in Graphs**
-- **Topological Sorting**
-- **Solving Mazes and Puzzles**
-- **Connected Components in Networks**
+- **Cycle detection** in directed and undirected graphs.
+- **Topological sorting** in directed acyclic graphs (DAGs).
+- **Solving mazes and puzzles** by exploring all possible paths.
+- Identifying **connected components** in a network or graph.
 
 ## Backtracking
 
@@ -409,28 +403,26 @@ Q . . .
 
 The algorithm explores the solution space as a tree, where each node represents a partial solution (queens placed up to a certain row). The branches represent the possible positions for the next queen.
 
-- **Nodes:** Partial solutions with queens placed in certain rows.
-- **Branches:** Possible positions for the next queen in the next row.
-- **Leaves:** Complete solutions when $N$ queens are placed.
+- **Nodes** represent partial solutions where a certain number of queens have already been placed in specific rows.
+- **Branches** correspond to the possible positions for placing the next queen in the following row, exploring each valid option.
+- **Leaves** are the complete solutions when all $N$ queens have been successfully placed on the board without conflicts.
 
 The backtracking occurs when a node has no valid branches (no safe positions in the next row), prompting the algorithm to return to the previous node and try other options.
 
 #### Analysis:
 
-**Time Complexity:** $O(N!)$
+I. The **time complexity** of the N-Queens problem is $O(N!)$ as the algorithm explores permutations of queen placements across rows.
 
-- The algorithm explores permutations of queen placements.
+II. The **space complexity** is $O(N)$, where:
 
-**Space Complexity:** $O(N)$
-
-- The `board` array stores $N$ positions.
-- The recursion stack can go up to $N$ levels deep.
+- The `board` array stores the positions of the $N$ queens.
+- The recursion stack can go as deep as $N$ levels during the backtracking process.
 
 #### Applications:
 
-- **Constraint Satisfaction Problems:** The N-Queens problem is a classic example used to study algorithms in this domain.
-- **Algorithm Design:** Understanding backtracking and recursive problem-solving techniques.
-- **Artificial Intelligence:** Search algorithms and optimization.
+- **Constraint satisfaction problems** often use the N-Queens problem as a classic example to study and develop solutions for placing constraints on variable assignments.
+- In **algorithm design**, the N-Queens problem helps illustrate the principles of backtracking and recursive problem-solving.
+- In **artificial intelligence**, it serves as a foundational example for search algorithms and optimization techniques.
 
 #### Potential Improvements:
 
