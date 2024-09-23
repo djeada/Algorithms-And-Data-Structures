@@ -225,7 +225,7 @@ To efficiently keep track of the traversal, BFS employs two primary data structu
 * A queue, typically named `unexplored` or `queue`, to store nodes that are pending exploration.
 * A hash table or a set called `visited` to ensure that we do not revisit nodes.
 
-#### Algorithm Steps:
+#### Algorithm Steps
 
 1. Begin from a starting vertex, $i$.
 2. Mark the vertex $i$ as visited.
@@ -324,13 +324,13 @@ Dijkstra's algorithm is a cornerstone in graph theory, designed to compute the s
 * **Input**: A weighted graph (where each edge has a value associated with it, representing the cost or distance) and a starting vertex `A`.
 * **Output**: An array `distances` where `distances[v]` represents the shortest path from `A` to vertex `v`.
 
-#### Containers and Data Structures:
+#### Containers and Data Structures
 
 * An array `distances`, initialized to `∞` for all vertices except the starting vertex which is initialized to `0`.
 * A hash table `finished` to keep track of vertices for which the shortest path has been determined.
 * A priority queue to efficiently select the vertex with the smallest tentative distance.
 
-#### Algorithm Steps:
+#### Algorithm Steps
 
 I. Initialize `distances[A] = 0` and `distances[v] = ∞` for all other vertices `v`.
 
@@ -458,17 +458,17 @@ While the basic implementation of Dijkstra's algorithm runs in `O(n^2)` time, it
 
 The Bellman-Ford algorithm is a graph search algorithm that finds the shortest path from a single source vertex to all vertices in a weighted graph. Unlike Dijkstra's algorithm, which works only for graphs with non-negative weights, Bellman-Ford is versatile enough to handle graphs in which some of the edge weights are negative.
 
-#### Input & Output:
+#### Input & Output
 
 * **Input**: A weighted graph (where each edge has an associated cost or distance) and a starting vertex `A`.
 * **Output**: An array `distances` where `distances[v]` represents the shortest path from `A` to vertex `v`.
 
-#### Containers and Data Structures:
+#### Containers and Data Structures
 
 * An array `distances`, initialized to `∞` for all vertices except the starting vertex which is initialized to `0`.
 * A predecessor array, often used to reconstruct the shortest path.
 
-#### Algorithm Steps:
+#### Algorithm Steps
 
 I. Initialize `distances[A] = 0` for the starting vertex and `distances[v] = ∞` for all other vertices.
 
@@ -727,18 +727,18 @@ Such a subgraph is called a minimal spanning tree.
 
 Prim's Algorithm is a greedy algorithm used to find a minimum spanning tree (MST) for a weighted undirected graph. The goal of the algorithm is to include every vertex in the graph into a tree while minimizing the total edge weights.
 
-#### Input & Output:
+#### Input & Output
 
 * **Input**: A connected, undirected graph with weighted edges.
 * **Output**: A minimum spanning tree, which is a subset of the edges that connects all the vertices together without any cycles and with the minimum possible total edge weight.
 
-#### Containers and Data Structures:
+#### Containers and Data Structures
 
 * An array `key[]` to store weights. Initially, `key[v] = ∞` for all `v` except the first vertex.
 * A boolean array `mstSet[]` to keep track of vertices included in MST. Initially, all values are `false`.
 * An array `parent[]` to store the MST.
 
-#### Algorithm Steps:
+#### Algorithm Steps
 
 I. Start with an arbitrary node as the initial MST node.
 
@@ -835,17 +835,17 @@ The edges selected by Prim's algorithm in this case are: A-B, B-D, D-E, and A-C,
 ### Kruskal's Algorithm
 Kruskal's Algorithm is another method to find the minimum spanning tree (MST) of a connected, undirected graph with weighted edges. It works by sorting all the edges from the lowest to highest weight, and then picking edges one by one, ensuring that the inclusion of each edge doesn't form a cycle.
 
-#### Input & Output:
+#### Input & Output
 
 * **Input**: A connected, undirected graph with weighted edges.
 * **Output**: A minimum spanning tree composed of a subset of the edges.
 
-#### Containers and Data Structures:
+#### Containers and Data Structures
 
 * A list or priority queue to sort all the edges based on their weights.
 * A disjoint-set (or union-find) structure to help in cycle detection and prevention.
 
-#### Algorithm Steps:
+#### Algorithm Steps
 
 I. Sort all the edges in increasing order based on their weights.
 

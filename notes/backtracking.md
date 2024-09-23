@@ -11,7 +11,7 @@ Main idea:
 1. **Base Case (Termination Condition)** is the condition under which the recursion stops. It prevents infinite recursion by providing an explicit solution for the simplest instance of the problem.
 2. **Recursive Case** is the part of the function where it calls itself with a modified parameter, moving towards the base case.
 
-### Mathematical Foundation:
+### Mathematical Foundation
 
 Recursion closely relates to mathematical induction, where a problem is solved by assuming that the solution to a smaller instance of the problem is known and building upon it.
 
@@ -50,7 +50,7 @@ def factorial(n):
         return n * factorial(n - 1)  # Recursive case
 ```
 
-#### Detailed Computation for $n = 5$:
+#### Detailed Computation for $n = 5$
 
 Let's trace the recursive calls for `factorial(5)`:
 
@@ -77,7 +77,7 @@ Now, we backtrack and compute the results:
 
 Thus, $5! = 120$.
 
-### Visualization with Recursion Tree:
+### Visualization with Recursion Tree
 
 Each recursive call can be visualized as a node in a tree:
 
@@ -113,7 +113,7 @@ Main idea:
 - **Implementation** of DFS can be achieved either through recursion, which implicitly uses the call stack, or by using an explicit stack data structure to manage the nodes.
 - **Applications** of DFS include tasks such as topological sorting, identifying connected components in a graph, solving puzzles like mazes, and finding paths in trees or graphs.
 
-### Algorithm Steps:
+### Algorithm Steps
 
 - **Start at the root node** by marking it as visited to prevent revisiting it during the traversal.
 - **Explore each branch** by recursively performing DFS on each unvisited neighbor, diving deeper into the graph or tree structure.
@@ -224,7 +224,7 @@ Objective:
 - Ensure that no two queens attack each other.
 - Find all possible arrangements that satisfy the above conditions.
 
-#### Visual Representation:
+#### Visual Representation
 
 To better understand the problem, let's visualize it using ASCII graphics.
 
@@ -267,13 +267,13 @@ One of the possible solutions for placing 4 queens on a $4 \times 4$ chessboard 
 - `Q` represents a queen.
 - Blank spaces represent empty cells.
 
-#### Constraints:
+#### Constraints
 
 - Only one queen per row.
 - Only one queen per column.
 - No two queens share the same diagonal.
 
-#### Approach Using Backtracking:
+#### Approach Using Backtracking
 
 Backtracking is an ideal algorithmic approach for solving the N-Queens problem due to its constraint satisfaction nature. The algorithm incrementally builds the solution and backtracks when a partial solution violates the constraints.
 
@@ -289,7 +289,7 @@ High-Level Steps:
 8. When $N$ queens have been successfully placed without conflicts, record the solution.
 9. Continue the process to find all possible solutions.
 
-#### Python Implementation:
+#### Python Implementation
 
 Below is a Python implementation of the N-Queens problem using backtracking.
 
@@ -322,7 +322,7 @@ def solve_n_queens(N):
     place_queen(0)
     return solutions
 
-# Example usage:
+# Example usage
 N = 4
 solutions = solve_n_queens(N)
 print(f"Number of solutions for N={N}: {len(solutions)}")
@@ -343,7 +343,7 @@ for index, sol in enumerate(solutions):
 4. If no safe column is found, backtrack to the previous row.
 5. When a valid placement is found for all $N$ rows, record the solution.
 
-#### All Solutions for $N = 4$:
+#### All Solutions for $N = 4$
 
 There are two distinct solutions for $N = 4$:
 
@@ -381,7 +381,7 @@ Board Representation: [2, 0, 3, 1]
 +---+---+---+---+
 ```
 
-#### Output of the Program:
+#### Output of the Program
 
 ```
 Number of solutions for N=4: 2
@@ -399,7 +399,7 @@ Q . . .
 . Q . .
 ```
 
-#### Visualization of the Backtracking Tree:
+#### Visualization of the Backtracking Tree
 
 The algorithm explores the solution space as a tree, where each node represents a partial solution (queens placed up to a certain row). The branches represent the possible positions for the next queen.
 
@@ -409,7 +409,7 @@ The algorithm explores the solution space as a tree, where each node represents 
 
 The backtracking occurs when a node has no valid branches (no safe positions in the next row), prompting the algorithm to return to the previous node and try other options.
 
-#### Analysis:
+#### Analysis
 
 I. The **time complexity** of the N-Queens problem is $O(N!)$ as the algorithm explores permutations of queen placements across rows.
 
@@ -418,13 +418,13 @@ II. The **space complexity** is $O(N)$, where:
 - The `board` array stores the positions of the $N$ queens.
 - The recursion stack can go as deep as $N$ levels during the backtracking process.
 
-#### Applications:
+#### Applications
 
 - **Constraint satisfaction problems** often use the N-Queens problem as a classic example to study and develop solutions for placing constraints on variable assignments.
 - In **algorithm design**, the N-Queens problem helps illustrate the principles of backtracking and recursive problem-solving.
 - In **artificial intelligence**, it serves as a foundational example for search algorithms and optimization techniques.
 
-#### Potential Improvements:
+#### Potential Improvements
 
 - Implementing more efficient conflict detection methods.
 - Using heuristics to choose the order of columns to try first.
@@ -434,7 +434,7 @@ II. The **space complexity** is $O(N)$, where:
 
 Given a maze represented as a 2D grid, find a path from the starting point to the goal using backtracking. The maze consists of open paths and walls, and movement is allowed in four directions: up, down, left, and right (no diagonal moves). The goal is to determine a sequence of moves that leads from the start to the goal without crossing any walls.
 
-#### Maze Representation:
+#### Maze Representation
 
 **Grid Cells:**
 
@@ -494,7 +494,7 @@ Objective:
 
 Find a sequence of moves from `S` to `G`, navigating only through open paths (`.`) and avoiding walls (`#`). The path should be returned as a list of grid coordinates representing the steps from the start to the goal.
 
-#### Python Implementation:
+#### Python Implementation
 
 ```python
 def solve_maze(maze, start, goal):
@@ -549,7 +549,7 @@ else:
     print("No path found.")
 ```
 
-#### Recursive Function `explore(x, y)`:
+#### Recursive Function `explore(x, y)`
 
 I. **Base Cases:**
 
@@ -574,7 +574,7 @@ III. **Backtracking:**
 - Unmark the cell by setting `maze[x][y] = '.'`.
 - Return `False` to indicate that this path does not lead to the goal.
 
-#### Execution Flow:
+#### Execution Flow
 
 I. **Start at `(0, 0)`**:
 
@@ -605,7 +605,7 @@ V. **Reaching the Goal**:
 - If a path is found, it prints "Path to goal:" followed by the list of coordinates in the path.
 - If no path exists, it prints "No path found."
 
-#### Final Path Found:
+#### Final Path Found
 
 The path from start to goal:
 
@@ -615,7 +615,7 @@ The path from start to goal:
  (5, 5)]
 ```
 
-#### Visual Representation of the Path:
+#### Visual Representation of the Path
 
 Let's overlay the path onto the maze for better visualization. We'll use `*` to indicate the path.
 
@@ -643,13 +643,13 @@ Legend:
 . - Open path
 ```
 
-#### Advantages of Using Backtracking for Maze Solving:
+#### Advantages of Using Backtracking for Maze Solving
 
 - Ensures that all possible paths are explored until the goal is found.
 - Only the current path and visited cells are stored, reducing memory usage compared to storing all possible paths.
 - Recursive implementation leads to clean and understandable code.
 
-#### Potential Improvements:
+#### Potential Improvements
 
 - This algorithm finds a path but not necessarily the shortest path.
 - To find the shortest path, algorithms like Breadth-First Search (BFS) are more suitable.
