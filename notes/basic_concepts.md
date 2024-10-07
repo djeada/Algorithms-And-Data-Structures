@@ -252,7 +252,7 @@ The choice of an algorithm significantly impacts the application's performance, 
 
 - Not every problem has an algorithm that can solve it, irrespective of the complexity. For instance, the Halting Problem is undecidable—no algorithm can accurately predict whether a given program will halt or run indefinitely on every possible input.
 - Sometimes, we can create an illusion of $O(1)$ complexity by precomputing the results for all possible inputs and storing them in a lookup table (like a hash table). Then, we can solve the problem in constant time by directly retrieving the result from the table. This approach, known as memoization or caching, is limited by memory constraints and is only practical when the number of distinct inputs is small and manageable.
-- Often, the lower bound complexity for a class of problems is $O(n)$ or $O(nlogn)$. This bound represents problems where you at least have to examine each element once (as in the case of $O(n)$) or perform a more complex operation on every input (as in $O(nlogn)$), like sorting. Under certain conditions or assumptions, a more efficient algorithm might be achievable.
+- Often, the lower bound complexity for a class of problems is $O(n)$ or $O(nlogn)$. This bound represents problems where you at least have to examine each element once (as in the case of $O(n)$ ) or perform a more complex operation on every input (as in $O(nlogn)$ ), like sorting. Under certain conditions or assumptions, a more efficient algorithm might be achievable.
   
 #### When do algorithms have O(logn) or O(nlogn) complexity?
 
