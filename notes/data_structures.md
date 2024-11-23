@@ -1,6 +1,6 @@
 ## Data Structures: Collections and Containers
 
-In computer science, a _collection_ (often interchangeably referred to as a _container_) is a sophisticated data structure designed to hold multiple entities, these could be simple elements like numbers or text strings, or more complex objects like user-defined structures. Collections play a critical role in helping you store, organize, and manipulate different types of data in your programs.
+In computer science, a _collection_ (often interchangeably referred to as a _container_) is a sophisticated data structure designed to hold multiple entities, these could be simple elements like numbers or text strings, or more complex objects like user-defined structures. Collections help you store, organize, and manipulate different types of data in your programs.
 
 1. At **The Abstract Level**, we focus on the conceptual understanding of collections, defining what they are and their characteristics. This includes how they store and retrieve items, whether it's based on a specific order (as in arrays or lists) or using unique keys (as in dictionaries or maps).
 2. **The Machine Level** refers to the practical implementation of collections, where we concentrate on efficiently realizing the abstract models. Factors like memory usage, operation speeds (insertion, deletion, search), and flexibility help determine the best data structures and algorithms for a specific task.
@@ -452,7 +452,7 @@ These careful rotations and recoloring steps enable Red-Black trees to maintain 
 
 ### Hash Tables
 
-Hash tables, often referred to as hash maps or dictionaries, are a type of data structure that employs a hash function to pair keys with their corresponding values. This mechanism enables efficient insertion, deletion, and lookup of items within a collection, making hash tables a fundamental tool in many computing scenarios. They are typically used in contexts where swift lookup and insertion operations are critical, such as in database management and networking applications.
+Hash tables, often referred to as hash maps or dictionaries, are a type of data structure that employs a hash function to pair keys with their corresponding values. This mechanism enables efficient insertion, deletion, and lookup of items within a collection, making hash tables a fundamental tool in many computing scenarios. They are often used in contexts where fast lookup and insertion operations are important, such as database management and networking applications.
 
 ```
 +-----------------+
