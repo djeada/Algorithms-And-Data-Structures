@@ -3,9 +3,9 @@
 In computer science, a _collection_ (often interchangeably referred to as a _container_) is a sophisticated data structure designed to hold multiple entities, these could be simple elements like numbers or text strings, or more complex objects like user-defined structures. Collections play a critical role in helping you store, organize, and manipulate different types of data in your programs.
 
 1. At **The Abstract Level**, we focus on the conceptual understanding of collections, defining what they are and their characteristics. This includes how they store and retrieve items, whether it's based on a specific order (as in arrays or lists) or using unique keys (as in dictionaries or maps).
-2. **The Machine Level** refers to the practical implementation of collections, where we concentrate on efficiently realizing the abstract models. Factors such as memory usage, operation speeds (insertion, deletion, search), and flexibility are crucial in determining the most suitable data structures and algorithms for a particular task.
+2. **The Machine Level** refers to the practical implementation of collections, where we concentrate on efficiently realizing the abstract models. Factors like memory usage, operation speeds (insertion, deletion, search), and flexibility help determine the best data structures and algorithms for a specific task.
 
-Understanding and studying collections in-depth is crucial for every programmer. This knowledge empowers you to choose the most appropriate collection type for a given task, leading to programs that are not only more efficient in terms of time and space complexities, but also much more maintainable and robust due to clear structure and organization.
+Every programmer benefits from thoroughly understanding and studying collections. This knowledge empowers you to choose the most appropriate collection type for a given task, leading to programs that are not only more efficient in terms of time and space complexities, but also much more maintainable and robust due to clear structure and organization.
 
 ![G70oT](https://user-images.githubusercontent.com/37275728/185710905-8acd7541-e8ed-4439-a644-5d739b39e783.png)
 
@@ -47,8 +47,6 @@ Here are some standard operations associated with linked lists:
 * `replace(index, data)`: This substitutes the element at a specified index with a new value.
 
 #### Time Complexity
-
-Understanding the time complexity of basic operations is key to efficient use of linked lists:
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -102,8 +100,6 @@ Some of the commonly used operations for vectors are:
 
 #### Time Complexity
 
-A thorough understanding of the time complexity of basic operations is key to efficient use of vectors:
-
 | Operation | Average case | Worst case |
 | --- | --- | --- |
 | Access | `O(1)` | `O(1)` |
@@ -154,8 +150,6 @@ Stacks are incredibly versatile and are used in a multitude of applications, inc
 
 #### Time Complexity
 
-Knowing the time complexity of stack operations is crucial for writing efficient code:
-
 | Operation | Average case | Worst case |
 | --- | --- | --- |
 | Access | `O(n)` | `O(n)` |
@@ -193,7 +187,7 @@ The standard operations associated with a queue are:
 * `enqueue(element)`: This method adds a new element to the end of the queue.
 * `dequeue()`: This method returns the front element of the queue and simultaneously removes it.
 * `front()`: This method simply returns the front element without removing it from the queue, giving a peek at the next item to be dequeued.
-* `is_empty()`: This method checks if the queue is empty, a crucial operation before attempting to `dequeue()` or `front()` to avoid errors.
+* `is_empty()`: This method checks if the queue is empty, an important step before calling `dequeue()` or `front()` to prevent errors.
 
 #### Practical Applications
 
@@ -214,8 +208,6 @@ While stacks and queues are similar data structures, they differ in several key 
 - In **usage**, stacks are ideal for reversing the order of elements, while queues are useful for maintaining the original order of elements.
 
 #### Time Complexity
-
-Understanding the time complexity of queue operations is critical for writing efficient code:
 
 | Operation | Average case | Worst case |
 | --- | --- | --- |
@@ -262,13 +254,11 @@ The basic operations of a heap are as follows:
 
 Heaps are versatile and find widespread use across various computational problems:
 
-- In **graph algorithms**, heaps play a crucial role in well-known algorithms like Dijkstra's algorithm for finding the shortest paths and Prim's algorithm for constructing the minimum spanning tree.
+- In **graph algorithms**, heaps are used in algorithms like Dijkstra's for finding shortest paths and Prim's for constructing minimum spanning trees.
 - **Priority queues** are efficiently implemented using heaps, as they provide fast insertion and extraction of the highest or lowest priority elements.
 - In **sorting**, the heap sort algorithm utilizes heap properties to sort an array in-place, achieving a worst-case time complexity of **$O(n \log n)$**.
 
 #### Time Complexity of Heap Operations
-
-The time complexity of standard heap operations is as follows:
 
 | Operation | Average case |
 | --- | --- |
@@ -361,7 +351,7 @@ The AVL tree's self-balancing property lends itself to various applications, suc
 
 - Implementing associative arrays or sets in programming languages.
 - Database storage and indexing, where rapid data retrieval is essential.
-- Priority queues and dictionaries, where maintaining order is crucial.
+- Priority queues and dictionaries, where maintaining order matters.
 - Word suggestion systems and spell checkers, which benefit from fast lookups.
 - Networking algorithms and data compression, requiring efficient data structure.
 
@@ -375,8 +365,6 @@ AVL trees support standard BST operations with some modifications to maintain ba
 - `rotate_left()`, `rotate_right()`: Perform rotation operations to balance the tree after insertions or deletions.
 
 #### Time Complexity of AVL Tree Operations
-
-Thanks to their self-balancing property, AVL trees ensure logarithmic time complexity for essential operations, even in the worst-case scenario.
 
 | Operation | Average | Worst |
 | --- | --- | --- |
@@ -394,7 +382,7 @@ The key to maintaining AVL trees' balance is the application of rotation operati
 3. **Right-left rotation** is necessary when the right subtree of a node is taller, but the right child's left subtree is taller than its right subtree. This rotation involves first applying a right rotation on the right child, followed by a left rotation on the original node, with height updates for all affected nodes.
 4. **Left-right rotation** is applied when the left subtree of a node is taller, and the left child's right subtree is taller than its left subtree. The process starts with a left rotation on the left child, followed by a right rotation on the original node, and concludes with height updates.
 
-These rotations ensure that AVL trees maintain their crucial property of balance, offering consistently high performance.
+These rotations keep AVL trees balanced, ensuring consistent performance.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/cpp/avl_tree)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/collections_and_containers/python/avl_tree)
@@ -439,8 +427,6 @@ Red-Black trees support typical BST operations, albeit with additional steps to 
 - `rotate_left()`, `rotate_right()`: Perform rotation operations to maintain balance after insertions or deletions.
 
 #### Time Complexity of Red-Black Tree Operations
-
-Due to their self-balancing nature, Red-Black trees ensure efficient performance even in the worst-case scenarios, with a logarithmic time complexity for key operations:
 
 | Operation | Average | Worst |
 | --- | --- | --- |
