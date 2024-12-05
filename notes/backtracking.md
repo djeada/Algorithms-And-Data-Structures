@@ -54,18 +54,12 @@ def factorial(n):
 
 Let's trace the recursive calls for `factorial(5)`:
 
-1. **Call**: `factorial(5)`
-   - Since $5 \neq 0$, compute $5 \times factorial(4)$.
-2. **Call**: `factorial(4)`
-   - Compute $4 \times factorial(3)$.
-3. **Call**: `factorial(3)`
-   - Compute $3 \times factorial(2)$.
-4. **Call**: `factorial(2)`
-   - Compute $2 \times factorial(1)$.
-5. **Call**: `factorial(1)`
-   - Compute $1 \times factorial(0)$.
-6. **Call**: `factorial(0)`
-   - Base case reached: return $1$.
+- Call `factorial(5)` and compute $5 \times factorial(4)$ because $5 \neq 0$.  
+- Call `factorial(4)` and compute $4 \times factorial(3)$.  
+- Call `factorial(3)` and compute $3 \times factorial(2)$.  
+- Call `factorial(2)` and compute $2 \times factorial(1)$.  
+- Call `factorial(1)` and compute $1 \times factorial(0)$.  
+- Call `factorial(0)` and return $1$ as the base case is reached.  
 
 Now, we backtrack and compute the results:
 
@@ -134,6 +128,7 @@ DFS(node):
 Consider the following tree:
 
 ```
+Tree:
        A
       / \
      B   C
@@ -149,7 +144,7 @@ Traversal using DFS starting from node 'A':
 - **Move to 'D'**, but as 'D' has no unvisited neighbors, **backtrack to 'C'**.
 - **Move to 'E'**, but since 'E' also has no unvisited neighbors, **backtrack to 'C'**, and then further **backtrack to 'A'** to complete the exploration.
 
-Traversal order: A → B → C → D → E
+Traversal order: $A → B → C → D → E$
 
 Implementation in Python:
 
