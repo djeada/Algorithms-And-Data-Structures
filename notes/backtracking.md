@@ -1,8 +1,8 @@
-# Backtracking
+## Backtracking
 
 Backtracking is a systematic method for solving problems that incrementally build candidates to the solutions and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution. This approach is often used for constraint satisfaction problems, combinatorial optimization, and puzzles like the N-Queens problem or Sudoku.
 
-## Recursive Functions
+### Recursive Functions
 
 Recursive functions are functions that call themselves directly or indirectly to solve a problem by breaking it down into smaller, more manageable subproblems. This concept is fundamental in computer science and mathematics, as it allows for elegant solutions to complex problems through repeated application of a simple process.
 
@@ -11,7 +11,7 @@ Main idea:
 1. **Base Case (Termination Condition)** is the condition under which the recursion stops. It prevents infinite recursion by providing an explicit solution for the simplest instance of the problem.
 2. **Recursive Case** is the part of the function where it calls itself with a modified parameter, moving towards the base case.
 
-### Mathematical Foundation
+#### Mathematical Foundation
 
 Recursion closely relates to mathematical induction, where a problem is solved by assuming that the solution to a smaller instance of the problem is known and building upon it.
 
@@ -29,7 +29,7 @@ where:
 - $g(n)$ is the base case value,
 - $h$ is a function that defines how to build the solution from the smaller instance.
 
-### Example: Calculating Factorial
+#### Example: Calculating Factorial
 
 The factorial of a non-negative integer $n$ is the product of all positive integers less than or equal to $n$. Mathematically, it is defined as:
 
@@ -50,7 +50,7 @@ def factorial(n):
         return n * factorial(n - 1)  # Recursive case
 ```
 
-#### Detailed Computation for $n = 5$
+##### Detailed Computation for $n = 5$
 
 Let's trace the recursive calls for `factorial(5)`:
 
@@ -71,7 +71,7 @@ Now, we backtrack and compute the results:
 
 Thus, $5! = 120$.
 
-### Visualization with Recursion Tree
+#### Visualization with Recursion Tree
 
 Each recursive call can be visualized as a node in a tree:
 
@@ -97,7 +97,7 @@ The leaves represent the base case, and the tree unwinds as each recursive call 
 - Be mindful of **stack depth**, as each recursive call adds a new frame to the call stack. Too many recursive calls, especially in deep recursion, can result in a stack overflow error.
 - Consider **efficiency** when choosing a recursive approach. While recursive solutions can be elegant and clean, they may not always be optimal in terms of time and space, particularly when dealing with large input sizes or deep recursive calls.
 
-## Depth-First Search (DFS)
+### Depth-First Search (DFS)
 
 Depth-First Search is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores as far as possible along each branch before backtracking.
 
@@ -107,7 +107,7 @@ Main idea:
 - **Implementation** of DFS can be achieved either through recursion, which implicitly uses the call stack, or by using an explicit stack data structure to manage the nodes.
 - **Applications** of DFS include tasks such as topological sorting, identifying connected components in a graph, solving puzzles like mazes, and finding paths in trees or graphs.
 
-### Algorithm Steps
+#### Algorithm Steps
 
 - **Start at the root node** by marking it as visited to prevent revisiting it during the traversal.
 - **Explore each branch** by recursively performing DFS on each unvisited neighbor, diving deeper into the graph or tree structure.
@@ -123,7 +123,7 @@ DFS(node):
             DFS(neighbor)
 ```
 
-### Example: Tree Traversal
+#### Example: Tree Traversal
 
 Consider the following tree:
 
@@ -182,14 +182,14 @@ Analysis:
 - The **time complexity** of Depth-First Search (DFS) is $O(V + E)$, where $V$ represents the number of vertices and $E$ represents the number of edges in the graph.
 - The **space complexity** is $O(V)$, primarily due to the space used by the recursion stack or an explicit stack, as well as the memory required for tracking visited nodes.
 
-### Applications
+#### Applications
 
 - **Cycle detection** in directed and undirected graphs.
 - **Topological sorting** in directed acyclic graphs (DAGs).
 - **Solving mazes and puzzles** by exploring all possible paths.
 - Identifying **connected components** in a network or graph.
 
-## Backtracking
+### Backtracking
 
 Backtracking is an algorithmic technique for solving problems recursively by trying to build a solution incrementally, removing solutions that fail to satisfy the constraints at any point.
 
@@ -199,7 +199,7 @@ Main Idea:
 - Early detection of invalid solutions to prune the search space.
 - When a partial solution cannot be extended to a complete solution, the algorithm backtracks to try different options.
 
-### General Algorithm Framework
+#### General Algorithm Framework
 
 1. Understand the possible configurations of the solution.
 2. Start with an empty solution.
@@ -209,7 +209,7 @@ Main Idea:
 6. If the partial solution is complete and valid, record or output it.
 7. If all options are exhausted at a level, remove the last component and backtrack to the previous level.
 
-### N-Queens Problem
+#### N-Queens Problem
 
 The N-Queens problem is a classic puzzle in which the goal is to place $N$ queens on an $N \times N$ chessboard such that no two queens threaten each other. In chess, a queen can move any number of squares along a row, column, or diagonal. Therefore, no two queens can share the same row, column, or diagonal.
 
@@ -219,7 +219,7 @@ Objective:
 - Ensure that no two queens attack each other.
 - Find all possible arrangements that satisfy the above conditions.
 
-#### Visual Representation
+##### Visual Representation
 
 To better understand the problem, let's visualize it using ASCII graphics.
 
@@ -262,13 +262,13 @@ One of the possible solutions for placing 4 queens on a $4 \times 4$ chessboard 
 - `Q` represents a queen.
 - Blank spaces represent empty cells.
 
-#### Constraints
+##### Constraints
 
 - Only one queen per row.
 - Only one queen per column.
 - No two queens share the same diagonal.
 
-#### Approach Using Backtracking
+##### Approach Using Backtracking
 
 Backtracking is an ideal algorithmic approach for solving the N-Queens problem due to its constraint satisfaction nature. The algorithm incrementally builds the solution and backtracks when a partial solution violates the constraints.
 
@@ -284,7 +284,7 @@ High-Level Steps:
 8. When $N$ queens have been successfully placed without conflicts, record the solution.
 9. Continue the process to find all possible solutions.
 
-#### Python Implementation
+##### Python Implementation
 
 Below is a Python implementation of the N-Queens problem using backtracking.
 
@@ -330,7 +330,7 @@ for index, sol in enumerate(solutions):
         print(' '.join(line))
 ```
 
-#### Execution Flow
+##### Execution Flow
 
 1. Try placing a queen in columns `0` to `N - 1`.
 2. For each valid placement, proceed to row `1`.
@@ -338,7 +338,7 @@ for index, sol in enumerate(solutions):
 4. If no safe column is found, backtrack to the previous row.
 5. When a valid placement is found for all $N$ rows, record the solution.
 
-#### All Solutions for $N = 4$
+##### All Solutions for $N = 4$
 
 There are two distinct solutions for $N = 4$:
 
@@ -376,7 +376,7 @@ Board Representation: [2, 0, 3, 1]
 +---+---+---+---+
 ```
 
-#### Output of the Program
+##### Output of the Program
 
 ```
 Number of solutions for N=4: 2
@@ -394,7 +394,7 @@ Q . . .
 . Q . .
 ```
 
-#### Visualization of the Backtracking Tree
+##### Visualization of the Backtracking Tree
 
 The algorithm explores the solution space as a tree, where each node represents a partial solution (queens placed up to a certain row). The branches represent the possible positions for the next queen.
 
@@ -404,7 +404,7 @@ The algorithm explores the solution space as a tree, where each node represents 
 
 The backtracking occurs when a node has no valid branches (no safe positions in the next row), prompting the algorithm to return to the previous node and try other options.
 
-#### Analysis
+##### Analysis
 
 I. The **time complexity** of the N-Queens problem is $O(N!)$ as the algorithm explores permutations of queen placements across rows.
 
@@ -413,23 +413,23 @@ II. The **space complexity** is $O(N)$, where:
 - The `board` array stores the positions of the $N$ queens.
 - The recursion stack can go as deep as $N$ levels during the backtracking process.
 
-#### Applications
+##### Applications
 
 - **Constraint satisfaction problems** often use the N-Queens problem as a classic example to study and develop solutions for placing constraints on variable assignments.
 - In **algorithm design**, the N-Queens problem helps illustrate the principles of backtracking and recursive problem-solving.
 - In **artificial intelligence**, it serves as a foundational example for search algorithms and optimization techniques.
 
-#### Potential Improvements
+##### Potential Improvements
 
 - Implementing more efficient conflict detection methods.
 - Using heuristics to choose the order of columns to try first.
 - Converting the recursive solution to an iterative one using explicit stacks to handle larger values of $N$ without stack overflow.
 
-### Example: Maze Solver
+#### Example: Maze Solver
 
 Given a maze represented as a 2D grid, find a path from the starting point to the goal using backtracking. The maze consists of open paths and walls, and movement is allowed in four directions: up, down, left, and right (no diagonal moves). The goal is to determine a sequence of moves that leads from the start to the goal without crossing any walls.
 
-#### Maze Representation
+##### Maze Representation
 
 **Grid Cells:**
 
@@ -441,7 +441,7 @@ Given a maze represented as a 2D grid, find a path from the starting point to th
 - Up, down, left, right.
 - No diagonal movement.
 
-#### ASCII Representation
+##### ASCII Representation
 
 Let's visualize the maze using ASCII graphics to better understand the problem.
 
@@ -489,7 +489,7 @@ Objective:
 
 Find a sequence of moves from `S` to `G`, navigating only through open paths (`.`) and avoiding walls (`#`). The path should be returned as a list of grid coordinates representing the steps from the start to the goal.
 
-#### Python Implementation
+##### Python Implementation
 
 ```python
 def solve_maze(maze, start, goal):
@@ -544,7 +544,7 @@ else:
     print("No path found.")
 ```
 
-#### Recursive Function `explore(x, y)`
+##### Recursive Function `explore(x, y)`
 
 I. **Base Cases:**
 
@@ -569,7 +569,7 @@ III. **Backtracking:**
 - Unmark the cell by setting `maze[x][y] = '.'`.
 - Return `False` to indicate that this path does not lead to the goal.
 
-#### Execution Flow
+##### Execution Flow
 
 I. **Start at `(0, 0)`**:
 
@@ -595,12 +595,12 @@ V. **Reaching the Goal**:
 - Eventually, the algorithm reaches the goal `(5, 5)` if a path exists.
 - The function returns `True`, and the full path is constructed via the recursive calls.
 
-#### Output
+##### Output
 
 - If a path is found, it prints "Path to goal:" followed by the list of coordinates in the path.
 - If no path exists, it prints "No path found."
 
-#### Final Path Found
+##### Final Path Found
 
 The path from start to goal:
 
@@ -610,7 +610,7 @@ The path from start to goal:
  (5, 5)]
 ```
 
-#### Visual Representation of the Path
+##### Visual Representation of the Path
 
 Let's overlay the path onto the maze for better visualization. We'll use `*` to indicate the path.
 
@@ -638,78 +638,78 @@ Legend:
 . - Open path
 ```
 
-#### Advantages of Using Backtracking for Maze Solving
+##### Advantages of Using Backtracking for Maze Solving
 
 - Ensures that all possible paths are explored until the goal is found.
 - Only the current path and visited cells are stored, reducing memory usage compared to storing all possible paths.
 - Recursive implementation leads to clean and understandable code.
 
-#### Potential Improvements
+##### Potential Improvements
 
 - This algorithm finds a path but not necessarily the shortest path.
 - To find the shortest path, algorithms like Breadth-First Search (BFS) are more suitable.
 - Modify the code to collect all possible paths by removing early returns when the goal is found.
 - Allowing diagonal movements would require adjusting the `explore` function to include additional directions.
 
-## List of Problems
+### List of Problems
 
-### Permutations
+#### Permutations
 
 Develop an algorithm to generate all possible permutations of a given list of elements. This problem requires creating different arrangements of the elements where the order matters.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_permutations)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_permutations)
 
-### Combinations
+#### Combinations
 
 Design an algorithm to generate all possible combinations of 'k' elements selected from a given list of elements. This involves selecting elements where the order does not matter, but the selection size does.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/all_combinations)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/all_combinations)
 
-### String Pattern
+#### String Pattern
 
 Create a solution to determine whether a given string adheres to a specified pattern, where the pattern may include letters and wildcard characters that represent any character. This problem often involves checking for matches and handling special pattern symbols.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/string_pattern)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/string_pattern)
 
-### Generating Words
+#### Generating Words
 
 Generate all possible words that can be formed from a given list of characters and match a specified pattern. The pattern can contain letters and wildcard characters, requiring the algorithm to account for flexible matching.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/generating_words)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/generating_words)
 
-### Hamiltonian Path
+#### Hamiltonian Path
 
 Create an algorithm that identifies whether a simple path exists within a provided undirected or directed graph. This path should visit every vertex exactly once. Known as the "traveling salesman problem," it can be addressed using depth-first search to explore possible paths.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/hamiltonian_paths)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/hamiltonian_paths)
 
-### K-Colorable Configurations
+#### K-Colorable Configurations
 
 Develop an algorithm to find all possible ways to color a given graph with 'k' colors such that no two adjacent vertices share the same color. This graph coloring problem requires ensuring valid color assignments for all vertices.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/k_colorable_configurations)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/k_colorable_configurations)
 
-### Knight Tour
+#### Knight Tour
 
 Create an algorithm to find all potential paths a knight can take on an 'n' x 'n' chessboard to visit every square exactly once. This classic chess problem involves ensuring the knight moves in an L-shape and covers all board positions.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/knight_tour)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/knight_tour)
 
-### Topological Orderings
+#### Topological Orderings
 
 Determine a topological ordering of the vertices in a given directed graph, if one exists. This involves sorting the vertices such that for every directed edge UV from vertex U to vertex V, U comes before V in the ordering.
 
 * [C++ Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/cpp/topological_sort)
 * [Python Solution](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/backtracking/python/topological_sort)
 
-### Tic-Tac-Toe (Minimax)
+#### Tic-Tac-Toe (Minimax)
 
 Develop an algorithm to determine the optimal move for a player in a game of tic-tac-toe using the minimax algorithm. This requires evaluating possible moves to find the best strategy for winning or drawing the game.
 
