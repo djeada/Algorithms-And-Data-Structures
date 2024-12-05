@@ -1,6 +1,6 @@
 ## Backtracking
 
-Backtracking is a systematic method for solving problems that incrementally build candidates to the solutions and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution. This approach is often used for constraint satisfaction problems, combinatorial optimization, and puzzles like the N-Queens problem or Sudoku.
+Backtracking is a method used to solve problems by building potential solutions step by step. If it becomes clear that a partial solution cannot lead to a valid final solution, the process "backtracks" by undoing the last step and trying a different path. This approach is commonly applied to **constraint satisfaction problems**, **combinatorial optimization**, and puzzles like **N-Queens** or **Sudoku**, where all possibilities need to be explored systematically while avoiding unnecessary computations.
 
 ### Recursive Functions
 
