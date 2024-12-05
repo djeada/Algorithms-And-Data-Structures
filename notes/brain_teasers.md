@@ -24,6 +24,7 @@ Understanding and effectively using data structures is fundamental in programmin
 #### Working with Arrays
 
 Arrays are fundamental data structures that store elements in contiguous memory locations, allowing efficient random access. Here are strategies for working with arrays:
+
 - **Sorting** an array can simplify many problems. Algorithms like Quick Sort and Merge Sort are efficient with $O(n \log n)$ time complexity. For nearly sorted or small arrays, **Insertion Sort** may be a better option due to its simplicity and efficiency in those cases.
 - In **sorted arrays**, binary search provides a fast way to find elements or their positions, working in $O(\log n)$. Be cautious with **mid-point calculations** in languages prone to integer overflow due to fixed-size integer types.
 - The **two-pointer technique** uses two indices, often starting from opposite ends of the array, to solve problems involving pairs or triplets, like finding two numbers that add up to a target sum. It helps optimize time and space.
@@ -418,9 +419,9 @@ Combine the two smallest frequency nodes into a new node. Repeat until there is 
 I. Combine 5(A) and 9(B):
 
 ```
-   (14)
-   /  \
- 5(A) 9(B)
+ (14)
+ /  \
+5(A) 9(B)
 ```
 
 Updated Heap: $[12(C), 13(D), 14(AB), 16(E), 45(F)]$
@@ -428,9 +429,9 @@ Updated Heap: $[12(C), 13(D), 14(AB), 16(E), 45(F)]$
 II. Combine 12(C) and 13(D):
 
 ```
-   (25)
-   /  \
- 12(C) 13(D)
+ (25)
+ /  \
+12(C) 13(D)
 ```
 
 Updated Heap: $[14(AB), 16(E), 25(CD), 45(F)]$
@@ -438,9 +439,9 @@ Updated Heap: $[14(AB), 16(E), 25(CD), 45(F)]$
 III. Combine 14(AB) and 16(E):
 
 ```
-   (30)
-   /  \
- 14(AB) 16(E)
+ (30)
+ /  \
+14(AB) 16(E)
 ```
 
 Updated Heap: $[25(CD), 30(ABE), 45(F)]$
@@ -448,9 +449,9 @@ Updated Heap: $[25(CD), 30(ABE), 45(F)]$
 IV. Combine 25(CD) and 30(ABE):
 
 ```
-   (55)
-   /  \
- 25(CD) 30(ABE)
+ (55)
+ /  \
+25(CD) 30(ABE)
 ```
 
 Updated Heap: $[45(F), 55(CDABE)]$
@@ -458,9 +459,10 @@ Updated Heap: $[45(F), 55(CDABE)]$
 V. Combine 45(F) and 55(CDABE):
 
 ```
-   (100)
-   /    \
- 45(F)  55(CDABE)
+Tree:
+         (100)
+         /    \
+      45(F)  55(CDABE)
        /      \
     25(CD)   30(ABE)
     /   \     /    \
@@ -489,6 +491,7 @@ F = 11
 **Final Huffman Tree Diagram:**
 
 ```
+Tree:
                         (100)
                        /     \
                     (45)     (55)
