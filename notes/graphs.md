@@ -287,40 +287,47 @@ A common task when dealing with weighted graphs is to find the shortest route be
 
 #### Dijkstra's Algorithm
 
-- **Dijkstra's algorithm** is a method used to find the shortest paths from a starting vertex to all other vertices in a weighted graph.
-- A **weighted graph** is a graph where each edge has a number, called a weight, which typically represents cost, distance, or time.
-- The algorithm begins at a specific **starting vertex**, often labeled as $A$, and calculates the shortest path to every other vertex.
-- Dijkstra's algorithm maintains a **tentative distance** for each vertex, which represents the current shortest distance from the start to that vertex.
-- The process involves **selecting the vertex** with the smallest tentative distance that hasn’t been fully processed yet.
-- After selecting a vertex, the algorithm **relaxes all its edges**. Relaxing an edge means checking if the current shortest path to the neighboring vertex can be improved by going through the selected vertex.
-- This process continues until all vertices have been processed, resulting in the shortest paths from the starting vertex to all others in the graph.
-- Dijkstra’s algorithm works only for graphs with **non-negative weights**, as negative weights can lead to incorrect results.
-
-##### Input & Output
-
-* **Input**: A weighted graph (where each edge has a value associated with it, representing the cost or distance) and a starting vertex `A`.
-* **Output**: An array `distances` where `distances[v]` represents the shortest path from `A` to vertex `v`.
-
-##### Containers and Data Structures
-
-* An array `distances`, initialized to `∞` for all vertices except the starting vertex which is initialized to `0`.
-* A hash table `finished` to keep track of vertices for which the shortest path has been determined.
-* A priority queue to efficiently select the vertex with the smallest tentative distance.
+- **Dijkstra's algorithm** is a method to find the shortest paths from a starting vertex to all other vertices in a weighted graph.
+- A **weighted graph** is one where each edge has a numerical value (cost, distance, or time).
+- The algorithm starts at a **starting vertex**, often labeled **A**, and computes the shortest path to every other vertex.
+- It keeps a **tentative distance** for each vertex, representing the current known shortest distance from the start.
+- It repeatedly **selects the vertex** with the smallest tentative distance that hasn't been finalized (or "finished") yet.
+- Once a vertex is selected, the algorithm **relaxes all its edges**: it checks if going through this vertex offers a shorter path to its neighbors.
+- This continues until all vertices are processed, yielding the shortest paths from the starting vertex to every other vertex.
+- **Important**: Dijkstra’s algorithm requires **non-negative edge weights**, or else results can be incorrect.
 
 ##### Algorithm Steps
 
-I. Initialize `distances[A] = 0` and `distances[v] = ∞` for all other vertices `v`.
+**Input**
 
-II. For each vertex `v` in the graph:
+- A weighted graph where each edge has a cost or distance
+- A starting vertex `A`
 
-- Select the vertex `u` with the minimum `distances[u]` and `finished[u]` being false.
-- Set `finished[u]` to true.
-- For each neighbor `w` of `u`:
-  - If `distances[u] + weights[u][w] < distances[w]`, then update `distances[w] = distances[u] + weights[u][w]`.
+**Output**
+
+- An array `distances` where `distances[v]` is the shortest distance from `A` to vertex `v`
+
+**Containers and Data Structures**
+
+- An array `distances`, initialized to `∞` for all vertices except `A`, which is set to `0`
+- A hash table `finished` to mark vertices with confirmed shortest paths
+- A priority queue to efficiently select the vertex with the smallest current distance
+
+**Steps**
+
+I. Initialize `distances[A]` to `0`
+
+II. Initialize `distances[v]` to `∞` for every other vertex `v`
+
+III. While not all vertices are marked as finished
+
+- Select vertex `u` with the smallest `distances[u]` among unfinished vertices
+- Mark `finished[u]` as `true`
+- For each neighbor `w` of `u`, if `distances[u] + weights[u][w]` is less than `distances[w]`, update `distances[w]` to `distances[u] + weights[u][w]`
 
 ##### Step by Step Example
 
-Imagine we have the same graph with vertices A, B, C, D, and E. The edges and weights are:
+Consider a graph with vertices A, B, C, D, and E, and edges:
 
 ```
 A-B: 4
@@ -332,19 +339,19 @@ C-E: 10
 D-E: 2
 ```
 
-The adjacency matrix for the graph is:
+The adjacency matrix looks like this (∞ means no direct edge):
 
-|   | A | B | C | D | E |
-|---|---|---|---|---|---|
-| **A** | 0 | 4 | 2 | ∞ | ∞ |
-| **B** | 4 | 0 | 1 | 5 | ∞ |
-| **C** | 2 | 1 | 0 | 8 | 10 |
-| **D** | ∞ | 5 | 8 | 0 | 2 |
-| **E** | ∞ | ∞ | 10 | 2 | 0 |
+|   |  A |  B |  C |  D |  E |
+|---|----|----|----|----|----|
+| **A** |  0 |  4 |  2 |  ∞ |  ∞ |
+| **B** |  4 |  0 |  1 |  5 |  ∞ |
+| **C** |  2 |  1 |  0 |  8 | 10 |
+| **D** |  ∞ |  5 |  8 |  0 |  2 |
+| **E** |  ∞ |  ∞ | 10 |  2 |  0 |
 
-Dijkstra's algorithm starting from A would proceed as follows:
+**Starting from A**, here’s how Dijkstra’s algorithm proceeds:
 
-I. Initialize the shortest paths from A to all other nodes as infinite (∞) and A to A as 0.
+I. Initialize all distances with ∞ except A=0:
 
 ```
 A: 0
@@ -354,37 +361,58 @@ D: ∞
 E: ∞
 ```
 
-II. Start with A. Update all its neighbors:
+II. From A (distance 0), update neighbors:
 
 ```
 A: 0
-B: 4
-C: 2
+B: 4  (via A)
+C: 2  (via A)
 D: ∞
 E: ∞
 ```
 
-III. Pick the smallest unvisited vertex, which is C. Update its neighbors:
+III. Pick the smallest unvisited vertex (C with distance 2). Update its neighbors:
+
+- B can be updated to 3 if 2 + 1 < 4  
+- D can be updated to 10 if 2 + 8 < ∞  
+- E can be updated to 12 if 2 + 10 < ∞
 
 ```
 A: 0
-B: 3 (via C)
+B: 3  (via C)
 C: 2
-D: ∞
-E: 10
+D: 10 (via C)
+E: 12 (via C)
 ```
 
-IV. Next smallest unvisited vertex is B. Update its neighbors:
+IV. Pick the next smallest unvisited vertex (B with distance 3). Update its neighbors:
+
+- D becomes 8 if 3 + 5 < 10  
+- E remains 12 (no direct edge from B to E)
 
 ```
 A: 0
 B: 3
 C: 2
-D: 8 (via B)
-E: 10
+D: 8  (via B)
+E: 12
 ```
 
-V. Next smallest unvisited vertex is D. Update its neighbors:
+V. Pick the next smallest unvisited vertex (D with distance 8). Update its neighbors:
+
+- E becomes 10 if 8 + 2 < 12
+
+```
+A: 0
+B: 3
+C: 2
+D: 8
+E: 10 (via D)
+```
+
+VI. The only remaining vertex is E (distance 10). No further updates are possible.
+
+**Final shortest paths from A**:
 
 ```
 A: 0
@@ -392,39 +420,18 @@ B: 3
 C: 2
 D: 8
 E: 10
-```
-
-VI. E remains, but no update is possible.
-
-Final shortest paths from A:
-
-```
-A: 0
-B: 3
-C: 2
-D: 8
-E: 10
-```
-
-In the adjacency matrix, the shortest path distances from A can be represented as:
-
-```
-A [0]
-B [3]
-C [2]
-D [8]
-E [10]
 ```
 
 ##### Optimizing Time Complexity
 
-While the basic implementation of Dijkstra's algorithm runs in `O(n^2)` time, its time complexity can be significantly reduced using a priority queue. By leveraging the queue to extract the vertex with the minimum distance, the complexity becomes `O((V+E) log V)` for a graph with `V` vertices and `E` edges.
+- A basic (array-based) implementation of Dijkstra's algorithm runs in **O(n^2)** time.
+- Using a priority queue (min-heap) to select the vertex with the smallest distance reduces the complexity to **O((V+E) log V)**, where **V** is the number of vertices and **E** is the number of edges.
 
 ##### Applications
 
-* It's used in internet routing to find the most efficient path for data packets.
-* Mapping software like Google Maps or Waze use variations of Dijkstra to compute driving directions.
-* In telecommunication networks, it helps in determining paths with minimum cost.
+- **Internet routing** protocols use it to determine efficient paths for data packets.
+- **Mapping software** (e.g., Google Maps, Waze) employ variations of Dijkstra to compute driving routes.
+- **Telecommunication networks** use it to determine paths with minimal cost.
 
 ##### Implementation
 
@@ -435,37 +442,42 @@ While the basic implementation of Dijkstra's algorithm runs in `O(n^2)` time, it
 
 - **Bellman-Ford algorithm** is a method for finding the shortest paths from a single starting vertex to all other vertices in a weighted graph.
 - Unlike **Dijkstra’s algorithm**, Bellman-Ford can handle **negative edge weights**, making it more flexible for certain types of graphs.
-- The algorithm works by **repeatedly relaxing all edges** in the graph. Relaxing an edge means updating the shortest known distance to a vertex if a shorter path is found through another vertex.
-- The algorithm performs this **relaxation process $V-1$ times**, where $V$ is the number of vertices in the graph. This ensures that all possible shortest paths are accounted for.
-- After $V-1$ relaxations, the algorithm performs an additional pass to check for **negative weight cycles**. If any edge can still be relaxed, it means the graph contains a cycle with a negative total weight.
-- Bellman-Ford is slower than Dijkstra’s algorithm, with a time complexity of **$O(V \times E)$**, where $E$ is the number of edges, making it less efficient for large graphs with many edges.
-
-##### Input & Output
-
-* **Input**: A weighted graph (where each edge has an associated cost or distance) and a starting vertex `A`.
-* **Output**: An array `distances` where `distances[v]` represents the shortest path from `A` to vertex `v`.
-
-##### Containers and Data Structures
-
-* An array `distances`, initialized to `∞` for all vertices except the starting vertex which is initialized to `0`.
-* A predecessor array, often used to reconstruct the shortest path.
+- The algorithm works by **repeatedly relaxing all edges** in the graph. Relaxing an edge means updating the current shortest distance to a vertex if a shorter path is found via another vertex.
+- The algorithm performs this **relaxation process** exactly **$V - 1$ times**, where $V$ is the number of vertices. This ensures that every possible shortest path is discovered.
+- After completing $V - 1$ relaxations, the algorithm does one more pass to detect **negative weight cycles**. If any edge can still be relaxed, a negative cycle exists and no finite shortest path is defined.
+- Bellman-Ford’s time complexity is **$O(V \times E)$**, which is generally slower than Dijkstra’s algorithm for large graphs.
 
 ##### Algorithm Steps
 
-I. Initialize `distances[A] = 0` for the starting vertex and `distances[v] = ∞` for all other vertices.
+**Input**
 
-II. Repeat `V-1` times (where `V` is the number of vertices):
+- A weighted graph with possible negative edge weights
+- A starting vertex `A`
 
-  - For each edge `(u, v)` with weight `w`:
-    - If `distances[u] + w < distances[v]`, then update `distances[v] = distances[u] + w` and update the predecessor of `v` to `u`.
+**Output**
 
-III. For each edge `(u, v)` with weight `w`:
+- An array `distances` where `distances[v]` represents the shortest path from `A` to vertex `v`
 
-  - If `distances[u] + w < distances[v]`, there is a negative weight cycle, and the shortest path is not well-defined.
+**Containers and Data Structures**
+
+- An array `distances`, set to `∞` for all vertices except the start vertex (set to `0`)
+- A `predecessor` array to help reconstruct the actual shortest path
+
+**Steps**
+
+I. Initialize `distances[A]` to `0` and `distances[v]` to `∞` for all other vertices `v`
+
+II. Repeat `V - 1` times
+
+- For every edge `(u, v)` with weight `w`, if `distances[u] + w < distances[v]`, update `distances[v]` to `distances[u] + w` and `predecessor[v]` to `u`
+
+III. Check for negative cycles by iterating over all edges `(u, v)` again
+
+- If `distances[u] + w < distances[v]` for any edge, a negative weight cycle exists
 
 ##### Step by Step Example
 
-Consider a graph with vertices A, B, C, D, and E. The edges and weights are:
+We have vertices A, B, C, D, and E. The edges and weights (including a self-loop on E):
 
 ```
 A-B: 6
@@ -479,66 +491,55 @@ D-C: 7
 E-E: 9
 ```
 
-The adjacency matrix for the graph would be:
+Adjacency matrix (∞ means no direct edge):
 
-|   | A | B | C | D | E |
-|---|---|---|---|---|---|
-| **A** | 0 | 6 | 7 | ∞ | ∞ |
-| **B** | ∞ | 0 | 8 | -4 | 5 |
-| **C** | ∞ | ∞ | 0 | ∞ | -3 |
-| **D** | 2 | ∞ | 7 | 0 | ∞ |
-| **E** | ∞ | ∞ | ∞ | ∞ | 9 |
+|   |  A |  B |  C |  D |  E |
+|---|----|----|----|----|----|
+| **A** |  0 |  6 |  7 |  ∞ |  ∞ |
+| **B** |  ∞ |  0 |  8 | -4 |  5 |
+| **C** |  ∞ |  ∞ |  0 |  ∞ | -3 |
+| **D** |  2 |  ∞ |  7 |  0 |  ∞ |
+| **E** |  ∞ |  ∞ |  ∞ |  ∞ |  9 |
 
-Now, let's run Bellman-Ford algorithm starting from vertex A:
-
-Initialization:
+**Initialization**:
 
 ```
 dist[A] = 0
-dist[B] = dist[C] = dist[D] = dist[E] = ∞
+dist[B] = ∞
+dist[C] = ∞
+dist[D] = ∞
+dist[E] = ∞
 ```
 
-For each vertex, update the distance to every other vertex.
-
-I. Iteration 1:
-
-Based on A's neighbors:
+**Iteration 1** (relax edges from A):
 
 ```
 dist[B] = 6
 dist[C] = 7
 ```
 
-II. Iteration 2:
-
-Based on B's neighbors:
+**Iteration 2** (relax edges from B, then C):
 
 ```
-dist[C] = 7 (No change)
-dist[D] = 6 - 4 = 2
-dist[E] = 11
+dist[D] = 2        (6 + (-4))
+dist[E] = 11       (6 + 5)
+dist[E] = 4        (7 + (-3))  // C → E is better
 ```
 
-Based on C's neighbors:
+**Iteration 3** (relax edges from D):
 
 ```
-dist[E] = 7 - 3 = 4
+dist[A] = 4        (2 + 2)
+(No update for C since dist[C]=7 is already < 9)
 ```
 
-III. Iteration 3:
-
-Based on D's neighbors:
+**Iteration 4**:
 
 ```
-dist[A] = 2 + 2 = 4
-dist[C] = 2 + 7 = 9 (But C's distance is already 7, so no change)
+No changes in this round
 ```
 
-IV. Iteration 4:
-
-No changes this round.
-
-Final distances from A:
+**Final distances from A**:
 
 ```
 dist[A] = 0
@@ -550,14 +551,14 @@ dist[E] = 4
 
 ##### Special Characteristics
 
-* One of the major advantages of the Bellman-Ford algorithm is its ability to handle negative weights, though it cannot handle negative weight cycles (cycles in the graph where the overall sum of the edge weights is negative).
-* The basic implementation of the Bellman-Ford algorithm has a time complexity of `O(V*E)`, where `V` is the number of vertices and `E` is the number of edges. This makes it less efficient than Dijkstra's algorithm for some scenarios, but its ability to handle negative weights is a distinct advantage.
+- It can manage **negative edge weights** but cannot produce valid results when **negative cycles** are present.
+- It is often used when edges can be negative, though it is slower than Dijkstra’s algorithm.
 
 ##### Applications
 
-* Used in financial markets to detect arbitrage opportunities in currency exchange.
-* To determine the best path to forward data packets.
-* In games that involve terrain and movement costs.
+- **Financial arbitrage** detection in currency exchange markets.
+- **Routing** in networks where edges might have negative costs.
+- **Game development** scenarios with penalties or negative terrain effects.
 
 ##### Implementation
 
@@ -566,51 +567,63 @@ dist[E] = 4
   
 #### A* (A-Star) Algorithm
 
-- **A*** is an informed search algorithm commonly used for **pathfinding** and **graph traversal** tasks.
-- It is considered a **best-first search algorithm** because it prioritizes exploring the most promising paths first, based on a combination of actual and estimated costs.
-- The algorithm uses two main components for decision-making at each step:
-- **$g(n)$**: The actual cost from the start node to the current node $n$.
-- **$h(n)$**: A **heuristic** function that estimates the cost from $n$ to the goal node.
-- The **total cost** function, $f(n) = g(n) + h(n)$, guides the algorithm. It evaluates both the known path cost and the estimated remaining cost to reach the goal.
-- At each step, A* selects the node with the **lowest $f(n)$** value from the priority queue for exploration.
-- The **heuristic $h(n)$** must be **admissible**, meaning it never overestimates the actual cost to the goal, ensuring the algorithm finds an optimal path.
-- A* stops when it either reaches the **goal node** or exhausts all possible paths (if no solution exists).
-- It is efficient for many applications because it **balances exploration and goal-direction**, but its performance heavily depends on the quality of the heuristic function.
-- A* is widely used in areas like game development, robotics, and navigation systems due to its flexibility and effectiveness in solving real-world pathfinding problems.
-
-##### Input & Output
-
-* **Input**: A graph, a start vertex `A`, a goal vertex `B`, and a heuristic function `h(v)`, which estimates the cost from vertex `v` to goal vertex `B`.
-* **Output**: The shortest path from `A` to `B`, if one exists.
+- **A\*** is an informed search algorithm used for **pathfinding** and **graph traversal**.
+- It is a **best-first search** because it prioritizes the most promising paths first, combining known and estimated costs.
+- The algorithm relies on:
+- **g(n)**: The actual cost from the start node to the current node **n**.
+- **h(n)**: A **heuristic** estimating the cost from **n** to the goal.
+- The total cost function is **f(n) = g(n) + h(n)**, guiding the search toward a potentially optimal path.
+- At each step, A* expands the node with the **lowest f(n)** in the priority queue.
+- The heuristic **h(n)** must be **admissible** (never overestimates the real cost) to guarantee an optimal result.
+- A* terminates when it either reaches the **goal** or exhausts all possibilities if no solution exists.
+- It is efficient for many applications because it balances **exploration** with being **goal-directed**, but its performance depends on the heuristic quality.
+- A* is broadly used in **games**, **robotics**, and **navigation** due to its effectiveness in real-world pathfinding.
 
 ##### Algorithm Steps
 
-I. Add the starting node to the `openSet`.
+**Input**
 
-II. While the `openSet` is not empty:
+- A graph
+- A start vertex `A`
+- A goal vertex `B`
+- A heuristic function `h(v)` that estimates the cost from `v` to `B`
 
-- Get the node `current` in `openSet` having the lowest `f(n)`.
-- If `current` is the goal node, reconstruct the path and return it.
-- Remove `current` from `openSet` and add to `closedSet`.
-- For each neighbor `n` of `current`:
-  - If `n` is in `closedSet`, skip it.
-  - If `n` is not in `openSet`, add it and compute its `g(n)`, `h(n)`, and `f(n)`.
-  - If a better path to `n` is found, update `cameFrom` for `n`.
+**Output**
 
-III. If the algorithm terminates without finding the goal, no path exists.
+- The shortest path from `A` to `B` if one exists
 
-##### Used Data Structures
+**Used Data Structures**
 
-* `g(n)`: The cost of the cheapest path from the start vertex to vertex `n` currently known.
-* `h(n)`: Heuristic estimate of the cost from vertex `n` to the goal.
-* `f(n) = g(n) + h(n)`: Estimated total cost from start to goal through vertex `n`.
-* An `openSet`, initialized with the starting vertex, represents the set of nodes to be evaluated.
-* A `closedSet` representing the nodes already evaluated.
-* A `cameFrom` data structure, which keeps track of the best path as the algorithm progresses.
+I. **g(n)**: The best-known cost from the start vertex to vertex `n`
+
+II. **h(n)**: The heuristic estimate from vertex `n` to the goal
+
+III. **f(n) = g(n) + h(n)**: The estimated total cost from start to goal via `n`
+
+IV. **openSet**: Starting with the initial node, contains nodes to be evaluated
+
+V. **closedSet**: Contains nodes already fully evaluated
+
+VI. **cameFrom**: Structure to record the path taken
+
+**Steps**
+
+I. Add the starting node to the **openSet**
+
+II. While the **openSet** is not empty
+
+- Get the node `current` in **openSet** with the lowest **f(n)**
+- If `current` is the goal node, reconstruct the path and return it
+- Remove `current` from **openSet** and add it to **closedSet**
+- For each neighbor `n` of `current`, skip it if it is in **closedSet**
+- If `n` is not in **openSet**, add it and compute **g(n)**, **h(n)**, and **f(n)**
+- If a better path to `n` is found, update **cameFrom** for `n`
+
+III. If the algorithm terminates without finding the goal, no path exists
 
 ##### Step by Step Example
 
-Suppose we have a graph with vertices A, B, C, D, and E. The edges and weights are:
+We have a graph with vertices A, B, C, D, and E:
 
 ```
 A-B: 1
@@ -620,7 +633,7 @@ C-D: 2
 D-E: 1
 ```
 
-Additionally, let's assume we have the following heuristic values estimating the distance from each node to the target node E:
+Heuristic estimates to reach E:
 
 ```
 h(A) = 3
@@ -630,74 +643,64 @@ h(D) = 1
 h(E) = 0
 ```
 
-The adjacency matrix for the graph would look like:
+Adjacency matrix (∞ = no direct path):
 
-|   | A | B | C | D | E |
-|---|---|---|---|---|---|
-| **A** | 0 | 1 | 2 | ∞ | ∞ |
-| **B** | ∞ | 0 | ∞ | 3 | ∞ |
-| **C** | ∞ | ∞ | 0 | 2 | ∞ |
-| **D** | ∞ | ∞ | ∞ | 0 | 1 |
-| **E** | ∞ | ∞ | ∞ | ∞ | 0 |
+|   | A | B | C | D |  E |
+|---|---|---|---|---|----|
+| **A** | 0 | 1 | 2 | ∞ |  ∞ |
+| **B** | ∞ | 0 | ∞ | 3 |  ∞ |
+| **C** | ∞ | ∞ | 0 | 2 |  ∞ |
+| **D** | ∞ | ∞ | ∞ | 0 |  1 |
+| **E** | ∞ | ∞ | ∞ | ∞ |  0 |
 
-Now, let's run the A* algorithm starting from vertex A with the goal of reaching vertex E:
-
-Initialization:
+**Initialization**:
 
 ```
 g(A) = 0
 f(A) = g(A) + h(A) = 0 + 3 = 3
-
-OpenList = [A]
-ClosedList = []
-
-While OpenList is not empty:
-
-    Choose the node n in the OpenList with the lowest f(n).
-    If n is the goal node, we're done.
-    Otherwise, move n from the OpenList to the ClosedList.
+openSet = [A]
+closedSet = []
 ```
 
-I. Expand Node A:
+Expand **A**:
 
 ```
-A -> B : f(B) = g(A) + cost(A, B) + h(B) = 0 + 1 + 2 = 3
-A -> C : f(C) = g(A) + cost(A, C) + h(C) = 0 + 2 + 2 = 4
-The node with the lowest f value is B. So, expand B next.
+f(B) = 0 + 1 + 2 = 3
+f(C) = 0 + 2 + 2 = 4
 ```
 
-II. Expand Node B:
+Expand **B** next (lowest f=3):
 
 ```
-B -> D : f(D) = g(B) + cost(B, D) + h(D) = 1 + 3 + 1 = 5
-Now, C has the lowest f value. So, expand C next.
+f(D) = g(B) + cost(B,D) + h(D) = 1 + 3 + 1 = 5
 ```
 
-III. Expand Node C:
+Next lowest is **C** (f=4):
 
 ```
-C -> D : f(D) = g(C) + cost(C, D) + h(D) = 2 + 2 + 1 = 5 (No improvement on the path to D)
+f(D) = g(C) + cost(C,D) + h(D) = 2 + 2 + 1 = 5 (no improvement)
 ```
 
-IV. Expand Node D:
+Expand **D** (f=5):
 
 ```
-D -> E : f(E) = g(D) + cost(D, E) + h(E) = 5 + 1 + 0 = 6
-E is the goal node. The algorithm stops here.
+f(E) = g(D) + cost(D,E) + h(E) = 5 + 1 + 0 = 6
+E is the goal; algorithm stops.
 ```
 
-The path found by A* is: `A -> B -> D -> E` with a total cost of 5.
+Resulting path: **A -> B -> D -> E** with total cost **5**.
 
 ##### Special Characteristics
 
-* When using an admissible heuristic (one that never overestimates the true cost), A* is guaranteed to return the shortest possible path.
-* The efficiency of A* depends on the heuristic. A good heuristic will explore fewer nodes than a poor one.
+- **A\*** finds an optimal path if the heuristic is **admissible**.
+- Edges must have **non-negative weights** for A* to work correctly.
+- A good heuristic drastically improves its efficiency.
 
 ##### Applications
 
-* Widely used in games to determine the path a character should take to reach a destination.
-* For navigation and movement planning.
-* To determine the shortest path between two locations.
+- Used in **video games** for enemy AI or player navigation.
+- Employed in **robotics** for motion planning.
+- Integral to **mapping** and **GPS** systems for shortest route calculations.
 
 ##### Implementation
 
@@ -716,41 +719,48 @@ Such a subgraph is called a minimal spanning tree.
 
 #### Prim's Algorithm
 
-- **Prim's Algorithm** is used to find a **minimum spanning tree (MST)**, which is a subset of a graph that connects all its vertices with the smallest total edge weight.
-- The algorithm works on a **weighted undirected graph**, meaning the edges have weights, and the direction of edges doesn’t matter.
-- It starts with an **arbitrary vertex** and grows the tree by adding one edge at a time.
-- At each step, the algorithm chooses the **smallest weight edge** that connects a vertex already in the tree to a vertex outside the tree. This is why it’s considered a **greedy algorithm**.
-- The process continues until **all vertices** are included in the tree.
-- Prim’s algorithm ensures the resulting tree is **connected**, meaning there’s a path between any two vertices, and the total weight is minimized.
-- The algorithm can be efficiently implemented using a **priority queue** (like a min-heap) to keep track of the smallest edge weights, resulting in a time complexity of **$O(E \log V)$**, where $E$ is the number of edges and $V$ is the number of vertices.
-
-##### Input & Output
-
-* **Input**: A connected, undirected graph with weighted edges.
-* **Output**: A minimum spanning tree, which is a subset of the edges that connects all the vertices together without any cycles and with the minimum possible total edge weight.
-
-##### Containers and Data Structures
-
-* An array `key[]` to store weights. Initially, `key[v] = ∞` for all `v` except the first vertex.
-* A boolean array `mstSet[]` to keep track of vertices included in MST. Initially, all values are `false`.
-* An array `parent[]` to store the MST.
+- **Prim's Algorithm** is used to find a **minimum spanning tree (MST)**, which is a subset of a graph that connects all its vertices with the smallest total edge weight.  
+- It works on a **weighted undirected graph**, meaning the edges have weights, and the direction of edges doesn’t matter.  
+- It starts with an **arbitrary vertex** and grows the MST by adding one edge at a time.  
+- At each step, it chooses the **smallest weight edge** that connects a vertex in the MST to a vertex not yet in the MST (a **greedy** approach).  
+- This process continues until **all vertices** are included.  
+- The resulting MST is **connected**, ensuring a path between any two vertices, and the total edge weight is minimized.  
+- Using a **priority queue** (min-heap), it can achieve a time complexity of **O(E log V)** with adjacency lists, where E is the number of edges and V is the number of vertices.  
+- With an adjacency matrix, the algorithm can be implemented in **O(V^2)** time.
 
 ##### Algorithm Steps
 
-I. Start with an arbitrary node as the initial MST node.
+**Input**
 
-II. While there are nodes not yet included in the MST:
+- A connected, undirected graph with weighted edges
+- A start vertex `A`
 
-- Pick a vertex `v` not in the MST with the smallest key value.
-- Include `v` in `mstSet[]`.
-- For each neighboring vertex `u` of `v` not in the MST:
-  - If the weight of edge `(u, v)` is less than `key[u]`, update `key[u]` and set `parent[u]` to `v`.
+**Output**
 
-III.. The MST is formed using the `parent[]` array.
+- A minimum spanning tree, which is a subset of the edges that connects all vertices together without any cycles and with the minimum total edge weight
+
+**Containers and Data Structures**
+
+- An array `key[]` to store the minimum reachable edge weight for each vertex. Initially, `key[v] = ∞` for all `v` except the first chosen vertex (set to `0`)
+- A boolean array `mstSet[]` to keep track of whether a vertex is included in the MST. Initially, all values are `false`
+- An array `parent[]` to store the MST. Each `parent[v]` indicates the vertex connected to `v` in the MST
+
+**Steps**
+
+I. Start with an arbitrary node as the initial MST node
+
+II. While there are vertices not yet included in the MST
+
+- Pick a vertex `v` with the smallest `key[v]`
+- Include `v` in `mstSet[]`
+- For each neighboring vertex `u` of `v` not in the MST
+- If the weight of edge `(u, v)` is less than `key[u]`, update `key[u]` and set `parent[u]` to `v`
+
+III. The MST is formed using the `parent[]` array once all vertices are included
 
 ##### Step by Step Example
 
-Consider a simple graph with vertices A, B, C, D, and E. The edges with weights are:
+Consider a simple graph with vertices **A**, **B**, **C**, **D**, and **E**. The edges with weights are:
 
 ```
 A-B: 2
@@ -762,7 +772,7 @@ C-E: 5
 D-E: 2
 ```
 
-The adjacency matrix for the graph would look like:
+The adjacency matrix for the graph (using ∞ where no direct edge exists) is:
 
 |   | A | B | C | D | E |
 |---|---|---|---|---|---|
@@ -772,57 +782,59 @@ The adjacency matrix for the graph would look like:
 | **D** | ∞ | 1 | 4 | 0 | 2 |
 | **E** | ∞ | 3 | 5 | 2 | 0 |
 
-Now, let's run Prim's algorithm starting from vertex A:
+Run Prim's algorithm starting from vertex **A**:
 
-Initialization:
-
-```
-Chosen vertex: A
-Vertices not included: B, C, D, E
-```
-
-Step-by-Step Execution:
-
-I. Starting from vertex A, the closest vertex is B with a weight of 2.
+I. **Initialization**  
 
 ```
-Chosen vertices: A, B
-Vertices not included: C, D, E
+Chosen vertex: A  
+Not in MST: B, C, D, E  
 ```
 
-II. From the chosen vertices A and B, the closest vertex is D (from B) with a weight of 1.
+II. **Pick the smallest edge from A**  
 
 ```
-Chosen vertices: A, B, D
-Vertices not included: C, E
+Closest vertex is B with a weight of 2.  
+MST now has: A, B  
+Not in MST: C, D, E  
 ```
 
-III. Continuing from the chosen vertices, the closest vertex is E (from D) with a weight of 2.
+III. **From A and B, pick the smallest edge**  
 
 ```
-Chosen vertices: A, B, D, E
-Vertices not included: C
+Closest vertex is D (from B) with a weight of 1.  
+MST now has: A, B, D  
+Not in MST: C, E  
 ```
 
-IV. From the chosen vertices, the closest remaining vertex is C (from A) with a weight of 3.
+IV. **Next smallest edge from A, B, or D**  
 
 ```
-Chosen vertices: A, B, D, E, C
-And with that, all vertices have been included in the Minimum Spanning Tree (MST) using Prim's algorithm.
+Closest vertex is E (from D) with a weight of 2.  
+MST now has: A, B, D, E  
+Not in MST: C  
 ```
 
-The edges selected by Prim's algorithm in this case are: A-B, B-D, D-E, and A-C, with a total weight of 8.
+V. **Pick the final vertex**  
+
+```
+The closest remaining vertex is C (from A) with a weight of 3.  
+MST now has: A, B, D, E, C  
+```
+
+The MST includes the edges: **A-B (2), B-D (1), D-E (2),** and **A-C (3)**, with a total weight of **8**.
 
 ##### Special Characteristics
 
-* At every step, it considers the smallest weight edge to add to the MST.
-* With a priority queue, its time complexity can be reduced to `O(E log V)`, where `E` is the number of edges and `V` is the number of vertices.
+- It always selects the smallest edge that can connect a new vertex to the existing MST.  
+- Different choices of starting vertex can still result in the same total MST weight (though the exact edges might differ if multiple edges have the same weight).  
+- With adjacency lists and a priority queue, the time complexity is **O(E log V)**; with an adjacency matrix, it is **O(V^2)**.
 
 ##### Applications
 
-* Used in scenarios like designing a telecommunication network to ensure all cities are connected while reducing the total length of cable.
-* Building roads, tunnels, or bridges while minimizing costs.
-* Designing water, electrical, or internet infrastructure to connect all houses or buildings at a minimum cost.
+- **Network design**: Building telecommunication networks with minimal cable length.  
+- **Road infrastructure**: Constructing roads, tunnels, or bridges at minimal total cost.  
+- **Utility services**: Designing water, electrical, or internet infrastructure to connect all locations at minimum cost.
 
 ##### Implementation
 
@@ -831,40 +843,45 @@ The edges selected by Prim's algorithm in this case are: A-B, B-D, D-E, and A-C,
 
 #### Kruskal's Algorithm
 
-- **Kruskal's Algorithm** is a method for finding a **minimum spanning tree (MST)** in a connected, undirected graph with weighted edges.
-- The algorithm starts by **sorting all edges** in the graph by weight, from smallest to largest.
-- It then processes the edges in order, **adding each edge to the MST** if it does not create a cycle.
-- To check for **cycles**, the algorithm uses a **disjoint-set data structure** (also known as Union-Find). This structure keeps track of which vertices are in the same connected component.
-- If two vertices connected by an edge are in the same component, adding that edge would form a cycle, so the edge is skipped.
-- The process continues until the MST contains **$V-1$ edges**, where $V$ is the number of vertices in the graph.
-- Kruskal’s algorithm is particularly efficient for **sparse graphs** (graphs with relatively few edges) and has a time complexity of **$O(E \log E)$**, where $E$ is the number of edges. This complexity arises from sorting the edges and performing Union-Find operations.
-
-##### Input & Output
-
-* **Input**: A connected, undirected graph with weighted edges.
-* **Output**: A minimum spanning tree composed of a subset of the edges.
-
-##### Containers and Data Structures
-
-* A list or priority queue to sort all the edges based on their weights.
-* A disjoint-set (or union-find) structure to help in cycle detection and prevention.
+- **Kruskal's Algorithm** is used to find a **minimum spanning tree (MST)** in a connected, undirected graph with weighted edges.  
+- It **sorts all edges** from smallest to largest by weight.  
+- It **adds edges** one by one to the MST if they do not form a cycle.  
+- **Cycle detection** is managed by a **disjoint-set** (union-find) data structure, which helps quickly determine if two vertices belong to the same connected component.  
+- If adding an edge connects two different components, it is safe to include; if both vertices are already in the same component, including that edge would create a cycle and is skipped.  
+- The process continues until the MST has **V-1** edges, where **V** is the number of vertices.  
+- Its time complexity is **O(E \log E)**, dominated by sorting the edges, while union-find operations typically take near-constant time (**O(α(V))**, where α is the inverse Ackermann function).
 
 ##### Algorithm Steps
 
-I. Sort all the edges in increasing order based on their weights.
+**Input**
 
-II. Initialize an empty forest (a set of trees).
+- A connected, undirected graph with weighted edges
 
-III. Iterate through the sorted edges. For each edge `(u, v)`:
+**Output**
 
-  - If `u` and `v` are in different trees (or disjoint sets), add the edge to the forest and union `u` and `v` to be in the same set.
-  - If they are in the same set, skip the edge as it would form a cycle.
+- A subset of edges forming a MST, ensuring all vertices are connected with no cycles and minimal total weight
 
-IV. The forest formed after processing all edges is the MST.
+**Containers and Data Structures**
+
+- A list or priority queue to sort the edges by weight
+- A `disjoint-set (union-find)` structure to manage and merge connected components
+
+**Steps**
+
+I. Sort all edges in increasing order of their weights
+
+II. Initialize a forest where each vertex is its own tree
+
+III. Iterate through the sorted edges
+
+- If the edge `(u, v)` connects two different components, include it in the MST and perform a `union` of the sets
+- If it connects vertices in the same component, skip it
+
+IV. Once `V-1` edges have been added, the MST is complete
 
 ##### Step by Step Example
 
-Consider a simple graph with vertices A, B, C, D, and E. The edges with weights are:
+Consider a graph with vertices **A**, **B**, **C**, **D**, and **E**. The weighted edges are:
 
 ```
 A-B: 2
@@ -876,7 +893,7 @@ C-E: 5
 D-E: 2
 ```
 
-Here is the adjacency matrix for the graph:
+The adjacency matrix (∞ indicates no direct edge):
 
 |   | A | B | C | D | E |
 |---|---|---|---|---|---|
@@ -886,13 +903,9 @@ Here is the adjacency matrix for the graph:
 | **D** | ∞ | 1 | 4 | 0 | 2 |
 | **E** | ∞ | 3 | 5 | 2 | 0 |
 
-Kruskal's algorithm sorts all the edges in ascending order and starts picking them from the smallest, ensuring that a cycle isn't formed.
+**Sort edges** by weight:
 
-Step-by-Step Execution:
-
-I. Sort all edges:
-
-``` 
+```
 B-D: 1
 A-B: 2
 D-E: 2
@@ -902,52 +915,28 @@ C-D: 4
 C-E: 5
 ```
 
-II. Pick the smallest edge, B-D with a weight of 1.
+1. **Pick B-D (1)**: Include it. MST has {B-D}, weight = 1.  
+2. **Pick A-B (2)**: Include it. MST has {B-D, A-B}, weight = 3.  
+3. **Pick D-E (2)**: Include it. MST has {B-D, A-B, D-E}, weight = 5.  
+4. **Pick A-C (3)**: Include it. MST has {B-D, A-B, D-E, A-C}, weight = 8.  
+5. **Pick B-E (3)**: Would form a cycle (B, D, E already connected), skip.  
+6. **Pick C-D (4)**: Would form a cycle (C, D already connected), skip.  
+7. **Pick C-E (5)**: Would form a cycle as well, skip.  
 
-```
-Included edges: B-D
-Total weight: 1
-```
-
-III. The next edge, A-B with a weight of 2, does not form a cycle. Include it.
-
-```
-Included edges: B-D, A-B
-Total weight: 3
-```
-
-IV. The edge D-E with a weight of 2 is chosen next and does not form a cycle.
-
-```
-Included edges: B-D, A-B, D-E
-Total weight: 5
-```
-
-V. The edge A-C with a weight of 3 does not form a cycle. Include it.
-
-```
-Included edges: B-D, A-B, D-E, A-C
-Total weight: 8
-```
-
-VI. The next edge, B-E would form a cycle with the previously chosen edges, so it's skipped.
-
-VII. Continuing, C-D would also form a cycle, so it's skipped.
-
-VIII. The edge C-E would also form a cycle. At this point, all the vertices are connected, so the algorithm terminates.
-
-The final Minimum Spanning Tree formed by Kruskal's algorithm includes the edges: B-D, A-B, D-E, and A-C with a total weight of 8.
+The MST edges are **B-D, A-B, D-E, and A-C**, total weight = **8**.
 
 ##### Special Characteristics
 
-* The algorithm always picks the smallest edge that doesn't cause a cycle.
-* With a good disjoint-set implementation, the time complexity is close to `O(E log E)` (or `O(E log V)`), where `E` is the number of edges and `V` is the number of vertices.
+- It always picks the **smallest available edge** that won't create a cycle.  
+- In case of a **tie**, any equally weighted edge can be chosen.  
+- The approach is particularly efficient for **sparse graphs**.  
+- Sorting edges takes **O(E \log E)** time, and disjoint-set operations can be considered almost **O(1)** on average.
 
 ##### Applications
 
-* Useful for designing telecommunication or computer networks to ensure all nodes are connected while minimizing total wire length or latency.
-* Such as connecting homes to utility sources in a way that minimizes the total infrastructure cost.
-* Like road systems to connect all locations with the shortest possible roads.
+- **Network design**: Connecting servers or cities using minimal cable length.  
+- **Infrastructure**: Building road systems, water lines, or power grids with the smallest total cost.  
+- **Any MST requirement**: Ensuring connectivity among all nodes at minimum cost.
 
 ##### Implementation
 
