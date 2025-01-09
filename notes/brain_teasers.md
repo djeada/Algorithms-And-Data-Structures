@@ -6,7 +6,7 @@ Programming puzzles and brain teasers are excellent tools for testing and enhanc
 
 When tackling programming puzzles, consider the following strategies:
 
-- Starting with a **simple solution** can help you understand the problem better and identify key challenges. This initial approach often highlights areas where optimization is needed later.
+- Starting with a **simple solution** can help you understand the problem better and identify challenges. This initial approach often highlights areas where optimization is needed later.
 - Writing **unit tests** ensures your solution works for a variety of input scenarios. These tests are invaluable for catching logical errors and handling edge cases, and they allow for safe updates through regression testing.
 - Analyzing the **time and space complexity** of your algorithm helps you measure its efficiency. Aim for the best possible complexity, such as $O(n)$, while avoiding unnecessary memory usage.
 - Choosing the **appropriate data structure** is important for achieving better performance. Knowing when to use structures like arrays, linked lists, stacks, or trees can greatly enhance your solution.
@@ -60,9 +60,9 @@ Linked lists are dynamic data structures consisting of nodes that contain data a
 
 Trees are hierarchical data structures with a root node and child nodes. Binary trees are a specific type where each node has at most two children.
 
-- **Tree traversals** are key techniques for exploring binary trees, including in-order, pre-order, and post-order methods. These can be done recursively or iteratively, with stacks often used to simulate the recursive behavior in iterative solutions.
+- **Tree traversals** are techniques for exploring binary trees, including in-order, pre-order, and post-order methods. These can be done recursively or iteratively, with stacks often used to simulate the recursive behavior in iterative solutions.
 - A **Binary Search Tree (BST)** organizes nodes so that the left subtree contains keys smaller than the root, and the right subtree contains keys larger. This structure supports efficient operations like search, insertion, and deletion, usually taking $O(\log n)$ time in balanced trees.
-- **Balancing trees**, such as AVL trees and Red-Black trees, maintain a logarithmic height to ensure efficient $O(\log n)$ operations. They use rotations to rebalance the tree after insertions or deletions.
+- **Balancing trees**, such as AVL trees and Red-Black trees, maintain a logarithmic height to make sure efficient $O(\log n)$ operations. They use rotations to rebalance the tree after insertions or deletions.
 - **Heaps** are tree structures where each parent node satisfies a heap property. In a max-heap, the parent is greater than or equal to its children. Heaps are ideal for priority queues, where quick access to the maximum or minimum element is needed.
 - **Binary heaps** are commonly implemented using arrays for efficient memory usage. They allow $O(\log n)$ operations like insertion, deletion, and heapify. **Heap Sort**, based on binary heaps, is an in-place sorting algorithm with a time complexity of $O(n \log n)$.
 - Solving **common tree problems** often involves tasks like finding the lowest common ancestor of two nodes, determining the depth or height of the tree, and performing level-order traversals using breadth-first search (BFS). These are foundational skills for tree-based problem-solving.
@@ -164,7 +164,7 @@ Example when the sum is too large:
 
 I. **Recursion** works by breaking a problem into smaller instances of itself, with each call reducing the size of the problem.
 
-II. Key **principles** of recursion include:
+II. Recursion process includes:
 
 - Defining a clear **base case** to ensure that recursion terminates when the simplest version of the problem is solved.
 - Ensuring that the **recursive case** moves toward the base case by reducing the problem’s size or complexity with each call.
@@ -312,7 +312,7 @@ II. There are two primary **approaches** to dynamic programming:
 - The **top-down approach (memoization)** involves using recursion while caching the results of subproblems to avoid redundant computations.
 - The **bottom-up approach (tabulation)** builds a solution iteratively by solving the smallest subproblems first and using their solutions to solve larger subproblems.
   
-III. The **key steps** in dynamic programming include:
+III. Some steps that might be taken in dynamic programming:
 
 - **Defining the subproblems** to break the main problem into manageable parts.
 - **Identifying the state variables** that uniquely define each subproblem.
@@ -385,7 +385,7 @@ To find the items included trace back from $DP[4][7]$, checking where values cha
 
 I. **Greedy algorithms** are used when making a locally optimal choice at each step leads to a globally optimal solution.
   
-II. The two key **characteristics** of greedy algorithms are:
+II. The two **characteristics** of greedy algorithms are:
 
 - **Optimal substructure**, meaning the overall solution incorporates optimal solutions to subproblems.
 - The **greedy choice property**, where making the best local decision at each step results in the globally best solution.
@@ -572,9 +572,9 @@ Bit manipulation involves algorithms that operate directly on bits, the basic un
 
 #### Fundamental Concepts
 
-- A solid grasp of **binary representation** is essential for working with bitwise operations. In binary, each digit (or bit) represents a power of 2, starting with the least significant bit (LSB) on the right, which corresponds to $2^0$, and increasing as you move left.
+- A solid grasp of **binary representation** is necessary for working with bitwise operations. In binary, each digit (or bit) represents a power of 2, starting with the least significant bit (LSB) on the right, which corresponds to $2^0$, and increasing as you move left.
 - **Signed and unsigned integers** differ in how they represent numbers. **Unsigned integers** can only represent non-negative values, while **signed integers** use the most significant bit (MSB) as a sign bit, with 0 representing positive numbers and 1 representing negative numbers, typically using two's complement representation.
-- **Bitwise operators** are key tools for manipulating individual bits. The **AND (`&`)** operator produces 1 only when both corresponding bits are 1, making it useful for masking bits. The **OR (`|`)** operator sets a bit to 1 if at least one of the corresponding bits is 1, often used for setting bits.
+- **Bitwise operators** are tools for manipulating individual bits. The **AND (`&`)** operator produces 1 only when both corresponding bits are 1, making it useful for masking bits. The **OR (`|`)** operator sets a bit to 1 if at least one of the corresponding bits is 1, often used for setting bits.
 - The **XOR (`^`)** operator produces 1 when the bits are different, useful for toggling bits or swapping values. The **NOT (`~`)** operator flips all bits, performing a bitwise negation.
 - The **left shift (`<<`)** operation shifts bits to the left, filling with zeros from the right, effectively multiplying the number by powers of two. Conversely, **right shift (`>>`)** operations shift bits to the right, with two variations: **logical shifts**, which fill with zeros from the left (used for unsigned integers), and **arithmetic shifts**, which preserve the sign bit, used for signed integers.
 
