@@ -88,7 +88,7 @@ Here, the matrix indicates a graph with vertices A to D. For instance, vertex A 
 - Consumes more space for sparse graphs.
 - Traversing neighbors can be slower due to the need to check all vertices.
 
-### Adjacency List
+#### Adjacency List
 
 An adjacency list uses a collection (often an array or a linked list) to catalog the neighbors of each vertex. Each vertex points to its own list, enumerating its direct neighbors.
 
