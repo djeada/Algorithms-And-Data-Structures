@@ -113,7 +113,7 @@ This list reflects the same graph as our matrix example. Vertex A's neighbors, f
 - Edge existence checks can take up to $O(V)$ time in the worst case.
 - Potentially consumes more space for dense graphs.
 
-In practice, the choice between these (and other) representations often hinges on the graph's characteristics and the specific tasks or operations envisioned.
+In practice, the choice between these (and other) representations often depends on the graph's characteristics and the specific tasks or operations envisioned.
 
 ### Planarity
 
