@@ -235,14 +235,16 @@ A _heap_ is a specialized tree-based data structure that satisfies the heap prop
 Heaps are always complete binary trees, which means they are filled at all levels, except the last, which is filled from left to right. This structure ensures that the heap remains balanced.
 
 ```
-        [100]
-       /     \
-    [19]     [36]
-   /   \     /   \
- [17] [3]  [25]  [1]
+[100]
+├── [19]
+│   ├── [17]
+│   └── [3]
+└── [36]
+    ├── [25]
+    └── [1]
 ```
 
-#### Key Methods of the Heap Interface
+#### Methods of the Heap Interface
 
 The basic operations of a heap are as follows:
 
@@ -273,11 +275,10 @@ These time complexities make heaps especially useful in situations where we need
 
 Heaps can be represented efficiently using a one-dimensional array, which allows for easy calculation of the parent, left, and right child positions. The standard mapping from the heap to this array representation is as follows:
 
-1. The root of the tree is placed at index 1.
-2. For an element at index `i` in the array:
-2.1. The left child is placed at index `2*i`.
-2.2. The right child is placed at index `2*i + 1`.
-3. The parent of an element at index `i` is placed at index `floor(i/2)`.
+- In a *heap*, the root of the tree is stored at index `1` of the array representation.
+- The *left child* of any node at index `i` is positioned at index `2*i` in the array.
+- The *right child* of a node located at index `i` can be found at index `2*i + 1`.
+- To find the *parent* of any node at index `i`, calculate the index as `floor(i/2)`.
 
 This layout keeps the parent-child relationships consistent and makes navigation within the heap straightforward and efficient.
 
@@ -289,11 +290,12 @@ This layout keeps the parent-child relationships consistent and makes navigation
 A Binary Search Tree (BST) is a type of binary tree where each node has up to two children and maintains a specific ordering property among its values. For every node, the values of all nodes in its left subtree are less than its own value, and the values of all nodes in its right subtree are greater than its own value. In a well-balanced BST, this property enables efficient lookup, addition, and deletion operations, ideally distributing the nodes evenly across the left and right subtrees. Note that BSTs typically disallow duplicate values.
 
 ```
-        [1]
-       /   \
-     [2]   [3]
-    /   \     \
-  [4]   [5]   [6]
+#
+      [1]
+     /   \
+   [2]   [3]
+  /   \     \
+[4]   [5]   [6]
 ```
 
 #### Key Operations of the BST Interface
@@ -331,6 +333,7 @@ Insertion, deletion, and search operations are often implemented recursively to 
 Named after its inventors, G.M. Adelson-Velsky and E.M. Landis, AVL trees are a subtype of binary search trees (BSTs) that self-balance. Unlike regular BSTs, AVL trees maintain a stringent balance by ensuring the height difference between the left and right subtrees of any node is at most one. This tight control on balance guarantees optimal performance for lookups, insertions, and deletions, making AVL trees highly efficient.
 
 ```
+#
        [20]       
       /    \
    [10]    [30]
@@ -392,10 +395,11 @@ These rotations keep AVL trees balanced, ensuring consistent performance.
 Red-Black trees are a type of self-balancing binary search trees, with each node bearing an additional attribute: color. Each node in a Red-Black tree is colored either red or black, and these color attributes follow specific rules to maintain the tree's balance. This balance ensures that fundamental tree operations such as insertions, deletions, and searches remain efficient.
 
 ```
-          (30B)      
-         /     \
-     (20R)    (40B)
-    /   \      /   \
+#
+        (30B)
+      /      \
+   (20R)     (40B)
+   /   \      /   \
 (10B) (25B) (35B) (50B)
 ```
 
