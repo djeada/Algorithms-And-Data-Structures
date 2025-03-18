@@ -341,7 +341,7 @@ Named after its inventors, G.M. Adelson-Velsky and E.M. Landis, AVL trees are a 
 [5]  [15] [25]  [35]
 ```
 
-#### Key Characteristics of AVL Trees
+#### Characteristics of AVL Trees
 
 The defining characteristics of AVL trees include:
 
