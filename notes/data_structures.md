@@ -130,7 +130,7 @@ A _stack_ is a fundamental data structure that models a First-In-Last-Out (FILO)
 [1]  <- bottom
 ```
 
-#### Key Interface Methods
+#### Interface Methods
 
 Typical operations associated with a stack include:
 
@@ -200,7 +200,7 @@ Queues are incredibly versatile and find use in a variety of real-world scenario
 
 #### Comparing Stacks and Queues
 
-While stacks and queues are similar data structures, they differ in several key aspects:
+While stacks and queues are similar data structures, they differ in several aspects:
 
 - The stack operates on a Last-In-First-Out (LIFO) principle, while the queue follows a **First-In-First-Out (FIFO)** principle.
 - In terms of **accessibility**, stacks allow access only to the top element, while queues provide access to both the front and rear elements.
@@ -298,7 +298,7 @@ A Binary Search Tree (BST) is a type of binary tree where each node has up to tw
 [4]   [5]   [6]
 ```
 
-#### Key Operations of the BST Interface
+#### Operations of the BST Interface
 
 The fundamental operations provided by a BST are:
 
@@ -378,7 +378,7 @@ AVL trees support standard BST operations with some modifications to maintain ba
 
 #### Implementation of AVL Trees
 
-The key to maintaining AVL trees' balance is the application of rotation operations. Four types of rotations can occur based on the tree's balance state:
+The secret to maintaining AVL trees' balance is the application of rotation operations. Four types of rotations can occur based on the tree's balance state:
 
 1. **Right rotation** occurs when the left subtree of a node is taller than its right subtree. In this rotation, the node's left child becomes the new root, and the old root becomes the right child of this new root. The final step involves updating the heights of the affected nodes.
 2. **Left rotation** is used when the right subtree of a node is taller than its left subtree. During this rotation, the node's right child becomes the new root, while the old root becomes the left child of the new root. Afterward, the nodes' heights are updated accordingly.
@@ -403,7 +403,7 @@ Red-Black trees are a type of self-balancing binary search trees, with each node
 (10B) (25B) (35B) (50B)
 ```
 
-#### Key Properties of Red-Black Trees
+#### Properties of Red-Black Trees
 
 Red-Black trees abide by the following essential properties:
 
