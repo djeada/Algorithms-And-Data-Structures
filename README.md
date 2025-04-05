@@ -593,14 +593,35 @@ We encourage contributions that enhance the repository's value. To contribute:
 ## References
 
 ### Books
-- L. V. Narashima Prasad, E. Kishna Rao Patro, *Lecture Notes on Data Structures using C*
-- Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein, *Introduction to Algorithms, 3rd Edition (The MIT Press)*
-- Steven Halim, *Competitive Programming 3*
-- Narasimha Karumanchi, *Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles*
-- Brian Kernighan, Dennis Ritchie, *The C Programming Language*
-- Steven Skiena, Miguel Revilla, *Programming Challenges: The Programming Contest Training Manual*
-- Antti Laaksonen, *Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science)*
-- Nite Nimajneb, *The Hitchhiker’s Guide to the Programming Contests*
+- **Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford**  
+  *Introduction to Algorithms, 3rd Edition (The MIT Press)*  
+  [Amazon Link](https://amzn.to/4liRr12)
+
+- **Halim, Steven**  
+  *Competitive Programming 3*  
+  [Amazon Link](https://amzn.to/43H2KtM)
+
+- **Karumanchi, Narasimha**  
+  *Data Structures and Algorithms Made Easy: Data Structures and Algorithmic Puzzles*  
+  [Amazon Link](https://amzn.to/4jbJZCY)
+
+- **Kernighan, Brian; Ritchie, Dennis**  
+  *The C Programming Language*  
+  [Amazon Link](https://amzn.to/3FWJxKM)
+
+- **Skiena, Steven; Revilla, Miguel**  
+  *Programming Challenges: The Programming Contest Training Manual*  
+  [Amazon Link](https://amzn.to/44aL75A)
+
+- **Laaksonen, Antti**  
+  *Guide to Competitive Programming: Learning and Improving Algorithms Through Contests (Undergraduate Topics in Computer Science)*  
+  [Amazon Link](https://amzn.to/4cDo3Pr)
+
+- **Nimajneb, Nite**  
+  *The Hitchhiker’s Guide to the Programming Contests*
+
+- **Prasad, L. V. Narashima; Patro, E. Kishna Rao**  
+  *Lecture Notes on Data Structures using C*
 
 ### Online Courses and Resources
 - [Stanford CS Library](http://cslibrary.stanford.edu/)
