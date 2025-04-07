@@ -80,7 +80,7 @@ Here, the matrix indicates a graph with vertices A to D. For instance, vertex A 
 
 **Benefits**:
 
-- Fixed-time ($O(1)$) edge existence checks.
+- Fixed-time ( $O(1)$ ) edge existence checks.
 - Particularly suitable for dense graphs, where the edge-to-vertex ratio is high.
 
 **Drawbacks**:
@@ -113,25 +113,35 @@ This list reflects the same graph as our matrix example. Vertex A's neighbors, f
 - Edge existence checks can take up to $O(V)$ time in the worst case.
 - Potentially consumes more space for dense graphs.
 
-In practice, the choice between these (and other) representations often depends on the graph's characteristics and the specific tasks or operations envisioned.
+The choice between these (and other) representations often depends on the graph's characteristics and the specific tasks or operations envisioned.
 
 ### Planarity
 
-Planarity is a fundamental concept in graph theory that examines whether a graph can be drawn on a flat surface without any of its edges overlapping. This idea holds significant importance in areas such as circuit design, urban planning, and geography.
+Planarity examines whether a graph can be drawn on a flat surface (a plane) without any of its edges crossing. This idea holds significant importance in areas such as circuit design, urban planning, and geography.
 
 #### What is a Planar Graph?
 
-A graph is considered "planar" if there exists a representation of it on a two-dimensional plane where its edges intersect only at their vertices and nowhere in between. Being able to redraw a graph without any edges crossing, even if it starts out messy with overlaps, is what shows if it’s planar or not.
+A graph is considered **planar** if there exists a representation (also called a drawing) of it on a two-dimensional plane where its edges intersect only at their vertices and nowhere else. Even if a graph is initially drawn with overlaps or crossings, it may still be planar if it is possible to **redraw** (or **rearrange**) it so that no edges intersect in the interior of the drawing.
+
+An important theoretical result related to planarity is **Kuratowski’s Theorem**, which states that a graph is planar if and only if it does not contain a subgraph that is a subdivision of either $K_5$ (the complete graph on five vertices) or $K_{3,3}$ (the complete bipartite graph on six vertices, partitioned into sets of three).  
 
 #### Planar Embedding
 
-A "planar embedding" refers to a way of drawing a graph on a plane so that none of its edges cross each other. If a graph is first drawn with overlapping edges, it’s considered planar if you can rearrange it so no edges cross.
+A **planar embedding** refers to a specific way of drawing a graph on a plane so that none of its edges cross each other in the interior. If such a crossing-free drawing exists, the graph is planar. A related fact is **Euler’s Formula** for planar graphs:
+
+$$|V| - |E| + |F| = 2$$
+
+where:
+
+- $|V|$ is the number of vertices,
+- $|E|$ is the number of edges,
+- $|F|$ is the number of faces (including the "outer" infinite face).
 
 #### Examples
 
-To understand planarity better, let's explore some examples:
+I. **Cycle Graphs**  
 
-1. **Cycle Graphs**: Graphs like triangles, squares, or hexagons, which are simple loops or cycles, are intrinsically planar. These shapes can always be illustrated without intersecting edges.
+Simple cycle graphs (triangles, squares, pentagons, hexagons, etc.) are planar because you can easily draw them without any edges crossing. In the square cycle graph $C_4$ example below, there are no intersecting edges:
 
 ```
 A-----B
@@ -139,30 +149,35 @@ A-----B
 C-----D
 ```
 
-2. **Complete Graph with Four Vertices ($K_4$)**: This graph has every vertex connected to all other vertices. Despite its complexity, $K_4$ remains planar and resembles a tetrahedron.
+II. **Complete Graph with Four Vertices ($K_4$)**
+
+This graph has every vertex connected to every other vertex. Despite having 6 edges, $K_4$ is planar. Its planar drawing can resemble a tetrahedron (triangular pyramid) flattened onto a plane:
 
 ```
-#
-   A--------
-  / \      |
- B---C     |
-  \ /      |
-   D--------
+   A
+  / \
+ B---C
+  \ /
+   D
 ```
 
-3. **Complete Graph with Five Vertices ($K_5$)**: Unlike $K_4$, $K_5$ cannot be sketched without crossing edges, thus classifying it as non-planar.
+III. **Complete Graph with Five Vertices ($K_5$)**
+
+$K_5$ has every one of its five vertices connected to the other four, making a total of 10 edges. This graph is **non-planar**: no matter how you try to arrange the vertices and edges, there will always be at least one pair of edges that must cross. A rough sketch illustrating its inherent crossing is shown below:
 
 ```
-#
-      -  A  -
-    /  /   \  \
-  /   |     |   \
- B----+-----+---C
-  \   |     |  /
-    \ D-----E /
+   A
+  /|\
+ / | \
+B--+--C
+ \ | /
+  \|/
+   D
+   |
+   E
 ```
 
-In the $K_5$ graph, edges like AD and AE overlap with BC.
+Attempting to avoid one crossing in $K_5$ inevitably forces another crossing elsewhere, confirming its non-planarity.
 
 #### Strategies for Assessing Planarity
 
