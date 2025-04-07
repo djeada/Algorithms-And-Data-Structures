@@ -5,7 +5,7 @@ In computer science, a _collection_ (often interchangeably referred to as a _con
 1. At **The Abstract Level**, we focus on the conceptual understanding of collections, defining what they are and their characteristics. This includes how they store and retrieve items, whether it's based on a specific order (as in arrays or lists) or using unique keys (as in dictionaries or maps).
 2. **The Machine Level** refers to the practical implementation of collections, where we concentrate on efficiently realizing the abstract models. Factors like memory usage, operation speeds (insertion, deletion, search), and flexibility help determine the best data structures and algorithms for a specific task.
 
-Every programmer should really get to know collections well. It helps you pick the right type of collection for the job, making your code faster, more efficient, and easier to manage in the long run.
+Every developer should really get to know collections well. It helps you pick the right type of collection for the job, making your code faster, more efficient, and easier to manage in the long run.
 
 ![G70oT](https://user-images.githubusercontent.com/37275728/185710905-8acd7541-e8ed-4439-a644-5d739b39e783.png)
 
@@ -23,18 +23,6 @@ Linked lists can be highly valuable when the data doesn't require contiguous sto
 ```
 [HEAD]-->[1| ]-->[2| ]-->[3| ]-->[4| ]-->[NULL]
 ```
-
-#### Common Applications
-
-Linked lists find utility in a wide variety of areas including, but not limited to:
-
-* Storing items that undergo frequent addition or removal operations. This is due to the cost-effective manipulation (insertion/deletion) capabilities of linked lists.
-* Implementing other high-level data structures such as stacks and queues.
-* Storing buckets in hash tables or elements in associative arrays.
-* Maintaining key-value pairs in symbol tables or dictionaries.
-* Representing nodes in advanced structures like graphs or tree data structures.
-* Managing allocation or deallocation of memory blocks in memory management systems.
-* Storing sequences of operations to support undo or redo functionality in software applications.
 
 #### Typical Interface
 
@@ -57,6 +45,18 @@ Here are some standard operations associated with linked lists:
 
 Note that while insertion and deletion are constant time operations, access and search operations require traversing the list, resulting in linear time complexity.
 
+#### Common Applications
+
+Linked lists find utility in a wide variety of areas including, but not limited to:
+
+* Storing items that undergo frequent addition or removal operations. This is due to the cost-effective manipulation (insertion/deletion) capabilities of linked lists.
+* Implementing other high-level data structures such as stacks and queues.
+* Storing buckets in hash tables or elements in associative arrays.
+* Maintaining key-value pairs in symbol tables or dictionaries.
+* Representing nodes in advanced structures like graphs or tree data structures.
+* Managing allocation or deallocation of memory blocks in memory management systems.
+* Storing sequences of operations to support undo or redo functionality in software applications.
+
 #### Implementation Details
 
 Linked lists can be implemented in various ways, largely dependent on the programming language used. A conventional implementation strategy involves defining a custom class or structure to represent a node. This class encapsulates a value and a reference to the next node. Additionally, methods for adding, removing, and accessing elements are provided to manipulate the list.
@@ -77,15 +77,6 @@ Vectors are often favored over low-level arrays due to their augmented feature s
 | 0 | 1 | 2 | 3 | 4 | 5 |
 -------------------------
 ```
-
-#### Practical Applications
-
-Vectors can be leveraged for a wide array of tasks, such as:
-
-* Storing collections of values. Vectors are adept at storing and manipulating ordered lists of homogenous data types.
-* Executing matrix operations. Vectors provide a good structure for representing matrices and performing computations on them.
-* Implementing various search and sorting algorithms. Due to their continuous memory allocation and indexing, vectors are ideal for executing such algorithms.
-* Creating intricate data structures. Vectors can serve as foundational building blocks in the implementation of more complex data structures.
 
 #### Typical Interface
 
@@ -109,6 +100,15 @@ Some of the commonly used operations for vectors are:
 
 While access to elements is a constant time operation, insertions and deletions can vary depending on where these operations are performed. If at the end, they are constant time operations; however, elsewhere, these operations can result in shifting of elements, causing linear time complexity.
 
+#### Common Applications
+
+Vectors can be leveraged for a wide array of tasks, such as:
+
+* Storing collections of values. Vectors are adept at storing and manipulating ordered lists of homogenous data types.
+* Executing matrix operations. Vectors provide a good structure for representing matrices and performing computations on them.
+* Implementing various search and sorting algorithms. Due to their continuous memory allocation and indexing, vectors are ideal for executing such algorithms.
+* Creating intricate data structures. Vectors can serve as foundational building blocks in the implementation of more complex data structures.
+
 #### Implementation Details
 
 Vectors are typically implemented using an array of elements accompanied by additional metadata such as the current size and total capacity. When a resize operation is necessary, a new, larger array is created, and the existing elements are copied over to the new array. As resizing can be time and resource-consuming, vectors often allocate extra memory ahead of time to minimize the frequency of resizing.
@@ -130,7 +130,7 @@ A _stack_ is a fundamental data structure that models a First-In-Last-Out (FILO)
 [1]  <- bottom
 ```
 
-#### Interface Methods
+#### Typical Interface
 
 Typical operations associated with a stack include:
 
@@ -138,15 +138,6 @@ Typical operations associated with a stack include:
 * `pop()`: This method returns the top element of the stack and simultaneously removes it.
 * `top()`: This method simply returns the top element without removing it from the stack, allowing you to inspect the most recent addition.
 * `is_empty()`: This method checks if the stack is empty, a useful operation before attempting to `pop()` or `top()` to prevent errors.
-
-#### Common Applications
-
-Stacks are incredibly versatile and are used in a multitude of applications, including:
-
-- **Stack-oriented programming languages** such as Forth and PostScript rely heavily on the stack data structure to perform operations.
-- In **graph algorithms**, stacks are widely used in depth-first search (DFS) algorithms, where backtracking is necessary to explore unvisited nodes.
-- When **finding Eulerian cycles in graphs**, stacks help keep track of the current path, as the cycle must visit every edge exactly once.
-- **Identifying strongly connected components** in graphs often involves the use of stacks, as seen in algorithms like Tarjan’s algorithm, which utilizes stacks to efficiently track components.
 
 #### Time Complexity
 
@@ -158,6 +149,15 @@ Stacks are incredibly versatile and are used in a multitude of applications, inc
 | Search | `O(n)` | `O(n)` |
 
 As can be seen, while push and pop operations are constant time, access (retrieving an element without popping) and search operations require linear time since, in the worst case, all elements must be inspected.
+
+#### Common Applications
+
+Stacks are incredibly versatile and are used in a multitude of applications, including:
+
+- **Stack-oriented programming languages** such as Forth and PostScript rely heavily on the stack data structure to perform operations.
+- In **graph algorithms**, stacks are widely used in depth-first search (DFS) algorithms, where backtracking is necessary to explore unvisited nodes.
+- When **finding Eulerian cycles in graphs**, stacks help keep track of the current path, as the cycle must visit every edge exactly once.
+- **Identifying strongly connected components** in graphs often involves the use of stacks, as seen in algorithms like Tarjan’s algorithm, which utilizes stacks to efficiently track components.
 
 #### Implementation Details
 
@@ -180,7 +180,7 @@ A _queue_ is a fundamental data structure that stores elements in a sequence, wi
 [5]  <- rear
 ```
 
-#### Core Interface Methods
+#### Typical Interface
 
 The standard operations associated with a queue are:
 
@@ -188,15 +188,6 @@ The standard operations associated with a queue are:
 * `dequeue()`: This method returns the front element of the queue and simultaneously removes it.
 * `front()`: This method simply returns the front element without removing it from the queue, giving a peek at the next item to be dequeued.
 * `is_empty()`: This method checks if the queue is empty, an important step before calling `dequeue()` or `front()` to prevent errors.
-
-#### Practical Applications
-
-Queues are incredibly versatile and find use in a variety of real-world scenarios, including:
-
-- In **resource scheduling**, queues are used to manage requests for resources like servers, printers, or CPU tasks, ensuring they are handled in the order they are received.
-- **Communication systems** rely on queues to handle data packets and messages in a FIFO manner, making them the ideal data structure for this purpose.
-- **Simulations** of real-world systems, such as event processing or customer service, often process tasks in a FIFO order, which aligns naturally with queue usage.
-- In **Breadth-First Search (BFS)** for graph algorithms, a queue is used to keep track of the vertices that need to be processed.
 
 #### Comparing Stacks and Queues
 
@@ -217,6 +208,15 @@ While stacks and queues are similar data structures, they differ in several aspe
 | Search | `O(n)` | `O(n)` |
 
 Enqueue and dequeue operations are constant time, while accessing or searching for a specific element require linear time as all elements may need to be inspected.
+
+#### Common Applications
+
+Queues are incredibly versatile and find use in a variety of real-world scenarios, including:
+
+- In **resource scheduling**, queues are used to manage requests for resources like servers, printers, or CPU tasks, ensuring they are handled in the order they are received.
+- **Communication systems** rely on queues to handle data packets and messages in a FIFO manner, making them the ideal data structure for this purpose.
+- **Simulations** of real-world systems, such as event processing or customer service, often process tasks in a FIFO order, which aligns naturally with queue usage.
+- In **Breadth-First Search (BFS)** for graph algorithms, a queue is used to keep track of the vertices that need to be processed.
 
 #### Implementation Details
 
@@ -244,7 +244,7 @@ Heaps are always complete binary trees, which means they are filled at all level
     └── [1]
 ```
 
-#### Methods of the Heap Interface
+#### Typical Interface
 
 The basic operations of a heap are as follows:
 
@@ -252,15 +252,7 @@ The basic operations of a heap are as follows:
 * `search(value)`: Searches for a specific value in the heap. Note that heaps do not allow efficient arbitrary searches.
 * `remove(value)`: Deletes a specific value from the heap, then restructures the heap to maintain its properties.
 
-#### Practical Applications of Heaps
-
-Heaps are versatile and find widespread use across various computational problems:
-
-- In **graph algorithms**, heaps are used in algorithms like Dijkstra's for finding shortest paths and Prim's for constructing minimum spanning trees.
-- **Priority queues** are efficiently implemented using heaps, as they provide fast insertion and extraction of the highest or lowest priority elements.
-- In **sorting**, the heap sort algorithm utilizes heap properties to sort an array in-place, achieving a worst-case time complexity of **$O(n \log n)$**.
-
-#### Time Complexity of Heap Operations
+#### Time Complexity
 
 | Operation | Average case |
 | --- | --- |
@@ -270,6 +262,14 @@ Heaps are versatile and find widespread use across various computational problem
 | Merge | `O(m log(m+n))` |
 
 These time complexities make heaps especially useful in situations where we need to repeatedly remove the minimum (or maximum) element.
+
+#### Common Applications
+
+Heaps are versatile and find widespread use across various computational problems:
+
+- In **graph algorithms**, heaps are used in algorithms like Dijkstra's for finding shortest paths and Prim's for constructing minimum spanning trees.
+- **Priority queues** are efficiently implemented using heaps, as they provide fast insertion and extraction of the highest or lowest priority elements.
+- In **sorting**, the heap sort algorithm utilizes heap properties to sort an array in-place, achieving a worst-case time complexity of **$O(n \log n)$**.
 
 #### Implementation Details
 
@@ -298,7 +298,7 @@ A Binary Search Tree (BST) is a type of binary tree where each node has up to tw
 [4]   [5]   [6]
 ```
 
-#### Operations of the BST Interface
+#### Typical Interface
 
 The fundamental operations provided by a BST are:
 
@@ -308,7 +308,7 @@ The fundamental operations provided by a BST are:
 * `minimum()`: Retrieves the smallest value in the tree, which is the leftmost node.
 * `maximum()`: Retrieves the largest value in the tree, which is the rightmost node.
 
-#### Time Complexity of BST Operations
+#### Time Complexity
 
 The efficiency of BST operations depends on the height of the tree. In a balanced tree, this results in an average-case time complexity of `O(log n)`. However, in the worst-case scenario (a degenerate or unbalanced tree), the time complexity degrades to `O(n)`.
 
@@ -319,7 +319,7 @@ The efficiency of BST operations depends on the height of the tree. In a balance
 | Delete | `O(log n)` | `O(n)` |
 | Search | `O(log n)` | `O(n)` |
 
-#### BST Implementation Details
+#### Implementation Details
 
 A BST is typically implemented using a node-based model where each node encapsulates a value and pointers to the left and right child nodes. A special root pointer points to the first node, if any.
 
@@ -341,14 +341,32 @@ Named after its inventors, G.M. Adelson-Velsky and E.M. Landis, AVL trees are a 
 [5]  [15] [25]  [35]
 ```
 
-#### Characteristics of AVL Trees
+#### Properties
 
 The defining characteristics of AVL trees include:
 
 - Every node's left and right subtrees differ in height by at most one.
 - Both left and right subtrees of any node are also AVL trees, recursively applying the AVL property across the tree.
 
-#### Applications of AVL Trees
+#### Typical Interface
+
+AVL trees support standard BST operations with some modifications to maintain balance:
+
+- `insert(value)`: Add a value to the tree while preserving the AVL properties.
+- `search(value)`: Find and return a node with the given value in the tree.
+- `remove(value)`: Delete a node with the given value while keeping the tree balanced.
+- `rotate_left()`, `rotate_right()`: Perform rotation operations to balance the tree after insertions or deletions.
+
+#### Time Complexity
+
+| Operation | Average | Worst |
+| --- | --- | --- |
+| Access | `O(log n)` | `O(log n)` |
+| Insert | `O(log n)` | `O(log n)` |
+| Delete | `O(log n)` | `O(log n)` |
+| Search | `O(log n)` | `O(log n)` |
+
+#### Common Applications
 
 The AVL tree's self-balancing property lends itself to various applications, such as:
 
@@ -358,25 +376,7 @@ The AVL tree's self-balancing property lends itself to various applications, suc
 - Word suggestion systems and spell checkers, which benefit from fast lookups.
 - Networking algorithms and data compression, requiring efficient data structure.
 
-#### AVL Tree Interface and Methods
-
-AVL trees support standard BST operations with some modifications to maintain balance:
-
-- `insert(value)`: Add a value to the tree while preserving the AVL properties.
-- `search(value)`: Find and return a node with the given value in the tree.
-- `remove(value)`: Delete a node with the given value while keeping the tree balanced.
-- `rotate_left()`, `rotate_right()`: Perform rotation operations to balance the tree after insertions or deletions.
-
-#### Time Complexity of AVL Tree Operations
-
-| Operation | Average | Worst |
-| --- | --- | --- |
-| Access | `O(log n)` | `O(log n)` |
-| Insert | `O(log n)` | `O(log n)` |
-| Delete | `O(log n)` | `O(log n)` |
-| Search | `O(log n)` | `O(log n)` |
-
-#### Implementation of AVL Trees
+#### Implementation Details
 
 The secret to maintaining AVL trees' balance is the application of rotation operations. Four types of rotations can occur based on the tree's balance state:
 
@@ -403,7 +403,7 @@ Red-Black trees are a type of self-balancing binary search trees, with each node
 (10B) (25B) (35B) (50B)
 ```
 
-#### Properties of Red-Black Trees
+#### Properties
 
 Red-Black trees abide by the following essential properties:
 
@@ -413,15 +413,7 @@ Red-Black trees abide by the following essential properties:
 - If a node is red, then both its parent and its children nodes must be black. 
 - For each node, any simple path from this node to any of its descendant NIL nodes contains the same number of black nodes.
 
-#### Applications of Red-Black Trees
-
-Red-Black trees find application in several areas, including:
-
-- Kernel and system programming, where they are used in the internals of many operating systems.
-- Implementing maps, sets, and multi-maps in programming languages like C++ (as part of the Standard Template Library) and Java (in the TreeMap and TreeSet classes).
-- Underlying data structures for various advanced tree-based data structures and algorithms, such as splay trees and treaps.
-
-#### Red-Black Tree Interface and Methods
+#### Typical Interface
 
 Red-Black trees support typical BST operations, albeit with additional steps to manage node colors and balance:
 
@@ -430,7 +422,7 @@ Red-Black trees support typical BST operations, albeit with additional steps to 
 - `remove(value)`: Delete a node with the given value, adjusting colors and performing rotations as necessary to keep the tree balanced.
 - `rotate_left()`, `rotate_right()`: Perform rotation operations to maintain balance after insertions or deletions.
 
-#### Time Complexity of Red-Black Tree Operations
+#### Time Complexity
 
 | Operation | Average | Worst |
 | --- | --- | --- |
@@ -439,7 +431,15 @@ Red-Black trees support typical BST operations, albeit with additional steps to 
 | Delete | `O(log n)` | `O(log n)` |
 | Search | `O(log n)` | `O(log n)` |
 
-#### Implementation of Red-Black Trees
+#### Common Applications
+
+Red-Black trees find application in several areas, including:
+
+- Kernel and system programming, where they are used in the internals of many operating systems.
+- Implementing maps, sets, and multi-maps in programming languages like C++ (as part of the Standard Template Library) and Java (in the TreeMap and TreeSet classes).
+- Underlying data structures for various advanced tree-based data structures and algorithms, such as splay trees and treaps.
+
+#### Implementation Details
 
 Red-Black trees are a sophisticated binary search tree variant. They require careful management of node colors during insertions and deletions, often involving multiple rebalancing steps:
 
@@ -470,16 +470,7 @@ Hash tables, often referred to as hash maps or dictionaries, are a type of data 
 +-----------------+
 ```
 
-#### Key Applications of Hash Tables
-
-Hash tables are ubiquitous across various domains, including:
-
-- Databases and caching systems leverage hash tables to achieve quick insertion, deletion, and lookup operations.
-- Networking applications use hash tables for rapid data retrieval and updates.
-- They are employed within string searching algorithms, such as the Rabin-Karp algorithm, enabling efficient substring search.
-- Data visualization often involves creating histograms, which use hash tables for binning data.
-
-#### Basic Operations of a Hash Table
+#### Typical Interface
 
 Hash tables support a range of operations, which include:
 
@@ -490,7 +481,7 @@ Hash tables support a range of operations, which include:
 - `delete(key)`: This function removes the key-value pair corresponding to the provided key from the hash table.
 - `traverse()`: This method allows iteration over all the key-value pairs in the hash table.
 
-#### Time Complexity of Hash Table Operations
+#### Time Complexity
 
 The performance of hash table operations depends on the hash function's quality, the strategy for resolving collisions, and the load factor (the ratio of the number of key-value pairs to the number of slots or buckets in the table).
 
@@ -501,7 +492,16 @@ The performance of hash table operations depends on the hash function's quality,
 | Delete | `O(1)` | `O(n)` |
 | Search | `O(1)` | `O(n)` |
 
-#### Implementing Hash Tables
+#### Common Applications
+
+Hash tables are ubiquitous across various domains, including:
+
+- Databases and caching systems leverage hash tables to achieve quick insertion, deletion, and lookup operations.
+- Networking applications use hash tables for rapid data retrieval and updates.
+- They are employed within string searching algorithms, such as the Rabin-Karp algorithm, enabling efficient substring search.
+- Data visualization often involves creating histograms, which use hash tables for binning data.
+
+#### Implementation Details
 
 The creation of a hash table involves setting up a data structure to store key-value pairs, designing a hash function to map keys to slots in the data structure, and devising a collision resolution strategy to handle instances where multiple keys hash to the same slot. 
 
