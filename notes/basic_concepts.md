@@ -242,7 +242,7 @@ The graph below illustrates the growth of these different time complexities:
 
 The choice of an algorithm significantly impacts the application's performance, making the understanding of time complexity crucial.
 
-#### Interpreting Big O Notation: Key Rules
+#### Interpreting Big O Notation
 
 - We focus on the rate of growth rather than the exact number of operations, which is why constant factors are typically ignored. For example, the function $5n$ is expressed as **$O(n)$**, neglecting the constant factor of 5.
 - When an algorithm has multiple terms, only the term with the fastest growth rate is considered important. For example, if the running time is $n^2 + n$, the time complexity simplifies to **$O(n^2)$**, since $n^2$ grows faster than $n$.
