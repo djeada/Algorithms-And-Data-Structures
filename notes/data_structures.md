@@ -509,7 +509,7 @@ Common data structures used include arrays (for open addressing) and linked list
 
 ##### Hash Function
 
-The hash function plays a pivotal role in a hash table's performance as it determines where a key-value pair will be stored within the table. An ideal hash function distributes keys evenly across the table, balancing the number of keys in each bucket. This uniform distribution can be achieved by leveraging prime numbers both for the size of the hash table and within the hash function itself. When hashing strings, a common approach is to calculate the ASCII value for each character, add them, and then compute the modulo with respect to the size of the table.
+A hash function takes a key (like a string) and turns it into a number, which then decides where to store the data in a table. The goal is to spread out the keys evenly so that no single spot gets overloaded. One simple method for strings is to add up the ASCII values of the characters and then use the remainder from dividing by the table size to pick a slot. Using prime numbers for the table size or in the calculations can help achieve a more balanced spread.
 
 ```
 # n: number of keys
