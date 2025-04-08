@@ -6,9 +6,9 @@ DP works best for problems that have two key features. The first is **optimal su
 
 This method was introduced by Richard Bellman in the 1950s and has become a valuable tool in areas like computer science, economics, and operations research. It has been used to solve problems that would otherwise take too long by turning slow, exponential-time algorithms into much faster polynomial-time solutions. DP is practical and powerful for tackling real-world optimization challenges.
 
-### Fundamental Principles of Dynamic Programming
+### Principles
 
-To effectively apply dynamic programming, a problem must satisfy two key properties:
+To effectively apply dynamic programming, a problem must satisfy two properties:
 
 #### 1. Optimal Substructure
 
@@ -40,7 +40,7 @@ Let $S(n)$ be the set of subproblems for problem size $n$. If there exists $s \i
 
 The recursive computation of Fibonacci numbers $F(n) = F(n - 1) + F(n - 2)$ involves recalculating the same Fibonacci numbers multiple times. For instance, to compute $F(5)$, we need to compute $F(4)$ and $F(3)$, both of which require computing $F(2)$ and $F(1)$ multiple times.
 
-### Dynamic Programming Techniques
+### Techniques
 
 There are two primary methods for implementing dynamic programming algorithms:
 
@@ -160,9 +160,9 @@ We fill the table $dp[0..n][0..W]$ iteratively based on the state transition.
 - The **time complexity** is $O(nW)$, where $n$ is the number of items and $W$ is the capacity of the knapsack, as the algorithm iterates through both items and weights.
 - The **space complexity** is $O(nW)$, but this can be optimized to $O(W)$ because each row in the table depends only on the values from the previous row, allowing for space reduction.
 
-## Advanced Dynamic Programming Concepts
+### Advanced Concepts
 
-### Memory Optimization
+#### Memory Optimization
 
 In some cases, we can optimize space complexity by noticing dependencies between states.
 
@@ -175,7 +175,7 @@ for i in range(1, n + 1):
         dp[w] = max(dp[w], dp[w - w_i] + v_i)
 ```
 
-### Dealing with Non-Overlapping Subproblems
+#### Dealing with Non-Overlapping Subproblems
 
 If a problem has **optimal substructure** but does not have **overlapping subproblems**, it is often better to use **Divide and Conquer** instead of Dynamic Programming. Divide and Conquer works by breaking the problem into independent subproblems, solving each one separately, and then combining their solutions. Since there are no repeated subproblems to reuse, storing intermediate results (as in Dynamic Programming) is unnecessary, making Divide and Conquer a more suitable and efficient choice in such cases.
 
