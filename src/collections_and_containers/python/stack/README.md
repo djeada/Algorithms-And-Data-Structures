@@ -19,7 +19,7 @@ The Stack class has the following methods:
 Here is an example of how to use the Stack class:
 
 ```python
-frosrc.stack import Stack
+from src.stack import Stack
 
 # Create a new stack with a maximum size of 5 elements
 s = Stack(max_size=5)
