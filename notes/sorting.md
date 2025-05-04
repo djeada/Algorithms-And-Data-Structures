@@ -16,59 +16,59 @@ Stability, in the context of sorting, refers to preserving the relative order of
 - In an **unstable** sorting algorithm, their order might be reversed in the sorted output.
 - In a **stable** sorting algorithm, their relative order remains unchanged.
 
-#### Example
-
-Picture each element as a **programming-language name** followed by the 0-based position it held in the original (unsorted) list:
+Let’s take an analogous list of medieval knights (each with its original 0-based index):
 
 ```
-[C#0] [Python1] [C#2] [JavaScript3] [Python4]
+[Lancelot0] [Gawain1] [Lancelot2] [Percival3] [Gawain4]
 ```
+
+We’ll “sort” them by name, bringing all **Lancelot**s to the front, then **Gawain**, then **Percival**.
 
 #### Stable Sort
 
-A **stable** sort keeps items that compare as “equal” in the same left-to-right order they started with.
+A **stable** sort preserves the left-to-right order of equal items.
 
-I. Bring every `"C#"` to the front **without** changing their internal order (`0` still precedes `2`):
-
-```
-[C#0] [C#2] [Python1] [JavaScript3] [Python4]
-```
-
-II. Next, move the two `"Python"` entries ahead of `"JavaScript"`, again preserving `1` before `4`:
+I. **Bring every “Lancelot” to the front**, in the order they appeared (index 0 before 2):
 
 ```
-[C#0] [C#2] [JavaScript3] [Python1] [Python4]
+[Lancelot0] [Lancelot2] [Gawain1] [Percival3] [Gawain4]
 ```
 
-So the stable-sorted sequence is:
+II. **Next, move the two “Gawain”s** ahead of “Percival”, again preserving 1 before 4:
 
 ```
-[C#0] [C#2] [JavaScript3] [Python1] [Python4]
+[Lancelot0] [Lancelot2] [Gawain1] [Gawain4] [Percival3]
+```
+
+So the **stable-sorted** sequence is:
+
+```
+[Lancelot0] [Lancelot2] [Gawain1] [Gawain4] [Percival3]
 ```
 
 #### Unstable Sort
 
-An **unstable** sort does *not* guarantee that equal items keep their original relative order.
+An **unstable** sort may reorder equal items arbitrarily.
 
-I. While collecting `"C#"` items, the algorithm might emit index `2` *before* index `0`:
-
-```
-[C#2] [C#0] [Python1] [JavaScript3] [Python4]
-```
-
-II. Later, the two `"Python"` entries can also swap positions (`4` before `1`):
+I. When collecting the “Lancelot”s, it might pick index 2 before 0:
 
 ```
-[C#2] [C#0] [JavaScript3] [Python4] [Python1]
+[Lancelot2] [Lancelot0] [Gawain1] [Percival3] [Gawain4]
 ```
 
-So one possible unstable-sorted sequence is:
+II. Later, the two “Gawain”s might swap (4 before 1):
 
 ```
-[C#2] [C#0] [JavaScript3] [Python4] [Python1]
+[Lancelot2] [Lancelot0] [Gawain4] [Gawain1] [Percival3]
 ```
 
-This stability property matters when you chain sorts on multiple keys—for instance, first sorting bug reports by **severity**, then by **timestamp**—because each later pass can rely on ties already being in the correct internal order.
+So one possible **unstable-sorted** sequence is:
+
+```
+[Lancelot2] [Lancelot0] [Gawain4] [Gawain1] [Percival3]
+```
+
+If you then did a second pass (say, sorting by rank or battle-honors) you’d only want to reorder knights of different names, trusting that ties (same-name knights) are still in their intended original order—something only a stable sort guarantees.
 
 ### Bubble Sort
 
