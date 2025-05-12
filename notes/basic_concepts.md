@@ -17,7 +17,24 @@ A **data structure** organizes and stores data in a way that allows efficient ac
 5. A **tree** resembles a family tree, starting from one ancestor (the root) and branching out into multiple descendants (nodes), each of which can have their own children. Formally, trees are hierarchical structures organized across various levels. They’re excellent for showing hierarchical relationships, such as organizing files on your computer or visualizing company structures.
 6. Consider a **graph** like a network of cities connected by roads. Each city represents a node, and the roads connecting them are edges, which can either be one-way (directed) or two-way (undirected). Graphs effectively illustrate complex relationships and networks, such as social media connections, website link structures, or even mapping transportation routes.
 
-![ds](https://user-images.githubusercontent.com/37275728/185381435-9335db5b-8c9a-4e74-87dc-deac3c0356f1.png)
+```mermaid
+graph TD
+    DS["data structures"] --> PR[primitive]
+    DS --> NP["non-primitive"]
+    PR --> I[int]
+    PR --> F[float]
+    PR --> C[char]
+    PR --> P[pointer]
+    NP --> A[arrays]
+    NP --> L[lists]
+    NP --> FI[files]
+    L --> LI[linear]
+    L --> NL["non-linear"]
+    LI --> S[stack]
+    LI --> Q[queue]
+    NL --> G[graph]
+    NL --> T[tree]
+```
 
 ### Algorithms
 
@@ -240,7 +257,21 @@ The graph below illustrates the growth of these different time complexities:
 
 ![big_o](https://user-images.githubusercontent.com/37275728/185381461-ec062561-1f55-4cf5-a3fa-d4cc0a2c06df.png)
 
-The choice of an algorithm significantly impacts the application's performance, making the understanding of time complexity crucial.
+Imagine you’re building an app and every millisecond counts—choosing the right algorithm can make it lightning-fast or tediously slow, so having a solid grasp of time complexity may pay off.
+
+Here is a summary cheat sheet:
+
+| Notation        | Name                 | Meaning                                                          | Common Examples                                        |
+|-----------------|----------------------|------------------------------------------------------------------|--------------------------------------------------------|
+| $O(1)$        | Constant time        | Running time does not depend on input size $n$.                  | Array indexing, hash‐table lookup                      |
+| $O(\log n)$   | Logarithmic time     | Time grows proportionally to the logarithm of $n$.               | Binary search, operations on balanced BSTs             |
+| $O(n)$        | Linear time          | Time grows linearly with $n$.                                    | Single loop over array, scanning for max/min          |
+| $O(n \log n)$ | Linearithmic time    | Combination of linear and logarithmic growth.                    | Merge sort, heap sort, FFT                             |
+| $O(n^2)$      | Quadratic time       | Time grows proportional to the square of $n$.                    | Bubble sort, selection sort, nested loops              |
+| $O(n^3)$      | Cubic time           | Time grows proportional to the cube of $n$.                      | Naïve matrix multiplication (3 nested loops)           |
+| $O(2^n)$      | Exponential time     | Time doubles with each additional element in the input.          | Recursive Fibonacci, brute‐force subset enumeration    |
+| $O(n!)$       | Factorial time       | Time grows factorially with $n$.                                 | Brute‐force permutation generation, TSP brute‐force    |
+
 
 #### Interpreting Big O Notation
 
@@ -255,47 +286,87 @@ The choice of an algorithm significantly impacts the application's performance, 
 - Sometimes, we can create an illusion of $O(1)$ complexity by precomputing the results for all possible inputs and storing them in a lookup table (like a hash table). Then, we can solve the problem in constant time by directly retrieving the result from the table. This approach, known as memoization or caching, is limited by memory constraints and is only practical when the number of distinct inputs is small and manageable.
 - Often, the lower bound complexity for a class of problems is $O(n)$ or $O(nlogn)$. This bound represents problems where you at least have to examine each element once (as in the case of $O(n)$ ) or perform a more complex operation on every input (as in $O(nlogn)$ ), like sorting. Under certain conditions or assumptions, a more efficient algorithm might be achievable.
   
-#### When do algorithms have O(logn) or O(nlogn) complexity?
+### Recognising $O(\log n)$ and $O(n \log n)$ running-times
 
-The exact time complexity of an algorithm usually stems from how the size of the input affects the execution flow of the algorithm—particularly the loop iterations. 
+The growth rate of an algorithm almost always comes from **how quickly the remaining work shrinks** as the algorithm executes. Two common patterns are:
 
-Consider four example algorithms with differing complexities:
+| Pattern                                                                   | Typical loop behaviour                               | Resulting time-complexity |
+| ------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------------- |
+| *Halve (or otherwise divide) the problem each step*                       | $n \to n/2 \to n/4 \dots$                          | $\Theta(\log n)$        |
+| *Do a linear amount of work, but each unit of work is itself logarithmic* | outer loop counts down one by one, inner loop halves | $\Theta(n \log n)$      |
 
-I. **First Algorithm** $O(n)$: Here, the running time is directly proportional to the input size ($n$), as each loop iteration reduces $n$ by 1. Hence, the number of iterations equals the initial value of $n$.
+Below are four miniature algorithms written in language-neutral *pseudocode* (no Python syntax), followed by the intuition behind each bound.
 
-```python
-WHILE n > 0:
-    n = n - 1
+I. Linear - $\Theta(n)$
+
+```text
+procedure Linear(n)
+    while n > 0 do
+        n ← n − 1
+    end while
+end procedure
 ```
 
-II. **Second Algorithm** $O(log(n))$: In this case, the running time is proportional to the number of times the loop can iterate before $n$ reduces to 0. Each loop iteration halves the value of $n$. This equals the number of times you can halve $n$ before it becomes 0, which also corresponds to $log(n)$.
+*Work left* drops by **1** each pass, so the loop executes exactly $n$ times.
 
-```python
-WHILE n > 0:
-   n = n / 2
+II. Logarithmic - $\Theta(\log n)$
+
+```text
+procedure Logarithmic(n)
+    while n > 0 do
+        n ← ⌊n / 2⌋          ▹ halve the problem
+    end while
+end procedure
 ```
 
-III. **Third Algorithm** $O(nlog(n))$: Here, the outer loop iterates $n$ times, and the inner loop iterates $log(n)$ times for each outer loop iteration. Hence, the total number of iterations is $n * log(n)$.
+Each pass discards half of the remaining input, so only $\lfloor\log\_2 n\rfloor + 1$ iterations are needed.
 
-```python
-m = n
-WHILE m > 0:
-   k = n
-   WHILE k > 0:
-      k = k / 2
-   m = m - 1
+*Common real examples: binary search, finding the height of a complete binary tree.*
+
+III. Linear-logarithmic - $\Theta(n \log n)$
+
+```text
+procedure LinearLogarithmic(n)
+    m ← n
+    while m > 0 do                ▹ runs n times
+        k ← n
+        while k > 0 do            ▹ runs log n times
+            k ← ⌊k / 2⌋
+        end while
+        m ← m − 1
+    end while
+end procedure
 ```
 
-IV. **Fourth Algorithm** $O(log^2(n))$: In this scenario, the outer loop iterates $log(n)$ times, and the inner loop also iterates $log(n)$ times for each outer loop iteration. Consequently, the total number of iterations equals $log^2(n)$.
+* **Outer loop:** $n$ iterations.
+* **Inner loop:** $\lfloor\log\_2 n\rfloor + 1$ iterations for each outer pass.
+* Total work $\approx n \cdot \log n$.
 
-```python
-m = n
-WHILE m > 0:
-   k = n
-   WHILE k > 0:
-      k = k / 2
-   m = m / 2
+Classic real-world instances: mergesort, heapsort, many divide-and-conquer algorithms, building a heap then doing $n$ delete-min operations.
+
+IV. Squared-logarithmic - $\Theta(\log^2 n)$
+
+```text
+procedure LogSquared(n)
+    m ← n
+    while m > 0 do                ▹ outer loop: log n times
+        k ← n
+        while k > 0 do            ▹ inner loop: log n times
+            k ← ⌊k / 2⌋
+        end while
+        m ← ⌊m / 2⌋
+    end while
+end procedure
 ```
+
+Both loops cut their control variable in half, so each contributes a $\log n$ factor, giving $\log^2 n$. Such bounds appear in some advanced data-structures (e.g., range trees) where *two* independent logarithmic dimensions are traversed.
+
+Rules of thumb:
+
+1. **Log factors come from repeatedly shrinking a quantity by a constant factor.** Any loop of the form `while x > 1: x \gets x / c` (for constant $c > 1$) takes $\Theta(\log x)$ steps.
+2. **Multiplying two independent loops multiplies their costs.** An outer loop that counts $n$ times and an inner loop that counts $\log n$ times gives $n \cdot \log n$.
+3. **Divide-and-conquer often yields $n \log n$.** Splitting the problem into a constant number of sub-problems of half size and doing $\Theta(n)$ work to combine them recurs to the *Master Theorem* case $T(n) = 2\,T\bigl(n/2\bigr) + \Theta(n) = \Theta(n \log n).$
+4. **Nested logarithmic loops stack.** Two independent halving loops give $\log^2 n$; three give $\log^3 n$, and so on.
 
 ### Misconceptions
 
