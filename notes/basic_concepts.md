@@ -17,24 +17,7 @@ A **data structure** organizes and stores data in a way that allows efficient ac
 5. A **tree** resembles a family tree, starting from one ancestor (the root) and branching out into multiple descendants (nodes), each of which can have their own children. Formally, trees are hierarchical structures organized across various levels. They’re excellent for showing hierarchical relationships, such as organizing files on your computer or visualizing company structures.
 6. Consider a **graph** like a network of cities connected by roads. Each city represents a node, and the roads connecting them are edges, which can either be one-way (directed) or two-way (undirected). Graphs effectively illustrate complex relationships and networks, such as social media connections, website link structures, or even mapping transportation routes.
 
-```mermaid
-graph TD
-    DS["data structures"] --> PR[primitive]
-    DS --> NP["non-primitive"]
-    PR --> I[int]
-    PR --> F[float]
-    PR --> C[char]
-    PR --> P[pointer]
-    NP --> A[arrays]
-    NP --> L[lists]
-    NP --> FI[files]
-    L --> LI[linear]
-    L --> NL["non-linear"]
-    LI --> S[stack]
-    LI --> Q[queue]
-    NL --> G[graph]
-    NL --> T[tree]
-```
+![image](https://github.com/user-attachments/assets/f1962de7-aa28-4348-9933-07e49c737cd9)
 
 ### Algorithms
 
