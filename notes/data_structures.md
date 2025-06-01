@@ -7,56 +7,7 @@ In computer science, a _collection_ (often interchangeably referred to as a _con
 
 Every developer should really get to know collections well. It helps you pick the right type of collection for the job, making your code faster, more efficient, and easier to manage in the long run.
 
-```mermaid
-flowchart TD
-    Start((Start))
-    Start --> OrderImportant{Order is Important?}
-
-    %% Order‐important branch
-    OrderImportant -- yes --> LIFO{Last In, First Out?}
-    LIFO -- yes --> stack[stack]
-    LIFO -- no  --> FIFO{First In, First Out?}
-    FIFO -- yes --> queue[queue]
-    FIFO -- no  --> BestIn{Best In, First Out?}
-    BestIn -- yes --> priority_queue[priority_queue]
-    BestIn -- no  --> KeepSorted{Keep Sorted Elements?}
-
-    KeepSorted -- yes --> MainPurpose{Main Purpose}
-    KeepSorted -- no  --> InsertMiddle{Insert/erase at middle?}
-
-    InsertMiddle -- yes --> Frequent{Frequent Traversals?}
-    InsertMiddle -- no  --> InsertFront{Insert/erase at front?}
-
-    Frequent -- yes --> list[list]
-    Frequent -- no  --> InsertFront
-
-    InsertFront -- yes --> deque[deque]
-    InsertFront -- no  --> Persistent{Persistent Positions?}
-
-    Persistent -- yes --> deque
-    Persistent -- no  --> SizeVaries{Size varies widely?}
-
-    SizeVaries -- yes --> deque
-    SizeVaries -- no  --> vector[vector]
-
-    MainPurpose -- "In-order Traversals" --> sorted_vector["vector (sorted)"]
-    MainPurpose -- "Look-up Keys"         --> Lookup{Look-up Keys?}
-
-    %% Order-not-important & lookup branch
-    OrderImportant -- no  --> Lookup
-    Lookup        -- no  --> InsertFront
-    Lookup        -- yes --> AllowDup{Allow Duplicates?}
-
-    AllowDup -- no  --> Sep1{Separate Key/Value?}
-    AllowDup -- yes --> Sep2{Separate Key/Value?}
-
-    Sep1 -- yes --> unordered_map[unordered_map]
-    Sep1 -- no  --> unordered_set[unordered_set]
-
-    Sep2 -- yes --> unordered_multimap[unordered_multimap]
-    Sep2 -- no  --> unordered_multiset[unordered_multiset]
-
-```
+![image](https://github.com/user-attachments/assets/2471c93c-297e-486d-89ea-e78e7241cfb2)
 
 ### Linked Lists
 
