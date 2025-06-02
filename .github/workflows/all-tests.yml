@@ -7,10 +7,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout repository (full history)
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0
+        fetch-depth: 0     # ← fetch all branches and commits
+
+    - name: Ensure master/main exist locally
+      run: |
+        # Try to fetch both master and main so that one of them is guaranteed to exist
+        git fetch origin master:master  || true
+        git fetch origin main:main      || true
 
     - name: Setup Python
       uses: actions/setup-python@v2
@@ -18,7 +24,7 @@ jobs:
         python-version: '3.x'
 
     - name: Install CMake and Make
-      run: sudo apt-get install -y cmake make
+      run: sudo apt-get update && sudo apt-get install -y cmake make
 
     - name: Run tests
       run: |
