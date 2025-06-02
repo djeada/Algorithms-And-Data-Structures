@@ -2,26 +2,36 @@
 
 set -e
 
+# Determine which branch to compare against: master or main
+detect_base_branch() {
+    if git rev-parse --verify master >/dev/null 2>&1; then
+        echo "master"
+    elif git rev-parse --verify main >/dev/null 2>&1; then
+        echo "main"
+    else
+        echo "Error: neither 'master' nor 'main' exists in this repository." >&2
+        exit 1
+    fi
+}
+
 # Find all directories (under start_dir) that contain a CMakeLists.txt
 find_cmake_subdirs() {
     local start_dir="$1"
-    local cmakedirs
-    cmakedirs=$(find "$start_dir" -type f -name 'CMakeLists.txt' -printf '%h\n' | sort -u)
-    echo "$cmakedirs"
+    # print the parent directory of each CMakeLists.txt, remove duplicates, sort
+    find "$start_dir" -type f -name 'CMakeLists.txt' -printf '%h\n' | sort -u
 }
 
-# Find all directories (under start_dir) that contain a __init__.py (i.e., Python packages)
+# Find all directories (under start_dir) that contain a __init__.py (Python packages)
 find_python_subdirs() {
     local start_dir="$1"
-    local pydirs
-    pydirs=$(find "$start_dir" -type f -name '__init__.py' -printf '%h\n' | sort -u)
-    echo "$pydirs"
+    find "$start_dir" -type f -name '__init__.py' -printf '%h\n' | sort -u
 }
 
-# Get list of files changed since last commit on master
+# Get list of files changed since last base-branch commit
 get_modified_files() {
-    # Compare against master branch; adjust "master" to "origin/master" if needed
-    git diff --name-only master...HEAD
+    local base_branch
+    base_branch="$(detect_base_branch)"
+    git diff --name-only "$base_branch"...HEAD
 }
 
 test_cpp_projects() {
@@ -32,14 +42,16 @@ test_cpp_projects() {
     local all_subdirs
     all_subdirs=$(find_cmake_subdirs .)
 
-    # Files modified in this PR relative to master
+    # Files modified in this PR relative to base branch
     local modified_files
     modified_files=$(get_modified_files)
 
     # Filter to only those C++ subdirs in which at least one file was modified
     local modified_subdirs=""
     for subdir in $all_subdirs; do
-        if echo "$modified_files" | grep -q "^${subdir#./}/"; then
+        # strip leading ./ if present when comparing to git output
+        local sub="${subdir#./}"
+        if echo "$modified_files" | grep -q "^$sub/"; then
             modified_subdirs="$modified_subdirs $subdir"
         fi
     done
@@ -62,15 +74,13 @@ test_cpp_projects() {
     for subdir in $modified_subdirs; do
         echo -e "\nRunning tests for C++ project at: $subdir"
         cd "$subdir"
-        mkdir -p build && cd build
 
-        # Ensure cleanup on exit from this block
+        mkdir -p build && cd build
         trap cleanup EXIT
 
-        # Redirect cmake/make output to /dev/null
+        # hide cmake/make output
         cmake .. 1>/dev/null 2>&1 && make 1>/dev/null 2>&1
 
-        # Run tests and capture output
         cpp_test_log="$current_dir/cpp_test_$(echo "$subdir" | tr '/' '_').log"
         : > "$cpp_test_log"
         ctest --verbose 2>&1 | tee -a "$cpp_test_log"
@@ -79,7 +89,6 @@ test_cpp_projects() {
         cleanup
         cd "$current_dir"
 
-        # Count total and passed tests in this subdir
         local cpp_total_tests
         cpp_total_tests=$(grep -oP '\d+(?= tests from)' "$cpp_test_log" | tail -1 || echo 0)
         local cpp_passed_tests
@@ -105,14 +114,15 @@ test_python_projects() {
     local all_subdirs
     all_subdirs=$(find_python_subdirs .)
 
-    # Files modified in this PR relative to master
+    # Files modified in this PR relative to base branch
     local modified_files
     modified_files=$(get_modified_files)
 
     # Filter to only those Python subdirs in which at least one file was modified
     local modified_subdirs=""
     for subdir in $all_subdirs; do
-        if echo "$modified_files" | grep -q "^${subdir#./}/"; then
+        local sub="${subdir#./}"
+        if echo "$modified_files" | grep -q "^$sub/"; then
             modified_subdirs="$modified_subdirs $subdir"
         fi
     done
@@ -137,7 +147,6 @@ test_python_projects() {
         python3 -m unittest discover -v 2>&1 | tee -a "$python_test_log"
         cd "$current_dir"
 
-        # Count total and passed tests
         local python_total_tests
         python_total_tests=$(grep -oP '(?<=Ran )\d+' "$python_test_log" | head -1 || echo 0)
         local python_passed_tests
@@ -157,7 +166,7 @@ test_python_projects() {
 
 main() {
     if [ "$#" -eq 0 ]; then
-        echo "Running tests only for projects modified since last master commit."
+        echo "Running tests only for projects modified since last commit on base branch."
         echo "---- Python Projects ----"
         test_python_projects
         echo "---- C++ Projects ----"
@@ -169,7 +178,7 @@ main() {
         case "$1" in
             -h|--help)
                 echo "Usage: run_tests.sh [OPTION]"
-                echo "Run tests for projects modified since last master commit."
+                echo "Run tests for projects modified since base branch."
                 echo ""
                 echo "Options:"
                 echo "  -h, --help    Show this help message and exit"
