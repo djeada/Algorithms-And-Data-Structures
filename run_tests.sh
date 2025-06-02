@@ -3,7 +3,7 @@ set -e
 
 # Determine base branch by looking at the upstream. If no upstream is set, fall back to "master".
 detect_base_branch() {
-    # Try to get the upstream name, e.g. "origin/master" or "origin/main"
+    # If there’s an upstream (e.g. origin/master or origin/main), use that.
     if base="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"; then
         echo "$base"
     else
@@ -11,16 +11,17 @@ detect_base_branch() {
     fi
 }
 
-# Find all directories under start_dir that contain a CMakeLists.txt
+# Find all directories (under start_dir) that contain a CMakeLists.txt
 find_cmake_subdirs() {
     local start_dir="$1"
     find "$start_dir" -type f -name 'CMakeLists.txt' -printf '%h\n' | sort -u
 }
 
-# Find all directories under start_dir that contain a __init__.py
+# Find only those Python-package roots that actually have a tests/ subdirectory.
+# In other words, look for “*/tests” and return the parent directory.
 find_python_subdirs() {
     local start_dir="$1"
-    find "$start_dir" -type f -name '__init__.py' -printf '%h\n' | sort -u
+    find "$start_dir" -type d -name 'tests' -printf '%h\n' | sort -u
 }
 
 # Get the list of files changed since the last commit on base branch
@@ -34,15 +35,15 @@ test_cpp_projects() {
     local current_dir
     current_dir=$(pwd)
 
-    # Find every directory that has a CMakeLists.txt
+    # All C++ project directories (where CMakeLists.txt lives)
     local all_subdirs
     all_subdirs=$(find_cmake_subdirs .)
 
-    # Which files changed in this PR (relative to base)
+    # Files modified in this PR relative to base
     local modified_files
     modified_files=$(get_modified_files)
 
-    # Filter to only those C++ subdirs where at least one file was modified
+    # Filter to only those C++ subdirs in which at least one file was modified
     local modified_subdirs=""
     for subdir in $all_subdirs; do
         # strip leading "./" for comparison against git output
@@ -85,14 +86,20 @@ test_cpp_projects() {
         cleanup
         cd "$current_dir"
 
+        # Safely extract “<number> tests from” (if any) or default to 0
         local cpp_total_tests
         cpp_total_tests=$(grep -oP '\d+(?= tests from)' "$cpp_test_log" | tail -1 || echo 0)
+        cpp_total_tests="${cpp_total_tests:-0}"
+
+        # Safely extract passed count (if any) or default to 0
         local cpp_passed_tests
         cpp_passed_tests=$(grep -oP '(?<=\[ *PASSED *\] )\d+' "$cpp_test_log" | tail -1 || echo 0)
-        local cpp_failed_tests=$((cpp_total_tests - cpp_passed_tests))
+        cpp_passed_tests="${cpp_passed_tests:-0}"
 
-        total_passed_tests=$((total_passed_tests + cpp_passed_tests))
-        total_failed_tests=$((total_failed_tests + cpp_failed_tests))
+        local cpp_failed_tests=$(( cpp_total_tests - cpp_passed_tests ))
+
+        total_passed_tests=$(( total_passed_tests + cpp_passed_tests ))
+        total_failed_tests=$(( total_failed_tests + cpp_failed_tests ))
 
         echo "C++ Tests summary for $subdir:"
         echo -e "  Passed: \e[32m$cpp_passed_tests\e[0m, Failed: \e[31m$cpp_failed_tests\e[0m"
@@ -106,7 +113,7 @@ test_python_projects() {
     local current_dir
     current_dir=$(pwd)
 
-    # Find every directory that has an __init__.py
+    # Only pick up directories that actually have a “tests/” folder
     local all_subdirs
     all_subdirs=$(find_python_subdirs .)
 
@@ -114,7 +121,7 @@ test_python_projects() {
     local modified_files
     modified_files=$(get_modified_files)
 
-    # Filter to only those Python subdirs where at least one file was modified
+    # Filter to only those Python-root dirs where at least one file was modified
     local modified_subdirs=""
     for subdir in $all_subdirs; do
         local sub="${subdir#./}"
@@ -140,17 +147,25 @@ test_python_projects() {
         python_test_log="$current_dir/python_test_$(echo "$subdir" | tr '/' '_').log"
         : > "$python_test_log"
 
+        # Run unittest discovery; any output goes into the log
         python3 -m unittest discover -v 2>&1 | tee -a "$python_test_log"
         cd "$current_dir"
 
+        # Safely grab “Ran X tests” (default to 0 if none found)
         local python_total_tests
         python_total_tests=$(grep -oP '(?<=Ran )\d+' "$python_test_log" | head -1 || echo 0)
+        python_total_tests="${python_total_tests:-0}"
+
+        # Count how many “... ok” lines (default to 0)
         local python_passed_tests
         python_passed_tests=$(grep -c '\.\.\. ok' "$python_test_log" || echo 0)
-        local python_failed_tests=$((python_total_tests - python_passed_tests))
+        python_passed_tests="${python_passed_tests:-0}"
 
-        total_passed_tests=$((total_passed_tests + python_passed_tests))
-        total_failed_tests=$((total_failed_tests + python_failed_tests))
+        # Compute failures
+        local python_failed_tests=$(( python_total_tests - python_passed_tests ))
+
+        total_passed_tests=$(( total_passed_tests + python_passed_tests ))
+        total_failed_tests=$(( total_failed_tests + python_failed_tests ))
 
         echo "Python Tests summary for $subdir:"
         echo -e "  Passed: \e[32m$python_passed_tests\e[0m, Failed: \e[31m$python_failed_tests\e[0m"
