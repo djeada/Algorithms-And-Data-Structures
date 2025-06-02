@@ -4,8 +4,7 @@ import unittest
 
 from src.all_permutations import (
     all_permutations_itertools,
-    all_permutations_backtracking,
-    all_permutations  # this is aliased to backtracking by default
+    all_permutations_backtracking
 )
 
 
