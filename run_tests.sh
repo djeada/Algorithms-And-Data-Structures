@@ -1,33 +1,29 @@
 #!/bin/bash
-
 set -e
 
-# Determine which branch to compare against: master or main
+# Determine base branch by looking at the upstream. If no upstream is set, fall back to "master".
 detect_base_branch() {
-    if git rev-parse --verify master >/dev/null 2>&1; then
-        echo "master"
-    elif git rev-parse --verify main >/dev/null 2>&1; then
-        echo "main"
+    # Try to get the upstream name, e.g. "origin/master" or "origin/main"
+    if base="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"; then
+        echo "$base"
     else
-        echo "Error: neither 'master' nor 'main' exists in this repository." >&2
-        exit 1
+        echo "master"
     fi
 }
 
-# Find all directories (under start_dir) that contain a CMakeLists.txt
+# Find all directories under start_dir that contain a CMakeLists.txt
 find_cmake_subdirs() {
     local start_dir="$1"
-    # print the parent directory of each CMakeLists.txt, remove duplicates, sort
     find "$start_dir" -type f -name 'CMakeLists.txt' -printf '%h\n' | sort -u
 }
 
-# Find all directories (under start_dir) that contain a __init__.py (Python packages)
+# Find all directories under start_dir that contain a __init__.py
 find_python_subdirs() {
     local start_dir="$1"
     find "$start_dir" -type f -name '__init__.py' -printf '%h\n' | sort -u
 }
 
-# Get list of files changed since last base-branch commit
+# Get the list of files changed since the last commit on base branch
 get_modified_files() {
     local base_branch
     base_branch="$(detect_base_branch)"
@@ -38,18 +34,18 @@ test_cpp_projects() {
     local current_dir
     current_dir=$(pwd)
 
-    # All C++ project directories (where CMakeLists.txt lives)
+    # Find every directory that has a CMakeLists.txt
     local all_subdirs
     all_subdirs=$(find_cmake_subdirs .)
 
-    # Files modified in this PR relative to base branch
+    # Which files changed in this PR (relative to base)
     local modified_files
     modified_files=$(get_modified_files)
 
-    # Filter to only those C++ subdirs in which at least one file was modified
+    # Filter to only those C++ subdirs where at least one file was modified
     local modified_subdirs=""
     for subdir in $all_subdirs; do
-        # strip leading ./ if present when comparing to git output
+        # strip leading "./" for comparison against git output
         local sub="${subdir#./}"
         if echo "$modified_files" | grep -q "^$sub/"; then
             modified_subdirs="$modified_subdirs $subdir"
@@ -78,7 +74,7 @@ test_cpp_projects() {
         mkdir -p build && cd build
         trap cleanup EXIT
 
-        # hide cmake/make output
+        # Hide cmake/make output
         cmake .. 1>/dev/null 2>&1 && make 1>/dev/null 2>&1
 
         cpp_test_log="$current_dir/cpp_test_$(echo "$subdir" | tr '/' '_').log"
@@ -110,15 +106,15 @@ test_python_projects() {
     local current_dir
     current_dir=$(pwd)
 
-    # All Python project directories (where __init__.py lives)
+    # Find every directory that has an __init__.py
     local all_subdirs
     all_subdirs=$(find_python_subdirs .)
 
-    # Files modified in this PR relative to base branch
+    # Which files changed in this PR (relative to base)
     local modified_files
     modified_files=$(get_modified_files)
 
-    # Filter to only those Python subdirs in which at least one file was modified
+    # Filter to only those Python subdirs where at least one file was modified
     local modified_subdirs=""
     for subdir in $all_subdirs; do
         local sub="${subdir#./}"
