@@ -637,6 +637,7 @@ We encourage contributions that enhance the repository's value. To contribute:
 - [CP Algorithms](https://cp-algorithms.com/)
 - [Computational Geometry by Kent State University](https://www.personal.kent.edu/~rmuhamma/Compgeometry/compgeom.html)
 - [CodeAhoy - Learn C Programming](https://codeahoy.com/learn/cprogramming/toc/)
+- [University of Chicago REU 2017](https://math.uchicago.edu/~may/REU2017/)
 
 ## License
 
