@@ -1,3 +1,9 @@
+todo:
+
+- bisect
+- heaps
+- fast and slow pointer for lists
+
 ## Solving Programming Brain Teasers
 
 Programming puzzles and brain teasers are excellent tools for testing and enhancing your coding abilities and problem-solving skills. They are frequently used in technical interviews to evaluate a candidate's logical thinking, analytical prowess, and ability to devise efficient algorithms. To excel in these scenarios, it is recommended to master effective strategies for approaching and solving these problems.
