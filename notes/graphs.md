@@ -1,3 +1,6 @@
+TODO:
+- topological sort
+
 ## Graphs
 
 In many areas of life, we come across systems where elements are deeply interconnected—whether through physical routes, digital networks, or abstract relationships. Graphs offer a flexible way to represent and make sense of these connections.
