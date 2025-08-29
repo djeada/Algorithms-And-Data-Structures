@@ -60,7 +60,7 @@ Checks: (1≠9) → (2≠9) → (3≠9) → end → not found
 * Simple and dependable for short or unsorted data.
 * Assumes 0-based indexing in these notes.
 
-### Sentinel Linear Search
+#### Sentinel Linear Search
 
 Place one copy of the target at the very end as a “sentinel” so the scan can run without checking bounds each step; afterward, decide whether the match was inside the original list or only at the sentinel position.
 
@@ -634,7 +634,7 @@ LOOKUP "alpha": counters at {2,5,9} = {0,1,0}
 * Watch for counter **saturation** (caps at max value) and **underflow** (don’t decrement below 0).
 * Good for dynamic sets with frequent inserts and deletes.
 
-##### Cuckoo Filter
+#### Cuckoo Filter
 Hash-table–style filter that stores short **fingerprints** in two possible buckets; supports **insert, lookup, delete** with low false-positive rates and high load factors.
 
 **Example inputs and outputs**
