@@ -1,3 +1,7 @@
+## Searching
+
+Searching refers to the process of finding the location of a specific element within a collection of data, such as an array, list, tree, or graph. It underpins many applications, from databases and information retrieval to routing and artificial intelligence. Depending on the organization of the data, different search techniques are used—such as linear search for unsorted data, binary search for sorted data, and more advanced approaches like hash-based lookup or tree traversals for hierarchical structures. Efficient searching is important because it directly impacts the performance and scalability of software systems.
+
 ### 1. **Linear & Sequential Search**
 - **Linear Search (Sequential Search)**
   - Checks each element one by one.
