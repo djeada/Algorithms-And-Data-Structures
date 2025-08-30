@@ -40,42 +40,66 @@ $$
 \text{Output: } \text{not found}
 $$
 
-**How it works**
+**How Linear Search Works**
 
-Start at index 0, compare, move right; stop on first equal or after the last element.
+We start at index `0`, compare the value with the target, and keep moving right until we either **find it** or reach the **end**.
+
+Target **5** in `[7, 3, 5, 2, 9]`
 
 ```
-Indexes:     0    1    2    3    4
-List:      [ 7 ][ 3 ][ 5 ][ 2 ][ 9 ]
+Indexes:   0    1    2    3    4
+List:     [7]  [3]  [5]  [2]  [9]
 Target: 5
-
-Pass 1: pointer at 0 → compare 7 vs 5  → no
-          v
-Indexes:   0    1    2    3    4
-           |    
-List:      7    3    5    2    9
-
-Pass 2: pointer at 1 → compare 3 vs 5  → no
-               v
-Indexes:   0    1    2    3    4
-                |   
-List:      7    3    5    2    9
-
-Pass 3: pointer at 2 → compare 5 vs 5  → YES → return 2
-                    v
-Indexes:   0    1    2    3    4
-                     |  
-List:      7    3    5    2    9
 ```
 
-**Worst case (not found):** you compare every element and then stop.
+*Step 1:* pointer at index 0
 
 ```
-Indexes:     0    1    2
-List:      [ 1 ][ 2 ][ 3 ]
+|
+v
+7   3   5   2   9
+
+→ compare 7 vs 5  → no
+```
+
+*Step 2:* pointer moves to index 1
+
+```    
+    |
+    v
+7   3   5   2   9
+
+→ compare 3 vs 5  → no
+```
+
+*Step 3:* pointer moves to index 2
+
+```
+        |
+        v
+7   3   5   2   9
+
+→ compare 5 vs 5  → YES ✅ → return index 2
+```
+
+**Worst Case (Not Found)**
+
+Target **9** in `[1, 2, 3]`
+
+```
+Indexes:   0    1    2
+List:     [1]  [2]  [3]
 Target: 9
+```
 
-Checks: (1≠9) → (2≠9) → (3≠9) → end → not found
+Checks:
+
+```
+→  1 ≠ 9
+→  2 ≠ 9
+→  3 ≠ 9
+→  end
+→ not found ❌
 ```
 
 * Works on any list; no sorting or structure required.
@@ -116,40 +140,55 @@ $$
 
 Put the target at one extra slot at the end so the loop is guaranteed to stop on a match; afterward, check whether the match was inside the original range.
 
+Target **11** not in the list
+
 ```
-Original length n = 5
-Before:   [ 4 ][ 9 ][ 1 ][ 7 ][ 6 ]
+Original list (n=5):
+[ 4 ][ 9 ][ 1 ][ 7 ][ 6 ]
 Target: 11
+```
 
 Add sentinel (extra slot):
-          [ 4 ][ 9 ][ 1 ][ 7 ][ 6 ][ 11 ]
-Indexes:    0    1    2    3    4     5  ← sentinel position
-
-Scan left→right until you see 11:
-
-Step 1: 4 ≠ 11
-          ^
-Step 2: 9 ≠ 11
-               ^
-Step 3: 1 ≠ 11
-                    ^
-Step 4: 7 ≠ 11
-                         ^
-Step 5: 6 ≠ 11
-                              ^
-Step 6: 11 (match at index 5, which is the sentinel)
-
-Because the first match is at index 5 (the sentinel position), the target was not in the original indexes 0..4 → report “not found”.
-```
-
-**When the target exists inside the list:**
 
 ```
-List:      [ 12 ][ 8 ][ 6 ][ 15 ]   n = 4
+[ 4 ][ 9 ][ 1 ][ 7 ][ 6 ][ 11 ]
+  0    1    2    3    4     5  ← sentinel
+```
+
+Scan step by step:
+
+```
+4 ≠ 11   → pointer at 0
+9 ≠ 11   → pointer at 1
+1 ≠ 11   → pointer at 2
+7 ≠ 11   → pointer at 3
+6 ≠ 11   → pointer at 4
+11 = 11  → pointer at 5 (sentinel)
+```
+
+Therefore, **not found** in original list.
+
+Target **6** inside the list
+
+```
+Original list (n=4):
+[ 12 ][ 8 ][ 6 ][ 15 ]
 Target: 6
-With sentinel: [ 12 ][ 8 ][ 6 ][ 15 ][ 6 ]
+```
 
-Scan: 12≠6 → 8≠6 → 6=6 (index 2 < n) → real match at 2
+Add sentinel:
+
+```
+[ 12 ][ 8 ][ 6 ][ 15 ][ 6 ]
+  0     1    2    3     4
+```
+
+Scan:
+
+```
+12 ≠ 6   → index 0
+ 8 ≠ 6   → index 1
+ 6 = 6   → index 2 ✅
 ```
 
 * Removes the per-iteration “have we reached the end?” check; the sentinel guarantees termination.
@@ -198,27 +237,60 @@ $$
 \text{Output: } \text{not found}
 $$
 
-
 **How it works**
 
+We repeatedly check the **middle** element, and then discard half the list based on comparison.
+
+Find **16** in:
+
 ```
-Sorted A:  [ 2 ][ 5 ][ 8 ][12 ][16 ][23 ][38 ]
-Indexes:     0    1    2   3    4    5    6
-Target: 16
-
-1) low=0, high=6  → mid=(0+6)//2=3
-   A[3]=12 < 16 → discard left half up to mid, keep [mid+1..high]
-         [ 2 ][ 5 ][ 8 ]  |[12 ]| [16 ][23 ][38 ]
-                          low=4               high=6
-
-2) low=4, high=6 → mid=(4+6)//2=5
-   A[5]=23 > 16 → discard right half after mid, keep [low..mid-1]
-         [16 ][23 ]|[38 ]
-        low=4  high=4
-
-3) low=4, high=4 → mid=4
-   A[4]=16 = target → FOUND at index 4
+A = [  2 ][  5 ][  8 ][ 12 ][ 16 ][ 23 ][ 38 ]
+i =    0     1     2     3     4     5     6
 ```
+
+*Step 1*
+
+```
+low = 0, high = 6
+mid = (0+6)//2 = 3
+A[3] = 12 < 16  →  target is to the RIGHT  →  new low = mid + 1 = 4
+
+A = [  2 ][  5 ][  8 ][ 12 ][ 16 ][ 23 ][ 38 ]
+i =    0     1     2     3     4     5     6
+        ↑L                ↑M                ↑H
+        0                 3                 6
+Active range: indices 0..6
+```
+
+*Step 2*
+
+```
+low = 4, high = 6
+mid = (4+6)//2 = 5
+A[5] = 23 > 16  →  target is to the LEFT   →  new high = mid - 1 = 4
+
+A = [  2 ][  5 ][  8 ][ 12 ][ 16 ][ 23 ][ 38 ]
+i =    0     1     2     3     4     5     6
+                              ↑L      ↑M      ↑H
+                              4       5       6
+Active range: indices 4..6
+```
+
+*Step 3*
+
+```
+low = 4, high = 4
+mid = 4
+A[4] = 16 == target ✅
+
+A = [  2 ][  5 ][  8 ][ 12 ][ 16 ][ 23 ][ 38 ]
+i =    0     1     2     3     4     5     6
+                              ↑LMH
+                              4
+Active range: indices 4..4
+```
+
+FOUND at index 4
 
 * Requires a sorted array (assume ascending here).
 * Time: O(log n); Space: O(1) iterative.
@@ -253,24 +325,36 @@ $$
 
 **How it works**
 
+We divide the array into **three parts** using two midpoints `m1` and `m2`.
+
+* If `target < A[m1]` → search $[low .. m1-1]$
+* Else if `target > A[m2]` → search $[m2+1 .. high]$
+* Else → search $[m1+1 .. m2-1]$
+
 ```
-Sorted A: [ 1 ][ 4 ][ 7 ][ 9 ][12 ][15 ]
-Indexes:    0    1    2    3    4    5
+A = [  1 ][  4 ][  7 ][  9 ][ 12 ][ 15 ]
+i =    0     1     2     3     4     5
 Target: 9
-
-1) low=0, high=5
-   m1 = low + (high-low)//3      = 0 + 5//3 = 1
-   m2 = high - (high-low)//3     = 5 - 5//3 = 3
-
-   Compare A[m1]=4, A[m2]=9 with target=9:
-
-   A[m2]=9 = target → FOUND at index 3
-
-(If no immediate match:)
-- If target < A[m1], keep [low..m1-1]
-- Else if target > A[m2], keep [m2+1..high]
-- Else keep [m1+1..m2-1] and repeat
 ```
+
+*Step 1*
+
+```
+low = 0, high = 5
+
+m1 = low + (high - low)//3  = 0 + (5)//3 = 1
+m2 = high - (high - low)//3 = 5 - (5)//3 = 3
+
+A[m1] = 4
+A[m2] = 9
+
+A = [  1 ][  4 ][  7 ][  9 ][ 12 ][ 15 ]
+i =    0     1     2     3     4     5
+        ↑L    ↑m1        ↑m2           ↑H
+        0     1          3             5
+```
+
+FOUND at index 3
 
 * Also assumes a sorted array.
 * For discrete sorted arrays, it does **not** beat binary search asymptotically; it performs more comparisons per step.
@@ -304,21 +388,42 @@ $$
 
 **How it works**
 
-```
-Sorted A: [ 1 ][ 4 ][ 9 ][16 ][25 ][36 ][49 ]
-Indexes:    0    1    2    3    4    5    6
-Target: 25
-Choose block size ≈ √n → here n=7 → jump=2
+Perfect — that’s a **jump search trace**. Let me reformat and polish it so the steps are crystal clear and the “jump + linear scan” pattern pops visually:
 
-Jumps (probe at 0,2,4,6 until A[probe] ≥ target):
-- probe=0 → A[0]=1   (<25) → next probe=2
-- probe=2 → A[2]=9   (<25) → next probe=4
-- probe=4 → A[4]=25 (≥25) → target must be in block (2..4]
+We’re applying **jump search** to find $25$ in
 
-Linear scan inside last block (indexes 3..4):
-- i=3 → A[3]=16 (<25)
-- i=4 → A[4]=25 (=) FOUND at index 4
+$$
+A = [1, 4, 9, 16, 25, 36, 49]
+$$
+
+with $n=7$, block size $\approx \sqrt{7} \approx 2$, so **jump=2**.
+
+We probe every 2nd index:
+
+* probe = 0 → $A[0] = 1 < 25$ → jump to 2
+* probe = 2 → $A[2] = 9 < 25$ → jump to 4
+* probe = 4 → $A[4] = 25 \geq 25$ → stop
+
+So target is in block $(2..4]$.
+
 ```
+[ 1 ][ 4 ] | [ 9 ][16 ] | [25 ][36 ] | [49 ]
+    ^            ^            ^            ^
+   probe=0      probe=2      probe=4      probe=6
+```
+
+Linear Scan in block (indexes 3..4)
+
+* i = 3 → $A[3] = 16 < 25$
+* i = 4 → $A[4] = 25 = 25$ ✅ FOUND
+
+```
+Block [16 ][25 ]
+       ^    ^
+      i=3  i=4 (found!)
+```
+
+The element $25$ is found at **index 4**.
 
 * Works on sorted arrays; pick jump ≈ √n for good balance.
 * Time: O(√n) comparisons on average; Space: O(1).
