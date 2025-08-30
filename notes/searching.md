@@ -27,7 +27,7 @@ $$
 $$
 
 $$
-\text{Output: } \text{index} = 0 \; (\text{first match})
+\text{Output: } \text{index} = 0  (\text{first match})
 $$
 
 *Example 3*
@@ -133,7 +133,7 @@ $$
 $$
 
 $$
-\text{Output: } \text{not found } \; (\text{only the sentinel matched})
+\text{Output: } \text{not found }  (\text{only the sentinel matched})
 $$
 
 **How it works**
@@ -459,21 +459,84 @@ $$
 **How it works**
 
 ```
-Sorted A: [ 2 ][ 3 ][ 5 ][ 7 ][11 ][13 ][17 ][19 ][23 ]
-Indexes:    0    1    2    3    4    5    6    7    8
-Target: 19
-
-1) Find range by exponential jumps (check A[1], A[2], A[4], A[8], ...):
-   - A[1]=3  ≤ 19
-   - A[2]=5  ≤ 19
-   - A[4]=11 ≤ 19
-   - A[8]=23 > 19 → stop; range is (prev_power_of_two..8] → (4..8]
-
-2) Do binary search on A[5..8]:
-   Subarray: [13 ][17 ][19 ][23 ]
-   Indices:    5    6    7    8
-   Binary search finds A[7]=19 → FOUND at index 7
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+Target = 19
 ```
+
+Find range by exponential jumps
+
+*Start* at `i=1`, double each step until `A[i] ≥ target` (or end).
+
+*Jump 1:* `i=1`
+
+```
+A[i]=3 ≤ 19  → continue
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+             ↑
+```
+
+*Jump 2:* `i=2`
+
+```
+A[i]=5 ≤ 19  → continue
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+                   ↑
+```
+
+*Jump 3:* `i=4`
+
+```
+A[i]=11 ≤ 19 → continue
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+                               ↑
+```
+
+*Jump 4:* `i=8`
+
+```
+A[i]=23 > 19  → stop
+Range is (previous power of two .. i] = (4 .. 8] → search indices 5..8
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+                                                         ↑
+```
+
+*Range for binary search:* `low=5, high=8`.
+
+Binary search on $A[5..8]$
+
+```
+Subarray: [ 13 ][ 17 ][ 19 ][ 23 ]
+Indices :    5     6     7     8
+```
+
+*Step 1*
+
+```
+low=5, high=8 → mid=(5+8)//2=6
+A[6]=17 < 19 → move right → low=7
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+                                    ↑L      ↑M             ↑H
+                                    5       6              8
+```
+
+*Step 2*
+
+```
+low=7, high=8 → mid=(7+8)//2=7
+A[7]=19 == target ✅ → FOUND
+A = [  2 ][  3 ][  5 ][  7 ][ 11 ][ 13 ][ 17 ][ 19 ][ 23 ]
+i =    0     1     2     3    4     5     6     7     8
+                                           ↑L M H
+                                              7
+```
+
+Found at **index 7**.
 
 * Great when the target is likely to be near the beginning or when the array is **unbounded**/**stream-like** but sorted (you can probe indices safely).
 * Time: O(log p) to find the range where p is the final bound, plus O(log p) for binary search → overall O(log p).
@@ -493,7 +556,7 @@ $$
 $$
 
 $$
-\text{Output: } \text{not found } \; (\text{probes near indices } 4\text{–}5)
+\text{Output: } \text{not found }  (\text{probes near indices } 4\text{–}5)
 $$
 
 *Example 2*
@@ -513,30 +576,56 @@ $$
 $$
 
 $$
-\text{Output: } \text{not found } \; (\text{bad distribution for interpolation})
+\text{Output: } \text{not found }  (\text{bad distribution for interpolation})
 $$
 
 **How it works**
 
+* Guard against division by zero: if `A[high] == A[low]`, stop (or binary-search fallback).
+* Clamp the computed `pos` to `[low, high]` before probing.
+* Works best when values are **uniformly distributed**; otherwise it can degrade toward linear time.
+* Assumes `A` is sorted and values are uniform.
+
+Probe formula:
+
 ```
-Assumes A is sorted and values are roughly uniform.
-
-Idea: "Guess" the likely index by linearly interpolating the target’s value
-between A[low] and A[high]:
-
-Estimated position:
 pos ≈ low + (high - low) * (target - A[low]) / (A[high] - A[low])
+```
 
-Example:
-A = [10, 20, 30, 40, 50, 60, 70], target = 45
+Let say we have following array and target:
+
+```
+A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
+i =    0     1     2     3     4     5     6
+target = 45
+```
+
+*Step 1 — initial probe*
+
+```
 low=0 (A[0]=10), high=6 (A[6]=70)
 
-pos ≈ 0 + (6-0) * (45-10)/(70-10) = 6 * 35/60 ≈ 3.5 → probe index 3 or 4
+pos ≈ 0 + (6-0) * (45-10)/(70-10)
+    ≈ 6 * 35/60
+    ≈ 3.5  → probe near 3.5
 
-Probe at 3: A[3]=40  (<45) → new low=4
-Probe at 4: A[4]=50  (>45) → new high=3
-Now low>high → not found
+A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
+i =    0     1     2     3     4     5     6
+      ↑L                                   ↑H
+            ↑pos≈3.5 → choose ⌊pos⌋=3 (or ⌈pos⌉=4)
 ```
+
+Probe **index 3**: `A[3]=40 < 45` → set `low = 3 + 1 = 4`
+
+*Step 2 — after moving low*
+
+```
+A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
+i =    0     1     2     3     4     5     6
+                                ↑L         ↑H
+```
+
+At this point, an **early-stop check** already tells us `target (45) < A[low] (50)` → cannot exist in `A[4..6]` → **not found**.
 
 * Best on **uniformly distributed** sorted data; expected time O(log log n).
 * Worst case can degrade to O(n), especially on skewed or clustered values.
@@ -583,22 +672,76 @@ $$
 **How it works**
 
 ```
-Concept:
-key  --hash-->  index in array  --search/compare-->  match?
++-----+      hash       +-----------------+      search/compare      +--------+
+| key | --------------> | index in array  | ----------------------> | match? |
++-----+                  +-----------------+                         +--------+
+```
 
+* With chaining, the “collision path” is the **list inside one bucket**.
+* With linear probing, the “collision path” is the **probe sequence** across buckets (3 → 4 → 5 → …).
+* Both keep your original flow: hash → inspect bucket (and collision path) → match?
+
+```
 Array (buckets/indexes 0..6):
-Idx:    0     1     2     3     4     5     6
-      [   ][   ][   ][   ][   ][   ][   ]
 
-Example mapping with h(k)=k mod 7, stored keys {10, 24, 31}:
+Idx:   0     1     2     3     4     5     6
+      +---+-----+-----+-----+-----+-----+-----+
+      |   |     |     |     |     |     |     |
+      +---+-----+-----+-----+-----+-----+-----+
+```
+
+**Example mapping with** `h(k) = k mod 7`, **stored keys** `{10, 24, 31}` all hash to index `3`.
+
+*Strategy A — Separate Chaining (linked list per bucket)*
+
+Insertions
+
+```
 10 -> 3
-24 -> 3   (collides with 10; resolved by the chosen strategy)
-31 -> 3   (collides again)
+24 -> 3   (collides with 10; append to bucket[3] list)
+31 -> 3   (collides again; append to bucket[3] list)
 
-Search(24):
+Idx:   0     1     2     3     4     5     6
+      +---+-----+-----+-----+-----+-----+-----+
+      |   |     |     | •   |     |     |     |
+      +---+-----+-----+-----+-----+-----+-----+
+
+bucket[3] chain:  [10] → [24] → [31] → ∅
+```
+
+*Search(24)*
+
+```
 1) Compute index = h(24) = 3
-2) Inspect bucket 3 (and possibly its collision path)
-3) If 24 is found along that path → found; otherwise → not found
+2) Inspect bucket 3's chain:
+      [10]  →  [24]  →  [31]
+               ↑ found here
+3) Return FOUND (bucket 3)
+```
+
+*Strategy B — Open Addressing (Linear Probing)*
+
+Insertions
+
+```
+10 -> 3                    place at 3
+24 -> 3  (occupied)  →  probe 4  → place at 4
+31 -> 3  (occ) → 4 (occ) → probe 5 → place at 5
+
+Idx:   0     1     2     3     4     5     6
+      +---+-----+-----+-----+-----+-----+-----+
+      |   |     |     | 10  | 24  | 31  |     |
+      +---+-----+-----+-----+-----+-----+-----+
+```
+
+*Search(24)*
+
+```
+1) Compute index = h(24) = 3
+2) Probe sequence:
+      3: 10 ≠ 24  → continue
+      4: 24 = target  → FOUND at index 4
+   (If not found, continue probing until an empty slot or wrap limit.)
 ```
 
 * Quality hash + low load factor (α = n/m) ⇒ expected O(1) search/insert/delete.
@@ -638,27 +781,52 @@ $$
 
 **How it works**
 
+*Hash function:*
+
 ```
-h(k) = k mod 10, probe sequence: i, i+1, i+2, ... (wrap around)
+h(k) = k mod 10
+Probe sequence: i, i+1, i+2, ... (wrap around)
+```
 
-Insertions already done:
-12 -> h=2 → put at 2
-22 -> h=2 (occupied) → try 3 → put at 3
-32 -> h=2 (occupied), 3 (occupied) → try 4 → put at 4
+*Insertions*
 
-Array:
-Idx:  0  1  2   3   4  5  6  7  8  9
-     [ ][ ][12][22][32][ ][ ][ ][ ][ ]
+* Insert 12 → `h(12)=2` → place at index 2
+* Insert 22 → `h(22)=2` occupied → probe 3 → place at 3
+* Insert 32 → `h(32)=2` occupied → probe 3 (occupied) → probe 4 → place at 4
 
-Search(22):
-- Start at h(22)=2 → 12 ≠ 22
-- Next 3 → 22 = 22 → FOUND at index 3
+Resulting table (indexes 0..9):
 
-Search(42):
-- Start at 2 → 12 ≠ 42
-- 3 → 22 ≠ 42
-- 4 → 32 ≠ 42
-- 5 → empty → stop → NOT FOUND
+```
+Index:   0   1   2    3    4   5   6   7   8   9
+        +---+---+----+----+----+---+---+---+---+---+
+Value:  |   |   | 12 | 22 | 32 |   |   |   |   |   |
+        +---+---+----+----+----+---+---+---+---+---+
+```
+
+*Search(22)*
+
+* Start at `h(22)=2`
+* index 2 → 12 ≠ 22 → probe →
+* index 3 → 22 ✅ FOUND
+
+Path followed:
+
+```
+2 → 3
+```
+
+*Search(42)*
+
+* Start at `h(42)=2`
+* index 2 → 12 ≠ 42 → probe →
+* index 3 → 22 ≠ 42 → probe →
+* index 4 → 32 ≠ 42 → probe →
+* index 5 → empty slot → stop → ❌ NOT FOUND
+
+Path followed:
+
+```
+2 → 3 → 4 → 5 (∅)
 ```
 
 * Simple and cache-friendly; clusters form (“primary clustering”) which can slow probes.
@@ -673,7 +841,7 @@ Search(42):
 *Example 1*
 
 $$
-m = 11 \; (\text{prime}), 
+m = 11  (\text{prime}), 
 \quad \text{Stored keys: } \{22, 33, 44\}, 
 \quad \text{Target: } 33
 $$
@@ -689,7 +857,7 @@ $$
 *Example 2*
 
 $$
-m = 11 \; (\text{prime}), 
+m = 11  (\text{prime}), 
 \quad \text{Stored keys: } \{22, 33, 44\}, 
 \quad \text{Target: } 55
 $$
@@ -704,29 +872,62 @@ $$
 
 **How it works**
 
+*Hash function:*
+
 ```
 h(k) = k mod 11
-Probe offsets: +1^2, +2^2, +3^2, ... (i.e., +1, +4, +9, +16≡+5, +25≡+3, ... mod 11)
+```
 
-Insert:
-22 -> h=0 → put at 0
-33 -> h=0 (occupied) → 0+1^2=1 → put at 1? (showing a typical sequence)
-(For clarity we'll place 33 at the first free among 0,1,4,9,... Suppose 1 is free.)
-44 -> h=0 (occupied) → try 1 (occupied) → try 4 → put at 4
+*Probe sequence (relative offsets):*
 
-Array (one possible state):
-Idx:  0   1   2  3  4  5  6  7  8  9  10
-     [22][33][ ][ ][44][ ][ ][ ][ ][ ][  ]
+```
++1², +2², +3², ... mod 11
+= +1, +4, +9, +5, +3, +3²… (wrapping around table size)
+```
 
-Search(33):
-- h=0 → 22 ≠ 33
-- 0+1^2=1 → 33 = 33 → FOUND at index 1
+So from `h(k)`, we try slots in this order:
 
-Search(55):
-- h=0 → 22 ≠ 55
-- +1^2=1 → 33 ≠ 55
-- +2^2=4 → 44 ≠ 55
-- +3^2=9 → empty → NOT FOUND
+```
+h, h+1, h+4, h+9, h+5, h+3, ...   (all mod 11)
+```
+
+*Insertions*
+
+* Insert **22** → `h(22)=0` → place at index 0
+* Insert **33** → `h(33)=0` occupied → try `0+1²=1` → index 1 free → place at 1
+* Insert **44** → `h(44)=0` occupied → probe 1 (occupied) → probe `0+4=4` → place at 4
+
+Resulting table:
+
+```
+Idx:   0    1    2   3   4   5  6  7  8  9  10
+      +----+----+---+---+----+---+--+--+--+---+
+Val:  | 22 | 33 |   |   | 44 |   |  |  |  |  |   |
+      +----+----+---+---+----+---+--+--+--+--+---+
+```
+
+*Search(33)*
+
+* Start `h(33)=0` → slot 0 = 22 ≠ 33
+* Probe `0+1²=1` → slot 1 = 33 ✅ FOUND
+
+Path:
+
+```
+0 → 1
+```
+
+*Search(55)*
+
+* Start `h(55)=0` → slot 0 = 22 ≠ 55
+* Probe `0+1²=1` → slot 1 = 33 ≠ 55
+* Probe `0+2²=4` → slot 4 = 44 ≠ 55
+* Probe `0+3²=9` → slot 9 = empty → stop → ❌ NOT FOUND
+
+Path:
+
+```
+0 → 1 → 4 → 9 (∅)
 ```
 
 * Reduces primary clustering but can exhibit **secondary clustering** (keys with same h(k) follow same probe squares).
@@ -759,7 +960,7 @@ m = 11,
 \quad \text{Target: } 33
 $$
 
-* For $k = 33$:
+For $k = 33$:
 
 $$
 h_{1}(33) = 33 \bmod 11 = 0,
@@ -769,9 +970,9 @@ $$
 So probe sequence is
 
 $$
-h(33,0) = 0,\;
-h(33,1) = (0 + 1\cdot 4) \bmod 11 = 4,\;
-h(33,2) = (0 + 2\cdot 4) \bmod 11 = 8,\; \dots
+h(33,0) = 0,
+h(33,1) = (0 + 1\cdot 4) \bmod 11 = 4,
+h(33,2) = (0 + 2\cdot 4) \bmod 11 = 8, \dots
 $$
 
 Since the stored layout places $33$ at index $4$, the search succeeds.
@@ -788,7 +989,7 @@ m = 11,
 \quad \text{Target: } 55
 $$
 
-* For $k = 55$:
+For $k = 55$:
 
 $$
 h_{1}(55) = 55 \bmod 11 = 0,
@@ -798,7 +999,7 @@ $$
 Probing sequence:
 
 $$
-0, \; (0+6)\bmod 11 = 6,\; (0+2\cdot 6)\bmod 11 = 1,\; (0+3\cdot 6)\bmod 11 = 7,\; \dots
+0,  (0+6)\bmod 11 = 6, (0+2\cdot 6)\bmod 11 = 1, (0+3\cdot 6)\bmod 11 = 7, \dots
 $$
 
 No slot matches $55$.
@@ -809,27 +1010,69 @@ $$
 
 **How it works**
 
+We use **two hash functions**:
+
 ```
-Probe sequence: i, i+h₂, i+2·h₂, i+3·h₂, ... (all mod m)
+h₁(k) = k mod m
+h₂(k) = 1 + (k mod 10)
+```
 
-Insert:
-22: h₁=0 → put at 0
-33: h₁=0 (occupied), h₂=1+(33 mod 10)=4
-    Probes: 0, 4 → put at 4
-44: h₁=0 (occupied), h₂=1+(44 mod 10)=5
-    Probes: 0, 5 → put at 5
+*Probe sequence:*
 
-Array:
-Idx:  0   1  2  3  4   5  6  7  8  9  10
-     [22][ ][ ][ ][33][44][ ][ ][ ][ ][ ]
+```
+i, i + h₂, i + 2·h₂, i + 3·h₂, ...  (all mod m)
+```
 
-Search(33):
-- Start 0 → 22 ≠ 33
-- Next 0+4=4 → 33 → FOUND
+This ensures fewer clustering issues compared to linear or quadratic probing.
 
-Search(55):
-- h₁=0, h₂=1+(55 mod 10)=6
-- Probes: 0 (22), 6 (empty) → NOT FOUND
+*Insertions (m = 11)*
+
+Insert **22**
+
+* `h₁(22)=0` → place at index 0
+
+Insert **33**
+
+* `h₁(33)=0` (occupied)
+* `h₂(33)=1+(33 mod 10)=4`
+* Probe sequence: 0, 4 → place at index 4
+
+Insert **44**
+
+* `h₁(44)=0` (occupied)
+* `h₂(44)=1+(44 mod 10)=5`
+* Probe sequence: 0, 5 → place at index 5
+
+*Table State*
+
+```
+Idx:   0   1  2  3   4   5  6  7  8  9  10
+      +---+---+---+---+---+---+---+---+---+---+
+Val:  |22 |   |   |   |33 |44 |   |   |   |   |   |
+      +---+---+---+---+---+---+---+---+---+---+---+
+```
+
+*Search(33)*
+
+* Start at `h₁(33)=0` → slot 0 = 22 ≠ 33
+* Next: `0+1·h₂(33)=0+4=4` → slot 4 = 33 ✅ FOUND
+
+Path:
+
+```
+0 → 4
+```
+
+*Search(55)*
+
+* `h₁(55)=0`, `h₂(55)=1+(55 mod 10)=6`
+* slot 0 = 22 ≠ 55
+* slot 6 = empty → stop → ❌ NOT FOUND
+
+Path:
+
+```
+0 → 6 (∅)
 ```
 
 * Minimizes clustering; probe steps depend on the key.
@@ -1064,8 +1307,8 @@ Space-efficient structure for fast membership tests; answers **“maybe present�
 *Setup*
 
 $$
-m = 16 \; \text{bits}, 
-\quad k = 3 \; \text{hash functions } (h_{1}, h_{2}, h_{3})
+m = 16  \text{bits}, 
+\quad k = 3  \text{hash functions } (h_{1}, h_{2}, h_{3})
 $$
 
 Inserted set:
@@ -1193,7 +1436,7 @@ $$
 Inserted set:
 
 $$
-\{\text{"alpha"}, \; \text{"beta"}\}
+\{\text{"alpha"},  \text{"beta"}\}
 $$
 
 Then delete `"alpha"`.
@@ -1324,13 +1567,13 @@ Hash-table–style filter that stores short **fingerprints** in two possible buc
 $$
 b = 8  \text{buckets}, 
 \quad \text{bucket size} = 2, 
-\quad \text{fingerprint size} = 8 \; \text{bits}
+\quad \text{fingerprint size} = 8  \text{bits}
 $$
 
 Inserted set:
 
 $$
-\{\text{"cat"}, \; \text{"dog"}, \; \text{"eel"}\}
+\{\text{"cat"},  \text{"dog"},  \text{"eel"}\}
 $$
 
 Each element is stored as a short fingerprint in one of two candidate buckets.
@@ -1473,7 +1716,7 @@ $$
 $$
 
 $$
-\text{Output: matches at indices } \; 0  \text{and}  7
+\text{Output: matches at indices }  0  \text{and}  7
 $$
 
 *Example 2*
@@ -1484,7 +1727,7 @@ $$
 $$
 
 $$
-\text{Output: matches at indices } \; 0, \; 1, \; 2
+\text{Output: matches at indices }  0,  1,  2
 $$
 
 **How it works**
@@ -1786,7 +2029,7 @@ $$
 $$
 
 $$
-\text{Output: matches at indices } 0, \; 4, \; 7
+\text{Output: matches at indices } 0,  4,  7
 $$
 
 *Example 2*
