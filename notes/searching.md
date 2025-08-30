@@ -859,11 +859,11 @@ Bucket contents after hashing:
 
 $$
 \begin{aligned}
-h(12) &= 12 \bmod 5 = 2 &\;\;\Rightarrow& \;\; \text{bucket 2: } [12] \\[6pt]
-h(22) &= 22 \bmod 5 = 2 &\;\;\Rightarrow& \;\; \text{bucket 2: } [12, 22] \\[6pt]
-h(7)  &= 7  \bmod 5 = 2 &\;\;\Rightarrow& \;\; \text{bucket 2: } [12, 22, 7] \\[6pt]
-h(3)  &= 3  \bmod 5 = 3 &\;\;\Rightarrow& \;\; \text{bucket 3: } [3] \\[6pt]
-h(14) &= 14 \bmod 5 = 4 &\;\;\Rightarrow& \;\; \text{bucket 4: } [14]
+h(12) &= 12 \bmod 5 = 2 \Rightarrow&  \text{bucket 2: } [12] [6pt]
+h(22) &= 22 \bmod 5 = 2 \Rightarrow&  \text{bucket 2: } [12, 22] [6pt]
+h(7)  &= 7  \bmod 5 = 2 \Rightarrow&  \text{bucket 2: } [12, 22, 7] [6pt]
+h(3)  &= 3  \bmod 5 = 3 \Rightarrow&  \text{bucket 3: } [3] [6pt]
+h(14) &= 14 \bmod 5 = 4 \Rightarrow&  \text{bucket 4: } [14]
 \end{aligned}
 $$
 
@@ -874,7 +874,7 @@ $$
 $$
 
 $$
-h(22) = 2 \;\;\Rightarrow\;\; \text{bucket 2} = [12, 22, 7]
+h(22) = 2 \Rightarrow \text{bucket 2} = [12, 22, 7]
 $$
 
 Found at **position 2** in the list.
@@ -890,7 +890,7 @@ $$
 $$
 
 $$
-h(9) = 9 \bmod 5 = 4 \;\;\Rightarrow\;\; \text{bucket 4} = [14]
+h(9) = 9 \bmod 5 = 4 \Rightarrow \text{bucket 4} = [14]
 $$
 
 No match.
@@ -974,57 +974,79 @@ $$
 If insertion causes repeated displacements and eventually loops:
 
 $$
-\text{Cycle detected } \;\;\Rightarrow\;\; \text{rehash with new } h_{1}, h_{2}
+\text{Cycle detected } \Rightarrow \text{rehash with new } h_{1}, h_{2}
 $$
 
 $$
 \text{Output: rebuild / rehash required}
 $$
 
-**How it works**
+**How it works** 
+
+We keep **two hash tables (T₁, T₂)**, each with its own hash function. Every key can live in **exactly one of two possible slots**:
+
+Hash functions:
+
+$$
+h_1(k) = k \bmod 5, \quad h_2(k) = 1 + (k \bmod 4)
+$$
+
+Every key can live in **exactly one of two slots**: $T_1[h_1(k)]$ or $T_2[h_2(k)]$.
+If a slot is occupied, we **evict** the old occupant and reinsert it at its alternate location.
+
+*Start empty:*
 
 ```
-Example hashes:
-h₁(k) = k mod 5
-h₂(k) = 1 + (k mod 4)
-
-Start empty T₁ and T₂ (indexes 0..4):
-
 T₁: [   ][   ][   ][   ][   ]
 T₂: [   ][   ][   ][   ][   ]
+```
 
-Insert 10:
-- Place at T₁[h₁(10)=0] = 0
+*Insert 10* → goes to $T_1[h_1(10)=0]$:
 
+```
 T₁: [10 ][   ][   ][   ][   ]
 T₂: [   ][   ][   ][   ][   ]
+```
 
-Insert 15:
-- T₁[h₁(15)=0] occupied by 10 → cuckoo step:
-  Evict 10; put 15 at T₁[0]
-  Reinsert evicted 10 at its alternate home T₂[h₂(10)=1+(10 mod 4)=3]
+*Insert 15*
 
+* $T_1[0]$ already has 10 → evict 10
+* Place 15 at $T_1[0]$
+* Reinsert evicted 10 at $T_2[h_2(10)=3]$:
+
+```
 T₁: [15 ][   ][   ][   ][   ]
 T₂: [   ][   ][   ][10 ][   ]
+```
 
-Insert 20:
-- T₁[h₁(20)=0] occupied by 15 → evict 15; place 20 at T₁[0]
-  Reinsert 15 at T₂[h₂(15)=1+(15 mod 4)=4]
+*Insert 20*
 
+* $T_1[0]$ has 15 → evict 15
+* Place 20 at $T_1[0]$
+* Reinsert 15 at $T_2[h_2(15)=4]$:
+
+```
 T₁: [20 ][   ][   ][   ][   ]
 T₂: [   ][   ][   ][10 ][15 ]
+```
 
-Insert 25:
-- T₁[h₁(25)=0] occupied by 20 → evict 20; place 25 at T₁[0]
-  Reinsert 20 at T₂[h₂(20)=1+(20 mod 4)=1]
+*Insert 25*
 
+* $T_1[0]$ has 20 → evict 20
+* Place 25 at $T_1[0]$
+* Reinsert 20 at $T_2[h_2(20)=1]$:
+
+```
 T₁: [25 ][   ][   ][   ][   ]
 T₂: [   ][20 ][   ][10 ][15 ]
-
-Search(15):
-- Check T₁[h₁(15)=0] → 25 ≠ 15
-- Check T₂[h₂(15)=4] → 15 → FOUND
 ```
+
+🔎 *Search(15)*
+
+* $T_1[h_1(15)=0] \to 25 \neq 15$
+* $T_2[h_2(15)=4] \to 15$ ✅ FOUND
+
+**FOUND in T₂ at index 4**
 
 * Lookups probe at **most two places** (with two hashes) → excellent constant factors.
 * Inserts may trigger a chain of evictions; detect cycles and **rehash** with new functions.
@@ -1090,33 +1112,64 @@ $$
 
 **How it works**
 
+*Initial state* (all zeros):
+
 ```
-Bit array (m = 16), initially all zeros:
-
-Idx:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-     [0 0 0 0 0 0 0 0 0 0  0  0  0  0  0  0]
-
-INSERT "cat":
-h1(cat)=3, h2(cat)=7, h3(cat)=12  → set those bits to 1
-
-     [0 0 0 1 0 0 0 1 0 0  0  0  1  0  0  0]
-                 ^   ^           ^
-                3    7          12
-
-INSERT "dog":
-h1(dog)=1, h2(dog)=7, h3(dog)=9  → set 1,7,9 to 1 (7 already 1)
-
-     [0 1 0 1 0 0 0 1 0 1  0  0  1  0  0  0]
-         ^         ^       ^
-
-QUERY "cow":
-h1(cow)=1 (bit=1), h2(cow)=3 (bit=1), h3(cow)=6 (bit=0) → at least one zero
-→ Result: DEFINITELY NOT PRESENT
-
-QUERY "eel":
-h1(eel)=7 (1), h2(eel)=9 (1), h3(eel)=12 (1) → all ones
-→ Result: MAYBE PRESENT (could be a FALSE POSITIVE)
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+A  =  [0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0]
 ```
+
+Insert `"cat"`
+
+```
+h1(cat) = 3,  h2(cat) = 7,  h3(cat) = 12
+→ Set bits at 3, 7, 12
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+A  =  [0  0  0  1  0  0  0  1  0  0  0  0  1  0  0  0]
+                 ^              ^              ^
+                 3              7              12
+```
+
+Insert `"dog"`
+
+```
+h1(dog) = 1,  h2(dog) = 7,  h3(dog) = 9
+→ Set bits at 1, 7, 9  (7 already set)
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+A  =  [0  1  0  1  0  0  0  1  0  1  0  0  1  0  0  0]
+           ^              ^       ^
+           1              7       9
+```
+
+Query `"cow"`
+
+```
+h1(cow) = 1 → bit[1] = 1
+h2(cow) = 3 → bit[3] = 1
+h3(cow) = 6 → bit[6] = 0  ❌
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+A  =  [0  1  0  1  0  0  0  1  0  1  0  0  1  0  0  0]
+           ✓              ✓     ✗
+```
+
+At least one zero → **DEFINITELY NOT PRESENT**
+
+Query `"eel"`
+
+```
+h1(eel) = 7 → bit[7] = 1
+h2(eel) = 9 → bit[9] = 1
+h3(eel) = 12 → bit[12] = 1
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+A  =  [0  1  0  1  0  0  0  1  0  1  0  0  1  0  0  0]
+                             ✓     ✓        ✓
+```
+
+All ones → **MAYBE PRESENT** (could be a **false positive**)
 
 * Answers: **maybe present** / **definitely not present**; never false negatives (without deletions).
 * False-positive rate is tunable via bit-array size **m**, number of hashes **k**, and items **n**; more space & good **k** → lower FPR.
@@ -1133,8 +1186,8 @@ Bloom filter variant that keeps a small counter per bit so you can **delete** by
 *Setup*
 
 $$
-m = 12 \;\; \text{counters (each 2–4 bits)}, 
-\quad k = 3 \;\; \text{hash functions}
+m = 12  \text{counters (each 2–4 bits)}, 
+\quad k = 3  \text{hash functions}
 $$
 
 Inserted set:
@@ -1183,26 +1236,77 @@ $$
 
 **How it works**
 
+Each cell is a **small counter** (e.g. 4-bits, range 0..15).
+This allows **deletions**: increment on insert, decrement on delete.
+
+Initial state
+
 ```
-Counters (not bits). Each cell stores a small integer (0..15 if 4-bit).
-
-Idx:  0 1 2 3 4 5 6 7 8 9 10 11
-     [0 0 0 0 0 0 0 0 0 0  0  0]
-
-INSERT "alpha": h: {2, 5, 9} → increment those counters
-     [0 0 1 0 0 1 0 0 0 1  0  0]
-
-INSERT "beta":  h: {3, 5, 11} → increment
-     [0 0 1 1 0 2 0 0 0 1  0  1]
-
-LOOKUP "beta": counters at {3,5,11} = {1,2,1} > 0 → MAYBE PRESENT
-
-DELETE "alpha": decrement {2,5,9}
-     [0 0 0 1 0 1 0 0 0 0  0  1]
-
-LOOKUP "alpha": counters at {2,5,9} = {0,1,0}
-→ has a zero → DEFINITELY NOT PRESENT
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11
+A  =  [0  0  0  0  0  0  0  0  0  0  0  0]
 ```
+
+Insert `"alpha"`
+
+```
+Hashes: {2, 5, 9}
+→ Increment those counters
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11
+A  =  [0  0  1  0  0  1  0  0  0  1  0  0]
+             ↑        ↑              ↑
+             2        5              9
+```
+
+Insert `"beta"`
+
+```
+Hashes: {3, 5, 11}
+→ Increment those counters
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11
+A  =  [0  0  1  1  0  2  0  0  0  1  0  1]
+                ↑        ↑              ↑
+                3        5              11
+```
+
+Lookup `"beta"`
+
+```
+Hashes: {3, 5, 11}
+Counters = {1, 2, 1} → all > 0
+→ Result: MAYBE PRESENT
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11
+A  =  [0  0  1  1  0  2  0  0  0  1  0  1]
+                ✓        ✓              ✓
+```
+
+Delete `"alpha"`
+
+```
+Hashes: {2, 5, 9}
+→ Decrement those counters
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11
+A  =  [0  0  0  1  0  1  0  0  0  0  0  1]
+             ↓        ↓              ↓
+             2        5              9
+```
+
+Lookup `"alpha"`
+
+```
+Hashes: {2, 5, 9}
+Counters = {0, 1, 0}
+→ At least one zero
+→ Result: DEFINITELY NOT PRESENT
+
+Idx:   0  1  2  3  4  5  6  7  8  9 10 11
+A  =  [0  0  0  1  0  1  0  0  0  0  0  1]
+             ✗        ✓              ✗
+```
+
 
 * Supports **deletion** by decrementing counters; insertion increments.
 * Still probabilistic: may return false positives; avoids false negatives **if counters never underflow** and hashes are consistent.
@@ -1218,7 +1322,7 @@ Hash-table–style filter that stores short **fingerprints** in two possible buc
 *Setup*
 
 $$
-b = 8 \;\; \text{buckets}, 
+b = 8  \text{buckets}, 
 \quad \text{bucket size} = 2, 
 \quad \text{fingerprint size} = 8 \; \text{bits}
 $$
@@ -1269,44 +1373,77 @@ $$
 
 **How it works**
 
-```
-Each key x → short fingerprint f = FP(x)
+Each key `x` → short **fingerprint** `f = FP(x)`
 Two candidate buckets:
-i1 = H(x) mod b
-i2 = i1 XOR H(f) mod b   (so moving f between i1 and i2 preserves alternation)
 
-Buckets (capacity 2 each), showing fingerprints as hex bytes:
+* `i1 = H(x) mod b`
+* `i2 = i1 XOR H(f) mod b`
+  (`f` can be stored in either bucket; moving between buckets preserves the invariant.)
 
-Start (empty):
-[0]: [  -- , -- ]   [1]: [ -- , -- ]   [2]: [ -- , -- ]   [3]: [ -- , -- ]
-[4]: [  -- , -- ]   [5]: [ -- , -- ]   [6]: [ -- , -- ]   [7]: [ -- , -- ]
+Start (empty)
 
-INSERT "cat": f=0xA7, i1=1, i2=1 XOR H(0xA7)=5
-- Bucket 1 has space → place 0xA7 in [1]
+```
+[0]: [ -- , -- ]   [1]: [ -- , -- ]   [2]: [ -- , -- ]   [3]: [ -- , -- ]
+[4]: [ -- , -- ]   [5]: [ -- , -- ]   [6]: [ -- , -- ]   [7]: [ -- , -- ]
+```
+
+Insert `"cat"`
+
+```
+f = 0xA7
+i1 = 1
+i2 = 1 XOR H(0xA7) = 5
+
+Bucket 1 has free slot → place 0xA7 in [1]
 
 [1]: [ A7 , -- ]
-
-INSERT "dog": f=0x3C, i1=5, i2=5 XOR H(0x3C)=2
-- Bucket 5 has space → place 0x3C in [5]
-
-[5]: [ 3C , -- ]
-
-INSERT "eel": f=0xD2, i1=1, i2=1 XOR H(0xD2)=4
-- Bucket 1 has one free slot → place 0xD2 in [1]
-
-[1]: [ A7 , D2 ]
-
-LOOKUP "cat":
-- Compute f=0xA7, check buckets 1 and 5 → found in bucket 1 → MAYBE PRESENT
-
-LOOKUP "fox":
-- Compute f=0x9B, buckets say 0 and 7 → fingerprint not in [0] or [7]
-→ DEFINITELY NOT PRESENT
-
-If an insertion finds both buckets full:
-- Evict one resident fingerprint (“cuckoo kick”), move it to its alternate bucket,
-  possibly triggering a chain; if a loop is detected, resize/rehash.
 ```
+
+Insert `"dog"`
+
+```
+f = 0x3C
+i1 = 5
+i2 = 5 XOR H(0x3C) = 2
+
+Bucket 5 has free slot → place 0x3C in [5]
+
+[1]: [ A7 , -- ]        [5]: [ 3C , -- ]
+```
+
+Insert `"eel"`
+
+```
+f = 0xD2
+i1 = 1
+i2 = 1 XOR H(0xD2) = 4
+
+Bucket 1 has one free slot → place 0xD2 in [1]
+
+[1]: [ A7 , D2 ]        [5]: [ 3C , -- ]
+```
+
+Lookup `"cat"`
+
+```
+f = 0xA7
+Buckets: i1 = 1, i2 = 5
+Check: bucket[1] has A7 → found
+```
+
+Result: MAYBE PRESENT
+
+Lookup `"fox"`
+
+```
+f = 0x9B
+i1 = 0
+i2 = 0 XOR H(0x9B) = 7
+
+Check buckets 0 and 7 → fingerprint not found
+```
+
+Result: DEFINITELY NOT PRESENT
 
 * Stores **fingerprints**, not full keys; answers **maybe present** / **definitely not present**.
 * Supports **deletion** by removing a matching fingerprint from either bucket.
@@ -1336,7 +1473,7 @@ $$
 $$
 
 $$
-\text{Output: matches at indices } \; 0 \;\; \text{and} \;\; 7
+\text{Output: matches at indices } \; 0  \text{and}  7
 $$
 
 *Example 2*
@@ -1352,43 +1489,90 @@ $$
 
 **How it works**
 
+*Text* (length 11):
+
 ```
-Text (index): 0 1 2 3 4 5 6 7 8 9 10
-              a b r a c a d a b r  a
+Text:   a b r a c a d a b r  a
+Idx:    0 1 2 3 4 5 6 7 8 9 10
+```
+
+*Pattern* (length 4):
+
+```
+Pattern: a b r a
+```
+
+*Shift 0*
+
+```
+Text:    a b r a
+Pattern: a b r a
+```
+
+✅ All match → **REPORT at index 0**
+
+*Shift 1*
+
+```
+Text:     b r a c
+Pattern:  a b r a
+```
+
+❌ Mismatch at first char → advance
+
+*Shift 2*
+
+```
+Text:      r a c a
+Pattern:   a b r a
+```
+
+❌ Mismatch → advance
+
+*Shift 3*
+
+```
+Text:       a c a d
+Pattern:    a b r a
+```
+
+❌ Mismatch → advance
+
+*Shift 4*
+
+```
+Text:        c a d a
+Pattern:     a b r a
+```
+
+❌ Mismatch → advance
+
+*Shift 5*
+
+```
+Text:         a d a b
 Pattern:      a b r a
-
-Shift 0:
-a b r a
-a b r a   ← all match → REPORT 0
-
-Shift 1:
-  a b r a
-  b r a c ← mismatch at first char → advance by 1
-
-Shift 2:
-    a b r a
-    r a c a ← mismatch → advance
-
-Shift 3:
-      a b r a
-      a c a d ← mismatch → advance
-
-Shift 4:
-        a b r a
-        c a d a ← mismatch → advance
-
-Shift 5:
-          a b r a
-          a d a b ← mismatch → advance
-
-Shift 6:
-            a b r a
-            d a b r ← mismatch → advance
-
-Shift 7:
-              a b r a
-              a b r a ← all match → REPORT 7
 ```
+
+❌ Mismatch → advance
+
+*Shift 6*
+
+```
+Text:          d a b r
+Pattern:       a b r a
+```
+
+❌ Mismatch → advance
+
+*Shift 7*
+
+```
+Text:           a b r a
+Pattern:        a b r a
+```
+
+✅ All match → **REPORT at index 7**
 
 * Works anywhere; no preprocessing.
 * Time: worst/average **O(n·m)** (text length n, pattern length m).
@@ -1424,32 +1608,78 @@ $$
 $$
 
 **How it works**
+
+We want to find the pattern `"ababd"` in the text `"ababcabca babab d"`.
+
+*1) Precompute LPS (Longest Proper Prefix that is also a Suffix)*
+
+Pattern:
+
 ```
-1) Precompute LPS (Longest Proper Prefix that is also Suffix) for the pattern.
+a   b   a   b   d
+0   1   2   3   4   ← index
+```
 
-Pattern:  a  b  a  b  d
-Index:    0  1  2  3  4
-LPS:      0  0  1  2  0
+LPS array:
 
-Meaning: at each position, how far can we "fall back" within the pattern itself
-to avoid rechecking text characters.
+```
+0   0   1   2   0
+```
 
-2) Scan the text with two pointers i (text), j (pattern):
+Meaning:
 
-Text:    a b a b c a b c a b a b a b d
-Index:   0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+* At each position, how many chars can we “fall back” within the pattern itself if a mismatch happens.
+* Example: at index 3 (pattern `"abab"`), LPS=2 means if mismatch occurs, restart comparison from `"ab"` inside the pattern.
+
+*2) Scan Text with Two Pointers*
+
+* `i` = text index
+* `j` = pattern index
+
+Text:
+
+```
+a b a b c a b c a b a b a b d
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
 Pattern: a b a b d
-
-Walkthrough (only key steps shown):
-
-- i=0..3 match "abab" (j=4 points to 'd'), then
-  i=4 is 'c' vs pattern[j]='d' → mismatch
-  → set j = LPS[j-1] = LPS[3] = 2  (jump pattern back to "ab")
-  (i stays at 4; we do NOT recheck earlier text chars)
-
-- Continue matching; eventually at i=14, j advances to 5 (pattern length)
-  → FULL MATCH ends at i=14 → start index = 14 - 5 + 1 = 10 → REPORT 10
 ```
+
+*Step A: Initial matches*
+
+```
+i=0..3: "abab" matched → j=4 points to 'd'
+```
+
+*Step B: Mismatch at i=4*
+
+```
+text[i=4] = 'c'
+pattern[j=4] = 'd' → mismatch
+```
+
+Instead of restarting, use LPS:
+
+```
+j = LPS[j-1] = LPS[3] = 2
+```
+
+So pattern jumps back to `"ab"` (no wasted text comparisons).
+i stays at 4.
+
+*Step C: Continue scanning*
+
+The algorithm keeps moving forward, reusing LPS whenever mismatches occur.
+
+*Step D: Full match found*
+
+At `i=14`, j advances to 5 (pattern length).
+
+```
+→ FULL MATCH found!
+Start index = i - m + 1 = 14 - 5 + 1 = 10
+```
+
+✅ Pattern `"ababd"` occurs in the text starting at **index 10**.
 
 * Time: **O(n + m)** (preprocessing + scan).
 * Space: **O(m)** for LPS table.
@@ -1485,31 +1715,56 @@ $$
 \text{Output: match at index } 15
 $$
 
-
 **How it works**
 
+* Align the pattern under the text.
+* Compare **right → left**.
+* On mismatch, shift the pattern by the **max** of:
+* **Bad-character rule**: align the mismatched text char with its last occurrence in the pattern (or skip it if absent).
+* **Good-suffix rule**: if a suffix matched, align another occurrence of it (or a prefix).
+
+*Text* (with spaces shown as `_`):
+
 ```
-Idea: align pattern under text, compare RIGHT→LEFT.
-On mismatch, shift by the MAX of:
-  - Bad-character shift: move so the mismatching text char lines up with its last
-    occurrence in the pattern (or skip past if absent).
-  - Good-suffix shift: if a suffix matched, align another occurrence of that suffix
-    (or a prefix) with the text.
-
-Example (bad-character only shown for brevity):
-Text (0..):  H E R E _ I S _ A _ S I M P L E _ E X A M P L E
-Pattern:                       E X A M P L E
-                               ↑ compare from here (rightmost)
-
-1) Align at text index 10..16 ("SIMPLE"):
-   compare L→R? No, BM compares R→L:
-   E vs E (ok), L vs L (ok), P vs P (ok), M vs M (ok), A vs A (ok), X vs I (mismatch)
-   Bad char = 'I' in text; last 'I' in pattern? none → shift pattern PAST 'I'
-
-2) After shifts, eventually align under "... E X A M P L E":
-   Compare from right:
-   E=E, L=L, P=P, M=M, A=A, X=X, E=E → FULL MATCH at index 17
+0        10        20        30
+H E R E _ I S _ A _ S I M P L E _ E X A M P L E
 ```
+
+**Pattern**: `"EXAMPLE"` (length = 7)
+
+*Step 1: Align pattern at text\[10..16] = `"SIMPLE"`*
+
+```
+Text:    ... S I M P L E ...
+Pattern:       E X A M P L E
+               ↑ (start comparing right → left)
+```
+
+Compare right-to-left:
+
+```
+E=E, L=L, P=P, M=M, A=A, 
+X vs I → mismatch
+```
+
+* Bad character = `I` (from text).
+* Does pattern contain `I`? → ❌ no.
+* → Shift pattern **past `I`**.
+
+*Step 2: Shift until pattern under `"EXAMPLE"`*
+
+```
+Text:    ... E X A M P L E
+Pattern:     E X A M P L E
+```
+
+Compare right-to-left:
+
+```
+E=E, L=L, P=P, M=M, A=A, X=X, E=E
+```
+
+✅ **Full match** found at **index 17**.
 
 * Average case sublinear (often skips large chunks of text).
 * Worst case can be **O(n·m)**; with both rules + Galil’s optimization, comparisons can be bounded **O(n + m)**.
@@ -1545,34 +1800,83 @@ $$
 \text{Output: no match}
 $$
 
-
 **How it works**
 
+We’ll use the classic choices:
+
+* Base **B = 256**
+* Modulus **M = 101** (prime)
+* Character value `val(c) = ASCII(c)` (e.g., `A=65, B=66, C=67, D=68`)
+* Pattern **P = "ABC"** (length **m = 3**)
+* Text **T = "ABCDABCABCD"** (length 11)
+
 ```
-Pick a base B and modulus M. Compute:
-- pattern hash H(P)
-- rolling window hash H(T[i..i+m-1]) for each window of length m
-
-Example windows (conceptual; showing only positions, not numbers):
-
-Text:   A B C D A B C A B C D
-Index:  0 1 2 3 4 5 6 7 8 9 10
-Pat:    A B C      (m = 3)
-
-Windows & hashes:
-[0..2] ABC → hash h0
-[1..3] BCD → hash h1  (derived from h0 by removing 'A', adding 'D')
-[2..4] CDA → hash h2
-[3..5] DAB → hash h3
-[4..6] ABC → hash h4 (equals H(P) → verify chars → MATCH at 4)
-[5..7] BCA → hash h5
-[6..8] CAB → hash h6
-[7..9] ABC → hash h7 (equals H(P) → verify → MATCH at 7)
-
-Rolling update (conceptually):
-h_next = (B*(h_curr - value(left_char)*B^(m-1)) + value(new_char)) mod M
-Only on hash equality do we compare characters to avoid false positives.
+Text:    A B C D A B C A B C D
+Index:   0 1 2 3 4 5 6 7 8 9 10
+Pattern: A B C   (m = 3)
 ```
+
+*Precompute*
+
+```
+pow = B^(m-1) mod M = 256^2 mod 101 = 88
+HP = H(P) = H("ABC")
+```
+
+Start `h=0`, then for each char `h = (B*h + val) mod M`:
+
+* After 'A': `(256*0 + 65) % 101 = 65`
+* After 'B': `(256*65 + 66) % 101 = 41`
+* After 'C': `(256*41 + 67) % 101 = 59`
+
+So **HP = 59**.
+
+*Rolling all windows*
+
+Initial window `T[0..2]="ABC"`:
+
+`h0 = 59` (matches HP → verify chars → ✅ match at 0)
+
+For rolling:
+
+`h_next = ( B * (h_curr − val(left) * pow) + val(new) ) mod M`
+
+(If the inner term is negative, add `M` before multiplying.)
+
+*First two rolls*
+
+From $[0..2]$ "ABC" $(h0=59)$ → $[1..3]$ "BCD":
+
+```
+left='A'(65), new='D'(68)
+inner = (59 − 65*88) mod 101 = (59 − 5720) mod 101 = 96
+h1 = (256*96 + 68) mod 101 = 24644 mod 101 = 0
+```
+
+From $[3..5]$ "DAB" $(h3=66)$ → $[4..6]$ "ABC":
+
+```
+left='D'(68), new='C'(67)
+inner = (66 − 68*88) mod 101 = (66 − 5984) mod 101 = 41
+h4 = (256*41 + 67) mod 101 = 10563 mod 101 = 59  (= HP)
+```
+
+*All windows (start index s)*
+
+```
+s   window   hash   =HP?
+0   ABC      59     ✓  → verify → ✅ MATCH at 0
+1   BCD       0
+2   CDA      38
+3   DAB      66
+4   ABC      59     ✓  → verify → ✅ MATCH at 4
+5   BCA      98
+6   CAB      79
+7   ABC      59     ✓  → verify → ✅ MATCH at 7
+8   BCD       0
+```
+
+Matches at indices: **0, 4, 7**.
 
 * Expected time **O(n + m)** with a good modulus and low collision rate; worst case **O(n·m)** if many collisions.
 * Space: **O(1)** beyond the text/pattern and precomputed powers.
