@@ -1,157 +1,150 @@
-## Greedy Algorithms
+## Greedy algorithms
 
-Greedy methods construct a solution piece by piece, always choosing the currently best-looking option according to a simple rule. The subtlety is not the rule itself but the proof that local optimality extends to global optimality. Two proof tools do most of the work: exchange arguments (you can swap an optimal solution’s first “deviation” back to the greedy choice without harm) and loop invariants (you maintain a statement that pins down exactly what your partial solution guarantees at each step).
-
-Formally, consider a finite ground set $E$, a family of feasible subsets $\mathcal{F}\subseteq 2^E$, and a weight function $w:E\to \mathbb{R}$. A generic greedy scheme orders elements of $E$ by a key $\kappa(e)$ and scans them, adding $e$ to the building solution $S$ if $S\cup\{e\}\in\mathcal{F}$. Correctness means
-
-$$
-\text{Greedy}(E,\mathcal{F},w,\kappa)\in\arg\max\{\,w(S):S\in\mathcal{F}\,\}.
-$$
-
-The nice, crisp setting where this always works is the theory of matroids. Outside that, correctness must be argued problem-by-problem.
+Greedy algorithms build a solution one step at a time. At each step, grab the option that looks best *right now* by some simple rule (highest value, earliest finish, shortest length, etc.). Keep it if it doesn’t break the rules of the problem.
 
 ```
-scan order:  e1  e2  e3  e4  e5  ...
-feasible?     Y   N   Y   Y   N
-solution S:  {e1,    e3, e4}
+1) Sort by your rule (the “key”).
+2) Scan items in that order.
+3) If adding this item keeps the partial answer valid, keep it.
+4) Otherwise skip it.
 ```
 
-### The greedy-choice principle and exchange arguments
+Picking the best “now” doesn’t obviously give the best “overall.” The real work is showing that these local choices still lead to a globally best answer.
 
-Greedy methods feel simple on the surface—always take the best-looking move right now—but the proof that this is globally safe is subtle. The core idea is to show that at the first moment an optimal solution “disagrees” with your greedy choice, you can surgically swap in the greedy move without making things worse. Do that repeatedly and you literally transform some optimal solution into the greedy one. That’s the exchange argument.
+**Two proof tricks you’ll see a lot:**
 
-Let $E$ be a finite ground set of “atoms.” Feasible solutions are subsets $S\subseteq E$ belonging to a family $\mathcal{F}\subseteq 2^E$. The objective is additive:
+* *Exchange argument.* Take any optimal solution that disagrees with greedy at the first point. Show you can “swap in” the greedy choice there without making the solution worse or breaking feasibility. Do this repeatedly and you morph some optimal solution into the greedy one—so greedy must be optimal.
+* *Loop invariant.* Write down a sentence that’s true after every step of the scan (e.g., “the current set is feasible and as good as any other set built from the items we’ve seen”). Prove it stays true as you process the next item; at the end, that sentence implies optimality.
 
-$$
-\text{maximize } w(S)=\sum_{e\in S} w(e)\quad\text{subject to } S\in\mathcal{F},\qquad w:E\to\mathbb{R}.
-$$
-
-A generic greedy algorithm fixes an order $e_1,e_2,\dots,e_m$ determined by a key $\kappa$ (for example, sort by nonincreasing $w$ or by earliest finishing time), then scans the elements and keeps $e_i$ whenever $S\cup\{e_i\}\in\mathcal{F}$.
-
-Two structural properties make the exchange proof go through.
-
-1. Feasibility exchange. Whenever $A,B\in\mathcal{F}$ with $|A|<|B|$, there exists $x\in B\setminus A$ such that $A\cup\{x\}\in\mathcal{F}$. This “augmentation flavor” is what lets you replace a non-greedy element by a greedy one while staying feasible.
-
-2. Local dominance. At the first position where greedy would keep $g$ but some optimal $O$ keeps $o\neq g$, you can drop some element $x\in O\setminus A$ and insert $g$ so that
-
-$$
-A\cup\{g\}\cup\bigl(O\setminus\{x\}\bigr)\in\mathcal{F}
-\quad\text{and}\quad
-w(g)\ge w(x),
-$$
-
-where $A$ is the common prefix chosen by both up to that point. The inequality ensures the objective does not decrease during the swap.
-
-When $(E,\mathcal{F})$ is a matroid, the feasibility exchange always holds; if you also order by nonincreasing $w$, local dominance holds trivially with $x$ chosen by the matroid’s augmentation. Many everyday problems satisfy these two properties even without full matroid machinery.
-
-Write the greedy picks as a sequence $G=(g_1,g_2,\dots,g_k)$, in the order chosen. The following lemma is the workhorse.
-
-**Lemma (first-difference exchange).** Suppose there exists an optimal solution $O$ whose first $t-1$ elements agree with greedy, meaning $g_1,\dots,g_{t-1}\in O$. If $g_t\in O$ as well, continue. Otherwise there exists $x\in O\setminus\{g_1,\dots,g_{t-1}\}$ such that
-
-$$
-O' \;=\;\bigl(O\setminus\{x\}\bigr)\cup\{g_t\}\in\mathcal{F}
-\quad\text{and}\quad
-w(O')\ge w(O).
-$$
-
-Hence there is an optimal solution that agrees with greedy on the first $t$ positions.
-
-*Proof sketch.* Let $A_{t-1}=\{g_1,\dots,g_{t-1}\}$. Because greedy considered $g_t$ before any element in $O\setminus A_{t-1}$ that it skipped, local dominance says some $x\in O\setminus A_{t-1}$ can be traded for $g_t$ without breaking feasibility and without decreasing weight. This creates $O'$ optimal and consistent with greedy for one more step. Apply the same reasoning inductively.
-
-Induction on $t$ yields the main theorem: there exists an optimal solution that agrees with greedy everywhere, hence greedy is optimal.
-
-It helps to picture the two solutions aligned in the greedy order. The top row is the greedy decision at each position; the bottom row is some optimal solution, possibly disagreeing. At the first disagreement, one swap pushes the optimal line upward to match greedy, and the objective value does not drop.
+*Picture it like this:*
 
 ```
-positions →   1      2      3      4      5      6      7
-greedy G:    [g1]   [g2]   [g3]   [g4]   [g5]   [g6]   [g7]
-optimal O:   [g1]   [g2]   [ o ]  [ ? ]  [ ? ]  [ ? ]  [ ? ]
-                                      
-exchange at position 3:
-drop some x from O beyond position 2 and insert g3
-
-after swap:
-optimal O':  [g1]   [g2]   [g3]   [ ? ]  [ ? ]  [ ? ]  [ ? ]
+position →   1    2    3    4    5
+greedy:     [✓]  [✗]  [✓]  [✓]  [✗]
+some optimal:
+             ✓    ✓    ✗    ?    ?
+First mismatch at 3 → swap in greedy’s pick without harm.
+Repeat until both rows match → greedy is optimal.
 ```
 
-The key is not the letter symbols but the invariants. Up to position $t-1$, both solutions coincide. The swap keeps feasibility and weight, so you have a new optimal that also matches at position $t$. Repeat, and the bottom row becomes the top row.
+**Where greedy shines automatically: matroids (nice constraint systems).**
+There’s a tidy setting where greedy is *always* right (for nonnegative weights): when your “what’s allowed” rules form a **matroid**. You don’t need the symbols—just the vibe:
 
-### Matroids
+1. **You can start from empty.**
+2. **Throwing things out never hurts.** If a set is allowed, any subset is allowed.
+3. **Smooth growth (augmentation).** If one allowed set is smaller than another, you can always add *something* from the bigger one to the smaller and stay allowed.
 
-Greedy methods don’t usually get ironclad guarantees, but there is a beautiful class of feasibility systems where they do. That class is the matroids. Once your constraints form a matroid, the simplest weight-ordered greedy scan is not a heuristic anymore; it is provably optimal for every nonnegative weight assignment.
+That third rule prevents dead ends and is exactly what exchange arguments rely on. In matroids, the simple “sort by weight and take what fits” greedy is guaranteed optimal. Outside matroids, greedy can still work—but you must justify it for the specific problem using exchange/invariants.
 
-A matroid is a pair $(E,\mathcal{I})$ with $E$ a finite ground set and $\mathcal{I}\subseteq 2^E$ the “independent” subsets. Three axioms hold.
-
-* Non-emptiness says $\varnothing\in\mathcal{I}$.
-* Heredity says independence is downward-closed: if $A\in\mathcal{I}$ and $B\subseteq A$, then $B\in\mathcal{I}$.
-* Augmentation says independence grows smoothly: if $A,B\in\mathcal{I}$ with $|A|<|B|$, then some $x\in B\setminus A$ exists with $A\cup\{x\}\in\mathcal{I}$.
-
-The last axiom is the heart. It forbids “dead ends” where a smaller feasible set cannot absorb a single element from any larger feasible set. That smoothness is exactly what greedy needs to keep repairing early choices.
 
 ### Reachability on a line
 
-You’re standing on square 0 of a line of squares $0,1,\dots,n-1$.
-Each square $i$ tells you how far you’re allowed to jump forward from there: a number $a[i]$. From $i$, you can jump to any square $i+1, i+2, \dots, i+a[i]$. The goal is to decide whether you can ever reach the last square, and, if not, what the furthest square is that you can reach.
+- You stand at square \$0\$ on squares \$0,1,\dots,n-1\$.
+- Each square \$i\$ has a jump power \$a\[i]\$. From \$i\$ you may land on any of \$i+1, i+2, \dots, i+a\[i]\$.
+- Goal: decide if you can reach \$n-1\$; if not, report the furthest reachable square.
 
-**Example inputs and outputs**
+Example
 
-Input array: `a = [3, 1, 0, 0, 4, 1]`
-There are 6 squares (0 through 5).
-Correct output: you cannot reach the last square; the furthest you can get is square `3`.
+* Input: \$a=\[3,1,0,0,4,1]\$, so \$n=6\$ (squares \$0..5\$).
 
-Baseline (slow)
+```
+indices:  0   1   2   3   4   5
+a[i]   :  3   1   0   0   4   1
+reach   :  ^ start at 0
+```
 
-Think “paint everything I can reach, one wave at a time.”
+From any \$i\$, the allowed landings are a range:
 
-1. Start with square 0 marked “reachable.”
-2. For every square already marked, paint all squares it can jump to.
-3. Keep doing this until no new squares get painted.
+```
+i=0 (a[0]=3): 1..3
+i=1 (a[1]=1): 2
+i=2 (a[2]=0): —
+i=3 (a[3]=0): —
+i=4 (a[4]=4): 5..8 (board ends at 5)
+```
 
-This is correct because you literally try every allowed jump from every spot you know is reachable. It can be wasteful, though, because the same squares get reconsidered over and over in dense cases.
+---
 
-Walking the example:
+Baseline idea (waves)
+
+“Paint everything reachable, one wave at a time.”
+
+1. Start with \${0}\$ reachable.
+2. For each already-reachable \$i\$, add all \$i+1..i+a\[i]\$.
+3. Stop when nothing new appears.
+
+Walk on the example:
 
 ```
 start:   reachable = {0}
-from 0:  can reach {1,2,3} → reachable = {0,1,2,3}
-from 1:  can reach {2}     → no change
-from 2:  can reach {}      → no change (a[2]=0)
-from 3:  can reach {}      → no change (a[3]=0)
-done:    no new squares → furthest is 3, last is unreachable
+from 0:  add {1,2,3}     → reachable = {0,1,2,3}
+from 1:  add {2}         → no change
+from 2:  add {}          → a[2]=0
+from 3:  add {}          → a[3]=0
+stop:    no new squares  → furthest = 3; last (5) unreachable
 ```
 
-**How it works**
+Correct, but can reprocess many squares.
 
-Carry one number as you sweep left to right: `F`, the furthest square you can reach **so far**.
-Rule of thumb:
+---
 
-* If you’re looking at square `i` and `i` is beyond `F`, you’re stuck forever.
-* Otherwise, extend the frontier with `F = max(F, i + a[i])` and move on.
+One-pass trick (frontier)
 
-That’s it—one pass, no backtracking.
+Carry one number while scanning left→right: the furthest frontier \$F\$ seen so far.
 
-Why this is safe in a sentence: `F` always summarizes “the best jump end we have discovered from any square we truly reached,” and it never goes backward; if you hit a gap where `i > F`, then no earlier jump can help because its effect was already folded into `F`.
+Rules:
 
-Plugging in the same numbers
+* If you are at \$i\$ with \$i>F\$, you hit a gap → stuck forever.
+* Otherwise, extend \$F \leftarrow \max(F,\ i+a\[i])\$ and continue.
+
+At the end:
+
+* Can reach last iff \$F \ge n-1\$.
+* Furthest reachable square is \$F\$ (capped by \$n-1\$).
+
+Pseudocode
 
 ```
-a = [3, 1, 0, 0, 4, 1]
-n = 6
-F = 0           # we start at square 0 (we’ll extend immediately at i=0)
+F = 0
+for i in 0..n-1:
+    if i > F: break
+    F = max(F, i + a[i])
 
-i=0: 0 ≤ F → F = max(0, 0+3) = 3
-i=1: 1 ≤ F → F = max(3, 1+1) = 3
-i=2: 2 ≤ F → F = max(3, 2+0) = 3
-i=3: 3 ≤ F → F = max(3, 3+0) = 3
-i=4: 4 > F  → stuck here
+can_reach_last = (F >= n-1)
+furthest = min(F, n-1)
 ```
 
-Final state: `F = 3`, which means the furthest reachable square is 3. Since `F < n-1 = 5`, the last square is not reachable.
+Why this is safe (one line): \$F\$ always equals “best jump end discovered from any truly-reachable square \$\le i\$,” and never decreases; if \$i>F\$, no earlier jump can help because its effect was already folded into \$F\$.
 
-Summary
+ walkthrough on the example
 
-* Time: $O(n)$ (single left-to-right pass)
-* Space: $O(1)$
+We draw the frontier as a bracket reaching to \$F\$.
+
+Step \$i=0\$ (inside frontier since \$0\le F\$); update \$F=\max(0,0+3)=3\$.
+
+```
+indices:  0   1   2   3   4   5
+          [===============F]
+          0   1   2   3
+F=3
+```
+
+Step \$i=1\$: still \$i\le F\$. Update \$F=\max(3,1+1)=3\$ (no change).
+Step \$i=2\$: \$F=\max(3,2+0)=3\$ (no change).
+Step \$i=3\$: \$F=\max(3,3+0)=3\$ (no change).
+
+Now \$i=4\$ but \$4>F(=3)\$ → gap → stuck.
+
+```
+indices:  0   1   2   3   4   5
+          [===============F]   x  (i=4 is outside)
+F=3
+```
+
+Final: \$F=3\$. Since \$F\<n-1=5\$, last is unreachable; furthest reachable square is \$3\$.
+
+Complexity: time \$O(n)\$, space \$O(1)\$.
+
 
 ### Minimum spanning trees
 
