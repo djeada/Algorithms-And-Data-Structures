@@ -104,8 +104,8 @@ Checks:
 
 * Works on any list; no sorting or structure required.
 * Returns the first index containing the target; if absent, reports “not found.”
-* Time: O(n) comparisons on average and in the worst case; best case O(1) if the first element matches.
-* Space: O(1) extra memory.
+* Time: $O(n)$ comparisons on average and in the worst case; best case $O(1)$ if the first element matches.
+* Space: $O(1)$ extra memory.
 * Naturally finds the earliest occurrence when duplicates exist.
 * Simple and dependable for short or unsorted data.
 * Assumes 0-based indexing in these notes.
@@ -192,7 +192,7 @@ Scan:
 ```
 
 * Removes the per-iteration “have we reached the end?” check; the sentinel guarantees termination.
-* Same O(n) time in big-O terms, but slightly fewer comparisons in tight loops.
+* Same $O(n)$ time in big-O terms, but slightly fewer comparisons in tight loops.
 * Space: needs one extra slot; if you cannot append, you can temporarily overwrite the last element (store it, write the target, then restore it).
 * After scanning, decide by index: if the first match index < original length, it’s a real match; otherwise, it’s only the sentinel.
 * Use when micro-optimizing linear scans over arrays where bounds checks are costly.
@@ -293,7 +293,7 @@ Active range: indices 4..4
 FOUND at index 4
 
 * Requires a sorted array (assume ascending here).
-* Time: O(log n); Space: O(1) iterative.
+* Time: $O(log n)$; Space: $O(1)$ iterative.
 * Returns any one matching index by default; “first/last occurrence” is a small, common refinement.
 * Robust, cache-friendly, and a building block for many higher-level searches.
 * Beware of off-by-one errors when shrinking bounds.
@@ -359,7 +359,7 @@ FOUND at index 3
 * Also assumes a sorted array.
 * For discrete sorted arrays, it does **not** beat binary search asymptotically; it performs more comparisons per step.
 * Most valuable for searching the extremum of a **unimodal function** on a continuous domain; for arrays, prefer binary search.
-* Complexity: O(log n) steps but with larger constant factors than binary search.
+* Complexity: $O(log n)$ steps but with larger constant factors than binary search.
 
 #### Jump Search
 On a sorted array, jump ahead in fixed block sizes to find the block that may contain the target, then do a linear scan inside that block.
@@ -426,7 +426,7 @@ Block [16 ][25 ]
 The element $25$ is found at **index 4**.
 
 * Works on sorted arrays; pick jump ≈ √n for good balance.
-* Time: O(√n) comparisons on average; Space: O(1).
+* Time: $O(√n)$ comparisons on average; Space: $O(1)$.
 * Useful when random access is cheap but full binary search isn’t desirable (e.g., limited CPU branch prediction, or when scanning in blocks is cache-friendly).
 * Degrades gracefully to “scan block then stop.”
 
@@ -539,8 +539,8 @@ i =    0     1     2     3    4     5     6     7     8
 Found at **index 7**.
 
 * Great when the target is likely to be near the beginning or when the array is **unbounded**/**stream-like** but sorted (you can probe indices safely).
-* Time: O(log p) to find the range where p is the final bound, plus O(log p) for binary search → overall O(log p).
-* Space: O(1).
+* Time: $O(log p)$ to find the range where p is the final bound, plus $O(log p)$ for binary search → overall $O(log p)$.
+* Space: $O(1)$.
 * Often paired with data sources where you can test “is index i valid?” while doubling i.
 
 #### Interpolation Search
@@ -627,21 +627,21 @@ i =    0     1     2     3     4     5     6
 
 At this point, an **early-stop check** already tells us `target (45) < A[low] (50)` → cannot exist in `A[4..6]` → **not found**.
 
-* Best on **uniformly distributed** sorted data; expected time O(log log n).
-* Worst case can degrade to O(n), especially on skewed or clustered values.
-* Space: O(1).
+* Best on **uniformly distributed** sorted data; expected time $O(log log n)$.
+* Worst case can degrade to $O(n)$, especially on skewed or clustered values.
+* Space: $O(1)$.
 * Very fast when value-to-index mapping is close to linear (e.g., near-uniform numeric keys).
 * Requires careful handling when A\[high] = A\[low] (avoid division by zero); also sensitive to integer rounding in discrete arrays.
 
 ### Hash-based Search
-* **Separate chaining:** Easiest deletions, steady O(1) with α≈1; good when memory fragmentation isn’t a concern.
+ * **Separate chaining:** Easiest deletions, steady $O(1)$ with α≈1; good when memory fragmentation isn’t a concern.
 * **Open addressing (double hashing):** Best probe quality among OA variants; great cache locality; keep α < 0.8.
 * **Open addressing (linear/quadratic):** Simple and fast at low α; watch clustering and tombstones.
 * **Cuckoo hashing:** Tiny and predictable lookup cost; inserts costlier and may rehash; great for read-heavy workloads.
 * In all cases: pick strong hash functions and resize early to keep α healthy.
 
 #### Hash Table Search
-Map a key to an array index with a hash function; look at that bucket to find the key, giving expected O(1) lookups under a good hash and healthy load factor.
+Map a key to an array index with a hash function; look at that bucket to find the key, giving expected $O(1)$ lookups under a good hash and healthy load factor.
 
 **Example inputs and outputs**
 
@@ -744,10 +744,10 @@ Idx:   0     1     2     3     4     5     6
    (If not found, continue probing until an empty slot or wrap limit.)
 ```
 
-* Quality hash + low load factor (α = n/m) ⇒ expected O(1) search/insert/delete.
+* Quality hash + low load factor (α = n/m) ⇒ expected $O(1)$ search/insert/delete.
 * Collisions are inevitable; the collision strategy (open addressing vs. chaining vs. cuckoo) dictates actual steps.
 * Rehashing (growing and re-inserting) is used to keep α under control.
-* Uniform hashing assumption underpins the O(1) expectation; adversarial keys or poor hashes can degrade performance.
+* Uniform hashing assumption underpins the $O(1)$ expectation; adversarial keys or poor hashes can degrade performance.
 
 #### Open Addressing — Linear Probing
 
@@ -832,7 +832,7 @@ Path followed:
 * Simple and cache-friendly; clusters form (“primary clustering”) which can slow probes.
 * Deletion uses **tombstones** to keep probe chains intact.
 * Performance depends sharply on load factor; keep α well below 1 (e.g., α ≤ 0.7).
-* Expected search \~ O(1) at low α; degrades as clusters grow.
+* Expected search \~ $O(1)$ at low α; degrades as clusters grow.
 
 #### Open Addressing — Quadratic Probing
 
@@ -933,7 +933,7 @@ Path:
 * Reduces primary clustering but can exhibit **secondary clustering** (keys with same h(k) follow same probe squares).
 * Table size choice matters (often prime); ensure the probe sequence can reach many slots.
 * Keep α modest; deletion still needs tombstones.
-* Expected O(1) at healthy α; simpler than double hashing.
+* Expected $O(1)$ at healthy α; simpler than double hashing.
 
 #### Open Addressing — Double Hashing
 
@@ -1162,7 +1162,7 @@ Search(9):
 ```
 
 * Simple deletes (remove from a bucket) and no tombstones.
-* Expected O(1 + α) time; with good hashing and α kept near/below 1, bucket lengths stay tiny.
+* Expected $O(1 + α)$ time; with good hashing and α kept near/below 1, bucket lengths stay tiny.
 * Memory overhead for bucket nodes; cache locality worse than open addressing.
 * Buckets can use **ordered lists** or **small vectors** to accelerate scans.
 * Rehashing still needed as n grows; α = n/m controls performance.
@@ -1416,7 +1416,7 @@ All ones → **MAYBE PRESENT** (could be a **false positive**)
 
 * Answers: **maybe present** / **definitely not present**; never false negatives (without deletions).
 * False-positive rate is tunable via bit-array size **m**, number of hashes **k**, and items **n**; more space & good **k** → lower FPR.
-* Time: O(k) per insert/lookup; Space: \~m bits.
+* Time: $O(k)$ per insert/lookup; Space: \~m bits.
 * No deletions in the basic form; duplicates are harmless (idempotent sets).
 * Union = bitwise OR; intersection = bitwise AND (for same m,k,hashes).
 * Choose independent, well-mixed hash functions to avoid correlated bits.
@@ -1697,7 +1697,7 @@ Result: DEFINITELY NOT PRESENT
 
 ### String Search Algorithms
 
-* **KMP:** Best all-rounder for guaranteed **O(n + m)** and tiny memory.
+* **KMP:** Best all-rounder for guaranteed $O(n + m)$ and tiny memory.
 * **Boyer–Moore:** Fastest in practice on long patterns / large alphabets due to big skips.
 * **Rabin–Karp:** Great for **many patterns** or streaming; hashing enables batched checks.
 * **Naive:** Fine for tiny inputs or as a baseline; simplest to reason about.
@@ -1818,8 +1818,8 @@ Pattern:        a b r a
 ✅ All match → **REPORT at index 7**
 
 * Works anywhere; no preprocessing.
-* Time: worst/average **O(n·m)** (text length n, pattern length m).
-* Space: **O(1)**.
+* Time: worst/average $O(n·m)$ (text length n, pattern length m).
+* Space: $O(1)$.
 * Good for very short patterns or tiny inputs; otherwise use KMP/BM/RK.
 
 #### Knuth–Morris–Pratt (KMP)
@@ -1924,8 +1924,8 @@ Start index = i - m + 1 = 14 - 5 + 1 = 10
 
 ✅ Pattern `"ababd"` occurs in the text starting at **index 10**.
 
-* Time: **O(n + m)** (preprocessing + scan).
-* Space: **O(m)** for LPS table.
+* Time: $O(n + m)$ (preprocessing + scan).
+* Space: $O(m)$ for LPS table.
 * Never moves i backward; avoids redundant comparisons.
 * Ideal for repeated searches with the same pattern.
 * LPS is also called prefix-function / failure-function.
@@ -2010,8 +2010,8 @@ E=E, L=L, P=P, M=M, A=A, X=X, E=E
 ✅ **Full match** found at **index 17**.
 
 * Average case sublinear (often skips large chunks of text).
-* Worst case can be **O(n·m)**; with both rules + Galil’s optimization, comparisons can be bounded **O(n + m)**.
-* Space: **O(σ + m)** for tables (σ = alphabet size).
+* Worst case can be $O(n·m)$; with both rules + Galil’s optimization, comparisons can be bounded $O(n + m)$.
+* Space: $O(σ + m)$ for tables (σ = alphabet size).
 * Shines on long patterns over large alphabets (e.g., English text, logs).
 * Careful table prep (bad-character & good-suffix) is crucial.
 
@@ -2121,8 +2121,8 @@ s   window   hash   =HP?
 
 Matches at indices: **0, 4, 7**.
 
-* Expected time **O(n + m)** with a good modulus and low collision rate; worst case **O(n·m)** if many collisions.
-* Space: **O(1)** beyond the text/pattern and precomputed powers.
+* Expected time $O(n + m)$ with a good modulus and low collision rate; worst case $O(n·m)$ if many collisions.
+* Space: $O(1)$ beyond the text/pattern and precomputed powers.
 * Excellent for multi-pattern search (compute many pattern hashes, reuse rolling windows).
 * Choose modulus to reduce collisions; verify on hash hits to ensure correctness.
 * Works naturally on streams/very large texts since it needs only the current window.

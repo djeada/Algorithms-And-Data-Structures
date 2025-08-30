@@ -1,4 +1,4 @@
-## What are greedy algorithms?
+## Greedy Algorithms
 
 Greedy methods construct a solution piece by piece, always choosing the currently best-looking option according to a simple rule. The subtlety is not the rule itself but the proof that local optimality extends to global optimality. Two proof tools do most of the work: exchange arguments (you can swap an optimal solution’s first “deviation” back to the greedy choice without harm) and loop invariants (you maintain a statement that pins down exactly what your partial solution guarantees at each step).
 
@@ -93,13 +93,13 @@ The last axiom is the heart. It forbids “dead ends” where a smaller feasible
 You’re standing on square 0 of a line of squares $0,1,\dots,n-1$.
 Each square $i$ tells you how far you’re allowed to jump forward from there: a number $a[i]$. From $i$, you can jump to any square $i+1, i+2, \dots, i+a[i]$. The goal is to decide whether you can ever reach the last square, and, if not, what the furthest square is that you can reach.
 
-#### Example input and the expected output
+**Example inputs and outputs**
 
 Input array: `a = [3, 1, 0, 0, 4, 1]`
 There are 6 squares (0 through 5).
 Correct output: you cannot reach the last square; the furthest you can get is square `3`.
 
-#### A slow but obvious approach
+Baseline (slow)
 
 Think “paint everything I can reach, one wave at a time.”
 
@@ -120,7 +120,7 @@ from 3:  can reach {}      → no change (a[3]=0)
 done:    no new squares → furthest is 3, last is unreachable
 ```
 
-#### A clean, fast greedy scan
+**How it works**
 
 Carry one number as you sweep left to right: `F`, the furthest square you can reach **so far**.
 Rule of thumb:
@@ -148,11 +148,16 @@ i=4: 4 > F  → stuck here
 
 Final state: `F = 3`, which means the furthest reachable square is 3. Since `F < n-1 = 5`, the last square is not reachable.
 
+Summary
+
+* Time: $O(n)$ (single left-to-right pass)
+* Space: $O(1)$
+
 ### Minimum spanning trees
 
 You’ve got a connected weighted graph and you want the cheapest way to connect **all** its vertices without any cycles—that’s a minimum spanning tree (MST). Think “one network of cables that touches every building, with the total cost as small as possible.”
 
-#### Example input → expected output
+**Example inputs and outputs**
 
 Vertices: $V=\{A,B,C,D,E\}$
 
@@ -173,11 +178,11 @@ Total weight $=1+2+3+4=10$.
 
 You can’t do better: any cheaper set of 4 edges would either miss a vertex or create a cycle.
 
-#### A slow, baseline way (what you’d do if time didn’t matter)
+Baseline (slow)
 
 Enumerate every spanning tree and pick the one with the smallest total weight. That’s conceptually simple—“try all combinations of $n-1$ edges that connect everything and have no cycles”—but it explodes combinatorially. Even medium graphs have an astronomical number of spanning trees, so this approach is only good as a thought experiment.
 
-#### Two fast greedy methods that always work
+**How it works**
 
 Both fast methods rely on two facts:
 
@@ -185,6 +190,17 @@ Both fast methods rely on two facts:
 * **Cycle rule (safe to skip):** in any cycle, the most expensive edge is never in an MST. Intuition: if you already have a loop, drop the priciest link and you’ll still be connected but strictly cheaper.
 
 #### Kruskal’s method
+
+**Example inputs and outputs**
+
+Use the same graph as above. A valid MST is
+
+$$
+\{A\!-\!B(1),\ B\!-\!D(2),\ C\!-\!E(3),\ B\!-\!C(4)\}\quad\Rightarrow\quad \text{total} = 10.
+$$
+
+**How it works**
+
 Sort edges from lightest to heaviest; walk down that list and keep an edge if it connects two **different** components. Stop when you have $n-1$ edges.
 
 Sorted edges by weight:
@@ -218,7 +234,18 @@ We’ll keep a running view of the components; initially each vertex is alone.
 Edges kept: $A\!-\!B(1), B\!-\!D(2), C\!-\!E(3), B\!-\!C(4)$.
 Total $=10$. Every later edge would create a cycle and is skipped by the cycle rule.
 
+Complexity
+
+* Time: $O(E \log E)$ to sort edges + near-constant $\alpha(V)$ for DSU unions; often written $O(E \log V)$ since $E\le V^2$.
+* Space: $O(V)$ for disjoint-set structure.
+
 ### Prim's method
+
+**Example inputs and outputs**
+
+Same graph and target: produce any MST of total weight $10$.
+
+**How it works**
 
 Start from any vertex; repeatedly add the lightest edge that leaves the current tree to bring in a new vertex. Stop when all vertices are in.
 
@@ -242,11 +269,16 @@ Edges chosen: exactly the same four as Kruskal, total $=10$.
 
 Why did step 4 grab a weight-3 edge after we already took a 4? Because earlier that 3 wasn’t **available**—it didn’t cross from the tree to the outside until $C$ joined the tree. Prim never regrets earlier picks because of the cut rule: at each moment it adds the cheapest bridge from “inside” to “outside,” and that’s always safe.
 
+Complexity
+
+* Time: $O(E \log V)$ with a binary heap and adjacency lists; $O(E + V\log V)$ with a Fibonacci heap.
+* Space: $O(V)$ for keys/parents and visited set.
+
 ### Shortest paths with non-negative weights
 
 You’ve got a weighted graph and a starting node $s$. Every edge has a cost $\ge 0$. The task is to find the cheapest cost to reach every node from $s$, and a cheapest route for each if you want it.
 
-#### Example input → expected output
+**Example inputs and outputs**
 
 Nodes: $A,B,C,D,E$
 
@@ -267,11 +299,11 @@ Correct shortest-path costs from $A$:
 * $d(D)=4$ via $A\!\to\!B\!\to\!D$
 * $d(E)=4$ via $A\!\to\!B\!\to\!C\!\to\!E$
 
-#### A slow baseline (what you’d do without the greedy insight)
+Baseline (slow)
 
 One safe—but slower—approach is to relax all edges repeatedly until nothing improves. Think of it as “try to shorten paths by one edge at a time, do that $|V|-1$ rounds.” This eventually converges to the true shortest costs, but it touches every edge many times, so its work is about $|V|\cdot|E|$. It also handles negative edges, which is why it has to be cautious and keep looping.
 
-#### The greedy method: Dijkstra’s idea
+**How it works**
 
 Carry two sets and a distance label for each node.
 
@@ -343,18 +375,23 @@ Recovering paths by remembering “who improved whom” gives:
 * $D$ from $B$
 * $E$ from $C$
 
+Complexity
+
+* Time: $O((V+E)\log V)$ with a binary heap (often written $O(E \log V)$ when $E\ge V$).
+* Space: $O(V)$ for distances, parent pointers, and heap entries.
+
 ### Maximum contiguous sum
 
 You’re given a list of numbers laid out in a line. You may pick one **contiguous** block, and you want that block’s sum to be as large as possible.
 
-### Example input and the expected output
+**Example inputs and outputs**
 
 Take $x = [\,2,\,-3,\,4,\,-1,\,2,\,-5,\,3\,]$.
 
 A best block is $[\,4,\,-1,\,2\,]$. Its sum is $5$.
 So the correct output is “maximum sum $=5$” and one optimal segment is positions $3$ through $5$ (1-based).
 
-#### A slow, obvious baseline
+Baseline (slow)
 
 Try every possible block and keep the best total. To sum any block $i..j$ quickly, precompute **prefix sums** $S_0=0$ and $S_j=\sum_{k=1}^j x_k$. Then
 
@@ -364,7 +401,7 @@ $$
 
 Loop over all $j$ and all $i\le j$, compute $S_j-S_{i-1}$, and take the maximum. This is easy to reason about and always correct, but it does $O(n^2)$ block checks.
 
-#### A clean one-pass greedy scan
+**How it works**
 
 Walk left to right once and carry two simple numbers.
 
@@ -434,13 +471,18 @@ When all numbers are negative, the best block is the **least negative single ele
 
 Empty-block conventions matter. If you define the answer to be strictly nonempty, initialize $\text{best}$ with $x_1$ and $E=x_1$ in the incremental form; if you allow empty blocks with sum $0$, initialize $\text{best}=0$ and $M=0$. Either way, the one-pass logic doesn’t change.
 
+Summary
+
+* Time: $O(n)$
+* Space: $O(1)$
+
 ### Scheduling themes
 
 Two everyday scheduling goals keep popping up. One tries to pack as many non-overlapping intervals as possible, like booking the most meetings in a single room. The other tries to keep lateness under control when jobs have deadlines, like finishing homework so the worst overrun is as small as possible. Both have crisp greedy rules, and both are easy to run by hand once you see them.
 
 Imagine you have time intervals on a single line, and you can keep an interval only if it doesn’t overlap anything you already kept. The aim is to keep as many as possible.
 
-#### Example input and the desired output
+**Example inputs and outputs**
 
 Intervals (start, finish):
 
@@ -448,11 +490,11 @@ Intervals (start, finish):
 
 A best answer keeps four intervals, for instance $(1,3),(4,7),(8,10),(10,11)$. I wrote $(10,11)$ for clarity even though the original end was $11$; think half-open $[s,e)$ if you want “touching” to be allowed.
 
-#### A slow baseline
+Baseline (slow)
 
 Try all subsets and keep the largest that has no overlaps. That’s conceptually simple and always correct, but it’s exponential in the number of intervals, which is a non-starter for anything but tiny inputs.
 
-#### The greedy rule
+**How it works**
 
 Sort by finishing time, then walk once from earliest finisher to latest. Keep an interval if its start is at least the end time of the last one you kept. Ending earlier leaves more room for the future, and that is the whole intuition.
 
@@ -487,6 +529,11 @@ ending earlier leaves more open space to the right
 
 Why this works in one sentence: at the first place an optimal schedule would choose a later-finishing interval, swapping in the earlier finisher cannot reduce what still fits afterward, so you can push the optimal schedule to match greedy without losing size.
 
+Complexity
+
+* Time: $O(n \log n)$ to sort by finishing time; $O(n)$ scan.
+* Space: $O(1)$ (beyond input storage).
+
 ### Minimize the maximum lateness
 
 Now think of $n$ jobs, all taking the same amount of time (say one unit). Each job $i$ has a deadline $d_i$. When you run them in some order, the completion time of the $k$-th job is $C_k=k$ (since each takes one unit), and its lateness is
@@ -497,7 +544,7 @@ $$
 
 Negative values mean you finished early; the quantity to control is the worst lateness $L_{\max}=\max_i L_i$. The goal is to order the jobs so $L_{\max}$ is as small as possible.
 
-#### Example input and the desired output
+**Example inputs and outputs**
 
 Jobs and deadlines:
 
@@ -508,11 +555,11 @@ Jobs and deadlines:
 
 An optimal schedule is $J_2,J_4, J_1, J_3$. The maximum lateness there is $0$.
 
-#### A slow baseline
+Baseline (slow)
 
 Try all $n!$ orders, compute every job’s completion time and lateness, and take the order with the smallest $L_{\max}$. This explodes even for modest $n$.
 
-#### The greedy rule
+**How it works**
 
 Order jobs by nondecreasing deadlines (earliest due date first, often called EDD). Fixing any “inversion” where a later deadline comes before an earlier one can only help the maximum lateness, so sorting by deadlines is safe.
 
@@ -552,6 +599,11 @@ late?    0    0    0    0  → max lateness 0
 
 Why this works in one sentence: if two adjacent jobs are out of deadline order, swapping them never increases any completion time relative to its own deadline, and strictly improves at least one, so repeatedly fixing these inversions leads to the sorted-by-deadline order with no worse maximum lateness.
 
+Complexity
+
+* Time: $O(n \log n)$ to sort by deadlines; $O(n)$ evaluation.
+* Space: $O(1)$.
+
 ### Huffman coding
 
 You have symbols that occur with known frequencies $f_i>0$ and $\sum_i f_i=1$. The goal is to assign each symbol a binary codeword so that no codeword is a prefix of another (a prefix code), and the average length
@@ -562,7 +614,7 @@ $$
 
 is as small as possible. Prefix codes exactly correspond to full binary trees whose leaves are the symbols and whose leaf depths are the codeword lengths $L_i$. The Kraft inequality $\sum_i 2^{-L_i}\le 1$ is the feasibility condition; equality holds for full trees.
 
-#### Example input and the target output
+**Example inputs and outputs**
 
 Frequencies:
 
@@ -572,11 +624,11 @@ $$
 
 A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L_A,\dots,L_E$, plus a concrete codebook.
 
-### A naive way to think about it
+Baseline (slow)
 
 One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum f_i\,L_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log_2 5\rceil=3$. That fixed-length code has $\mathbb{E}[L]=3$.
 
-#### The greedy method that is actually optimal
+**How it works**
 
 Huffman’s rule repeats one tiny step: always merge the two least frequent items. When you merge two “symbols” with weights $p$ and $q$, you create a parent of weight $p+q$. The act of merging adds exactly $p+q$ to the objective $\mathbb{E}[L]$ because every leaf inside those two subtrees becomes one level deeper. Summing over all merges yields the final cost:
 
@@ -640,6 +692,11 @@ One concrete codebook arises by reading left edges as 0 and right edges as 1:
 * $E \mapsto 011$
 
 You can verify the prefix property immediately and recompute $\mathbb{E}[L]$ from these lengths to get $2.20$ again.
+
+Complexity
+
+* Time: $O(k \log k)$ using a min-heap over $k$ symbol frequencies.
+* Space: $O(k)$ for the heap and $O(k)$ for the resulting tree.
 
 ### When greedy fails (and how to quantify “not too bad”)
 
