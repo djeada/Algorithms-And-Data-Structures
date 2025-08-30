@@ -10,9 +10,35 @@ Scan the list from left to right, comparing the target with each element until y
 
 **Example inputs and outputs**
 
-* Input: list = \[7, 3, 5, 2, 9], target = 5 → Output: index = 2
-* Input: list = \[4, 4, 4], target = 4 → Output: index = 0 (first match)
-* Input: list = \[10, 20, 30], target = 25 → Output: not found
+*Example 1*
+
+$$
+\text{Input: } [7, 3, 5, 2, 9], \quad \text{target} = 5
+$$
+
+$$
+\text{Output: } \text{index} = 2
+$$
+
+*Example 2*
+
+$$
+\text{Input: } [4, 4, 4], \quad \text{target} = 4
+$$
+
+$$
+\text{Output: } \text{index} = 0 \; (\text{first match})
+$$
+
+*Example 3*
+
+$$
+\text{Input: } [10, 20, 30], \quad \text{target} = 25
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
 
 **How it works**
 
@@ -66,8 +92,25 @@ Place one copy of the target at the very end as a “sentinel” so the scan can
 
 **Example inputs and outputs**
 
-* Input: list = \[12, 8, 6, 15], target = 6 → Output: index = 2
-* Input: list = \[2, 4, 6, 8], target = 5 → Output: not found (only the sentinel matched)
+*Example 1*
+
+$$
+\text{Input: } [12, 8, 6, 15], \quad \text{target} = 6
+$$
+
+$$
+\text{Output: } \text{index} = 2
+$$
+
+*Example 2*
+
+$$
+\text{Input: } [2, 4, 6, 8], \quad \text{target} = 5
+$$
+
+$$
+\text{Output: } \text{not found } \; (\text{only the sentinel matched})
+$$
 
 **How it works**
 
@@ -125,9 +168,36 @@ On a sorted array, repeatedly halve the search interval by comparing the target 
 
 **Example inputs and outputs**
 
-* Input: A = \[2, 5, 8, 12, 16, 23, 38], target = 16 → Output: index = 4
-* Input: A = \[1, 3, 3, 3, 9], target = 3 → Output: index = 2 (any valid match; first/last requires a slight variant)
-* Input: A = \[10, 20, 30, 40], target = 35 → Output: not found
+*Example 1*
+
+$$
+\text{Input: } A = [2, 5, 8, 12, 16, 23, 38], \quad \text{target} = 16
+$$
+
+$$
+\text{Output: } \text{index} = 4
+$$
+
+*Example 2*
+
+$$
+\text{Input: } A = [1, 3, 3, 3, 9], \quad \text{target} = 3
+$$
+
+$$
+\text{Output: } \text{index} = 2 \quad (\text{any valid match; first/last needs a variant})
+$$
+
+*Example 3*
+
+$$
+\text{Input: } A = [10, 20, 30, 40], \quad \text{target} = 35
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
+
 
 **How it works**
 
@@ -161,8 +231,25 @@ Like binary, but splits the current interval into three parts using two midpoint
 
 **Example inputs and outputs**
 
-* Input: A = \[1, 4, 7, 9, 12, 15], target = 9 → Output: index = 3
-* Input: A = \[2, 6, 10, 14], target = 5 → Output: not found
+*Example 1*
+
+$$
+\text{Input: } A = [1, 4, 7, 9, 12, 15], \quad \text{target} = 9
+$$
+
+$$
+\text{Output: } \text{index} = 3
+$$
+
+*Example 2*
+
+$$
+\text{Input: } A = [2, 6, 10, 14], \quad \text{target} = 5
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
 
 **How it works**
 
@@ -195,8 +282,25 @@ On a sorted array, jump ahead in fixed block sizes to find the block that may co
 
 **Example inputs and outputs**
 
-* Input: A = \[1, 4, 9, 16, 25, 36, 49], target = 25, jump = ⌊√7⌋=2 → Output: index = 4
-* Input: A = \[3, 8, 15, 20, 22, 27], target = 21, jump = 2 → Output: not found
+*Example 1*
+
+$$
+\text{Input: } A = [1, 4, 9, 16, 25, 36, 49], \quad \text{target} = 25, \quad \text{jump} = \lfloor \sqrt{7} \rfloor = 2
+$$
+
+$$
+\text{Output: } \text{index} = 4
+$$
+
+*Example 2*
+
+$$
+\text{Input: } A = [3, 8, 15, 20, 22, 27], \quad \text{target} = 21, \quad \text{jump} = 2
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
 
 **How it works**
 
@@ -227,8 +331,25 @@ On a sorted array, grow the right boundary exponentially (1, 2, 4, 8, …) to fi
 
 **Example inputs and outputs**
 
-* Input: A = \[2, 3, 5, 7, 11, 13, 17, 19, 23], target = 19 → Output: index = 7
-* Input: A = \[10, 20, 30, 40, 50], target = 12 → Output: not found
+*Example 1*
+
+$$
+\text{Input: } A = [2, 3, 5, 7, 11, 13, 17, 19, 23], \quad \text{target} = 19
+$$
+
+$$
+\text{Output: } \text{index} = 7
+$$
+
+*Example 2*
+
+$$
+\text{Input: } A = [10, 20, 30, 40, 50], \quad \text{target} = 12
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
 
 **How it works**
 
@@ -260,9 +381,35 @@ On a sorted (roughly uniformly distributed) array, estimate the likely position 
 
 **Example inputs and outputs**
 
-* Input: A = \[10, 20, 30, 40, 50, 60, 70], target = 55 → Output: not found (probes near index 4–5)
-* Input: A = \[5, 15, 25, 35, 45, 55, 65], target = 45 → Output: index = 4
-* Input: A = \[1, 1000, 1001, 1002], target = 2 → Output: not found (bad distribution for interpolation)
+*Example 1*
+
+$$
+\text{Input: } A = [10, 20, 30, 40, 50, 60, 70], \quad \text{target} = 55
+$$
+
+$$
+\text{Output: } \text{not found } \; (\text{probes near indices } 4\text{–}5)
+$$
+
+*Example 2*
+
+$$
+\text{Input: } A = [5, 15, 25, 35, 45, 55, 65], \quad \text{target} = 45
+$$
+
+$$
+\text{Output: } \text{index} = 4
+$$
+
+*Example 3*
+
+$$
+\text{Input: } A = [1, 1000, 1001, 1002], \quad \text{target} = 2
+$$
+
+$$
+\text{Output: } \text{not found } \; (\text{bad distribution for interpolation})
+$$
 
 **How it works**
 
@@ -304,8 +451,29 @@ Map a key to an array index with a hash function; look at that bucket to find th
 
 **Example inputs and outputs**
 
-* Table size m = 7; keys stored = {10, 24, 31}; target = 24 → Output: “found (bucket 3)”
-* Same table; target = 18 → Output: “not found”
+*Example 1*
+
+$$
+\text{Table size: } m = 7, 
+\quad \text{Keys stored: } \{10, 24, 31\}, 
+\quad \text{Target: } 24
+$$
+
+$$
+\text{Output: } \text{found (bucket 3)}
+$$
+
+*Example 2*
+
+$$
+\text{Table size: } m = 7, 
+\quad \text{Keys stored: } \{10, 24, 31\}, 
+\quad \text{Target: } 18
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
 
 **How it works**
 
@@ -339,8 +507,29 @@ Keep everything in one array; on collision, probe alternative positions in a det
 
 **Example inputs and outputs**
 
-* m = 10; stored = {12, 22, 32}; target = 22 → Output: “found (index 3)”
-* Same table; target = 42 → Output: “not found”
+*Example 1*
+
+$$
+m = 10, 
+\quad \text{Stored keys: } \{12, 22, 32\}, 
+\quad \text{Target: } 22
+$$
+
+$$
+\text{Output: } \text{found (index 3)}
+$$
+
+*Example 2*
+
+$$
+m = 10, 
+\quad \text{Stored keys: } \{12, 22, 32\}, 
+\quad \text{Target: } 42
+$$
+
+$$
+\text{Output: } \text{not found}
+$$
 
 **How it works**
 
@@ -376,8 +565,37 @@ Search(42):
 
 **Example inputs and outputs**
 
-* m = 11 (prime); stored = {22, 33, 44}; target = 33 → Output: “found (index 4)”
-* Same table; target = 55 → Output: “not found”
+*Example 1*
+
+$$
+m = 11 \; (\text{prime}), 
+\quad \text{Stored keys: } \{22, 33, 44\}, 
+\quad \text{Target: } 33
+$$
+
+$$
+h(k) = k \bmod m, \quad h(33) = 33 \bmod 11 = 0
+$$
+
+$$
+\text{Output: found (index 4)}
+$$
+
+*Example 2*
+
+$$
+m = 11 \; (\text{prime}), 
+\quad \text{Stored keys: } \{22, 33, 44\}, 
+\quad \text{Target: } 55
+$$
+
+$$
+h(55) = 55 \bmod 11 = 0
+$$
+
+$$
+\text{Output: not found}
+$$
 
 **How it works**
 
@@ -415,9 +633,74 @@ Search(55):
 
 **Example inputs and outputs**
 
-* m = 11; h₁(k) = k mod 11; h₂(k) = 1 + (k mod 10)
-* Stored = {22, 33, 44}; target = 33 → Output: “found (index 4)”
-* Same table; target = 55 → Output: “not found”
+*Hash functions*
+
+$$
+h_{1}(k) = k \bmod 11, 
+\quad h_{2}(k) = 1 + (k \bmod 10)
+$$
+
+Probing sequence:
+
+$$
+h(k,i) = \big(h_{1}(k) + i \cdot h_{2}(k)\big) \bmod 11
+$$
+
+*Example 1*
+
+$$
+m = 11, 
+\quad \text{Stored keys: } \{22, 33, 44\}, 
+\quad \text{Target: } 33
+$$
+
+* For $k = 33$:
+
+$$
+h_{1}(33) = 33 \bmod 11 = 0,
+\quad h_{2}(33) = 1 + (33 \bmod 10) = 1 + 3 = 4
+$$
+
+So probe sequence is
+
+$$
+h(33,0) = 0,\;
+h(33,1) = (0 + 1\cdot 4) \bmod 11 = 4,\;
+h(33,2) = (0 + 2\cdot 4) \bmod 11 = 8,\; \dots
+$$
+
+Since the stored layout places $33$ at index $4$, the search succeeds.
+
+$$
+\text{Output: found (index 4)}
+$$
+
+*Example 2*
+
+$$
+m = 11, 
+\quad \text{Stored keys: } \{22, 33, 44\}, 
+\quad \text{Target: } 55
+$$
+
+* For $k = 55$:
+
+$$
+h_{1}(55) = 55 \bmod 11 = 0,
+\quad h_{2}(55) = 1 + (55 \bmod 10) = 1 + 5 = 6
+$$
+
+Probing sequence:
+
+$$
+0, \; (0+6)\bmod 11 = 6,\; (0+2\cdot 6)\bmod 11 = 1,\; (0+3\cdot 6)\bmod 11 = 7,\; \dots
+$$
+
+No slot matches $55$.
+
+$$
+\text{Output: not found}
+$$
 
 **How it works**
 
@@ -455,9 +738,62 @@ Each array cell holds a small container (e.g., a linked list); colliding keys li
 
 **Example inputs and outputs**
 
-* m = 5; buckets hold lists
-* Stored = {12, 22, 7, 3, 14}; target = 22 → Output: “found (bucket 2, position 2)”
-* Same table; target = 9 → Output: “not found”
+*Setup*
+
+$$
+m = 5, \quad h(k) = k \bmod 5, \quad \text{buckets hold linked lists}
+$$
+
+Keys stored:
+
+$$
+\{12, 22, 7, 3, 14\}
+$$
+
+Bucket contents after hashing:
+
+$$
+\begin{aligned}
+h(12) &= 12 \bmod 5 = 2 &\;\;\Rightarrow& \;\; \text{bucket 2: } [12] \\[6pt]
+h(22) &= 22 \bmod 5 = 2 &\;\;\Rightarrow& \;\; \text{bucket 2: } [12, 22] \\[6pt]
+h(7)  &= 7  \bmod 5 = 2 &\;\;\Rightarrow& \;\; \text{bucket 2: } [12, 22, 7] \\[6pt]
+h(3)  &= 3  \bmod 5 = 3 &\;\;\Rightarrow& \;\; \text{bucket 3: } [3] \\[6pt]
+h(14) &= 14 \bmod 5 = 4 &\;\;\Rightarrow& \;\; \text{bucket 4: } [14]
+\end{aligned}
+$$
+
+*Example 1*
+
+$$
+\text{Target: } 22
+$$
+
+$$
+h(22) = 2 \;\;\Rightarrow\;\; \text{bucket 2} = [12, 22, 7]
+$$
+
+Found at **position 2** in the list.
+
+$$
+\text{Output: found (bucket 2, position 2)}
+$$
+
+*Example 2*
+
+$$
+\text{Target: } 9
+$$
+
+$$
+h(9) = 9 \bmod 5 = 4 \;\;\Rightarrow\;\; \text{bucket 4} = [14]
+$$
+
+No match.
+
+$$
+\text{Output: not found}
+$$
+
 
 **How it works**
 
@@ -488,9 +824,57 @@ Keep two (or more) hash positions per key; insert by “kicking out” occupants
 
 **Example inputs and outputs**
 
-* Two tables T₁ and T₂ (same size m = 5) with two hashes h₁, h₂
-* Inserted keys produce relocations; target = 15 → Output: “found in T₂ at index 4”
-* If insertion loops (cycle), rebuild with new hash functions (rehash)
+*Setup*
+Two hash tables $T_{1}$ and $T_{2}$, each of size
+
+$$
+m = 5
+$$
+
+Two independent hash functions:
+
+$$
+h_{1}(k), \quad h_{2}(k)
+$$
+
+Cuckoo hashing invariant:
+
+* Each key is stored either in $T_{1}[h_{1}(k)]$ or $T_{2}[h_{2}(k)]$.
+* On insertion, if a spot is occupied, the existing key is **kicked out** and reinserted into the other table.
+* If relocations form a cycle, the table is **rebuilt (rehash)** with new hash functions.
+
+*Example 1*
+
+$$
+\text{Target: } 15
+$$
+
+Lookup procedure:
+
+1. Check $T_{1}[h_{1}(15)]$.
+2. If not found, check $T_{2}[h_{2}(15)]$.
+
+Result:
+
+$$
+\text{found in } T_{2} \text{ at index } 4
+$$
+
+$$
+\text{Output: found (T₂, index 4)}
+$$
+
+*Example 2*
+
+If insertion causes repeated displacements and eventually loops:
+
+$$
+\text{Cycle detected } \;\;\Rightarrow\;\; \text{rehash with new } h_{1}, h_{2}
+$$
+
+$$
+\text{Output: rebuild / rehash required}
+$$
 
 **How it works**
 
@@ -550,11 +934,54 @@ Space-efficient structure for fast membership tests; answers **“maybe present�
 
 **Example inputs and outputs**
 
-* Setup: m = 16 bits, k = 3 hash functions (h₁, h₂, h₃).
-* Insert: {"cat", "dog"}
-* `contains("cat")` → **maybe present** (actual member)
-* `contains("cow")` → **definitely not present** (one probed bit is 0)
-* `contains("eel")` → **maybe present** (all probed bits happen to be 1 → **false positive**)
+*Setup*
+
+$$
+m = 16 \; \text{bits}, 
+\quad k = 3 \; \text{hash functions } (h_{1}, h_{2}, h_{3})
+$$
+
+Inserted set:
+
+$$
+\{"cat", "dog"\}
+$$
+
+*Example 1*
+
+$$
+\text{Query: contains("cat")}
+$$
+
+All $h_{i}(\text{"cat"})$ bits are set → actual member.
+
+$$
+\text{Output: maybe present (true positive)}
+$$
+
+*Example 2*
+
+$$
+\text{Query: contains("cow")}
+$$
+
+One probed bit = 0 → cannot be present.
+
+$$
+\text{Output: definitely not present}
+$$
+
+*Example 3*
+
+$$
+\text{Query: contains("eel")}
+$$
+
+All $h_{i}(\text{"eel"})$ bits happen to be set, even though "eel" was never inserted.
+
+$$
+\text{Output: maybe present (false positive)}
+$$
 
 **How it works**
 
@@ -598,12 +1025,56 @@ Bloom filter variant that keeps a small counter per bit so you can **delete** by
 
 **Example inputs and outputs**
 
-* Setup: m = 12 counters (each 2–4 bits), k = 3 hash functions.
-* Insert: {"alpha", "beta"}
-* Delete: remove "alpha".
-* `contains("alpha")` after deletion → **definitely not present** (one counter back to 0)
-* `contains("beta")` → **maybe present**
-* `contains("gamma")` → **definitely not present** (some counter = 0)
+*Setup*
+
+$$
+m = 12 \;\; \text{counters (each 2–4 bits)}, 
+\quad k = 3 \;\; \text{hash functions}
+$$
+
+Inserted set:
+
+$$
+\{\text{"alpha"}, \; \text{"beta"}\}
+$$
+
+Then delete `"alpha"`.
+
+*Example 1*
+
+$$
+\text{Query: contains("alpha")}
+$$
+
+Counters for `"alpha"` decremented; at least one probed counter is now $0$.
+
+$$
+\text{Output: definitely not present}
+$$
+
+*Example 2*
+
+$$
+\text{Query: contains("beta")}
+$$
+
+All three counters for `"beta"` remain $>0$.
+
+$$
+\text{Output: maybe present}
+$$
+
+*Example 3*
+
+$$
+\text{Query: contains("gamma")}
+$$
+
+At least one probed counter is $0$.
+
+$$
+\text{Output: definitely not present}
+$$
 
 **How it works**
 
@@ -639,13 +1110,57 @@ Hash-table–style filter that stores short **fingerprints** in two possible buc
 
 **Example inputs and outputs**
 
-* Setup: bucket array with **b = 8** buckets, **bucket size = 2**, **fingerprint = 8 bits**.
-* Insert: {"cat", "dog", "eel"} (each stored as short fingerprints).
-* Query:
+*Setup*
 
-  * `contains("cat")` → **maybe present** (fingerprint found in one of its two buckets)
-  * `contains("fox")` → **definitely not present** (fingerprint absent from both)
-* Delete: `remove("dog")` → fingerprint removed from its bucket.
+$$
+b = 8 \;\; \text{buckets}, 
+\quad \text{bucket size} = 2, 
+\quad \text{fingerprint size} = 8 \; \text{bits}
+$$
+
+Inserted set:
+
+$$
+\{\text{"cat"}, \; \text{"dog"}, \; \text{"eel"}\}
+$$
+
+Each element is stored as a short fingerprint in one of two candidate buckets.
+
+*Example 1*
+
+$$
+\text{Query: contains("cat")}
+$$
+
+Fingerprint for `"cat"` is present in one of its candidate buckets.
+
+$$
+\text{Output: maybe present (true positive)}
+$$
+
+*Example 2*
+
+$$
+\text{Query: contains("fox")}
+$$
+
+Fingerprint for `"fox"` is absent from both candidate buckets.
+
+$$
+\text{Output: definitely not present}
+$$
+
+*Example 3 (Deletion)*
+
+$$
+\text{Operation: remove("dog")}
+$$
+
+Fingerprint for `"dog"` is removed from its bucket.
+
+$$
+\text{Result: deletion supported directly by removing the fingerprint}
+$$
 
 **How it works**
 
@@ -708,8 +1223,27 @@ Slide the pattern one position at a time over the text; at each shift compare ch
 
 **Example inputs and outputs**
 
-* Text: `"abracadabra"`, Pattern: `"abra"` → Output: matches at indices **0** and **7**
-* Text: `"aaaaa"`, Pattern: `"aaa"` → Output: matches at indices **0**, **1**, **2**
+*Example 1*
+
+$$
+\text{Text: } "abracadabra", 
+\quad \text{Pattern: } "abra"
+$$
+
+$$
+\text{Output: matches at indices } \; 0 \;\; \text{and} \;\; 7
+$$
+
+*Example 2*
+
+$$
+\text{Text: } "aaaaa", 
+\quad \text{Pattern: } "aaa"
+$$
+
+$$
+\text{Output: matches at indices } \; 0, \; 1, \; 2
+$$
 
 **How it works**
 
@@ -762,8 +1296,27 @@ Precompute a table (LPS / prefix-function) for the pattern so that on a mismatch
 
 **Example inputs and outputs**
 
-* Text: `"ababcabcabababd"`, Pattern: `"ababd"` → Output: match at index **10**
-* Text: `"aaaaab"`, Pattern: `"aaab"` → Output: match at index **2**
+*Example 1*
+
+$$
+\text{Text: } "ababcabcabababd", 
+\quad \text{Pattern: } "ababd"
+$$
+
+$$
+\text{Output: match at index } 10
+$$
+
+*Example 2*
+
+$$
+\text{Text: } "aaaaab", 
+\quad \text{Pattern: } "aaab"
+$$
+
+$$
+\text{Output: match at index } 2
+$$
 
 **How it works**
 ```
@@ -805,8 +1358,28 @@ Compare the pattern right-to-left; on a mismatch, skip ahead using bad-character
 
 **Example inputs and outputs**
 
-* Text: `"HERE IS A SIMPLE EXAMPLE"`, Pattern: `"EXAMPLE"` → Output: match at index **17**
-* Text: `"NEEDLE IN A HAYSTACK"`, Pattern: `"STACK"` → Output: match at index **15**
+*Example 1*
+
+$$
+\text{Text: } "HERE IS A SIMPLE EXAMPLE", 
+\quad \text{Pattern: } "EXAMPLE"
+$$
+
+$$
+\text{Output: match at index } 17
+$$
+
+*Example 2*
+
+$$
+\text{Text: } "NEEDLE IN A HAYSTACK", 
+\quad \text{Pattern: } "STACK"
+$$
+
+$$
+\text{Output: match at index } 15
+$$
+
 
 **How it works**
 
@@ -845,8 +1418,28 @@ Compare rolling hashes of the current text window and the pattern; only if hashe
 
 **Example inputs and outputs**
 
-* Text: `"ABCDABCABCD"`, Pattern: `"ABC"` → Output: matches at indices **0**, **4**, **7**
-* Text: `"ABCDE"`, Pattern: `"FG"` → Output: **no match**
+*Example 1*
+
+$$
+\text{Text: } "ABCDABCABCD", 
+\quad \text{Pattern: } "ABC"
+$$
+
+$$
+\text{Output: matches at indices } 0, \; 4, \; 7
+$$
+
+*Example 2*
+
+$$
+\text{Text: } "ABCDE", 
+\quad \text{Pattern: } "FG"
+$$
+
+$$
+\text{Output: no match}
+$$
+
 
 **How it works**
 
