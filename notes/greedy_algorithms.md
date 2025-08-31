@@ -573,7 +573,7 @@ Try all subsets and keep the largest that has no overlaps. That’s conceptually
 Sort by finish time and take what fits.
 
 - Scan from earliest finisher to latest.
-- Keep $(s,e)$ iff $s \ge \text{last_end}$; then set $\text{last_end}\leftarrow e$.
+- Keep $(s,e)$ iff $s \ge \text{last end}$; then set $\text{last end}\leftarrow e$.
 
 Sorted by finish:
 
