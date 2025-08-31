@@ -36,7 +36,7 @@ That third rule prevents dead ends and is exactly what exchange arguments rely o
 
 ### Reachability on a line
 
-- You stand at square $0$ on squares $0,1,dots,n-1$.
+- You stand at square $0$ on squares $0,1,\ldots,n-1$.
 - Each square $i$ has a jump power $a\[i]$. From $i$ you may land on any of $i+1, i+2, \dots, i+a\[i]$.
 - Goal: decide if you can reach $n-1$; if not, report the furthest reachable square.
 
