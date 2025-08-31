@@ -48,14 +48,14 @@ Arrays are basic data structures that store elements in a continuous block of me
 Strings, as sequences of characters, often require special handling due to their immutable nature in some languages and the variety of operations performed on them.
 
 * In languages with *immutable strings*, concatenating inside a loop with `+` can be very slow—$O(n^2)$ time. Instead, use tools like `StringBuilder` in Java or `''.join(list_of_strings)` in Python to bring it down to $O(n)$.
-* For *string searching*, algorithms like Knuth–Morris–Pratt (KMP), Rabin–Karp, or Boyer–Moore are much faster than the naive $O(nm)$ approach.
+* For *string searching*, algorithms like Knuth-Morris-Pratt (KMP), Rabin-Karp, or Boyer-Moore are much faster than the naive $O(nm)$ approach.
 * *Tries (prefix trees)* let you store and retrieve strings with shared prefixes efficiently. They’re common in autocomplete, spell-checkers, and IP routing.
 * *Regular expressions* are powerful for pattern matching, but they need careful design—badly written patterns can cause exponential slowdowns.
 * Always keep *Unicode and character encoding* (UTF-8, ASCII, etc.) in mind when handling strings, especially with international text or external data. It prevents bugs and ensures proper compatibility.
 * For *anagram checks*, compare character counts with arrays or hash maps. For *palindrome checks*, the two-pointer method or comparing against the reversed string gives a simple, efficient solution.
 * *Substring and slicing operations* can vary in cost depending on the language. In some (like Python), slices create new strings, while in others (like Java, newer versions), substrings copy data. Always be mindful of hidden overhead.
 * When dealing with *very large text processing*, consider using *streaming* or *buffered reading* instead of loading everything into memory at once.
-* *Hashing strings* (e.g., rolling hash) is useful for fast lookups, substring checks, or detecting duplicates, especially in algorithms like Rabin–Karp or for building hash-based data structures.
+* *Hashing strings* (e.g., rolling hash) is useful for fast lookups, substring checks, or detecting duplicates, especially in algorithms like Rabin-Karp or for building hash-based data structures.
 * *Suffix arrays* and *suffix trees* are powerful for advanced text processing tasks like pattern matching, longest common substring, and text compression.
 * *String interning* (pooling identical strings) can save memory and speed up equality checks in languages like Java, but overuse can increase GC pressure.
 * For *case-insensitive comparisons*, normalize strings first (e.g., `.lower()` in Python, `.toLowerCase()` in Java), but remember locale-specific rules (e.g., Turkish dotted/dotless "i").
