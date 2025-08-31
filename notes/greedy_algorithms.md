@@ -725,23 +725,23 @@ $$
 A:0.40,\quad B:0.20,\quad C:0.20,\quad D:0.10,\quad E:0.10.
 $$
 
-A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths \$L\_A,\dots,L\_E\$, plus a concrete codebook. (There can be multiple optimal codebooks when there are ties in frequencies; their **lengths** agree, though the exact bitstrings may differ.)
+A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L\_A,\dots,L\_E$, plus a concrete codebook. (There can be multiple optimal codebooks when there are ties in frequencies; their **lengths** agree, though the exact bitstrings may differ.)
 
 **Baseline**
 
-One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing \$\sum f\_i,L\_i\$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length \$\lceil \log\_2 5\rceil=3\$. That fixed-length code has \$\mathbb{E}\[L]=3\$.
+One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum f\_i,L\_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log\_2 5\rceil=3$. That fixed-length code has $\mathbb{E}\[L]=3$.
 
 **Greedy Approach**
 
-Huffman’s rule repeats one tiny step: always merge the two least frequent items. When you merge two “symbols” with weights \$p\$ and \$q\$, you create a parent of weight \$p+q\$. **Why does this change the objective by exactly \$p+q\$?** Every leaf in those two subtrees increases its depth (and thus its code length) by \$1\$, so the total increase in \$\sum f\_i L\_i\$ is \$\sum\_{\ell\in\text{subtrees}} f\_\ell\cdot 1=(p+q)\$ by definition of \$p\$ and \$q\$. Summing over all merges yields the final cost:
+Huffman’s rule repeats one tiny step: always merge the two least frequent items. When you merge two “symbols” with weights $p$ and $q$, you create a parent of weight $p+q$. **Why does this change the objective by exactly $p+q$?** Every leaf in those two subtrees increases its depth (and thus its code length) by $1$, so the total increase in $\sum f\_i L\_i$ is $\sum\_{\ell\in\text{subtrees}} f\_\ell\cdot 1=(p+q)$ by definition of $p$ and $q$. Summing over all merges yields the final cost:
 
 $$
 \mathbb{E}[L]=\sum_{\text{merges}} (p+q)=\sum_{\text{internal nodes}} \text{weight}.
 $$
 
-**Why is the greedy choice optimal?** In an optimal tree the two deepest leaves must be siblings; if not, pairing them to be siblings never increases any other depth and strictly reduces cost whenever a heavier symbol is deeper than a lighter one (an **exchange argument**: swapping depths changes the cost by \$f\_{\text{heavy}}-f\_{\text{light}}>0\$ in our favor). Collapsing those siblings into a single pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof. (Ties can be broken arbitrarily; all tie-breaks achieve the same minimum \$\mathbb{E}\[L]\$.)
+**Why is the greedy choice optimal?** In an optimal tree the two deepest leaves must be siblings; if not, pairing them to be siblings never increases any other depth and strictly reduces cost whenever a heavier symbol is deeper than a lighter one (an **exchange argument**: swapping depths changes the cost by $f\_{\text{heavy}}-f\_{\text{light}}>0$ in our favor). Collapsing those siblings into a single pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof. (Ties can be broken arbitrarily; all tie-breaks achieve the same minimum $\mathbb{E}\[L]$.)
 
-Start with the multiset \${0.40, 0.20, 0.20, 0.10, 0.10}\$. At each line, merge the two smallest weights and add their sum to the running cost.
+Start with the multiset ${0.40, 0.20, 0.20, 0.10, 0.10}$. At each line, merge the two smallest weights and add their sum to the running cost.
 
 ```
 1) merge 0.10 + 0.10 → 0.20        cost += 0.20   (total 0.20)
@@ -757,14 +757,14 @@ Start with the multiset \${0.40, 0.20, 0.20, 0.10, 0.10}\$. At each line, merge 
    multiset becomes {1.00}  (done)
 ```
 
-So the optimal expected length is \$\boxed{\mathbb{E}\[L]=2.20}\$ bits per symbol. This already beats the naive fixed-length baseline \$3\$. It also matches the information-theoretic bound \$H(f)\le \mathbb{E}\[L]\<H(f)+1\$, since the entropy here is \$H\approx 2.1219\$.
+So the optimal expected length is $\boxed{\mathbb{E}\[L]=2.20}$ bits per symbol. This already beats the naive fixed-length baseline $3$. It also matches the information-theoretic bound $H(f)\le \mathbb{E}\[L]\<H(f)+1$, since the entropy here is $H\approx 2.1219$.
 
 Now assign actual lengths. Record who merged with whom:
 
-* Step 1 merges \$D(0.10)\$ and \$E(0.10)\$ → those two become siblings.
-* Step 2 merges \$B(0.20)\$ and \$C(0.20)\$ → those two become siblings.
-* Step 3 merges the pair \$D!E(0.20)\$ with \$A(0.40)\$.
-* Step 4 merges the pair from step 3 with the pair \$B!C(0.40)\$.
+* Step 1 merges $D(0.10)$ and $E(0.10)$ → those two become siblings.
+* Step 2 merges $B(0.20)$ and $C(0.20)$ → those two become siblings.
+* Step 3 merges the pair $D!E(0.20)$ with $A(0.40)$.
+* Step 4 merges the pair from step 3 with the pair $B!C(0.40)$.
 
 Depths follow directly (each merge adds one level to its members):
 
@@ -772,7 +772,7 @@ $$
 L_A=2,\quad L_B=L_C=2,\quad L_D=L_E=3.
 $$
 
-Check the Kraft sum \$3\cdot 2^{-2}+2\cdot 2^{-3}=3/4+1/4=1\$ and the cost \$0.4\cdot2+0.2\cdot2+0.2\cdot2+0.1\cdot3+0.1\cdot3=2.2\$.
+Check the Kraft sum $3\cdot 2^{-2}+2\cdot 2^{-3}=3/4+1/4=1$ and the cost $0.4\cdot2+0.2\cdot2+0.2\cdot2+0.1\cdot3+0.1\cdot3=2.2$.
 
 A tidy tree (weights shown for clarity):
 
@@ -790,15 +790,15 @@ A tidy tree (weights shown for clarity):
 
 One concrete codebook arises by reading left edges as 0 and right edges as 1 (the left/right choice is arbitrary; flipping all bits in a subtree yields an equivalent optimal code):
 
-* \$A \mapsto 00\$
-* \$B \mapsto 10\$
-* \$C \mapsto 11\$
-* \$D \mapsto 010\$
-* \$E \mapsto 011\$
+* $A \mapsto 00$
+* $B \mapsto 10$
+* $C \mapsto 11$
+* $D \mapsto 010$
+* $E \mapsto 011$
 
-You can verify the prefix property immediately and recompute \$\mathbb{E}\[L]\$ from these lengths to get \$2.20\$ again. (From these lengths you can also construct the **canonical Huffman code**, which orders codewords lexicographically—useful for compactly storing the codebook.)
+You can verify the prefix property immediately and recompute $\mathbb{E}\[L]$ from these lengths to get $2.20$ again. (From these lengths you can also construct the **canonical Huffman code**, which orders codewords lexicographically—useful for compactly storing the codebook.)
 
 *Complexity*
 
-* Time: \$O(k \log k)\$ using a min-heap over \$k\$ symbol frequencies (each of the \$k-1\$ merges performs two extractions and one insertion).
-* Space: \$O(k)\$ for the heap and \$O(k)\$ for the resulting tree (plus \$O(k)\$ for an optional map from symbols to codewords).
+* Time: $O(k \log k)$ using a min-heap over $k$ symbol frequencies (each of the $k-1$ merges performs two extractions and one insertion).
+* Space: $O(k)$ for the heap and $O(k)$ for the resulting tree (plus $O(k)$ for an optional map from symbols to codewords).
