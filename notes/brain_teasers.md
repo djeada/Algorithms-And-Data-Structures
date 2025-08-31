@@ -154,7 +154,7 @@ V. *Minimum Spanning Trees (MST)*:
 
 VI. *Network Flow Algorithms*:
 
-* In capacity networks, iterating augmenting paths with the *Ford–Fulkerson method* increases flow until none remain, whereas treating edges independently leaves throughput unused; for example, pushing more water through a pipe system.
+* In capacity networks, iterating augmenting paths with the *Ford-Fulkerson method* increases flow until none remain, whereas treating edges independently leaves throughput unused; for example, pushing more water through a pipe system.
 * To control search effort, adopting *Edmonds–Karp* chooses shortest augmenting paths by BFS, whereas arbitrary choices may require many iterations; for example, allocating bandwidth across shared links.
 
 VII. *Other Important Concepts*:
