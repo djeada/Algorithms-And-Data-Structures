@@ -177,8 +177,7 @@ Sorted! ✅
 
 **Optimizations**
 
-* **Early Exit**: If in a full pass **no swaps occur**, the array is already sorted, and the algorithm can terminate early.
-* This makes Bubble Sort’s **best case** much faster (\$O(n)\$).
+* This makes Bubble Sort’s **best case** much faster ($O(n)$).
 
 **Stability**
 
