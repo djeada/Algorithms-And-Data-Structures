@@ -709,13 +709,13 @@ return order, Lmax
 
 ### Huffman coding
 
-You have symbols that occur with known frequencies \$f\_i>0\$ and \$\sum\_i f\_i=1\$ (if you start with counts, first normalize by their total). The goal is to assign each symbol a binary codeword so that no codeword is a prefix of another (a **prefix code**, i.e., uniquely decodable without separators), and the average length
+You have symbols that occur with known frequencies $f_i>0$ and $\sum_i f_i=1$ (if you start with counts, first normalize by their total). The goal is to assign each symbol a binary codeword so that no codeword is a prefix of another (a **prefix code**, i.e., uniquely decodable without separators), and the average length
 
 $$
 \mathbb{E}[L]=\sum_i f_i\,L_i
 $$
 
-is as small as possible. Prefix codes correspond exactly to **full binary trees** (every internal node has two children) whose leaves are the symbols and whose leaf depths equal the codeword lengths \$L\_i\$. The **Kraft inequality** \$\sum\_i 2^{-L\_i}\le 1\$ characterizes feasibility; equality holds for full trees (so an optimal prefix code “fills” the inequality).
+is as small as possible. Prefix codes correspond exactly to **full binary trees** (every internal node has two children) whose leaves are the symbols and whose leaf depths equal the codeword lengths $L_i$. The **Kraft inequality** $\sum_i 2^{-L_i}\le 1$ characterizes feasibility; equality holds for full trees (so an optimal prefix code “fills” the inequality).
 
 **Example inputs and outputs**
 
