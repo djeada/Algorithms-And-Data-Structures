@@ -103,8 +103,6 @@ dc8 = [-1, 0, 1,-1, 1,-1, 0, 1]
 	└─────────────────┘
 ```
 
-Here’s a cleaned-up, MathJax-friendly version you can paste in:
-
 ### Basic Operations (Building Blocks)
 
 #### Transpose
