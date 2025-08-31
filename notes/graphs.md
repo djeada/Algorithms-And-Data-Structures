@@ -56,21 +56,29 @@ Graph theory has its own language, full of terms that make it easier to talk abo
 
 ### Representation of Graphs in Computer Memory
 
-Graphs, with their versatile applications in numerous domains, necessitate efficient storage and manipulation mechanisms in computer memory. The choice of representation often depends on the graph's characteristics, such as sparsity, and the specific operations to be performed. Among the various methods available, the adjacency matrix and the adjacency list are the most prevalent.
+Graphs, with their versatile applications in numerous domains, necessitate efficient storage and manipulation mechanisms in computer memory. The choice of representation often depends on the graph's characteristics (e.g., dense vs. sparse, directed vs. undirected, weighted vs. unweighted) and the specific operations to be performed. Among the various methods available, the adjacency matrix and the adjacency list are the most prevalent.
 
 #### Adjacency Matrix
 
-An adjacency matrix represents a graph $G$ as a two-dimensional matrix. Given $V$ vertices, it utilizes a $V \times V$ matrix $A$. The rows and columns correspond to the graph's vertices, and each cell $A_{ij}$ holds:
+An adjacency matrix represents a graph $G$ with $V$ vertices as a two-dimensional matrix $A$ of size $V \times V$. The rows and columns correspond to vertices, and each cell $A_{ij}$ holds:
 
-- `1` if there is an edge between vertex $i$ and vertex $j$
-- `0` if no such edge exists
+* `1` if there is an edge between vertex $i$ and vertex $j$ (or specifically $i \to j$ in a directed graph)
+* `0` if no such edge exists
+* For weighted graphs, $A_{ij}$ contains the **weight** of the edge; often `0` or `∞` (or `None`) indicates “no edge”
 
-For graphs with edge weights, $A_{ij}$ contains the weight of the edge between vertices $i$ and $j$.
+**Same graph used throughout (undirected 4-cycle A–B–C–D–A):**
 
-Example:
+```
+        (A)------(B)
+         |        |
+         |        |
+        (D)------(C)
+```
+
+**Matrix (table form):**
 
 |   | A | B | C | D |
-|---|---|---|---|---|
+| - | - | - | - | - |
 | A | 0 | 1 | 0 | 1 |
 | B | 1 | 0 | 1 | 0 |
 | C | 0 | 1 | 0 | 1 |
@@ -78,21 +86,55 @@ Example:
 
 Here, the matrix indicates a graph with vertices A to D. For instance, vertex A connects with vertices B and D, hence the respective 1s in the matrix.
 
-**Benefits**:
+**Matrix (large ASCII layout):**
 
-- Fixed-time ( $O(1)$ ) edge existence checks.
-- Particularly suitable for dense graphs, where the edge-to-vertex ratio is high.
+```
+            Columns →
+          A   B   C   D
+        +---+---+---+---+
+Row  A | 0 | 1 | 0 | 1 |
+↓   B | 1 | 0 | 1 | 0 |
+    C | 0 | 1 | 0 | 1 |
+    D | 1 | 0 | 1 | 0 |
+        +---+---+---+---+
+```
 
-**Drawbacks**:
+**Notes & Variants**
 
-- Consumes more space for sparse graphs.
-- Traversing neighbors can be slower due to the need to check all vertices.
+* When an *undirected graph* is represented, the adjacency matrix is symmetric because the connection from node $i$ to node $j$ also implies a connection from node $j$ to node $i$; if this property is omitted, the matrix will misrepresent mutual relationships, such as a road existing in both directions between two cities.
+* In the case of a *directed graph*, the adjacency matrix does not need to be symmetric since an edge from node $i$ to node $j$ does not guarantee a reverse edge; without this rule, one might incorrectly assume bidirectional links, such as mistakenly treating a one-way street as two-way.
+* A *self-loop* appears as a nonzero entry on the diagonal of the adjacency matrix, indicating that a node is connected to itself; if ignored, the representation will overlook scenarios like a website containing a hyperlink to its own homepage.
+
+**Benefits**
+
+* An *edge existence check* in an adjacency matrix takes constant time $O(1)$ because the presence of an edge is determined by directly inspecting a single cell; if this property is absent, the lookup could require scanning a list, as in adjacency list representations where finding whether two cities are directly connected may take longer.
+* With *simple, compact indexing*, the adjacency matrix aligns well with array-based structures, which makes it helpful for GPU optimizations or bitset operations; without this feature, algorithms relying on linear algebra techniques, such as computing paths with matrix multiplication, become less efficient.
+
+**Drawbacks**
+
+* The *space* requirement of an adjacency matrix is always $O(V^2)$, meaning memory usage grows with the square of the number of vertices even if only a few edges exist; if this property is overlooked, sparse networks such as social graphs with millions of users but relatively few connections will be stored inefficiently.
+* For *neighbor iteration*, each vertex requires $O(V)$ time because the entire row of the matrix must be scanned to identify adjacent nodes; without recognizing this cost, tasks like finding all friends of a single user in a large social network could become unnecessarily slow.
+
+**Common Operations (Adjacency Matrix)**
+
+| Operation                          | Time     |
+| ---------------------------------- | -------- |
+| Check if edge $u\leftrightarrow v$ | $O(1)$   |
+| Add/remove edge                    | $O(1)$   |
+| Iterate neighbors of $u$           | $O(V)$   |
+| Compute degree of $u$ (undirected) | $O(V)$   |
+| Traverse all edges                 | $O(V^2)$ |
+
+**Space Tips**
+
+* Using a *boolean or bitset matrix* allows each adjacency entry to be stored in just one bit, which reduces memory consumption by a factor of eight compared to storing each entry as a byte; if this method is not applied, representing even moderately sized graphs, such as a network of 10,000 nodes, can require far more storage than necessary.
+* The approach is most useful when the graph is *dense*, the number of vertices is relatively small, or constant-time edge queries are the primary operation; without these conditions, such as in a sparse graph with millions of vertices, the $V^2$ bit requirement remains wasteful and alternative representations like adjacency lists become more beneficial.
 
 #### Adjacency List
 
-An adjacency list uses a collection (often an array or a linked list) to catalog the neighbors of each vertex. Each vertex points to its own list, enumerating its direct neighbors.
+An adjacency list stores, for each vertex, the list of its neighbors. It’s usually implemented as an array/vector of lists (or vectors), hash sets, or linked structures. For weighted graphs, each neighbor entry also stores the weight.
 
-Example:
+**Same graph (A–B–C–D–A) as lists:**
 
 ```
 A -> [B, D]
@@ -101,96 +143,168 @@ C -> [B, D]
 D -> [A, C]
 ```
 
-This list reflects the same graph as our matrix example. Vertex A's neighbors, for instance, are B and D.
+**“In-memory” view (array of heads + per-vertex chains):**
 
-**Benefits**:
+```
+Vertices (index) →   0     1     2     3
+Names              [ A ] [ B ] [ C ] [ D ]
+                     |     |     |     |
+                     v     v     v     v
+A-list:  head -> [B] -> [D] -> NULL
+B-list:  head -> [A] -> [C] -> NULL
+C-list:  head -> [B] -> [D] -> NULL
+D-list:  head -> [A] -> [C] -> NULL
+```
 
-- Space-efficient for sparse graphs, where edges are relatively fewer.
-- Facilitates faster traversal of a vertex's neighbors since the direct neighbors are listed without extraneous checks.
+**Variants & Notes**
 
-**Drawbacks**:
+* In an *undirected graph* stored as adjacency lists, each edge is represented twice—once in the list of each endpoint—so that both directions can be traversed easily; if this duplication is omitted, traversing from one node to its neighbor may be possible in one direction but not in the other, as with a friendship relation that should be mutual but is stored only once.
+* For a *directed graph*, only out-neighbors are recorded in each vertex’s list, meaning that edges can be followed in their given direction; without a separate structure for in-neighbors, tasks like finding all users who link to a webpage require inefficient scanning of every adjacency list.
+* In a *weighted graph*, each adjacency list entry stores both the neighbor and the associated weight, such as $(\text{destination}, \text{distance})$; if weights are not included, algorithms like Dijkstra’s shortest path cannot be applied correctly.
+* The *order of neighbors* in adjacency lists may be arbitrary, though keeping them sorted allows faster checks for membership; if left unsorted, testing whether two people are directly connected in a social network could require scanning the entire list rather than performing a quicker search.
 
-- Edge existence checks can take up to $O(V)$ time in the worst case.
-- Potentially consumes more space for dense graphs.
+**Benefits**
+
+* The representation is *space-efficient for sparse graphs* because it requires $O(V+E)$ storage, growing only with the number of vertices and edges; without this property, a graph with millions of vertices but relatively few edges, such as a road network, would consume far more memory if stored as a dense matrix.
+* For *neighbor iteration*, the time cost is $O(\deg(u))$, since only the actual neighbors of vertex $u$ are examined; if this benefit is absent, each query would need to scan through all possible vertices, as happens in adjacency matrices when identifying a node’s connections.
+* In *edge traversals and searches*, adjacency lists support breadth-first search and depth-first search efficiently on sparse graphs because only existing edges are processed; without this design, traversals would involve wasted checks on non-edges, making exploration of large but sparsely connected networks, like airline routes, much slower.
+
+**Drawbacks**
+
+* An *edge existence check* in adjacency lists requires $O(\deg(u))$ time in the worst case because the entire neighbor list may need to be scanned; if a hash set is used for each vertex, the expected time improves to $O(1)$, though at the cost of extra memory and overhead, as seen in fast membership tests within large social networks.
+* With respect to *cache locality*, adjacency lists often rely on pointers or scattered memory, which reduces their efficiency on modern hardware; without this drawback, as in dense matrix storage, sequential memory access patterns make repeated operations such as matrix multiplication more beneficial.
+
+**Common Operations (Adjacency List)**
+
+| Operation                          | Time (typical)                              |
+| ---------------------------------- | ------------------------------------------- |
+| Check if edge $u\leftrightarrow v$ | $O(\deg(u))$ (or expected $O(1)$ with hash) |
+| Add edge                           | Amortized $O(1)$ (append to list(s))        |
+| Remove edge                        | $O(\deg(u))$ (find & delete)                |
+| Iterate neighbors of $u$           | $O(\deg(u))$                                |
+| Traverse all edges                 | $O(V + E)$                                  |
 
 The choice between these (and other) representations often depends on the graph's characteristics and the specific tasks or operations envisioned.
 
+* Choosing an *adjacency matrix* is helpful when the graph is dense, the number of vertices is moderate, and constant-time edge queries or linear-algebra formulations are beneficial; if this choice is ignored, operations such as repeatedly checking flight connections in a fully connected air network may become slower or harder to express mathematically.
+* Opting for an *adjacency list* is useful when the graph is sparse or when neighbor traversal dominates, as in breadth-first search or shortest-path algorithms; without this structure, exploring a large but lightly connected road network would waste time scanning nonexistent edges.
+
+**Hybrids/Alternatives:**
+
+* With *CSR/CSC (Compressed Sparse Row/Column)* formats, all neighbors of a vertex are stored contiguously in memory, which improves cache locality and enables fast traversals; without this layout, as in basic pointer-based adjacency lists, high-performance analytics on graphs like web link networks would suffer from slower memory access.
+* An *edge list* stores edges simply as $(u,v)$ pairs, making it convenient for graph input, output, and algorithms like Kruskal’s minimum spanning tree; if used for queries such as checking whether two nodes are adjacent, the lack of structure forces scanning the entire list, which becomes inefficient in large graphs.
+* In *hash-based adjacency* structures, each vertex’s neighbor set is managed as a hash table, enabling expected $O(1)$ membership tests; without this tradeoff, checking connections in dense social networks requires linear scans, while the hash-based design accelerates lookups at the cost of extra memory.
+
 ### Planarity
 
-Planarity examines whether a graph can be drawn on a flat surface (a plane) without any of its edges crossing. This idea holds significant importance in areas such as circuit design, urban planning, and geography.
+**Planarity** asks: can a graph be drawn on a flat plane so that edges only meet at their endpoints (no crossings)?
 
-#### What is a Planar Graph?
+Why it matters: layouts of circuits, road networks, maps, and data visualizations often rely on planar drawings.
 
-A graph is considered **planar** if there exists a representation (also called a drawing) of it on a two-dimensional plane where its edges intersect only at their vertices and nowhere else. Even if a graph is initially drawn with overlaps or crossings, it may still be planar if it is possible to **redraw** (or **rearrange**) it so that no edges intersect in the interior of the drawing.
+#### What is a planar graph?
 
-An important theoretical result related to planarity is **Kuratowski’s Theorem**, which states that a graph is planar if and only if it does not contain a subgraph that is a subdivision of either $K_5$ (the complete graph on five vertices) or $K_{3,3}$ (the complete bipartite graph on six vertices, partitioned into sets of three).  
+A graph is **planar** if it has **some** drawing in the plane with **no edge crossings**. A messy drawing with crossings doesn’t disqualify it—if you can **redraw** it without crossings, it’s planar.
 
-#### Planar Embedding
+* A crossing-free drawing of a planar graph is called a **planar embedding** (or **plane graph** once embedded).
+* In a planar embedding, the plane is divided into **faces** (regions), including the unbounded **outer face**.
 
-A **planar embedding** refers to a specific way of drawing a graph on a plane so that none of its edges cross each other in the interior. If such a crossing-free drawing exists, the graph is planar. A related fact is **Euler’s Formula** for planar graphs:
+**Euler’s Formula (connected planar graphs):**
 
-$$|V| - |E| + |F| = 2$$
+$$
+|V| - |E| + |F| = 2 \quad
+\text{(for \(c\) connected components: } |V|-|E|+|F|=1+c)
+$$
 
-where:
+#### Kuratowski’s & Wagner’s characterizations
 
-- $|V|$ is the number of vertices,
-- $|E|$ is the number of edges,
-- $|F|$ is the number of faces (including the "outer" infinite face).
+* According to *Kuratowski’s Theorem*, a graph is planar if and only if it does not contain a subgraph that is a subdivision of $K_5$ or $K_{3,3}$; if this condition is not respected, as in a network with five nodes all mutually connected, the graph cannot be drawn on a plane without edge crossings.
+* By *Wagner’s Theorem*, a graph is planar if and only if it has no $K_5$ or $K_{3,3}$ minor, meaning such structures cannot be formed through edge deletions, vertex deletions, or edge contractions; without ruling out these minors, a graph like the complete bipartite structure of three stations each linked to three others cannot be embedded in the plane without overlaps.
+
+These are equivalent “forbidden pattern” views.
+
+#### Handy planar edge bounds (quick tests)
+
+For a **simple** planar graph with $|V|\ge 3$:
+
+* $|E| \le 3|V| - 6$.
+* If the graph is **bipartite**, then $|E| \le 2|V| - 4$.
+
+These give fast non-planarity proofs:
+
+* $K_5$: $|V|=5, |E|=10 > 3\cdot5-6=9$ ⇒ **non-planar**.
+* $K_{3,3}$: $|V|=6, |E|=9 > 2\cdot6-4=8$ ⇒ **non-planar**.
 
 #### Examples
 
-I. **Cycle Graphs**  
+**I. Cycle graphs $C_n$ (always planar)**
 
-Simple cycle graphs (triangles, squares, pentagons, hexagons, etc.) are planar because you can easily draw them without any edges crossing. In the square cycle graph $C_4$ example below, there are no intersecting edges:
-
-```
-A-----B
-|     |
-C-----D
-```
-
-II. **Complete Graph with Four Vertices ($K_4$)**
-
-This graph has every vertex connected to every other vertex. Despite having 6 edges, $K_4$ is planar. Its planar drawing can resemble a tetrahedron (triangular pyramid) flattened onto a plane:
+A 4-cycle $C_4$:
 
 ```
-   A
-  / \
- B---C
+A───B
+│   │
+D───C
+```
+
+No crossings; faces: 2 (inside + outside).
+
+**II. Complete graph on four vertices $K_4$ (planar)**
+
+A planar embedding places one vertex inside a triangle:
+
+```
+    A
+   / \
+  B───C
+   \ /
+    D
+```
+
+All edges meet only at vertices; no crossings.
+
+**III. Complete graph on five vertices $K_5$ (non-planar)**
+
+No drawing avoids crossings. Even a “best effort” forces at least one:
+
+```
+A───B
+│╲ ╱│
+│ ╳ │   (some crossing is unavoidable)
+│╱ ╲│
+D───C
   \ /
-   D
-```
-
-III. **Complete Graph with Five Vertices ($K_5$)**
-
-$K_5$ has every one of its five vertices connected to the other four, making a total of 10 edges. This graph is **non-planar**: no matter how you try to arrange the vertices and edges, there will always be at least one pair of edges that must cross. A rough sketch illustrating its inherent crossing is shown below:
-
-```
-   A
-  /|\
- / | \
-B--+--C
- \ | /
-  \|/
-   D
-   |
    E
 ```
 
-Attempting to avoid one crossing in $K_5$ inevitably forces another crossing elsewhere, confirming its non-planarity.
+The edge bound $10>9$ (above) certifies non-planarity.
 
-#### Strategies for Assessing Planarity
+**IV. Complete bipartite $K_{3,3}$ (non-planar)**
 
-- The **planarity** of a graph refers to whether it can be drawn on a flat surface without any edges crossing each other.
-- **Small graphs** can be tested for planarity by manually rearranging their vertices and edges to check if a crossing-free drawing is possible.
-- **Kuratowski's theorem** states that a graph is planar if it does not contain a subgraph that can be transformed into $K_5$ (a graph with five vertices all connected to each other) or $K_{3,3}$ (a graph with two groups of three vertices, where every vertex in one group connects to every vertex in the other).
-- **$K_5$** is a complete graph with five vertices where every pair of vertices has a direct edge connecting them.
-- **$K_{3,3}$** is a bipartite graph where two sets of three vertices are connected such that each vertex in the first set is connected to all vertices in the second set, with no edges within the same set.
-- **Wagner’s theorem** provides an alternative way to determine planarity, stating that a graph is planar if it does not have $K_5$ or $K_{3,3}$ as a "minor." A minor is a smaller graph formed by deleting edges, deleting vertices, or merging connected vertices.
-- For **larger graphs**, manual testing becomes impractical, and planarity algorithms are often used instead.
-- The **Hopcroft-Tarjan algorithm** is a linear-time method for testing planarity. It uses depth-first search to efficiently decide if a graph can be drawn without crossing edges.
-- The **Boyer-Myrvold algorithm** is another linear-time approach that tests planarity and can also provide an embedding of the graph (a specific way to draw it without crossings) if it is planar.
-- Both **algorithms** are widely used in computer science for applications that involve networks, circuit design, and data visualization, where planarity helps simplify complex structures.
+Two sets $\{u_1,u_2,u_3\}$ and $\{v_1,v_2,v_3\}$, all cross-set pairs connected:
+
+```
+u1   u2   u3
+│ \  │ \  │ \
+│  \ │  \ │  \
+v1───v2───v3  (many edges must cross in the plane)
+```
+
+The bipartite bound $9>8$ proves non-planarity.
+
+#### How to check planarity in practice
+
+**For small graphs**
+
+1. Rearrange vertices and try to remove crossings.
+2. Look for $K_5$ / $K_{3,3}$ (or their subdivisions/minors).
+3. Apply the edge bounds above for quick eliminations.
+
+**For large graphs (efficient algorithms)**
+
+* The *Hopcroft–Tarjan* algorithm uses a depth-first search approach to decide planarity in linear time; without such an efficient method, testing whether a circuit layout can be drawn without wire crossings would take longer on large graphs.
+* The *Boyer–Myrvold* algorithm also runs in linear time but, in addition to deciding planarity, it produces a planar embedding when one exists; if this feature is absent, as in Hopcroft–Tarjan, a separate procedure would be required to actually construct a drawing of a planar transportation network.
+
+Both are widely used in graph drawing, EDA (circuit layout), GIS, and network visualization.
 
 ### Traversals
 
@@ -228,13 +342,12 @@ To efficiently keep track of the traversal, BFS employs two primary data structu
 
 **Algorithm Steps**
 
-1. Begin from a starting vertex, \$i\$.
-2. Initialize `visited = {i}`, set `parent[i] = None`, optionally `dist[i] = 0`, and **enqueue** \$i\$ into `queue`.
-3. While `queue` is not empty:
-1. **Dequeue** the front vertex `u`.
-2. For **each neighbor** `v` of `u`:
-* If `v` is **not** in `visited`, add `v` to `visited`, set `parent[v] = u` (and `dist[v] = dist[u] + 1` if tracking distances), and **enqueue** `v`.
-4. Continue until the queue becomes empty.
+1. Pick a start vertex $i$.
+2. Set `visited = {i}`, `parent[i] = None`, optionally `dist[i] = 0`, and enqueue $i$ into `queue`.
+3. While `queue` is nonempty, repeat steps 4–5.
+4. Dequeue the front vertex `u`.
+5. For each neighbor `v` of `u`, if `v` is not in `visited`, add it to `visited`, set `parent[v] = u` (and `dist[v] = dist[u] + 1` if tracking), and enqueue `v`.
+6. Stop when the queue is empty.
 
 Marking nodes as **visited at the moment they are enqueued** (not when dequeued) is crucial: it prevents the same node from being enqueued multiple times in graphs with cycles or multiple incoming edges.
 
@@ -265,9 +378,9 @@ BFS(G, i):
 
 *Sanity notes:*
 
-* **Time:** $O(V + E)$ for a graph with $V$ vertices and $E$ edges (each vertex enqueued once; each edge considered once).
-* **Space:** $O(V)$ for the queue + visited (+ parent/dist if used).
-* BFS order can differ depending on **neighbor iteration order**.
+* The *time* complexity of breadth-first search is $O(V+E)$ because each vertex is enqueued once and each edge is examined once; if this property is overlooked, one might incorrectly assume that exploring a large social graph requires quadratic time rather than scaling efficiently with its size.
+* The *space* requirement is $O(V)$ since the algorithm maintains a queue and a visited array, with optional parent or distance arrays if needed; without accounting for this, applying BFS to a network of millions of nodes could be underestimated in memory cost.
+* The order in which BFS visits vertices depends on the *neighbor iteration order*, meaning that traversal results can vary between implementations; if this variation is not recognized, two runs on the same graph—such as exploring a road map—may appear inconsistent even though both are correct BFS traversals.
 
 **Example**
 
@@ -314,34 +427,20 @@ Shortest path A→E: backtrack E→C→A  ⇒  A - C - E
 
 **Applications**
 
-1. **Shortest paths in unweighted graphs.**
-   BFS computes the minimum number of edges from the source to every reachable node. Use the `parent` map to reconstruct actual paths.
-
-2. **Connected components (undirected graphs).**
-   Repeatedly run BFS from every unvisited vertex; each run discovers exactly one component.
-
-3. **Broadcast/propagation modeling.**
-   BFS mirrors “wavefront” spread (e.g., message fan-out, infection spread, multi-hop neighborhood queries).
-
-4. **Cycle detection (undirected graphs).**
-   During BFS, if you encounter a neighbor that is already **visited** and is **not** the parent of the current vertex, a cycle exists.
-   *Note:* For **directed graphs**, detecting cycles typically uses other techniques (e.g., DFS with recursion stack or Kahn’s algorithm on indegrees).
-
-5. **Bipartite testing.**
-   While BFS’ing, assign alternating “colors” by level; if you ever see an edge connecting the **same** color, the graph isn’t bipartite.
-
-6. **Multi-source searches.**
-   Initialize the queue with **several** starting nodes at once (all with `dist=0`). This solves “nearest facility” style problems efficiently.
-
-7. **Topological sorting via Kahn’s algorithm (DAGs).**
-   A BFS-like process over vertices of indegree 0 (using a queue) produces a valid topological order for directed acyclic graphs.
+* In *shortest path computation on unweighted graphs*, BFS finds the minimum number of edges from a source to all reachable nodes and allows path reconstruction via a parent map; without this approach, one might incorrectly use Dijkstra’s algorithm, which is slower for unweighted networks such as social connections.
+* For identifying *connected components in undirected graphs*, BFS is run repeatedly from unvisited vertices, with each traversal discovering one full component; without this method, components in a road map or friendship network may remain undetected.
+* When modeling *broadcast or propagation*, BFS naturally mirrors wavefront-like spreading, such as message distribution or infection spread; ignoring this property makes it harder to simulate multi-hop communication in networks.
+* During BFS-based *cycle detection in undirected graphs*, encountering a visited neighbor that is not the current vertex’s parent signals a cycle; without this check, cycles in structures like utility grids may be overlooked.
+* For *bipartite testing*, BFS alternates colors by level, and the appearance of an edge connecting same-colored nodes disproves bipartiteness; without this strategy, verifying whether a task-assignment graph can be split into two groups becomes more complicated.
+* In *multi-source searches*, initializing the queue with several start nodes at distance zero allows efficient nearest-facility queries, such as finding the closest hospital from multiple candidate sites; without this, repeated single-source BFS runs would be less efficient.
+* In *topological sorting of DAGs*, a BFS-like procedure processes vertices of indegree zero using a queue, producing a valid ordering; without this method, scheduling tasks with dependency constraints may require less efficient recursive DFS approaches.
 
 **Implementation**
 
-*Implementation tip:* For dense graphs or when memory locality matters, an adjacency **matrix** can be used, but the usual adjacency **list** representation is more space- and time-efficient for sparse graphs.
-
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/bfs)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bfs)
+
+*Implementation tip:* For dense graphs or when memory locality matters, an adjacency **matrix** can be used, but the usual adjacency **list** representation is more space- and time-efficient for sparse graphs.
 
 #### Depth-First Search (DFS)
 
@@ -360,13 +459,14 @@ To track the traversal efficiently, DFS typically uses:
 
 **Algorithm Steps**
 
-1. Begin at starting vertex $i$.
-2. Mark $i$ as **visited**, optionally set `parent[i] = None`, record `tin[i]`.
-3. For each neighbor $v$ of the current vertex $u$:
-
-   * If $v$ is **unvisited**, set `parent[v] = u` and **recurse** (or push onto a stack) into $v$.
-4. After all neighbors of $u$ are explored, record `tout[u]` and **backtrack** (return or pop).
-5. Repeat for any remaining unvisited vertices (to cover disconnected graphs).
+1. Pick a start vertex $i$.
+2. Initialize `visited[v]=False` for all $v$; optionally set `parent[v]=None`; set a global timer `t=0`.
+3. Start a DFS from $i$ (recursive or with an explicit stack).
+4. On entry to a vertex $u$: set `visited[u]=True`, record `tin[u]=t++` (and keep `parent[u]=None` if $u=i$).
+5. Scan neighbors $v$ of $u$; whenever `visited[v]=False`, set `parent[v]=u` and visit $v$ (recurse/push), then resume scanning $u$’s neighbors.
+6. After all neighbors of $u$ are processed, record `tout[u]=t++` and backtrack (return or pop).
+7. When the DFS from $i$ finishes, if any vertex remains unvisited, choose one and repeat steps 4–6 to cover disconnected components.
+8. Stop when no unvisited vertices remain.
 
 Mark vertices **when first discovered** (on entry/push) to prevent infinite loops in cyclic graphs.
 
@@ -430,8 +530,8 @@ DFS_iter(G, i):
 
 *Sanity notes:*
 
-* **Time:** $O(V + E)$ — each vertex/edge handled a constant number of times.
-* **Space:** $O(V)$ — visited + recursion/stack. Worst-case recursion depth can reach $V$; use the iterative form on very deep graphs.
+* The *time* complexity of DFS is $O(V+E)$ because every vertex and edge is processed a constant number of times; if this property is ignored, one might incorrectly assume exponential growth when analyzing networks like citation graphs.
+* The *space* complexity is $O(V)$, coming from the visited array and the recursion stack (or an explicit stack in iterative form); without recognizing this, applying DFS to very deep structures such as long linked lists could risk stack overflow unless the iterative approach is used.
 
 **Example**
 
@@ -516,30 +616,14 @@ A
 
 **Applications**
 
-1. **Path existence & reconstruction.**
-   Use `parent` to backtrack from a target to the start after a DFS that finds it.
-
-2. **Topological sorting (DAGs).**
-   Run DFS on a directed acyclic graph; the **reverse postorder** (vertices sorted by decreasing `tout`) is a valid topological order.
-
-3. **Cycle detection.**
-   *Undirected:* seeing a visited neighbor that isn’t the parent ⇒ cycle.
-   *Directed:* maintain states (`unvisited`, `in_stack`, `done`); encountering an edge to a vertex **in\_stack** (a back edge) ⇒ cycle.
-
-4. **Connected components (undirected).**
-   Run DFS from every unvisited node; each run discovers exactly one component.
-
-5. **Bridges & articulation points (cut vertices).**
-   Using DFS **low-link** values (`low[u] = min(tin[u], tin[v] over back edges, low of children)`), you can find edges whose removal disconnects the graph (bridges) and vertices whose removal increases components (articulation points).
-
-6. **Strongly Connected Components (SCCs, directed graphs).**
-   Tarjan’s (single-pass with a stack and low-link) or Kosaraju’s (two DFS passes) algorithms are built on DFS.
-
-7. **Backtracking & search in state spaces.**
-   Classic for maze solving, puzzles (N-Queens, Sudoku), and constraint satisfaction: DFS systematically explores choices and backtracks on dead ends.
-
-8. **Detecting and classifying edges (directed).**
-   With timestamps, classify edges as **tree**, **back**, **forward**, or **cross**—useful for reasoning about structure and correctness.
+* In *path existence and reconstruction*, DFS records parent links so that after reaching a target node, the path can be backtracked to the source; without this, finding an explicit route through a maze-like graph would require re-running the search.
+* For *topological sorting of DAGs*, running DFS and outputting vertices in reverse postorder yields a valid order; if this step is omitted, dependencies in workflows such as build systems cannot be properly sequenced.
+* During *cycle detection*, DFS in undirected graphs reports a cycle when a visited neighbor is not the parent, while in directed graphs the discovery of a back edge to an in-stack node reveals a cycle; without these checks, feedback loops in control systems or task dependencies may go unnoticed.
+* To identify *connected components in undirected graphs*, DFS is launched from every unvisited vertex, with each traversal discovering one component; without this method, clusters in social or biological networks remain hidden.
+* Using *low-link values* in DFS enables detection of bridges (edges whose removal disconnects the graph) and articulation points (vertices whose removal increases components); if these are not identified, critical links in communication or power networks may be overlooked.
+* In *strongly connected components* of directed graphs, algorithms like Tarjan’s and Kosaraju’s use DFS to group vertices where every node is reachable from every other; ignoring this method prevents reliable partitioning of web link graphs or citation networks.
+* For *backtracking and state-space search*, DFS systematically explores decision trees and reverses when hitting dead ends, as in solving puzzles like Sudoku or N-Queens; without DFS, these problems would be approached less efficiently with blind trial-and-error.
+* With *edge classification in directed graphs*, DFS timestamps allow edges to be labeled as tree, back, forward, or cross, which helps analyze structure and correctness; without this classification, reasoning about graph algorithms such as detecting cycles or proving properties becomes more difficult.
 
 **Implementation**
 
@@ -567,28 +651,22 @@ To efficiently keep track of the traversal, Dijkstra’s algorithm employs two p
 
 *Useful additions in practice:*
 
-* A **target-aware early stop**: if you only need the distance to a specific target, you can stop when that target is popped from the priority queue.
-* **Decrease-key or lazy insertion**: if the PQ doesn’t support decrease-key, push an updated entry and ignore popped stale ones by checking against `dist`.
-* Optional **`pred` lists** for counting shortest paths or reconstructing multiple optimal routes.
+* A *target-aware early stop* allows Dijkstra’s algorithm to halt once the target vertex is extracted from the priority queue, saving work compared to continuing until all distances are finalized; without this optimization, computing the shortest route between two cities would require processing the entire network unnecessarily.
+* With *decrease-key or lazy insertion* strategies, priority queues that lack a decrease-key operation can still work by inserting updated entries and discarding outdated ones when popped; without this adjustment, distance updates in large road networks would be inefficient or require a more complex data structure.
+* Adding optional *predecessor lists* enables reconstruction of multiple optimal paths or counting the number of shortest routes; if these lists are not maintained, applications like enumerating all equally fast routes between transit stations cannot be supported.
 
 **Algorithm Steps**
 
-1. Begin from a starting vertex, \$i\$.
-
-2. Initialize `dist[i] = 0`, `parent[i] = None`; for all other vertices `v`, set `dist[v] = ∞`. Push \$i\$ into the min-priority queue keyed by `dist[i]`.
-
-3. While the priority queue is not empty:
-
-   1. **Extract** the vertex `u` with the **smallest** `dist[u]`.
-   2. If `u` is already finalized, continue; otherwise **finalize** `u` (add to `visited`/`finalized`).
-   3. For **each neighbor** `v` of `u` with edge weight `w(u,v) ≥ 0`:
-
-      * If `dist[u] + w(u,v) < dist[v]`, then **relax** the edge: set
-        `dist[v] = dist[u] + w(u,v)` and `parent[v] = u`, and **push** `v` into the PQ keyed by the new `dist[v]`.
-
-4. Continue until the queue becomes empty (all reachable vertices finalized) or until your **target** has been finalized (early stop).
-
-5. Reconstruct any shortest path by following `parent[·]` **backwards** from the target to the start.
+1. Pick a start vertex $i$.
+2. Set `dist[i] = 0` and `parent[i] = None`; for all other vertices $v \ne i$, set `dist[v] = ∞`.
+3. Push $i$ into a min-priority queue keyed by `dist[·]`.
+4. While the priority queue is nonempty, repeat steps 5–8.
+5. Extract the vertex $u$ with the smallest `dist[u]`.
+6. If $u$ is already finalized, continue to step 4; otherwise mark $u$ as finalized.
+7. For each neighbor $v$ of $u$ with edge weight $w(u,v) \ge 0$, test whether `dist[u] + w(u,v) < dist[v]`.
+8. If true, set `dist[v] = dist[u] + w(u,v)`, set `parent[v] = u`, and push $v$ into the priority queue keyed by the new `dist[v]`.
+9. Stop when the queue is empty (all reachable vertices finalized) or, if you have a target, when that target is finalized.
+10. Reconstruct any shortest path by following `parent[·]` backward from the target to $i$.
 
 Vertices are **finalized when they are dequeued** (popped) from the priority queue. With **non-negative** weights, once a vertex is popped the recorded `dist` is **provably optimal**.
 
@@ -636,10 +714,10 @@ reconstruct(parent, t):
 
 *Sanity notes:*
 
-* **Time:** with a binary heap, \$O((V + E)\log V)\$; with a Fibonacci heap, \$O(E + V\log V)\$; with a plain array (no heap), \$O(V^2)\$.
-* **Space:** \$O(V)\$ for `dist`, `parent`, PQ bookkeeping.
-* **Preconditions:** All edge weights must be **\$\ge 0\$**. Negative edges invalidate correctness.
-* **Ordering:** Different neighbor iteration orders don’t affect correctness, only tie behavior/performance.
+* The *time* complexity of Dijkstra’s algorithm depends on the priority queue: $O((V+E)\log V)$ with a binary heap, $O(E+V\log V)$ with a Fibonacci heap, and $O(V^2)$ with a plain array; without this distinction, one might wrongly assume that all implementations scale equally on dense versus sparse road networks.
+* The *space* complexity is $O(V)$, needed to store distance values, parent pointers, and priority queue bookkeeping; if underestimated, running Dijkstra on very large graphs such as nationwide transit systems may exceed available memory.
+* The *precondition* is that all edge weights must be nonnegative, since the algorithm assumes distances only improve as edges are relaxed; if negative weights exist, as in certain financial models with losses, the computed paths can be incorrect and Bellman–Ford must be used instead.
+* In terms of *ordering*, the sequence in which neighbors are processed does not affect correctness, only the handling of ties and slight performance differences; without recognizing this, variations in output order between implementations might be mistakenly interpreted as errors.
 
 **Example**
 
@@ -702,13 +780,13 @@ Shortest path A→E: A → C → B → E  (total cost 4)
 
 **Applications**
 
-1. **Single-source shortest paths** on graphs with **non-negative** weights (roads, networks, transit).
-2. **Navigation/routing** with early stop: stop when the goal is popped to avoid extra work.
-3. **Network planning & QoS:** minimum latency/cost routing, bandwidth-weighted paths (when additive and non-negative).
-4. **As a building block:** A\* with $h \equiv 0$; **Johnson’s algorithm** (all-pairs on sparse graphs); **k-shortest paths** variants.
-5. **Multi-source Dijkstra:** seed the PQ with multiple starts at distance 0 (e.g., nearest facility / multi-sink problems).
-6. **Label-setting baseline** for comparing heuristics (A\*, ALT landmarks, contraction hierarchies).
-7. **Grid pathfinding with terrain costs** (non-negative cell costs) when no admissible heuristic is available.
+* In *single-source shortest paths* with non-negative edge weights, Dijkstra’s algorithm efficiently finds minimum-cost routes in settings like roads, communication networks, or transit systems; without it, travel times or costs could not be computed reliably when distances vary.
+* For *navigation and routing*, stopping the search as soon as the destination is extracted from the priority queue avoids unnecessary work; without this early stop, route planning in a road map continues exploring irrelevant regions of the network.
+* In *network planning and quality of service (QoS)*, Dijkstra selects minimum-latency or minimum-cost routes when weights are additive and non-negative; without this, designing efficient data or logistics paths becomes more error-prone.
+* As a *building block*, Dijkstra underlies algorithms like A\* (with zero heuristic), Johnson’s algorithm for all-pairs shortest paths in sparse graphs, and $k$-shortest path variants; without it, these higher-level methods would lack a reliable core procedure.
+* In *multi-source Dijkstra*, initializing the priority queue with several starting nodes at distance zero solves nearest-facility queries, such as finding the closest hospital; without this extension, repeated single-source runs would waste time.
+* As a *label-setting baseline*, Dijkstra provides the reference solution against which heuristics like A\*, ALT landmarks, or contraction hierarchies are compared; without this baseline, heuristic correctness and performance cannot be properly evaluated.
+* For *grid pathfinding with terrain costs*, Dijkstra handles non-negative cell costs when no admissible heuristic is available; without it, finding a least-effort path across weighted terrain would require less efficient exhaustive search.
 
 **Implementation**
 
@@ -716,8 +794,6 @@ Shortest path A→E: A → C → B → E  (total cost 4)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/dijkstra)
 
 *Implementation tip:* If your PQ has no decrease-key, **push duplicates** on improvement and, when popping a vertex, **skip it** if it’s already finalized or if the popped key doesn’t match `dist[u]`. This “lazy” approach is simple and fast in practice.
-
-#### Bellman-Ford Algorithm
 
 #### Bellman–Ford Algorithm
 
@@ -730,31 +806,18 @@ To efficiently keep track of the computation, Bellman–Ford employs two primary
 
 *Useful additions in practice:*
 
-* **Edge list**: iterate edges directly (fast and simple) even if your graph is stored as adjacency lists.
-* **Early exit**: stop as soon as a full pass makes **no updates**.
-* **Negative-cycle extraction**: if an update occurs on pass $V$, backtrack through `parent` to find a cycle.
-* **Reachability guard**: you can skip edges whose source has `dist[u] = ∞` (still unreached).
+* With an *edge list*, iterating directly over edges simplifies implementation and keeps updates fast, even if the graph is stored in adjacency lists; without this practice, repeatedly scanning adjacency structures adds unnecessary overhead in each relaxation pass.
+* Using an *early exit* allows termination once a full iteration over edges yields no updates, improving efficiency; without this check, the algorithm continues all $V-1$ passes even on graphs like road networks where distances stabilize early.
+* For *negative-cycle extraction*, if an update still occurs on the $V$-th pass, backtracking through parent links reveals a cycle; without this step, applications such as financial arbitrage detection cannot identify opportunities caused by negative cycles.
+* Adding a *reachability guard* skips edges from vertices with infinite distance, avoiding wasted work on unreached nodes; without this filter, the algorithm needlessly inspects irrelevant edges in disconnected parts of the graph.
 
 **Algorithm Steps**
 
-1. Begin from a starting vertex, $i$.
-
-2. Initialize `dist[i] = 0`, `parent[i] = None`; for all other vertices $v$, set `dist[v] = ∞`.
-
-3. Repeat **$V-1$ passes** (where $V$ is the number of vertices):
-
-   1. Set `changed = False`.
-   2. For **each directed edge** $(u,v,w)$ (weight $w$):
-
-      * If `dist[u] + w < dist[v]`, then **relax** the edge:
-        `dist[v] = dist[u] + w`, `parent[v] = u`, and set `changed = True`.
-   3. If `changed` is **False**, break early (all distances stabilized).
-
-4. **Negative-cycle detection** (optional but common):
-   For each edge $(u,v,w)$, if `dist[u] + w < dist[v]`, then a **negative cycle is reachable**.
-   *To extract a cycle:* follow `parent` from `v` **V times** to land inside the cycle; then keep following until you revisit a vertex, collecting the cycle.
-
-5. To get a shortest path to a target $t$ (if no negative cycle affects it), follow `parent[t]` backward to $i$.
+1. Pick a start vertex $i$.
+2. Set `dist[i] = 0` and `parent[i] = None`; for all other vertices $v \ne i$, set `dist[v] = ∞`.
+3. Do up to $V-1$ passes: in each pass, scan every directed edge $(u,v,w)$; if `dist[u] + w < dist[v]`, set `dist[v] = dist[u] + w` and `parent[v] = u`. If a full pass makes no changes, stop early.
+4. (Optional) Detect negative cycles: if any edge $(u,v,w)$ still satisfies `dist[u] + w < dist[v]`, a reachable negative cycle exists. To extract one, follow `parent` from $v$ for $V$ steps to enter the cycle, then continue until a vertex repeats, collecting the cycle.
+5. To get a shortest path to a target $t$ (when no relevant negative cycle exists), follow `parent[t]` backward to $i$.
 
 *Reference pseudocode (edge list):*
 
@@ -796,10 +859,10 @@ reconstruct(parent, t):
 
 *Sanity notes:*
 
-* **Time:** $O(VE)$ (each pass scans all edges; up to $V-1$ passes).
-* **Space:** $O(V)$ for `dist` and `parent`.
-* **Handles negative weights**; **detects** reachable negative cycles.
-* If a reachable **negative cycle** exists, true shortest paths to vertices it can reach are **undefined** (effectively $-\infty$).
+* The *time* complexity of Bellman–Ford is $O(VE)$ because each of the $V-1$ relaxation passes scans all edges; without this understanding, one might underestimate the cost of running it on dense graphs with many edges.
+* The *space* complexity is $O(V)$, needed for storing distance estimates and parent pointers; if this is not accounted for, memory use may be underestimated in large-scale applications such as road networks.
+* The algorithm *handles negative weights* correctly and can also *detect negative cycles* that are reachable from the source; without this feature, Dijkstra’s algorithm would produce incorrect results on graphs with negative edge costs.
+* When a reachable *negative cycle* exists, shortest paths to nodes that can be reached from it are undefined, effectively taking value $-\infty$; without recognizing this, results such as infinitely decreasing profit in arbitrage graphs would be misinterpreted as valid finite paths.
 
 **Example**
 
@@ -828,6 +891,7 @@ C → E (3)
 ```
 
 *Edges list:*
+
 `A→B(4), A→C(2), B→C(-1), B→D(2), C→B(1), C→D(5), C→E(3), D→E(-3)`
 
 *Relaxation trace (dist after each full pass; start A):*
@@ -867,11 +931,11 @@ Bellman–Ford would perform a $V$-th pass and still find an improvement (e.g., 
 
 **Applications**
 
-1. **Shortest paths with negative edges** (when Dijkstra/A\* don’t apply).
-2. **Arbitrage detection** in currency/markets by summing $\log$ weights along cycles.
-3. **Feasibility checks** in difference constraints (systems like $x_v - x_u \le w$).
-4. **Robust baseline** for verifying or initializing faster methods (e.g., Johnson’s algorithm for all-pairs).
-5. **Graphs with penalties/credits** where some transitions reduce accumulated cost.
+* In *shortest path problems with negative edges*, Bellman–Ford is applicable where Dijkstra or A\* fail, such as road networks with toll credits; without this method, these graphs cannot be handled correctly.
+* For *arbitrage detection* in currency or financial markets, converting exchange rates into $\log$ weights makes profit loops appear as negative cycles; without Bellman–Ford, such opportunities cannot be systematically identified.
+* In solving *difference constraints* of the form $x_v - x_u \leq w$, the algorithm checks feasibility by detecting whether any negative cycles exist; without this check, inconsistent scheduling or timing systems may go unnoticed.
+* As a *robust baseline*, Bellman–Ford verifies results of faster algorithms or initializes methods like Johnson’s for all-pairs shortest paths; without it, correctness guarantees in sparse-graph all-pairs problems would be weaker.
+* For *graphs with penalties or credits*, where some transitions decrease accumulated cost, Bellman–Ford models these adjustments accurately; without it, such systems—like transport discounts or energy recovery paths—cannot be represented properly.
 
 ##### Implementation
 
@@ -897,24 +961,22 @@ If $h$ is **admissible** (never overestimates) and **consistent** (triangle ineq
 
 **Core data structures**
 
-* **Open set**: min-priority queue keyed by $f$ (often called `open` or `frontier`).
-* **Closed set**: a set (or map) of nodes already expanded (finalized).
-* **`g` map**: best known cost-so-far to each node.
-* **`parent` map**: to reconstruct the path on success.
-* (Optional) **`h` cache** and a **tie-breaker** (e.g., prefer larger $g$ or smaller $h$ when $f$ ties).
+* The *open set* is a min-priority queue keyed by the evaluation function $f=g+h$, storing nodes pending expansion; without it, selecting the next most promising state in pathfinding would require inefficient linear scans.
+* The *closed set* contains nodes already expanded and finalized, preventing reprocessing; if omitted, the algorithm may revisit the same grid cells or graph states repeatedly, wasting time.
+* The *$g$ map* tracks the best known cost-so-far to each node, ensuring paths are only updated when improvements are found; without it, the algorithm cannot correctly accumulate and compare path costs.
+* The *parent map* stores predecessors so that a complete path can be reconstructed once the target is reached; if absent, the algorithm would output only a final distance without the actual route.
+* An optional *heuristic cache* and *tie-breaker* (such as preferring larger $g$ or smaller $h$ when $f$ ties) can improve efficiency and consistency; without these, the search may expand more nodes than necessary or return different paths under equivalent conditions.
 
 **Algorithm Steps**
 
-1. Initialize `open = {start}` with `g[start]=0`, `f[start]=h(start)`; `parent[start]=None`.
-2. While `open` is not empty:
-   a. Pop `u` with **smallest** `f(u)` from `open`.
-   b. If `u` is the **goal**, reconstruct the path via `parent` and return.
-   c. Add `u` to **closed**.
-   d. For each neighbor `v` of `u` with edge cost `w(u,v) ≥ 0`:
-
-   * `tentative = g[u] + w(u,v)`
-   * If `v` not in `g` or `tentative < g[v]`: update `parent[v]=u`, `g[v]=tentative`, `f[v]=g[v]+h(v)` and push `v` into `open` (even if it was there before with a worse key).
-3. If `open` empties without reaching the goal, no path exists.
+1. Put `start` in `open` (a min-priority queue by `f`); set `g[start]=0`, `f[start]=h(start)`, `parent[start]=None`; initialize `closed = ∅`.
+2. While `open` is nonempty, repeat steps 3–7.
+3. Pop the node `u` with the smallest `f(u)` from `open`.
+4. If `u` is the goal, reconstruct the path by following `parent` back to `start` and return it.
+5. Add `u` to `closed`.
+6. For each neighbor `v` of `u` with edge cost $w(u,v) \ge 0$, set `tentative = g[u] + w(u,v)`.
+7. If `v` not in `g` or `tentative < g[v]`, set `parent[v]=u`, `g[v]=tentative`, `f[v]=g[v]+h(v)`, and push `v` into `open` (even if it was already there with a worse key).
+8. If the loop ends because `open` is empty, no path exists.
 
 *Mark neighbors **when you enqueue them** (by storing their best `g`) to avoid duplicate work; with **consistent** $h$, any node popped from `open` is final and will not improve later.*
 
@@ -958,9 +1020,9 @@ reconstruct_path(parent, t):
 
 *Sanity notes:*
 
-* **Time:** Worst-case exponential; practically much faster with informative $h$.
-* **Space:** $O(V)$ for maps + PQ (A\* is memory-hungry).
-* **Special cases:** If $h \equiv 0$, A\* ≡ **Dijkstra**. If all edges cost 1 and $h \equiv 0$, it behaves like **BFS**.
+* The *time* complexity of A\* is worst-case exponential, though in practice it runs much faster when the heuristic $h$ provides useful guidance; without an informative heuristic, the search can expand nearly the entire graph, as in navigating a large grid without directional hints.
+* The *space* complexity is $O(V)$, covering the priority queue and bookkeeping maps, which makes A\* memory-intensive; without recognizing this, applications such as robotics pathfinding may exceed available memory on large maps.
+* In *special cases*, A\* reduces to Dijkstra’s algorithm when $h \equiv 0$, and further reduces to BFS when all edges have cost 1 and $h \equiv 0$; without this perspective, one might overlook how A\* generalizes these familiar shortest-path algorithms.
 
 **Visual walkthrough (grid with 4-neighborhood, Manhattan $h$)**
 
@@ -1023,53 +1085,50 @@ Step | Popped u | Inserted neighbors (v: g,h,f)                  | Note
 
 (Exact numbers depend on the specific grid and walls; shown for intuition.)
 
----
-
-### Heuristic design
+**Heuristic design**
 
 For **grids**:
 
-* **4-dir moves:** $h(n)=|x_n-x_g|+|y_n-y_g|$ (Manhattan).
-* **8-dir (diag cost √2):** **Octile**: $h=\Delta_{\max} + (\sqrt{2}-1)\Delta_{\min}$.
-* **Euclidean** when motion is continuous and diagonal is allowed.
+* *4-dir moves:* $h(n)=|x_n-x_g|+|y_n-y_g|$ (Manhattan).
+* *8-dir (diag cost √2):* **Octile**: $h=\Delta_{\max} + (\sqrt{2}-1)\Delta_{\min}$.
+* *Euclidean* when motion is continuous and diagonal is allowed.
 
 For **sliding puzzles (e.g., 8/15-puzzle)**:
 
-* **Misplaced tiles** (admissible, weak).
-* **Manhattan sum** (stronger).
-* **Linear conflict / pattern databases** (even stronger).
+**Misplaced tiles* (admissible, weak).
+* *Manhattan sum* (stronger).
+* *Linear conflict / pattern databases* (even stronger).
 
 **Admissible vs. consistent**
 
-* **Admissible:** $h(n) \leq h^\*(n)$ (true remaining cost). Guarantees optimality.
-* **Consistent (monotone):** $h(u) \le w(u,v) + h(v)$ for every edge.
-  Ensures $f$-values are nondecreasing along paths; once a node is popped, its `g` is final (no reopen).
+* An *admissible* heuristic satisfies $h(n) \leq h^*(n)$, meaning it never overestimates the true remaining cost, which guarantees that A\* finds an optimal path; without admissibility, the algorithm may return a suboptimal route, such as a longer-than-necessary driving path.
+* A *consistent (monotone)* heuristic obeys $h(u) \leq w(u,v) + h(v)$ for every edge, ensuring that $f$-values do not decrease along paths and that once a node is removed from the open set, its $g$-value is final; without consistency, nodes may need to be reopened, increasing complexity in searches like grid navigation.
 
 **Applications**
 
-1. **Pathfinding** in maps, games, robotics (shortest or least-risk routes).
-2. **Route planning** with road metrics (time, distance, tolls) and constraints.
-3. **Planning & scheduling** in AI as a general shortest-path in state spaces.
-4. **Puzzle solving** (8-puzzle, Sokoban variants) with domain-specific $h$.
-5. **Network optimization** where edge costs are nonnegative and heuristics exist.
+* In *pathfinding* for maps, games, and robotics, A\* computes shortest or least-risk routes by combining actual travel cost with heuristic guidance; without it, movement planning in virtual or physical environments becomes slower or less efficient.
+* For *route planning* with road metrics such as travel time, distance, or tolls, A\* incorporates these costs and constraints into its evaluation; without heuristic search, navigation systems must fall back to slower methods like plain Dijkstra.
+* In *planning and scheduling* tasks, A\* serves as a general shortest-path algorithm in abstract state spaces, supporting AI decision-making; without it, solving resource allocation or task sequencing problems may require less efficient exhaustive search.
+* In *puzzle solving* domains such as the 8-puzzle or Sokoban, A\* uses problem-specific heuristics to guide the search efficiently; without heuristics, the state space may grow exponentially and become impractical to explore.
+* For *network optimization* problems with nonnegative edge costs, A\* applies whenever a useful heuristic is available to speed convergence; without heuristics, computations on communication or logistics networks may take longer than necessary.
 
 **Variants & practical tweaks**
 
-* **Dijkstra** = A\* with $h \equiv 0$.
-* **Weighted A\***: use $f = g + \varepsilon h$ ($\varepsilon>1$) for faster, **bounded-suboptimal** search.
-* **A\*ε / Anytime A\***: start with $\varepsilon>1$, reduce over time to approach optimal.
-* **IDA\***: iterative deepening on $f$-bound; **much lower memory**, sometimes slower.
-* **RBFS / Fringe Search**: memory-bounded alternatives.
-* **Tie-breaking**: on equal $f$, prefer **larger $g$** (deeper) or **smaller $h$** to reduce node re-expansions.
-* **Closed-set policy**: if $h$ is **inconsistent**, allow **reopening** when a better `g` is found.
+* Viewing *Dijkstra* as A\* with $h \equiv 0$ shows that A\* generalizes the classic shortest-path algorithm; without this equivalence, the connection between uninformed and heuristic search may be overlooked.
+* In *Weighted A\**, the evaluation function becomes $f = g + \varepsilon h$ with $\varepsilon > 1$, trading exact optimality for faster performance with bounded suboptimality; without this variant, applications needing quick approximate routing, like logistics planning, would run slower.
+* The *A\*ε / Anytime A\** approach begins with $\varepsilon > 1$ for speed and gradually reduces it to converge toward optimal paths; without this strategy, incremental refinement in real-time systems like navigation aids is harder to achieve.
+* With *IDA\** (Iterative Deepening A\*), the search is conducted by gradually increasing an $f$-cost threshold, greatly reducing memory usage but sometimes increasing runtime; without it, problems like puzzle solving could exceed memory limits.
+* *RBFS and Fringe Search* are memory-bounded alternatives that manage recursion depth or fringe sets more carefully; without these, large state spaces in AI planning can overwhelm storage.
+* In *tie-breaking*, preferring larger $g$ or smaller $h$ when $f$ ties reduces unnecessary re-expansions; without careful tie-breaking, searches on uniform-cost grids may explore more nodes than needed.
+* For the *closed-set policy*, when heuristics are inconsistent, nodes must be reopened if a better $g$ value is found; without allowing this, the algorithm may miss shorter paths, as in road networks with varying travel times.
 
 **Pitfalls & tips**
 
-* **No negative edges.** A\* assumes $w(u,v) \ge 0$.
-* **Overestimating $h$** breaks optimality.
-* **Precision issues:** with floats, compare $f$ using small epsilons.
-* **State hashing:** ensure equal states hash equal (avoid exploding duplicates).
-* **Neighbor order:** doesn’t affect optimality, but affects performance/trace aesthetics.
+* The algorithm requires *non-negative edge weights* because A\* assumes $w(u,v) \ge 0$; without this, negative costs can cause nodes to be expanded too early, breaking correctness in applications like navigation.
+* If the heuristic *overestimates* actual costs, A\* loses its guarantee of optimality; without enforcing admissibility, a routing system may return a path that is faster to compute but longer in distance.
+* With *floating-point precision issues*, comparisons of $f$-values should include small epsilons to avoid instability; without this safeguard, two nearly equal paths may lead to inconsistent queue ordering in large-scale searches.
+* In *state hashing*, equivalent states must hash identically so duplicates are merged properly; without this, search in puzzles or planning domains may blow up due to treating the same state as multiple distinct ones.
+* While *neighbor order* does not affect correctness, it influences performance and the aesthetics of the returned path trace; without considering this, two identical problems might yield very different expansion sequences or outputs.
 
 **Implementation**
 
@@ -1088,8 +1147,6 @@ Suppose we have a graph that represents a network of houses. Weights represent t
 
 Such a subgraph is called a minimal spanning tree.
 
-#### Prim's Algorithm
-
 #### Prim’s Algorithm
 
 Prim’s algorithm builds a **minimum spanning tree (MST)** of a **weighted, undirected** graph by growing a tree from a start vertex. At each step it adds the **cheapest edge** that connects a vertex **inside** the tree to a vertex **outside** the tree.
@@ -1101,29 +1158,20 @@ To efficiently keep track of the construction, Prim’s algorithm employs two pr
 
 *Useful additions in practice:*
 
-* A **`key` map** where `key[v]` stores the lightest edge weight found so far that connects `v` to the current tree (∞ initially, except the start which is 0).
-* **Lazy updates** if your PQ has no decrease-key: push improved `(v, key[v])` again and skip stale pops.
-* **Component handling**: if the graph can be **disconnected**, either run Prim once per component (restarting at an unvisited vertex) or seed the PQ with **multiple starts** (`key=0`) to produce a **spanning forest**.
+* A *key map* stores, for each vertex, the lightest edge weight connecting it to the current spanning tree, initialized to infinity except for the starting vertex at zero; without this, Prim’s algorithm cannot efficiently track which edges should be added next to grow the tree.
+* With *lazy updates*, when the priority queue lacks a decrease-key operation, improved entries are simply pushed again and outdated ones are skipped upon popping; without this adjustment, priority queues become harder to manage, slowing down minimum spanning tree construction.
+* For *component handling*, if the graph is disconnected, Prim’s algorithm must either restart from each unvisited vertex or seed multiple starts with key values of zero to produce a spanning forest; without this, the algorithm would stop after one component, leaving parts of the graph unspanned.
 
 **Algorithm Steps**
 
-1. Begin from a starting vertex, \$i\$.
-
-2. Initialize `key[i] = 0`, `parent[i] = None`; for all other vertices `v`, set `key[v] = ∞`. Push \$i\$ into the min-priority queue keyed by `key`.
-
-3. While the priority queue is not empty:
-
-   1. **Extract** the vertex `u` with the **smallest** `key[u]`.
-   2. If `u` is already in the MST, continue; otherwise **add `u` to the MST** (insert into `in_mst`).
-      If `parent[u]` is not `None`, record the tree edge `(parent[u], u)`.
-   3. For **each neighbor** `v` of `u` with edge weight `w(u,v)`:
-
-      * If `v` is **not** in the MST **and** `w(u,v) < key[v]`, then **improve** the connection to `v`:
-        set `key[v] = w(u,v)`, `parent[v] = u`, and **push** `v` into the PQ keyed by the new `key[v]`.
-
-4. Continue until the queue is empty (or until all vertices are in the MST for a connected graph).
-
-5. The set of edges `{ (parent[v], v) : v ≠ i }` forms an MST; the MST **total weight** is `∑ key[v]` when each `v` is added.
+1. Pick a start vertex $i$.
+2. Set `key[i] = 0`, `parent[i] = None`; for all other vertices $v \ne i$, set `key[v] = ∞`; push $i$ into a min-priority queue keyed by `key`.
+3. While the priority queue is nonempty, repeat steps 4–6.
+4. Extract the vertex $u$ with the smallest `key[u]`.
+5. If $u$ is already in the MST, continue; otherwise add $u$ to the MST and, if `parent[u] ≠ None`, record the tree edge `(parent[u], u)`.
+6. For each neighbor $v$ of $u$ with weight $w(u,v)$, if $v$ is not in the MST and $w(u,v) < key[v]$, set `key[v] = w(u,v)`, set `parent[v] = u`, and push $v$ into the priority queue keyed by the new `key[v]`.
+7. Stop when the queue is empty or when all vertices are in the MST (for a connected graph).
+8. The edges $\{(parent[v], v) : v \ne i\}$ form an MST; the MST total weight equals $\sum key[v]$ at the moments when each $v$ is added.
 
 Vertices are **finalized when they are dequeued**: at that moment, `key[u]` is the **minimum** cost to connect `u` to the growing tree (by the **cut property**).
 
@@ -1162,12 +1210,10 @@ Prim(G, i):
 
 *Sanity notes:*
 
-* **Time:** with a binary heap, $O(E \log V)$; with a Fibonacci heap, $O(E + V \log V)$.
-  Dense graph (adjacency matrix + no PQ) variant runs in $O(V^2)$.
-* **Space:** $O(V)$ for `key`, `parent`, and MST bookkeeping.
-* **Graph type:** **weighted, undirected**; weights may be negative or positive (no restriction like Dijkstra).
-  If the graph is **disconnected**, Prim yields a **minimum spanning forest** (one tree per component).
-* **Uniqueness:** If all edge weights are **distinct**, the MST is **unique**.
+* The *time* complexity of Prim’s algorithm is $O(E \log V)$ with a binary heap, $O(E + V \log V)$ with a Fibonacci heap, and $O(V^2)$ for the dense-graph adjacency-matrix variant; without knowing this, one might apply the wrong implementation and get poor performance on sparse or dense networks.
+* The *space* complexity is $O(V)$, required for storing the key values, parent pointers, and bookkeeping to build the minimum spanning tree; without this allocation, the algorithm cannot track which edges belong to the MST.
+* The *graph type* handled is a weighted, undirected graph with no restrictions on edge weights being positive; without this flexibility, graphs with negative costs, such as energy-saving transitions, could not be processed.
+* In terms of *uniqueness*, if all edge weights are distinct, the minimum spanning tree is unique; without distinct weights, multiple MSTs may exist, such as in networks where two equally light connections are available.
 
 **Example**
 
@@ -1225,12 +1271,12 @@ A
 
 **Applications**
 
-1. **Network design** (least-cost wiring/piping/fiber) connecting all sites with minimal total cost.
-2. **Approximation for TSP** (metric TSP 2-approx via MST preorder walk).
-3. **Clustering (single-linkage)**: remove the **k−1** heaviest edges of the MST to form **k** clusters.
-4. **Image processing / segmentation**: MST over pixels/superpixels to find low-contrast boundaries.
-5. **Map generalization / simplification**: keep a connectivity backbone with minimal redundancy.
-6. **Circuit design / VLSI**: minimal interconnect length under simple models.
+* In *network design*, Prim’s or Kruskal’s MST construction connects all sites such as offices, cities, or data centers with the least total cost of wiring, piping, or fiber; without using MSTs, infrastructure plans risk including redundant and more expensive links.
+* As an *approximation for the traveling salesman problem (TSP)*, building an MST and performing a preorder walk of it yields a tour within twice the optimal length for metric TSP; without this approach, even approximate solutions for large instances may be much harder to obtain.
+* In *clustering with single linkage*, removing the $k-1$ heaviest edges of the MST partitions the graph into $k$ clusters; without this technique, hierarchical clustering may require recomputing pairwise distances repeatedly.
+* For *image processing and segmentation*, constructing an MST over pixels or superpixels highlights low-contrast boundaries as cut edges; without MST-based grouping, segmentations may fail to respect natural intensity or color edges.
+* In *map generalization and simplification*, the MST preserves a connectivity backbone with minimal redundancy, reducing complexity while maintaining essential routes; without this, simplified maps may show excessive or unnecessary detail.
+* In *circuit design and VLSI*, MSTs minimize interconnect length under simple wiring models, supporting efficient layouts; without this method, chip designs may consume more area and power due to avoidable wiring overhead.
 
 ##### Implementation
 
@@ -1240,39 +1286,32 @@ A
 *Implementation tip:*
 For **dense graphs** ($E \approx V^2$), skip heaps: store `key` in an array and, at each step, scan all non-MST vertices to pick the minimum `key` in $O(V)$. Overall $O(V^2)$ but often **faster in practice** on dense inputs due to low overhead.
 
-
-#### Kruskal's Algorithm
 #### Kruskal’s Algorithm
 
 Kruskal’s algorithm builds a **minimum spanning tree (MST)** for a **weighted, undirected** graph by sorting all edges by weight (lightest first) and repeatedly adding the next lightest edge that **does not create a cycle**. It grows the MST as a forest of trees that gradually merges until all vertices are connected.
 
 To efficiently keep track of the construction, Kruskal’s algorithm employs two primary data structures:
 
-* A **sorted edge list** (ascending by weight) that drives which edge to consider next.
-* A **Disjoint Set Union (DSU)**, also called **Union–Find**, to detect whether an edge’s endpoints are already in the same tree (cycle) or in different trees (safe to unite).
+* A *sorted edge list* arranged in ascending order of weights ensures that Kruskal’s algorithm always considers the lightest available edge next; without this ordering, the method cannot guarantee that the resulting spanning tree has minimum total weight.
+* A *Disjoint Set Union (DSU)*, or Union–Find structure, tracks which vertices belong to the same tree and prevents cycles by only uniting edges from different sets; without this mechanism, the algorithm could inadvertently form cycles instead of building a spanning tree.
 
 *Useful additions in practice:*
 
-* **Union–Find with path compression** + **union by rank/size** for near-constant-time merges and finds.
-* **Early stop**: in a connected graph with $V$ vertices, once you’ve added **$V-1$** edges, the MST is complete.
-* **Deterministic tie-breaking**: when equal weights occur, break ties consistently for reproducible MSTs.
-* **Disconnected graphs**: Kruskal naturally yields a **minimum spanning forest** (one MST per component).
+* Using *Union–Find with path compression and union by rank/size* enables near-constant-time merge and find operations, making Kruskal’s algorithm efficient; without these optimizations, edge processing in large graphs such as communication networks would slow down significantly.
+* Applying an *early stop* allows the algorithm to terminate once $V-1$ edges have been added in a connected graph, since the MST is then complete; without this, unnecessary edges are still considered, adding avoidable work.
+* Enforcing *deterministic tie-breaking* ensures that when multiple edges share equal weights, the same MST is consistently produced; without this, repeated runs on the same weighted graph might yield different but equally valid spanning trees, complicating reproducibility.
+* On *disconnected graphs*, Kruskal’s algorithm naturally outputs a minimum spanning forest with one tree per component; without this property, handling graphs such as multiple separate road systems would require additional adjustments.
 
 **Algorithm Steps**
 
-1. Gather all edges $E=\{(u,v,w)\}$ and **sort** them by weight $w$ (ascending).
-
-2. Initialize **DSU** with each vertex in its **own set**; `parent[v]=v`, `rank[v]=0`.
-
-3. Traverse the sorted edges one by one:
-
-   1. For edge $(u,v,w)$, compute `ru = find(u)`, `rv = find(v)` in DSU.
-   2. If `ru ≠ rv` (endpoints in **different** sets), **add** $(u,v,w)$ to the MST and **union** the sets.
-   3. Otherwise, **skip** the edge (it would create a cycle).
-
-4. Stop when either **$V-1$** edges are chosen (connected case) or edges are exhausted (forest case).
-
-5. The chosen edges form the **MST**; the **total weight** is the sum of their weights.
+1. Gather all edges $E=\{(u,v,w)\}$ and sort them by weight $w$ in ascending order.
+2. Initialize a DSU with each vertex in its own set: `parent[v]=v`, `rank[v]=0`.
+3. Traverse the edges in the sorted order.
+4. For the current edge $(u,v,w)$, compute `ru = find(u)` and `rv = find(v)` in the DSU.
+5. If `ru ≠ rv`, add $(u,v,w)$ to the MST and `union(ru, rv)`.
+6. If `ru = rv`, skip the edge (it would create a cycle).
+7. Continue until $V-1$ edges have been chosen (connected graph) or until all edges are processed (forest).
+8. The chosen edges form the MST; the total weight is the sum of their weights.
 
 By the **cycle** and **cut** properties of MSTs, selecting the minimum-weight edge that crosses any cut between components is always safe; rejecting edges that close a cycle preserves optimality.
 
@@ -1320,10 +1359,10 @@ union(x, y):
 
 *Sanity notes:*
 
-* **Time:** Sorting dominates: $O(E \log E)$ = $O(E \log V)$. DSU operations are almost $O(1)$ amortized (inverse Ackermann).
-* **Space:** $O(V)$ for DSU; $O(E)$ to store edges.
-* **Weights:** May be **negative or positive** (unlike Dijkstra); graph must be **undirected**.
-* **Uniqueness:** If all edge weights are **distinct**, the MST is **unique**.
+* The *time* complexity of Kruskal’s algorithm is dominated by sorting edges, which takes $O(E \log E)$, or equivalently $O(E \log V)$, while DSU operations run in near-constant amortized time; without recognizing this, one might wrongly attribute the main cost to the union–find structure rather than sorting.
+* The *space* complexity is $O(V)$ for the DSU arrays and $O(E)$ to store the edges; without this allocation, the algorithm cannot track connectivity or efficiently access candidate edges.
+* With respect to *weights*, Kruskal’s algorithm works on undirected graphs with either negative or positive weights; without this flexibility, cases like networks where some connections represent cost reductions could not be handled.
+* Regarding *uniqueness*, if all edge weights are distinct, the MST is guaranteed to be unique; without distinct weights, multiple equally valid minimum spanning trees may exist, such as in graphs where two different links have identical costs.
 
 **Example**
 
@@ -1377,12 +1416,12 @@ A
 
 **Applications**
 
-1. **Network design:** least-cost backbone (roads, fiber, pipes) connecting all sites with minimal total length/cost.
-2. **Clustering (single-linkage):** build MST, then cut the **k−1** heaviest edges to form **k** clusters.
-3. **Image segmentation:** graph-based grouping by intensity/feature differences via MST.
-4. **Approximation for metric TSP:** preorder walk of MST gives a 2-approx tour (with shortcutting).
-5. **Circuit/VLSI layout:** minimal interconnect under simple models.
-6. **Maze generation:** randomized Kruskal picks edges in random order subject to acyclicity.
+* In *network design*, Kruskal’s algorithm builds the least-cost backbone, such as roads, fiber, or pipelines, that connects all sites with minimal total expense; without MST construction, the resulting infrastructure may include redundant and costlier links.
+* For *clustering with single linkage*, constructing the MST and then removing the $k-1$ heaviest edges partitions the graph into $k$ clusters; without this method, grouping data points into clusters may require repeated and slower distance recalculations.
+* In *image segmentation*, applying Kruskal’s algorithm to pixel or superpixel graphs groups regions by intensity or feature similarity through MST formation; without MST-based grouping, boundaries between regions may be less well aligned with natural contrasts.
+* As an *approximation for the metric traveling salesman problem*, building an MST and performing a preorder walk (with shortcutting) yields a tour at most twice the optimal length; without this approach, near-optimal solutions would be harder to compute efficiently.
+* In *circuit and VLSI layout*, Kruskal’s algorithm finds minimal interconnect length under simplified wiring models; without this, designs may require more area and energy due to unnecessarily long connections.
+* For *maze generation*, a randomized Kruskal process selects edges in random order while maintaining acyclicity, producing mazes that remain connected without loops; without this structure, generated mazes could contain cycles or disconnected regions.
 
 **Implementation**
 
@@ -1404,25 +1443,19 @@ To efficiently keep track of the process (Kahn’s algorithm), we use:
 
 *Useful additions in practice:*
 
-* A **`visited_count`** (or length of `order`) to detect cycles: if, after processing, fewer than $V$ vertices were output, the graph has a cycle.
-* A **min-heap** instead of a FIFO queue to get the **lexicographically smallest** valid topological order.
-* A **DFS-based alternative**: run DFS and take vertices in **reverse postorder** (also $O(V+E)$); with DFS you detect cycles via a 3-color/stack state.
+* Maintaining a *visited count* or tracking the length of the output order lets you detect cycles, since producing fewer than $V$ vertices indicates that some could not be placed due to a cycle; without this check, algorithms like Kahn’s may silently return incomplete results on cyclic task graphs.
+* Using a *min-heap* instead of a simple FIFO queue ensures that, among available candidates, the smallest-indexed vertex is always chosen, yielding the lexicographically smallest valid topological order; without this modification, the output order depends on arbitrary queueing, which may vary between runs.
+* A *DFS-based alternative* computes a valid topological order by recording vertices in reverse postorder, also in $O(V+E)$ time, while detecting cycles via a three-color marking or recursion stack; without DFS, cycle detection must be handled separately in Kahn’s algorithm.
 
 **Algorithm Steps (Kahn’s algorithm)**
 
-1. Compute `indegree[v]` for every vertex $v$.
-
-2. Initialize a queue `Q` with **all** vertices of indegree 0.
-
-3. While `Q` is not empty:
-
-   1. **Dequeue** a vertex `u` and append it to `order`.
-   2. For each outgoing edge `u → v`:
-
-      * Decrement `indegree[v]` by 1.
-      * If `indegree[v]` becomes 0, **enqueue** `v`.
-
-4. If `len(order) < V`, a **cycle exists** (topological order does not exist). Otherwise, `order` is a valid topological ordering.
+1. Compute `indegree[v]` for every vertex $v$; set `order = []`.
+2. Initialize a queue `Q` with all vertices of indegree 0.
+3. While `Q` is nonempty, repeat steps 4–6.
+4. Dequeue a vertex `u` from `Q` and append it to `order`.
+5. For each outgoing edge `u → v`, decrement `indegree[v]` by 1.
+6. If `indegree[v]` becomes 0, enqueue `v` into `Q`.
+7. If `len(order) < V` at the end, a cycle exists and no topological order; otherwise `order` is a valid topological ordering.
 
 *Reference pseudocode (adjacency-list graph):*
 
@@ -1457,9 +1490,9 @@ TopoSort_Kahn(G):
 
 *Sanity notes:*
 
-* **Time:** $O(V + E)$ — each vertex enqueued once; each edge decreases an indegree once.
-* **Space:** $O(V)$ — for indegrees, queue, and output.
-* **Input:** Must be a **DAG**; if a cycle exists, **no** topological order exists.
+* The *time* complexity of topological sorting is $O(V+E)$ because each vertex is enqueued exactly once and every edge is processed once when its indegree decreases; without this efficiency, ordering tasks in large dependency graphs would be slower.
+* The *space* complexity is $O(V)$, required for storing indegree counts, the processing queue, and the final output order; without allocating this space, the algorithm cannot track which vertices are ready to be placed.
+* The required *input* is a directed acyclic graph (DAG), since if a cycle exists, no valid topological order is possible; without this restriction, attempts to schedule cyclic dependencies, such as tasks that mutually depend on each other, will fail.
 
 **Example**
 
@@ -1537,12 +1570,12 @@ Here `indeg[X]=indeg[Y]=1` initially; `Q` starts empty ⇒ `order=[]` and `len(o
 
 **Applications**
 
-1. **Build systems / compilation** (compile a file only after its prerequisites).
-2. **Course scheduling** (take courses in an order respecting prerequisites).
-3. **Data pipelines / DAG workflows** (Airflow, Spark DAGs): execute stages when inputs are ready.
-4. **Dependency resolution** (package managers, container layers).
-5. **Dynamic programming on DAGs** (longest/shortest path, path counting) by processing vertices in topological order.
-6. **Circuit evaluation / spreadsheets** (evaluate cells/nets after their dependencies).
+* In *build systems and compilation*, topological sorting ensures that each file is compiled only after its prerequisites are compiled; without it, a build may fail by trying to compile a module before its dependencies are available.
+* For *course scheduling*, topological order provides a valid sequence in which to take courses respecting prerequisite constraints; without it, students may be assigned courses they are not yet eligible to take.
+* In *data pipelines and DAG workflows* such as Airflow or Spark, tasks are executed when their inputs are ready by following a topological order; without this, pipeline stages might run prematurely and fail due to missing inputs.
+* For *dependency resolution* in package managers or container systems, topological sorting installs components in an order that respects their dependencies; without it, software may be installed in the wrong sequence and break.
+* In *dynamic programming on DAGs*, problems like longest path, shortest path, or path counting are solved efficiently by processing vertices in topological order; without this ordering, subproblems may be computed before their dependencies are solved.
+* For *circuit evaluation or spreadsheets*, topological order ensures that each cell or net is evaluated only after its referenced inputs; without it, computations could use undefined or incomplete values.
 
 **Implementation**
 
