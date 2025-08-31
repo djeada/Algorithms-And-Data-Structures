@@ -177,7 +177,6 @@ Hash tables store key-value pairs for efficient lookup, insertion, and deletion.
 ### Algorithms
 
 Mastering algorithms is helpful for solving programming problems more efficiently by understanding patterns and techniques that reduce time and space usage.
-Here’s a clean, code-free version you can drop into notes or slides.
 
 #### Two-Pointer Technique (no code)
 
