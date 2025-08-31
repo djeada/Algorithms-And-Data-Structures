@@ -840,12 +840,12 @@ Step 3 (100s): [2  24  45  66  75  90  170  802]
 
 **Complexity**
 
-* **Time Complexity:** \$O(n \cdot k)\$
+* **Time Complexity:** $O(n \cdot k)$
 
-  * \$n\$ = number of elements
-  * \$k\$ = number of digits (or max digit length)
+  * $n$ = number of elements
+  * $k$ = number of digits (or max digit length)
 
-* **Space Complexity:** \$O(n + k)\$ (depends on the stable sorting method used, e.g., Counting Sort).
+* **Space Complexity:** $O(n + k)$ (depends on the stable sorting method used, e.g., Counting Sort).
 
 * For integers with fixed number of digits, Radix Sort can be considered **linear time**.
 
