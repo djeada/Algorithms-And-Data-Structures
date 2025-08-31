@@ -4,11 +4,11 @@ Matrices represent images, game boards, and maps. Many classic problems reduce t
 
 ### Conventions
 
-**Rows indexed \$0..R-1\$, columns \$0..C-1\$; cell \$(r,c)\$.**
+**Rows indexed $0..R-1$, columns $0..C-1$; cell $(r,c)$.**
 
-Rows increase **down**, columns increase **right**. Think “top-left is \$(0,0)\$”, not a Cartesian origin.
+Rows increase **down**, columns increase **right**. Think “top-left is $(0,0)$”, not a Cartesian origin.
 
-Visual index map (example \$R=6\$, \$C=8\$; each cell labeled \$rc\$):
+Visual index map (example $R=6$, $C=8$; each cell labeled $rc$):
 
 ```
   c →    0    1    2    3    4    5    6    7
@@ -29,11 +29,11 @@ r ↓   +----+----+----+----+----+----+----+----+
 
 Handy conversions (for linearization / array-of-arrays):
 
-* Linear index: \$\text{id}=r\cdot C+c\$.
-* From id: \$r=\lfloor \text{id}/C \rfloor\$, \$c=\text{id}\bmod C\$.
-* Row-major scan order (common in problems): for \$r\$ in \$0..R-1\$, for \$c\$ in \$0..C-1\$.
+* Linear index: $\text{id}=r\cdot C+c$.
+* From id: $r=\lfloor \text{id}/C \rfloor$, $c=\text{id}\bmod C$.
+* Row-major scan order (common in problems): for $r$ in $0..R-1$, for $c$ in $0..C-1$.
 
-**Row-major vs column-major arrows (same \$3\times 6\$ grid):**
+**Row-major vs column-major arrows (same $3\times 6$ grid):**
 
 ```
 Row-major (r, then c):                  Column-major (c, then r):
@@ -44,9 +44,9 @@ Row-major (r, then c):                  Column-major (c, then r):
 → → → → → →                              ↓ ↓ ↓
 ```
 
-**Neighborhoods: \$\mathbf{4}\$-dir \$\Delta={(-1,0),(1,0),(0,-1),(0,1)}\$; \$\mathbf{8}\$-dir adds diagonals.**
+**Neighborhoods: $\mathbf{4}$-dir $\Delta={(-1,0),(1,0),(0,-1),(0,1)}$; $\mathbf{8}$-dir adds diagonals.**
 
-The offsets \$(\Delta r,\Delta c)\$ are applied as \$(r+\Delta r,\ c+\Delta c)\$.
+The offsets $(\Delta r,\Delta c)$ are applied as $(r+\Delta r,\ c+\Delta c)$.
 
 **4-neighborhood (“+”):**
 
@@ -345,7 +345,7 @@ $$
 $$
 
 $$
-\text{Output sequence: } 1,\,2,\,3,\,4,\,8,\,12,\,11,\,10,\,9,\,5,\,6,\,7
+\text{Output sequence: } 1,2,3,4,8,12,11,10,9,5,6,7
 $$
 
 **How it works**
@@ -369,7 +369,7 @@ a & b & c \\
 d & e & f
 \end{bmatrix}
 \quad\Rightarrow\quad
-\text{One order: } a,\, b,\, d,\, e,\, c,\, f
+\text{One order: } a, b, d, e, c, f
 $$
 
 * Time: $O(R\cdot C)$; Space: $O(1)$.
@@ -403,13 +403,13 @@ BFS layers (distance mod 10):
 Legend: walls (#), goal reached (X)
 ```
 
-BFS explores in **expanding “rings”**; with 4-dir edges, each step increases Manhattan distance by 1 (unless blocked). Time \$O(RC)\$, space \$O(RC)\$ with a visited matrix/queue.
+BFS explores in **expanding “rings”**; with 4-dir edges, each step increases Manhattan distance by 1 (unless blocked). Time $O(RC)$, space $O(RC)$ with a visited matrix/queue.
 
 **Obstacles / costs / diagonals.**
 
-* Obstacles: skip neighbors that are `#` (or where cost is \$\infty\$).
+* Obstacles: skip neighbors that are `#` (or where cost is $\infty$).
 * Weighted grids: Dijkstra / 0-1 BFS on the same neighbor structure.
-* 8-dir with Euclidean costs: use \$1\$ for orthogonal moves and \$\sqrt{2}\$ for diagonals (A\* often pairs well here with an admissible heuristic).
+* 8-dir with Euclidean costs: use $1$ for orthogonal moves and $\sqrt{2}$ for diagonals (A\* often pairs well here with an admissible heuristic).
 
 **Common symbols:**
 
@@ -428,7 +428,7 @@ Find the minimum steps from S to T.
 *Example*
 
 $$
-\text{Grid (0 = open, 1 = wall), } S = (0,0),\; T = (2,3)
+\text{Grid (0 = open, 1 = wall), } S = (0,0), T = (2,3)
 $$
 
 $$
