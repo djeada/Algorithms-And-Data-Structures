@@ -941,8 +941,8 @@ Counting Sort is **stable** if we place elements **from right to left** into the
 
 **Implementation**
 
-* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/heap_sort/src/counting_sort.cpp)
-* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/heap_sort/src/counting_sort.py)
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/counting_sort/src/counting_sort.cpp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/counting_sort/src/counting_sort.py)
 
 ### Comparison Table
 
