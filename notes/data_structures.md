@@ -7,7 +7,7 @@ In computer science, a _collection_ (often interchangeably referred to as a _con
 
 Every developer should really get to know collections well. It helps you pick the right type of collection for the job, making your code faster, more efficient, and easier to manage in the long run.
 
-![image](https://github.com/user-attachments/assets/2471c93c-297e-486d-89ea-e78e7241cfb2)
+<img width="1791" height="753" alt="image" src="https://github.com/user-attachments/assets/0526c686-d302-4174-bbd6-032234b5af48" />
 
 ### Linked Lists
 
