@@ -671,8 +671,8 @@ This sequence of XOR operations swaps the values of `a` and `b` without needing 
 
 #### Bit Shifting Tricks
 
-- *Left shifting* (`<<`) is a useful technique for *multiplying by powers of two*. For instance, `number << 3` multiplies `number` by $(2^3 = 8)$, which is a fast alternative to regular multiplication.
-- Similarly, *right shifting* (`>>`) can be used for *dividing by powers of two*. For example, `number >> 2` divides `number` by $(2^2 = 4)$, making it an efficient way to handle division for unsigned integers or logical shifts.
+- *Left shifting* (`<<`) is a useful technique for *multiplying by powers of two*. For instance, `number << 3` multiplies `number` by $2^3 = 8$, which is a fast alternative to regular multiplication.
+- Similarly, *right shifting* (`>>`) can be used for *dividing by powers of two*. For example, `number >> 2` divides `number` by $2^2 = 4$, making it an efficient way to handle division for unsigned integers or logical shifts.
 - To *extract specific bits* from a number, you can use a combination of shifting and masking. For instance, to extract bits from position $p$ to $p + n - 1$, the operation `(number >> p) & ((1 << n) - 1)` can be applied. This shifts the target bits to the right and uses a mask to isolate only those bits.
 
 #### Cautions and Best Practices
