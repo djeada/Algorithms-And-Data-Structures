@@ -144,7 +144,7 @@ III. *Cycle Detection*:
 IV. *Shortest Path Algorithms*:
 
 * With non-negative weights, using *Dijkstra’s algorithm* and a priority queue yields shortest paths efficiently, whereas arbitrary relaxation can be slower or incorrect; for example, computing fastest driving times.
-* When negative edges are possible, selecting *Bellman–Ford* both finds shortest paths and reports negative cycles, whereas Dijkstra may return wrong distances; for example, detecting currency-exchange arbitrage.
+* When negative edges are possible, selecting *Bellman-Ford* both finds shortest paths and reports negative cycles, whereas Dijkstra may return wrong distances; for example, detecting currency-exchange arbitrage.
 * For all-pairs needs on moderately dense graphs, applying *Floyd–Warshall* precomputes every distance in O(n³), whereas repeating many single-source runs adds overhead; for example, planning shipping costs between warehouses and stores.
 
 V. *Minimum Spanning Trees (MST)*:
