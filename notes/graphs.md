@@ -86,16 +86,17 @@ An adjacency matrix represents a graph $G$ with $V$ vertices as a two-dimensiona
 
 Here, the matrix indicates a graph with vertices A to D. For instance, vertex A connects with vertices B and D, hence the respective 1s in the matrix.
 
-**Matrix (large ASCII layout):**
+**Matrix:**
 
 ```
+4x4
             Columns →
           A   B   C   D
         +---+---+---+---+
-Row  A | 0 | 1 | 0 | 1 |
-↓   B | 1 | 0 | 1 | 0 |
-    C | 0 | 1 | 0 | 1 |
-    D | 1 | 0 | 1 | 0 |
+Row   A | 0 | 1 | 0 | 1 |
+↓     B | 1 | 0 | 1 | 0 |
+      C | 0 | 1 | 0 | 1 |
+      D | 1 | 0 | 1 | 0 |
         +---+---+---+---+
 ```
 
