@@ -95,7 +95,7 @@ Linked lists are dynamic data structures consisting of nodes that contain data a
 * In shortest-path search, an *indexed priority queue* supports decrease-key in O(log n), whereas a plain heap needs lazy deletes that add overhead; e.g., Dijkstra on road networks.
 * During k-way merging, a *min-heap* holding one head per list outputs the next item in O(log k), whereas pairwise merges inflate complexity; e.g., merging sorted SSTables in storage engines.
 * For time-ordered processing, an event *priority queue* schedules the next timestamped event correctly, whereas FIFO or LIFO queues break ordering; e.g., discrete-event network simulators.
-* In heuristic search like A\*, a *priority queue* ordered by f=g+h explores promising nodes sooner, whereas BFS/DFS explore many irrelevant nodes; e.g., game map pathfinding.
+* In heuristic search like A*, a *priority queue* ordered by f=g+h explores promising nodes sooner, whereas BFS/DFS explore many irrelevant nodes; e.g., game map pathfinding.
 * To initialize from bulk data, using *heapify* builds a heap in O(n), whereas inserting one item at a time costs O(n log n); e.g., preparing a backlog for scheduling.
 * When you must sort in place with bounded memory, *heapsort* provides O(n log n) time and O(1) extra space, whereas mergesort needs additional buffers; e.g., firmware sorting tables.
 * If priorities change dynamically, supporting *decrease-key* (or increase-key) avoids duplicates and stale entries, whereas delete-and-reinsert inflates size and time; e.g., reprioritizing tickets as SLAs age.
