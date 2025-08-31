@@ -198,8 +198,8 @@ Bubble sort is **stable**.
 
 **Implementation**
 
-* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/selection_sort/src/bubble_sort.cpp)
-* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/selection_sort/src/bubble_sort.py)
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/bubble_sort/src/bubble_sort.cpp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/bubble_sort/src/bubble_sort.py)
 
 ### Selection Sort
 
