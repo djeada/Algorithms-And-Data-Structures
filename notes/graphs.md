@@ -1222,19 +1222,21 @@ Prim(G, i):
 Undirected, weighted graph; start at **A**. Edge weights shown on links.
 
 ```
-                          ┌────────┐
-                          │   A    │
-                          └─┬──┬───┘
-                         4/   │1
-                       ┌──    │    ──┐
-                 ┌─────▼──┐  │     ┌▼──────┐
-                 │   B    │──┘2    │   C   │
-                 └───┬────┘        └──┬────┘
-                   1 │               4 │
-                     │                 │
-                 ┌───▼────┐      3  ┌──▼───┐
-                 │   E    │────────│   D   │
-                 └────────┘         └──────┘
+                           ┌────────┐
+                           │   A    │
+                           └─┬──┬───┘
+                            4│  │1
+                             │  │
+                 ┌───────────┘  └───────────┐
+                 │                          │
+            ┌────▼────┐                ┌────▼────┐
+            │   B     │◄──────2────────│   C     │
+            └───┬─────┘                └─────┬───┘
+              1 │                          4 │
+                │                            │
+            ┌───▼────┐      3           ┌────▼───┐
+            │   E    │─────────────────▶│   D    │
+            └────────┘                  └────────┘
 
 Edges: A–B(4), A–C(1), C–B(2), B–E(1), C–D(4), D–E(3)
 ```
@@ -1372,15 +1374,15 @@ Undirected, weighted graph (we’ll draw the key edges clearly and list the rest
 Start with all vertices as separate sets: `{A} {B} {C} {D} {E} {F}`.
 
 ```
-Top row:                 A────────4────────B────────2────────C
-                         │                     │
-                         │                     │
-                         7                     3
-                         │                     │
-Bottom row:              F────────1────────E───┴──────────────D
-                               (E–F)
+Top row:       A────────4────────B────────2────────C
+               │                 │                 │
+               │                 │                 │
+               7                 3                 5
+               │                 │                 │
+Bottom row:    F────────1────────E────────6────────D
+
 Other edges (not all drawn to keep the picture clean):
-A–C(4), B–D(5), C–D(5), C–E(5), D–E(6), D–F(2)
+A–C(4), B–D(5), C–E(5), D–E(6), D–F(2)
 ```
 
 *Sorted edge list (ascending):*
