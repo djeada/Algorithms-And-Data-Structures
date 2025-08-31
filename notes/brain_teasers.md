@@ -178,7 +178,7 @@ Hash tables store key-value pairs for efficient lookup, insertion, and deletion.
 
 Mastering algorithms is helpful for solving programming problems more efficiently by understanding patterns and techniques that reduce time and space usage.
 
-#### Two-Pointer Technique (no code)
+#### Two-Pointer Technique
 
 Use two pointers when:
 
