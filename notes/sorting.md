@@ -852,8 +852,8 @@ Step 3 (100s): [2  24  45  66  75  90  170  802]
 
 **Implementation**
 
-* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/heap_sort/src/radix_sort.cpp)
-* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/heap_sort/src/radix_sort.py)
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/radix_sort/src/radix_sort.cpp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/radix_sort/src/radix_sort.py)
 
 ### Counting Sort
 
