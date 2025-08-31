@@ -209,6 +209,49 @@ Main Idea:
 6. If the partial solution is complete and valid, record or output it.
 7. If all options are exhausted at a level, remove the last component and backtrack to the previous level.
 
+General Template (pseudocode)
+
+```
+function backtrack(partial):
+    if is_complete(partial):
+        handle_solution(partial)
+        return    // or continue if looking for all solutions
+
+    for candidate in generate_candidates(partial):
+        if is_valid(candidate, partial):
+            place(candidate, partial)          // extend partial with candidate
+            backtrack(partial)
+            unplace(candidate, partial)        // undo extension (backtrack)
+```
+
+Pieces you supply per problem:
+
+* `is_complete`: does `partial` represent a full solution?
+* `handle_solution`: record/output the solution.
+* `generate_candidates`: possible next choices given current partial.
+* `is_valid`: pruning test to reject infeasible choices early.
+* `place` / `unplace`: apply and revert the choice.
+
+Python-ish Generic Framework
+
+```python
+def backtrack(partial, is_complete, generate_candidates, is_valid, handle_solution):
+    if is_complete(partial):
+        handle_solution(partial)
+        return
+
+    for candidate in generate_candidates(partial):
+        if not is_valid(candidate, partial):
+            continue
+        # make move
+        partial.append(candidate)
+        backtrack(partial, is_complete, generate_candidates, is_valid, handle_solution)
+        # undo move
+        partial.pop()
+```
+
+You can wrap those callbacks into a class or closures for stateful problems.
+
 #### N-Queens Problem
 
 The N-Queens problem is a classic puzzle in which the goal is to place $N$ queens on an $N \times N$ chessboard such that no two queens threaten each other. In chess, a queen can move any number of squares along a row, column, or diagonal. Therefore, no two queens can share the same row, column, or diagonal.

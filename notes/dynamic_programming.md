@@ -2,9 +2,9 @@
 
 Dynamic Programming (DP) is a way to solve complex problems by breaking them into smaller, easier problems. Instead of solving the same small problems again and again, DP **stores their solutions** in a structure like an array, table, or map. This avoids wasting time on repeated calculations and makes the process much faster and more efficient.
 
-DP works best for problems that have two key features. The first is **optimal substructure**, which means you can build the solution to a big problem from the solutions to smaller problems. The second is **overlapping subproblems**, where the same smaller problems show up multiple times during the process. By focusing on these features, DP ensures that each part of the problem is solved only once.
+DP works best for problems that have two features. The first is **optimal substructure**, which means you can build the solution to a big problem from the solutions to smaller problems. The second is **overlapping subproblems**, where the same smaller problems show up multiple times during the process. By focusing on these features, DP ensures that each part of the problem is solved only once.
 
-This method was introduced by Richard Bellman in the 1950s and has become a valuable tool in areas like computer science, economics, and operations research. It has been used to solve problems that would otherwise take too long by turning slow, exponential-time algorithms into much faster polynomial-time solutions. DP is practical and powerful for tackling real-world optimization challenges.
+This method was introduced by Richard Bellman in the 1950s and has become a valuable tool in areas like computer science, economics, and operations research. It has been used to solve problems that would otherwise take too long by turning slow, exponential-time algorithms into much faster polynomial-time solutions. DP is used in practice for tackling real-world optimization challenges.
 
 ### Principles
 

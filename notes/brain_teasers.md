@@ -1,21 +1,21 @@
+- tree traversal in order, post order etc.
+
 ## Solving Programming Brain Teasers
 
-Programming puzzles and brain teasers are excellent tools for testing and enhancing your coding abilities and problem-solving skills. They are frequently used in technical interviews to evaluate a candidate's logical thinking, analytical prowess, and ability to devise efficient algorithms. To excel in these scenarios, it is recommended to master effective strategies for approaching and solving these problems.
+Programming puzzles and brain teasers are great ways to improve your coding and problem-solving skills. They're commonly used in technical interviews to assess a candidate's logical thinking, analytical ability, and skill in creating efficient solutions. To do well in these situations, it's important to learn and apply effective strategies for solving these problems.
 
 ### General Strategies
 
 When tackling programming puzzles, consider the following strategies:
 
-- Starting with a **simple solution** can help you understand the problem better and identify challenges. This initial approach often highlights areas where optimization is needed later.
-- Writing **unit tests** ensures your solution works for a variety of input scenarios. These tests are invaluable for catching logical errors and handling edge cases, and they allow for safe updates through regression testing.
-- Analyzing the **time and space complexity** of your algorithm helps you measure its efficiency. Aim for the best possible complexity, such as $O(n)$, while avoiding unnecessary memory usage.
-- Choosing the **appropriate data structure** is important for achieving better performance. Knowing when to use structures like arrays, linked lists, stacks, or trees can greatly enhance your solution.
-- **Hash tables** are ideal for problems that require fast lookups, such as counting elements, detecting duplicates, or associating keys with values, as they offer average-case $O(1)$ complexity.
-- Implementing **memoization or dynamic programming** can optimize problems with overlapping subproblems by storing and reusing previously computed results to save time.
-- Breaking a problem into **smaller subproblems** often simplifies the process. Solving these subproblems individually makes it easier to manage and integrate the solutions.
-- Considering both **recursive and iterative approaches** allows flexibility. Recursion can simplify the logic for certain problems, while iteration may be more efficient and avoid stack overflow risks.
-- Paying attention to **edge cases and constraints** helps ensure robustness. Examples include handling empty inputs, very large or very small values, and duplicate data correctly.
-- While optimizing too early can complicate development, **targeted optimization** at the right time focuses on the most resource-intensive parts of the code, improving performance without reducing clarity or maintainability.
+* Starting with a *simple solution* can be helpful in understanding the problem and revealing areas that may need further optimization later on.
+* Writing *unit tests* is useful for ensuring that your solution works correctly across a range of input scenarios, including edge cases.
+* Analyzing *time and space complexity* of your algorithm is important for assessing its efficiency and striving for an optimal *performance*.
+* Choosing the *appropriate data structure*, such as an array or tree, is beneficial for improving the speed and clarity of your solution.
+* Breaking down the problem into *smaller parts* can make the overall task more manageable and easier to solve.
+* Considering both *recursive* and *iterative* approaches gives you flexibility in selecting the method that best suits the problem’s needs.
+* Paying attention to *edge cases* and *constraints* ensures your solution handles unusual or extreme inputs gracefully.
+* *Targeted optimization*, when applied at the right time, can improve performance in specific areas without sacrificing clarity.
 
 ### Data Structures
 
@@ -23,16 +23,27 @@ Understanding and effectively using data structures is fundamental in programmin
 
 #### Working with Arrays
 
-Arrays are fundamental data structures that store elements in contiguous memory locations, allowing efficient random access. Here are strategies for working with arrays:
+Arrays are basic data structures that store elements in a continuous block of memory, making it easy to access any element quickly. Here are some tips for working with arrays:
 
-- **Sorting** an array can simplify many problems. Algorithms like Quick Sort and Merge Sort are efficient with $O(n \log n)$ time complexity. For nearly sorted or small arrays, **Insertion Sort** may be a better option due to its simplicity and efficiency in those cases.
-- In **sorted arrays**, binary search provides a fast way to find elements or their positions, working in $O(\log n)$. Be cautious with **mid-point calculations** in languages prone to integer overflow due to fixed-size integer types.
-- The **two-pointer technique** uses two indices, often starting from opposite ends of the array, to solve problems involving pairs or triplets, like finding two numbers that add up to a target sum. It helps optimize time and space.
-- The **sliding window technique** is effective for subarray or substring problems, such as finding the longest substring without repeating characters. It keeps a dynamic subset of the array while iterating, improving efficiency.
-- **Prefix sums** enable quick range sum queries after preprocessing the array in $O(n)$. Similarly, **difference arrays** allow efficient range updates without modifying individual elements one by one.
-- **In-place operations** modify the array directly without using extra memory. This approach saves space but requires careful handling to avoid unintended side effects on other parts of the program.
-- When dealing with **duplicates**, it’s important to adjust the algorithm to handle them correctly. For example, in the two-pointer technique, duplicates may need to be skipped to prevent redundant results or errors.
-- **Memory usage** is a important consideration with large arrays, as they can consume significant space. Be mindful of space complexity in constrained environments to prevent excessive memory usage.
+* Sorting an array can often simplify many problems, with algorithms like Quick Sort and Merge Sort offering efficient $O(n \log n)$ time complexity. For nearly sorted or small arrays, *Insertion Sort* might be a better option due to its simplicity and efficiency in such cases.
+* In sorted arrays, *binary search* provides a fast way to find elements or their positions, working in $O(\log n)$. Be cautious with mid-point calculations in languages that may experience integer overflow due to fixed-size integer types.
+* The *two-pointer* technique uses two indices, typically starting from opposite ends of the array, to solve problems involving pairs or triplets, like finding two numbers that sum to a target. It helps optimize both time and space efficiency.
+* The *sliding window* technique is effective for solving subarray or substring problems, such as finding the longest substring without repeating characters. It maintains a dynamic subset of the array while iterating, improving overall efficiency.
+* *Prefix sums* enable fast range sum queries after preprocessing the array in $O(n)$. Likewise, difference arrays allow efficient range updates without the need to modify individual elements one by one.
+* In-place operations modify the array directly without using extra memory. This method saves space but requires careful handling to avoid unintended side effects on other parts of the program.
+* When dealing with duplicates, it’s important to adjust the algorithm to handle them appropriately. For example, the two-pointer technique may need to skip duplicates to prevent redundant results or errors.
+* When working with large arrays, it’s important to be mindful of memory usage, as they can consume a lot of space. To optimize, try to minimize the space complexity by using more memory-efficient data structures or algorithms. For instance, instead of storing a full array of values, consider using a *sliding window* or *in-place modifications* to avoid extra memory allocation. Additionally, analyze the space complexity of your solution and check for operations that create large intermediate data structures, which can lead to excessive memory consumption. In constrained environments, tools like memory profiling or checking the space usage of your program (e.g., using Python’s `sys.getsizeof()`) can help you identify areas for improvement.
+* When using dynamic arrays, it’s helpful to allow automatic resizing, which lets the array expand or shrink based on the data size. This avoids the need for manual memory management and improves flexibility.
+* Resizing arrays frequently can be costly in terms of time complexity. A more efficient approach is to resize the array exponentially, such as doubling its size, rather than resizing it by a fixed amount each time.
+* To avoid unnecessary memory usage, it's important to pass arrays by reference (or using pointers in some languages) when possible, instead of copying the entire array for each function call.
+* For arrays with many zero or null values, using sparse arrays or hash maps can be useful. This allows you to store only non-zero values, saving memory when dealing with large arrays that contain mostly empty data.
+* When dealing with multi-dimensional arrays, flattening them into a one-dimensional array can make it easier to perform operations, but be aware that this can temporarily increase memory usage.
+* To improve performance, accessing memory in contiguous blocks is important. Random access patterns may lead to cache misses, which can slow down operations, so try to access array elements sequentially when possible.
+* The `bisect` module helps maintain sorted order in a list by finding the appropriate index for inserting an element or by performing binary searches.
+* Use `bisect.insort()` to insert elements into a sorted list while keeping it ordered.
+* Use `bisect.bisect_left()` or `bisect.bisect_right()` to find the index where an element should be inserted.
+* Don’t use on unsorted lists or when frequent updates are needed, as maintaining order can be inefficient.
+* Binary search operations like `bisect_left()` are `O(log n)`, but `insort()` can be `O(n)` due to shifting elements.
 
 #### Working with Strings
 

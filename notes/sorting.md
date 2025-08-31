@@ -72,343 +72,887 @@ If you then did a second pass (say, sorting by rank or battle-honors) you’d on
 
 ### Bubble Sort
 
-Bubble sort, one of the simplest sorting algorithms, is often a go-to choice for teaching the foundational concepts of sorting due to its intuitive nature. The name "bubble sort" stems from the way larger elements "bubble up" towards the end of the array, much like how bubbles rise in a liquid.
+Bubble sort is one of the simplest sorting algorithms. It is often used as an **introductory algorithm** because it is easy to understand, even though it is not efficient for large datasets.
 
-#### Conceptual Overview
+The name comes from the way **larger elements "bubble up"** to the top (end of the list), just as bubbles rise in water.
 
-Imagine a sequence of numbers. Starting from the beginning of the sequence, we compare each pair of adjacent numbers and swap them if they are out of order. As a result, at the end of the first pass, the largest number will have "bubbled up" to the last position. Each subsequent pass ensures that the next largest number finds its correct position, and this continues until the whole array is sorted.
+The basic idea:
 
-#### Steps
+* Compare **adjacent elements**.
+* Swap them if they are in the wrong order.
+* Repeat until no swaps are needed.
 
-1. Start from the first item and compare it with its neighbor to the right.
-2. If the items are out of order (i.e., the left item is greater than the right), swap them.
-3. Move to the next item and repeat the above steps until the end of the array.
-4. After the first pass, the largest item will be at the last position. On the next pass, you can ignore the last item and consider the rest of the array.
-5. Continue this process for `n-1` passes to ensure the array is completely sorted.
+**Step-by-Step Walkthrough**
+
+1. Start from the **first element**.
+2. Compare it with its **neighbor to the right**.
+3. If the left is greater, **swap** them.
+4. Move to the next pair and repeat until the end of the list.
+5. After the **first pass**, the largest element is at the end.
+6. On each new pass, ignore the elements already in their correct place.
+7. Continue until the list is sorted.
+
+**Example Run**
+
+We will sort the array:
 
 ```
-Start:  [ 5 ][ 1 ][ 4 ][ 2 ][ 8 ]
-
-Pass 1:
-  [ 5 ][ 1 ][ 4 ][ 2 ][ 8 ]  → swap(5,1) →  [ 1 ][ 5 ][ 4 ][ 2 ][ 8 ]
-  [ 1 ][ 5 ][ 4 ][ 2 ][ 8 ]  → swap(5,4) →  [ 1 ][ 4 ][ 5 ][ 2 ][ 8 ]
-  [ 1 ][ 4 ][ 5 ][ 2 ][ 8 ]  → swap(5,2) →  [ 1 ][ 4 ][ 2 ][ 5 ][ 8 ]
-  [ 1 ][ 4 ][ 2 ][ 5 ][ 8 ]  →      no swap      → [ 1 ][ 4 ][ 2 ][ 5 ][ 8 ]
-
-Pass 2:
-  [ 1 ][ 4 ][ 2 ][ 5 ] [8]  →      no swap      → [ 1 ][ 4 ][ 2 ][ 5 ] [8]
-  [ 1 ][ 4 ][ 2 ][ 5 ] [8]  → swap(4,2) →  [ 1 ][ 2 ][ 4 ][ 5 ] [8]
-  [ 1 ][ 2 ][ 4 ][ 5 ] [8]  →      no swap      → [ 1 ][ 2 ][ 4 ][ 5 ] [8]
-
-Pass 3:
-  [ 1 ][ 2 ][ 4 ] [5,8]  → all comparisons OK
-
-Result: [ 1 ][ 2 ][ 4 ][ 5 ][ 8 ]
+[ 5 ][ 1 ][ 4 ][ 2 ][ 8 ]
 ```
 
-#### Optimizations
+**Pass 1**
 
-An important optimization for bubble sort is to keep track of whether any swaps were made during a pass. If a pass completes without any swaps, it means the array is already sorted, and there's no need to continue further iterations.
+Compare adjacent pairs and push the largest to the end.
 
-#### Stability
+```
+Initial:   [ 5 ][ 1 ][ 4 ][ 2 ][ 8 ]
 
-Bubble sort is stable. This means that two objects with equal keys will retain their relative order after sorting. Thus, if you had records sorted by name and then sorted them using bubble sort based on age, records with the same age would still maintain the name order.
+Compare 5 and 1 → swap
+           [ 1 ][ 5 ][ 4 ][ 2 ][ 8 ]
 
-#### Time Complexity
+Compare 5 and 4 → swap
+           [ 1 ][ 4 ][ 5 ][ 2 ][ 8 ]
 
-- In the **worst-case** scenario, the time complexity of bubble sort is $O(n^2)$, which occurs when the array is in reverse order.
-- The **average-case** time complexity is also $O(n^2)$, as bubble sort generally requires quadratic time for typical unsorted arrays.
-- In the **best-case** scenario, the time complexity is $O(n)$, which happens when the array is already sorted, especially if an optimization like early exit is implemented.
+Compare 5 and 2 → swap
+           [ 1 ][ 4 ][ 2 ][ 5 ][ 8 ]
 
-#### Space Complexity
+Compare 5 and 8 → no swap
+           [ 1 ][ 4 ][ 2 ][ 5 ][ 8 ]
+```
 
-$(O(1))$ - It sorts in place, so it doesn't require any additional memory beyond the input array.
+✔ Largest element **8** has bubbled to the end.
+
+**Pass 2**
+
+Now we only need to check the first 4 elements.
+
+```
+Start:     [ 1 ][ 4 ][ 2 ][ 5 ] [8]
+
+Compare 1 and 4 → no swap
+           [ 1 ][ 4 ][ 2 ][ 5 ] [8]
+
+Compare 4 and 2 → swap
+           [ 1 ][ 2 ][ 4 ][ 5 ] [8]
+
+Compare 4 and 5 → no swap
+           [ 1 ][ 2 ][ 4 ][ 5 ] [8]
+```
+
+✔ Second largest element **5** is now in place.
+
+**Pass 3**
+
+Check only the first 3 elements.
+
+```
+Start:     [ 1 ][ 2 ][ 4 ] [5][8]
+
+Compare 1 and 2 → no swap
+           [ 1 ][ 2 ][ 4 ] [5][8]
+
+Compare 2 and 4 → no swap
+           [ 1 ][ 2 ][ 4 ] [5][8]
+```
+
+✔ Sorted order is now reached.
+
+**Final Result**
+
+```
+[ 1 ][ 2 ][ 4 ][ 5 ][ 8 ]
+```
+
+**Visual Illustration of Bubble Effect**
+
+Here’s how the **largest values "bubble up"** to the right after each pass:
+
+```
+Pass 1:  [ 5  1  4  2  8 ] → [ 1  4  2  5  8 ]
+Pass 2:  [ 1  4  2  5 ]       → [ 1  2  4  5 ]  [8]
+Pass 3:  [ 1  2  4 ]          → [ 1  2  4 ]     [5 8]
+```
+
+Sorted! ✅
+
+**Optimizations**
+
+* By keeping track of whether any swaps were made during a pass, Bubble Sort can terminate early if the array is already sorted. This optimization makes Bubble Sort’s **best case** much faster ($O(n)$).
+
+**Stability**
+
+Bubble sort is **stable**.
+
+* If two elements have the same value, they remain in the same order relative to each other after sorting.
+* This is important when sorting complex records where a secondary key matters.
+
+**Complexity**
+
+| Case             | Time Complexity | Notes                                  |
+|------------------|-----------------|----------------------------------------|
+| **Worst Case**   | $O(n^2)$        | Array in reverse order                 |
+| **Average Case** | $O(n^2)$        | Typically quadratic comparisons        |
+| **Best Case**    | $O(n)$          | Already sorted + early exit optimization |
+| **Space**        | $O(1)$          | In-place, requires no extra memory     |
+
+**Implementation**
+
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/bubble_sort/src/bubble_sort.cpp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/bubble_sort/src/bubble_sort.py)
 
 ### Selection Sort
 
-Selection sort is another intuitive algorithm, widely taught in computer science curricula due to its straightforward mechanism. The crux of selection sort lies in repeatedly selecting the smallest (or largest, depending on the desired order) element from the unsorted section of the array and swapping it with the first unsorted element.
+Selection sort is another simple sorting algorithm, often introduced right after bubble sort because it is equally easy to understand.
 
-#### Conceptual Overview
+Instead of repeatedly "bubbling" elements, **selection sort works by repeatedly selecting the smallest (or largest) element** from the unsorted portion of the array and placing it into its correct position.
 
-Consider an array of numbers. The algorithm divides the array into two parts: a sorted subarray and an unsorted subarray. Initially, the sorted subarray is empty, while the entire array is unsorted. During each pass, the smallest element from the unsorted subarray is identified and then swapped with the first unsorted element. As a result, the sorted subarray grows by one element after each pass.
+Think of it like arranging books:
 
-#### Steps
+* Look through all the books, find the smallest one, and put it first.
+* Then, look through the rest, find the next smallest, and put it second.
+* Repeat until the shelf is sorted.
 
-1. Assume the first element is the smallest.
-2. Traverse the unsorted subarray and find the smallest element.
-3. Swap the found smallest element with the first element of the unsorted subarray.
-4. Move the boundary of the sorted and unsorted subarrays one element to the right.
-5. Repeat steps 1-4 until the entire array is sorted.
+**Step-by-Step Walkthrough**
+
+1. Start at the **first position**.
+2. Search the **entire unsorted region** to find the smallest element.
+3. Swap it with the element in the current position.
+4. Move the boundary of the sorted region one step forward.
+5. Repeat until all elements are sorted.
+
+**Example Run**
+
+We will sort the array:
 
 ```
-Start:
 [ 64 ][ 25 ][ 12 ][ 22 ][ 11 ]
+```
 
-Pass 1: find min(64,25,12,22,11)=11, swap with first element
-[ 11 ][ 25 ][ 12 ][ 22 ][ 64 ]
+**Pass 1**
 
-Pass 2: find min(25,12,22,64)=12, swap with second element
-[ 11 ][ 12 ][ 25 ][ 22 ][ 64 ]
+Find the smallest element in the entire array and put it in the first position.
 
-Pass 3: find min(25,22,64)=22, swap with third element
-[ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
+```
+Initial:    [ 64 ][ 25 ][ 12 ][ 22 ][ 11 ]
 
-Pass 4: find min(25,64)=25, swap with fourth element (self-swap)
-[ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
+Smallest = 11  
+Swap 64 ↔ 11  
 
-Pass 5: only one element remains, already in place
-[ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
+Result:     [ 11 ][ 25 ][ 12 ][ 22 ][ 64 ]
+```
 
-Result:
+✔ The first element is now in its correct place.
+
+**Pass 2**
+
+Find the smallest element in the remaining unsorted region.
+
+```
+Start:      [ 11 ][ 25 ][ 12 ][ 22 ][ 64 ]
+
+Smallest in [25,12,22,64] = 12  
+Swap 25 ↔ 12  
+
+Result:     [ 11 ][ 12 ][ 25 ][ 22 ][ 64 ]
+```
+
+✔ The second element is now in place.
+
+**Pass 3**
+
+Repeat for the next unsorted region.
+
+```
+Start:      [ 11 ][ 12 ][ 25 ][ 22 ][ 64 ]
+
+Smallest in [25,22,64] = 22  
+Swap 25 ↔ 22  
+
+Result:     [ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
+```
+
+✔ The third element is now in place.
+
+**Pass 4**
+
+Finally, sort the last two.
+
+```
+Start:      [ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
+
+Smallest in [25,64] = 25  
+Already in correct place → no swap  
+
+Result:     [ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
+```
+
+✔ Array fully sorted.
+
+**Final Result**
+
+```
 [ 11 ][ 12 ][ 22 ][ 25 ][ 64 ]
 ```
 
-#### Stability
+**Visual Illustration of Selection**
 
-Selection sort is inherently unstable. When two elements have equal keys, their relative order might change post-sorting. This can be problematic in scenarios where stability is crucial.
+Here’s how the **sorted region expands** from left to right:
 
-#### Time Complexity
+```
+Pass 1:  [ 64  25  12  22  11 ] → [ 11 ] [ 25  12  22  64 ]
+Pass 2:  [ 11 ][ 25  12  22  64 ] → [ 11  12 ] [ 25  22  64 ]
+Pass 3:  [ 11  12 ][ 25  22  64 ] → [ 11  12  22 ] [ 25  64 ]
+Pass 4:  [ 11  12  22 ][ 25  64 ] → [ 11  12  22  25 ] [ 64 ]
+```
 
-- In the **worst-case**, the time complexity is $O(n^2)$, as even if the array is already sorted, the algorithm still iterates through every element to find the smallest.
-- The **average-case** time complexity is also $O(n^2)$, since the algorithm's performance generally remains quadratic regardless of input arrangement.
-- In the **best-case**, the time complexity is still $O(n^2)$, unlike other algorithms, because selection sort always performs the same number of comparisons, regardless of the input's initial order.
+At each step:
 
-#### Space Complexity
+* The **left region is sorted** ✅
+* The **right region is unsorted** 🔄
 
-$(O(1))$ - The algorithm sorts in-place, meaning it doesn't use any extra space beyond what's needed for the input.
+**Optimizations**
 
-#### Implementation
+* Unlike bubble sort, **early exit is not possible** because selection sort always scans the entire unsorted region to find the minimum.
+* But it does fewer swaps: **at most (n-1) swaps**, compared to potentially many in bubble sort.
+
+**Stability**
+
+* **Selection sort is NOT stable** in its classic form.
+* If two elements are equal, their order may change due to swapping.
+* Stability can be achieved by inserting instead of swapping, but this makes the algorithm more complex.
+
+**Complexity**
+
+| Case             | Time Complexity | Notes                                      |
+|------------------|-----------------|--------------------------------------------|
+| **Worst Case**   | $O(n^2)$        | Scanning full unsorted region every pass   |
+| **Average Case** | $O(n^2)$        | Quadratic comparisons                      |
+| **Best Case**    | $O(n^2)$        | No improvement, still must scan every pass |
+| **Space**        | $O(1)$          | In-place sorting                           |
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/selection_sort/src/selection_sort.cpp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/selection_sort/src/selection_sort.py)
 
 ### Insertion Sort
 
-Insertion sort works much like how one might sort a hand of playing cards. It builds a sorted array (or list) one element at a time by repeatedly taking one element from the input and inserting it into the correct position in the already-sorted section of the array. Its simplicity makes it a common choice for teaching the basics of algorithm design.
+Insertion sort is a simple, intuitive sorting algorithm that works the way people often sort playing cards in their hands.
 
-#### Conceptual Overview
+It builds the **sorted portion one element at a time**, by repeatedly taking the next element from the unsorted portion and inserting it into its correct position among the already sorted elements.
 
-Imagine you have a series of numbers. The algorithm begins with the second element (assuming the first element on its own is already sorted) and inserts it into the correct position relative to the first. With each subsequent iteration, the algorithm takes the next unsorted element and scans through the sorted subarray, finding the appropriate position to insert the new element.
+The basic idea:
 
-#### Steps
+1. Start with the **second element** (the first element by itself is trivially sorted).
+2. Compare it with elements to its **left**.
+3. Shift larger elements one position to the right.
+4. Insert the element into the correct spot.
+5. Repeat until all elements are processed.
 
-1. Start at the second element (index 1) assuming the element at index 0 is sorted.
-2. Compare the current element with the previous elements.
-3. If the current element is smaller than the previous element, compare it with the elements before until you reach an element smaller or until you reach the start of the array. 
-4. Insert the current element into the correct position so that the elements before are all smaller.
-5. Repeat steps 2-4 for each element in the array.
+**Example Run**
+
+We will sort the array:
 
 ```
-Start:
-[ 12 ][ 11 ][ 13 ][  5 ][  6 ]
-
-Pass 1: key = 11, insert into [12]
-[ 11 ][ 12 ][ 13 ][  5 ][  6 ]
-
-Pass 2: key = 13, stays in place
-[ 11 ][ 12 ][ 13 ][  5 ][  6 ]
-
-Pass 3: key =  5, insert into [11,12,13]
-[  5 ][ 11 ][ 12 ][ 13 ][  6 ]
-
-Pass 4: key =  6, insert into [5,11,12,13]
-[  5 ][  6 ][ 11 ][ 12 ][ 13 ]
-
-Result:
-[  5 ][  6 ][ 11 ][ 12 ][ 13 ]
+[ 12 ][ 11 ][ 13 ][ 5 ][ 6 ]
 ```
 
-#### Stability
+**Pass 1: Insert 11**
 
-Insertion sort is stable. When two elements have equal keys, their relative order remains unchanged post-sorting. This stability is preserved since the algorithm only swaps elements if they are out of order, ensuring that equal elements never overtake each other.
+Compare 11 with 12 → shift 12 right → insert 11 before it.
 
-#### Time Complexity
+```
+Before:  [ 12 ][ 11 ][ 13 ][ 5 ][ 6 ]
+Action:  Insert 11 before 12
+After:   [ 11 ][ 12 ][ 13 ][ 5 ][ 6 ]
+```
 
-- In the **worst-case**, the time complexity is $O(n^2)$, which happens when the array is in reverse order, requiring every element to be compared with every other element.
-- The **average-case** time complexity is $O(n^2)$, as elements generally need to be compared with others, leading to quadratic performance.
-- In the **best-case**, the time complexity is $O(n)$, occurring when the array is already sorted, allowing the algorithm to simply pass through the array once without making any swaps.
+✔ Sorted portion: $[11, 12]$
 
-#### Space Complexity
+**Pass 2: Insert 13**
 
-$(O(1))$ - This in-place sorting algorithm doesn't need any additional storage beyond the input array.
+Compare 13 with 12 → already greater → stays in place.
 
-#### Implementation
+```
+Before:  [ 11 ][ 12 ][ 13 ][ 5 ][ 6 ]
+After:   [ 11 ][ 12 ][ 13 ][ 5 ][ 6 ]
+```
+
+✔ Sorted portion: [11, 12, 13]
+
+**Pass 3: Insert 5**
+
+Compare 5 with 13 → shift 13
+Compare 5 with 12 → shift 12
+Compare 5 with 11 → shift 11
+Insert 5 at start.
+
+```
+Before:  [ 11 ][ 12 ][ 13 ][ 5 ][ 6 ]
+Action:  Move 13 → Move 12 → Move 11 → Insert 5
+After:   [ 5 ][ 11 ][ 12 ][ 13 ][ 6 ]
+```
+
+✔ Sorted portion: [5, 11, 12, 13]
+
+**Pass 4: Insert 6**
+
+Compare 6 with 13 → shift 13
+Compare 6 with 12 → shift 12
+Compare 6 with 11 → shift 11
+Insert 6 after 5.
+
+```
+Before:  [ 5 ][ 11 ][ 12 ][ 13 ][ 6 ]
+Action:  Move 13 → Move 12 → Move 11 → Insert 6
+After:   [ 5 ][ 6 ][ 11 ][ 12 ][ 13 ]
+```
+
+✔ Sorted!
+
+**Final Result**
+
+```
+[ 5 ][ 6 ][ 11 ][ 12 ][ 13 ]
+```
+
+**Visual Growth of Sorted Region**
+
+```
+Start:   [ 12 | 11  13  5  6 ]
+Pass 1:  [ 11  12 | 13  5  6 ]
+Pass 2:  [ 11  12  13 | 5  6 ]
+Pass 3:  [ 5  11  12  13 | 6 ]
+Pass 4:  [ 5  6  11  12  13 ]
+```
+
+✔ The **bar ( | )** shows the boundary between **sorted** and **unsorted**.
+
+**Optimizations**
+
+* Efficient for **small arrays**.
+* Useful as a **helper inside more complex sorts** (e.g., Quick Sort or Merge Sort) for small subarrays.
+* Can be optimized with **binary search** to find insertion positions faster (but shifting still takes linear time).
+
+**Stability**
+
+Insertion sort is **stable** (equal elements keep their relative order).
+
+**Complexity**
+
+| Case             | Time Complexity | Notes                                             |
+|------------------|-----------------|---------------------------------------------------|
+| **Worst Case**   | $O(n^2)$        | Reverse-sorted input                              |
+| **Average Case** | $O(n^2)$        |                                                   |
+| **Best Case**    | $O(n)$          | Already sorted input — only comparisons, no shifts |
+| **Space**        | $O(1)$          | In-place                                          |
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/insertion_sort/src/insertion_sort.cpp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/insertion_sort/src/insertion_sort.py)
 
 ### Quick Sort
 
-Quick Sort, often simply referred to as "quicksort", is a divide-and-conquer algorithm that's renowned for its efficiency and is widely used in practice. Its name stems from its ability to sort large datasets quickly. The core idea behind quicksort is selecting a 'pivot' element and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot. The process is then recursively applied to the sub-arrays.
+Quick Sort is a **divide-and-conquer** algorithm. Unlike bubble sort or selection sort, which work by repeatedly scanning the whole array, Quick Sort works by **partitioning** the array into smaller sections around a "pivot" element and then sorting those sections independently.
 
-#### Conceptual Overview
+It is one of the **fastest sorting algorithms in practice**, widely used in libraries and systems.
 
-1. The first step is to **choose a pivot** from the array, which is the element used to partition the array. The pivot selection method can vary, such as picking the first element, the middle element, a random element, or using a more advanced approach like the median-of-three.
-2. During **partitioning**, the elements in the array are rearranged so that all elements less than or equal to the pivot are placed before it, and all elements greater than the pivot are placed after it. At this point, the pivot reaches its final sorted position.
-3. Finally, **recursion** is applied by repeating the same process for the two sub-arrays: one containing elements less than the pivot and the other containing elements greater than the pivot.
+The basic idea:
 
-#### Steps
+1. Choose a **pivot element** (commonly the last, first, middle, or random element).
+2. Rearrange (partition) the array so that:
+* All elements **smaller than the pivot** come before it.
+* All elements **larger than the pivot** come after it.
+3. The pivot is now in its **final sorted position**.
+4. Recursively apply Quick Sort to the **left subarray** and **right subarray**.
 
-1. Choose a 'pivot' from the array.
-2. Partition the array around the pivot, ensuring all elements on the left are less than the pivot and all elements on the right are greater than it.
-3. Recursively apply steps 1 and 2 to the left and right partitions.
-4. Repeat until base case: the partition has only one or zero elements.
+**Example Run**
 
+We will sort the array:
 
 ```
-Start:
-[ 10 ][ 7 ][ 8 ][ 9 ][ 1 ][ 5 ]
-
-Partition around pivot = 5:
-  • Compare and swap ↓
-    [  1 ][ 7 ][ 8 ][ 9 ][ 10 ][ 5 ]
-  • Place pivot in correct spot ↓
-    [  1 ][ 5 ][ 8 ][ 9 ][ 10 ][ 7 ]
-
-Recurse on left [1]  → already sorted  
-Recurse on right [8, 9, 10, 7]:
-
-  Partition around pivot = 7:
-    [  7 ][ 9 ][ 10 ][ 8 ]
-  Recurse left []       → []
-  Recurse right [9, 10, 8]:
-
-    Partition around pivot = 8:
-      [  8 ][ 10 ][ 9 ]
-    Recurse left []     → []
-    Recurse right [10, 9]:
-      Partition pivot = 9:
-        [  9 ][ 10 ]
-      → both sides sorted
-
-    → merge [8] + [9, 10] → [  8 ][  9 ][ 10 ]
-
-  → merge [7] + [8, 9, 10] → [  7 ][  8 ][  9 ][ 10 ]
-
-→ merge [1, 5] + [7, 8, 9, 10] → [  1 ][  5 ][  7 ][  8 ][  9 ][ 10 ]
-
-Result:
-[  1 ][  5 ][  7 ][  8 ][  9 ][ 10 ]
+[ 10 ][ 80 ][ 30 ][ 90 ][ 40 ][ 50 ][ 70 ]
 ```
 
-#### Stability
+**Step 1: Choose Pivot (last element = 70)**
 
-Quick sort is inherently unstable due to the long-distance exchanges of values. However, with specific modifications, it can be made stable, although this is not commonly done.
+Partition around 70.
 
-#### Time Complexity
+```
+Initial:   [ 10 ][ 80 ][ 30 ][ 90 ][ 40 ][ 50 ][ 70 ]
 
-- In the **worst-case**, the time complexity is $O(n^2)$, which can occur when the pivot is the smallest or largest element, resulting in highly unbalanced partitions. However, with effective pivot selection strategies, this scenario is rare in practice.
-- The **average-case** time complexity is $O(n \log n)$, which is expected when using a good pivot selection method that balances the partitions reasonably well.
-- In the **best-case**, the time complexity is also $O(n \log n)$, occurring when each pivot divides the array into two roughly equal-sized parts, leading to optimal partitioning.
+→ Elements < 70: [ 10, 30, 40, 50 ]  
+→ Pivot (70) goes here ↓
+Sorted split:  [ 10 ][ 30 ][ 40 ][ 50 ][ 70 ][ 90 ][ 80 ]
+```
 
-#### Space Complexity
+*(ordering of right side may vary during partition; only pivot’s position is guaranteed)*
 
-$(O(\log n))$ - Though quicksort sorts in place, it requires stack space for recursion, which in the best case is logarithmic.
+✔ Pivot (70) is in correct place.
 
-#### Implementation
+**Step 2: Left Subarray [10, 30, 40, 50]**
+
+Choose pivot = 50.
+
+```
+[ 10 ][ 30 ][ 40 ][ 50 ]   → pivot = 50
+
+→ Elements < 50: [10, 30, 40]  
+→ Pivot at correct place  
+
+Result: [ 10 ][ 30 ][ 40 ][ 50 ]
+```
+
+✔ Pivot (50) fixed.
+
+**Step 3: Left Subarray of Left [10, 30, 40]**
+
+Choose pivot = 40.
+
+```
+[ 10 ][ 30 ][ 40 ]   → pivot = 40
+
+→ Elements < 40: [10, 30]  
+→ Pivot at correct place  
+
+Result: [ 10 ][ 30 ][ 40 ]
+```
+
+✔ Pivot (40) fixed.
+
+**Step 4: [10, 30]**
+
+Choose pivot = 30.
+
+```
+[ 10 ][ 30 ]   → pivot = 30
+
+→ Elements < 30: [10]  
+
+Result: [ 10 ][ 30 ]
+```
+
+✔ Sorted.
+
+**Final Result**
+
+```
+[ 10 ][ 30 ][ 40 ][ 50 ][ 70 ][ 80 ][ 90 ]
+```
+
+**Visual Partition Illustration**
+
+Here’s how the array gets partitioned step by step:
+
+```
+Pass 1:  [ 10  80  30  90  40  50 | 70 ]  
+          ↓ pivot = 70  
+          [ 10  30  40  50 | 70 | 90  80 ]
+
+Pass 2:  [ 10  30  40 | 50 ] [70] [90  80]  
+          ↓ pivot = 50  
+          [ 10  30  40 | 50 ] [70] [90  80]
+
+Pass 3:  [ 10  30 | 40 ] [50] [70] [90  80]  
+          ↓ pivot = 40  
+          [ 10  30 | 40 ] [50] [70] [90  80]
+
+Pass 4:  [ 10 | 30 ] [40] [50] [70] [90  80]  
+          ↓ pivot = 30  
+          [ 10 | 30 ] [40] [50] [70] [90  80]
+```
+
+✔ Each pivot splits the problem smaller and smaller until fully sorted.
+
+**Optimizations**
+
+* **Pivot Choice:** Choosing a good pivot (e.g., median or random) improves performance.
+* **Small Subarrays:** For very small partitions, switch to Insertion Sort for efficiency.
+* **Tail Recursion:** Can optimize recursion depth.
+
+**Stability**
+
+* Quick Sort is **not stable** by default (equal elements may be reordered).
+* Stable versions exist, but require modifications.
+
+**Complexity**
+
+| Case             | Time Complexity | Notes                                                                 |
+|------------------|-----------------|----------------------------------------------------------------------|
+| **Worst Case**   | $O(n^2)$        | Poor pivot choices (e.g., always smallest/largest in sorted array)   |
+| **Average Case** | $O(n \log n)$   | Expected performance, very fast in practice                          |
+| **Best Case**    | $O(n \log n)$   | Balanced partitions                                                  |
+| **Space**        | $O(\log n)$     | Due to recursion stack                                               |
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/quick_sort/src/quick_sort.cpp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/quick_sort/src/quick_sort.py)
 
 ### Heap sort
 
-Heap Sort is a comparison-based sorting technique performed on a binary heap data structure. It leverages the properties of a heap to efficiently sort a dataset. The essential idea is to build a heap from the input data, then continuously extract the maximum element from the heap and reconstruct the heap until it's empty. The result is a sorted list.
+Heap Sort is a **comparison-based sorting algorithm** that uses a special data structure called a **binary heap**.
+It is efficient, with guaranteed $O(n \log n)$ performance, and sorts **in-place** (no extra array needed).
 
-#### Conceptual Overview
+The basic idea:
 
-1. The first step is to **build a max heap**, which involves transforming the list into a max heap (a complete binary tree where each node is greater than or equal to its children). This is typically achieved using a bottom-up approach to ensure the heap property is satisfied. *(Building the heap with Floyd’s bottom-up procedure costs Θ(*n*) time—lower than Θ(*n log n*)—so it never dominates the overall running time.)*
+1. **Build a max heap** from the input array.
+* In a max heap, every parent is greater than its children.
+* This ensures the **largest element is at the root** (first index).
+2. Swap the **root (largest element)** with the **last element** of the heap.
+3. Reduce the heap size by 1 (ignore the last element, which is now in place).
+4. **Heapify** (restore heap property).
+5. Repeat until all elements are sorted.
 
-2. During **sorting**, the maximum element (the root of the heap) is swapped with the last element of the unsorted portion of the array, placing the largest element in its final position. **After each swap, the newly “fixed” maximum stays at the end of the *same* array; the active heap is simply the prefix that remains unsorted.** The heap size is then reduced by one, and the unsorted portion is restructured into a max heap. This process continues until the heap size is reduced to one, completing the sort.
+**Example Run**
 
-#### Steps
-
-1. Construct a max heap from the given data. This will place the largest element at the root.
-2. Swap the root (maximum value) with the last element of the heap. This element is now considered sorted.
-3. Decrease the heap size by one (to exclude the sorted elements).
-4. "Heapify" the root of the tree, i.e., ensure the heap property is maintained.
-5. Repeat steps 2-4 until the size of the heap is one.
+We will sort the array:
 
 ```
-Initial array (size n = 5)                     index: 0 1 2 3 4
-        4                                        [4,10,3,5,1]
+[ 4 ][ 10 ][ 3 ][ 5 ][ 1 ]
+```
+
+**Step 1: Build Max Heap**
+
+Binary tree view:
+
+```
+        4
       /   \
     10     3
    /  \
   5    1
+```
 
-↓ BUILD MAX-HEAP  (Θ(n))  —> heapSize = 5
-        10                                       [10,5,3,4,1]
-      /    \
-     5      3
+Heapify → Largest at top:
+
+```
+       10
+      /   \
+     5     3
     / \
    4   1
+
+Array: [ 10 ][ 5 ][ 3 ][ 4 ][ 1 ]
 ```
 
-**Pass 1 extract-max**
+**Step 2: Swap Root with Last**
+
+Swap 10 ↔ 1 → largest (10) moves to correct final place.
 
 ```
-swap 10 ↔ 1                               [1,5,3,4 | 10]   heapSize = 4
-                                           ↑ live heap ↑  ↑fixed↑
-heapify (1↔5, 1↔4)  →                      [5,4,3,1 | 10]
+[ 1 ][ 5 ][ 3 ][ 4 ][ 10 ]
+```
 
-        5
-      /   \
-     4     3
+Heapify the reduced heap \[1,5,3,4]:
+
+```
+       5
+      / \
+     4   3
     /
    1
+
+Array: [ 5 ][ 4 ][ 3 ][ 1 ][ 10 ]
 ```
 
-**Pass 2 extract-max**
+**Step 3: Swap Root with Last**
+
+Swap 5 ↔ 1.
 
 ```
-swap 5 ↔ 1                                [1,4,3 | 5,10]   heapSize = 3
-heapify (1↔4)      →                      [4,1,3 | 5,10]
-
-        4
-      /   \
-     1     3
+[ 1 ][ 4 ][ 3 ][ 5 ][ 10 ]
 ```
 
-**Pass 3 extract-max**
+Heapify reduced heap \[1,4,3]:
 
 ```
-swap 4 ↔ 3                                [3,1 | 4,5,10]   heapSize = 2
-(no heapify needed – root already ≥ child)
+       4
+      / \
+     1   3
 
-        3
-       /
-      1
+Array: [ 4 ][ 1 ][ 3 ][ 5 ][ 10 ]
 ```
 
-**Pass 4 extract-max**
+**Step 4: Swap Root with Last**
+
+Swap 4 ↔ 3.
 
 ```
-swap 3 ↔ 1                                [1 | 3,4,5,10]   heapSize = 1
-(heap of size 1 is trivially a heap)
+[ 3 ][ 1 ][ 4 ][ 5 ][ 10 ]
 ```
 
-**Pass 5 extract-max**
+Heapify reduced heap \[3,1]:
 
 ```
-Done – heapSize = 0
-Sorted array:                              [1,3,4,5,10]
+       3
+      /
+     1
+
+Array: [ 3 ][ 1 ][ 4 ][ 5 ][ 10 ]
 ```
 
-#### Stability
+**Step 5: Swap Root with Last**
 
-Heap sort is inherently unstable. Similar to quicksort, the relative order of equal items is not preserved because of the long-distance exchanges.
+Swap 3 ↔ 1.
 
-#### Time Complexity
+```
+[ 1 ][ 3 ][ 4 ][ 5 ][ 10 ]
+```
 
-- In the **worst-case**, the time complexity is $O(n \log n)$, regardless of the arrangement of the input data.
-- The **average-case** time complexity is also $O(n \log n)$, as the algorithm's structure ensures consistent performance.
-- In the **best-case**, the time complexity remains $O(n \log n)$, since building and deconstructing the heap is still necessary, even if the input is already partially sorted.
+✔ Sorted array achieved.
 
-#### Space Complexity
+**Final Result**
 
-$O(1)$ – The sorting is done in-place, requiring only a constant amount of auxiliary space. **This assumes an *iterative* `siftDown/heapify`; a recursive version would add an \$O(\log n)\$ call stack.**
+```
+[ 1 ][ 3 ][ 4 ][ 5 ][ 10 ]
+```
 
-#### Implementation
+**Visual Progress**
+
+```
+Initial:   [ 4  10  3  5  1 ]
+Heapify:   [ 10  5  3  4  1 ]
+Step 1:    [ 5  4  3  1 | 10 ]
+Step 2:    [ 4  1  3 | 5  10 ]
+Step 3:    [ 3  1 | 4  5  10 ]
+Step 4:    [ 1 | 3  4  5  10 ]
+Sorted:    [ 1  3  4  5  10 ]
+```
+
+✔ Each step places the largest element into its correct final position.
+
+**Optimizations**
+
+* Building the heap can be done in **O(n)** time using bottom-up heapify.
+* After building, each extract-max + heapify takes **O(log n)**.
+
+**Stability**
+
+Heap sort is **not stable**. Equal elements may not preserve their original order because of swaps.
+
+**Complexity**
+
+| Case             | Time Complexity | Notes                          |
+|------------------|-----------------|--------------------------------|
+| **Worst Case**   | $O(n \log n)$   |                                |
+| **Average Case** | $O(n \log n)$   |                                |
+| **Best Case**    | $O(n \log n)$   | No early exit possible         |
+| **Space**        | $O(1)$          | In-place                       |
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/heap_sort/src/heap_sort.cpp)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/heap_sort/src/heap_sort.py)
+
+### Radix Sort
+
+Radix Sort is a **non-comparison-based sorting algorithm**.
+Instead of comparing elements directly, it processes numbers digit by digit, from either the **least significant digit (LSD)** or the **most significant digit (MSD)**, using a stable intermediate sorting algorithm (commonly **Counting Sort**).
+
+Because it avoids comparisons, Radix Sort can achieve **linear time complexity** in many cases.
+
+The basic idea:
+
+1. Pick a **digit position** (units, tens, hundreds, etc.).
+2. Sort the array by that digit using a **stable sorting algorithm**.
+3. Move to the next digit.
+4. Repeat until all digits are processed.
+
+**Example Run (LSD Radix Sort)**
+
+We will sort the array:
+
+```
+[ 170 ][ 45 ][ 75 ][ 90 ][ 802 ][ 24 ][ 2 ][ 66 ]
+```
+
+**Step 1: Sort by 1s place (units digit)**
+
+```
+Original: [170, 45, 75, 90, 802, 24, 2, 66]
+
+By 1s digit:
+[170][90] (0)
+[802][2]  (2)
+[24]      (4)
+[45][75]  (5)
+[66]      (6)
+
+Result: [170][90][802][2][24][45][75][66]
+```
+
+**Step 2: Sort by 10s place**
+
+```
+[170][90][802][2][24][45][75][66]
+
+By 10s digit:
+[802][2]   (0)
+[24]       (2)
+[45]       (4)
+[66]       (6)
+[170][75]  (7)
+[90]       (9)
+
+Result: [802][2][24][45][66][170][75][90]
+```
+
+**Step 3: Sort by 100s place**
+
+```
+[802][2][24][45][66][170][75][90]
+
+By 100s digit:
+[2][24][45][66][75][90]  (0)
+[170]                   (1)
+[802]                   (8)
+
+Result: [2][24][45][66][75][90][170][802]
+```
+
+**Final Result**
+
+```
+[ 2 ][ 24 ][ 45 ][ 66 ][ 75 ][ 90 ][ 170 ][ 802 ]
+```
+
+**Visual Process**
+
+```
+Step 1 (1s):   [170  90  802  2  24  45  75  66]
+Step 2 (10s):  [802  2  24  45  66  170  75  90]
+Step 3 (100s): [2  24  45  66  75  90  170  802]
+```
+
+✔ Each pass groups by digit → final sorted order.
+ 
+**LSD vs MSD**
+
+* **LSD (Least Significant Digit first):** Process digits from right (units) to left (hundreds). Most common, simpler.
+* **MSD (Most Significant Digit first):** Process from left to right, useful for variable-length data like strings.
+
+**Stability**
+
+* Radix Sort **is stable**, because it relies on a stable intermediate sort (like Counting Sort).
+* Equal elements remain in the same order across passes.
+
+**Complexity**
+
+* **Time Complexity:** $O(n \cdot k)$
+
+  * $n$ = number of elements
+  * $k$ = number of digits (or max digit length)
+
+* **Space Complexity:** $O(n + k)$ (depends on the stable sorting method used, e.g., Counting Sort).
+
+* For integers with fixed number of digits, Radix Sort can be considered **linear time**.
+
+**Implementation**
+
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/radix_sort/src/radix_sort.cpp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/radix_sort/src/radix_sort.py)
+
+### Counting Sort
+
+Counting Sort is a **non-comparison-based sorting algorithm** that works by **counting occurrences** of each distinct element and then calculating their positions in the output array.
+
+It is especially efficient when:
+
+* The input values are integers.
+* The **range of values (k)** is not significantly larger than the number of elements (n).
+
+The basic idea:
+
+1. Find the **range** of the input (min to max).
+2. Create a **count array** to store the frequency of each number.
+3. Modify the count array to store **prefix sums** (cumulative counts).
+* This gives the final position of each element.
+4. Place elements into the output array in order, using the count array.
+
+**Example Run**
+
+We will sort the array:
+
+```
+[ 4 ][ 2 ][ 2 ][ 8 ][ 3 ][ 3 ][ 1 ]
+```
+
+**Step 1: Count Frequencies**
+
+```
+Elements:  1  2  3  4  5  6  7  8
+Counts:    1  2  2  1  0  0  0  1
+```
+
+**Step 2: Prefix Sums**
+
+```
+Elements:  1  2  3  4  5  6  7  8
+Counts:    1  3  5  6  6  6  6  7
+```
+
+✔ Now each number tells us the **last index position** where that value should go.
+
+**Step 3: Place Elements**
+
+Process input from right → left (for stability).
+
+```
+Input:  [4,2,2,8,3,3,1]
+
+Place 1 → index 0
+Place 3 → index 4
+Place 3 → index 3
+Place 8 → index 6
+Place 2 → index 2
+Place 2 → index 1
+Place 4 → index 5
+```
+
+**Final Result**
+
+```
+[ 1 ][ 2 ][ 2 ][ 3 ][ 3 ][ 4 ][ 8 ]
+```
+
+**Visual Process**
+
+```
+Step 1 Count:   [0,1,2,2,1,0,0,0,1]
+Step 2 Prefix:  [0,1,3,5,6,6,6,6,7]
+Step 3 Output:  [1,2,2,3,3,4,8]
+```
+
+✔ Linear-time sorting by counting positions.
+
+**Stability**
+
+Counting Sort is **stable** if we place elements **from right to left** into the output array.
+
+**Complexity**
+
+| Case             | Time Complexity | Notes                                    |
+|------------------|-----------------|------------------------------------------|
+| **Overall**      | $O(n + k)$      | $n$ = number of elements, $k$ = value range |
+| **Space**        | $O(n + k)$      | Extra array for counts + output          |
+
+**Implementation**
+
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/counting_sort/src/counting_sort.cpp)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/counting_sort/src/counting_sort.py)
+
+### Comparison Table
+
+Below is a consolidated **side-by-side comparison** of all the sorts we’ve covered so far:
+
+| Algorithm      | Best Case  | Average     | Worst Case  | Space       | Stable? | Notes                  |
+|----------------|------------|-------------|-------------|-------------|---------|------------------------|
+| **Bubble Sort**    | O(n)       | O(n²)       | O(n²)       | O(1)        | Yes     | Simple, slow           |
+| **Selection Sort** | O(n²)      | O(n²)       | O(n²)       | O(1)        | No      | Few swaps              |
+| **Insertion Sort** | O(n)       | O(n²)       | O(n²)       | O(1)        | Yes     | Good for small inputs  |
+| **Quick Sort**     | O(n log n) | O(n log n)  | O(n²)       | O(log n)    | No      | Very fast in practice  |
+| **Heap Sort**      | O(n log n) | O(n log n)  | O(n log n)  | O(1)        | No      | Guaranteed performance |
+| **Counting Sort**  | O(n + k)   | O(n + k)    | O(n + k)    | O(n + k)    | Yes     | Integers only          |
+| **Radix Sort**     | O(nk)      | O(nk)       | O(nk)       | O(n + k)    | Yes     | Uses Counting Sort     |

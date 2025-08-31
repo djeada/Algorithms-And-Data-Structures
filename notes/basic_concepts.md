@@ -10,12 +10,73 @@ Data structures and algorithms are fundamental concepts in computer science that
 
 A **data structure** organizes and stores data in a way that allows efficient access, modification, and processing. The choice of the appropriate data structure depends on the specific use case and can significantly impact the performance of an application. Here are some common data structures:
 
-1. Imagine an **array** as a row of lockers, each labeled with a number and capable of holding one item of the same type. Technically, arrays are blocks of memory storing elements sequentially, allowing quick access using an index. However, arrays have a fixed size, which limits their flexibility when you need to add or remove items.
-2. Think of a **stack** like stacking plates: you always add new plates on top (push), and remove them from the top as well (pop). This structure follows the Last-In, First-Out (LIFO) approach, meaning the most recently added item is removed first. Stacks are particularly helpful in managing function calls (like in the call stack of a program) or enabling "undo" operations in applications.
-3. A **queue** is similar to a line at the grocery store checkout. People join at the end (enqueue) and leave from the front (dequeue), adhering to the First-In, First-Out (FIFO) principle. This ensures the first person (or item) that arrives is also the first to leave. Queues work great for handling tasks or events in the exact order they occur, like scheduling print jobs or processing messages.
-4. You can picture a **linked list** as a treasure hunt, where each clue leads you to the next one. Each clue, or node, holds data and a pointer directing you to the next node. Because nodes can be added or removed without shifting other elements around, linked lists offer dynamic and flexible management of data at any position.
-5. A **tree** resembles a family tree, starting from one ancestor (the root) and branching out into multiple descendants (nodes), each of which can have their own children. Formally, trees are hierarchical structures organized across various levels. They’re excellent for showing hierarchical relationships, such as organizing files on your computer or visualizing company structures.
-6. Consider a **graph** like a network of cities connected by roads. Each city represents a node, and the roads connecting them are edges, which can either be one-way (directed) or two-way (undirected). Graphs effectively illustrate complex relationships and networks, such as social media connections, website link structures, or even mapping transportation routes.
+**I. Array**
+
+Imagine an **array** as a row of lockers, each labeled with a number and capable of holding one item of the same type. Technically, arrays are blocks of memory storing elements sequentially, allowing quick access using an index. However, arrays have a fixed size, which limits their flexibility when you need to add or remove items.
+
+```
+Indices:  0   1   2   3
+Array:   [A] [B] [C] [D]
+```
+
+**II. Stack**
+
+Think of a **stack** like stacking plates: you always add new plates on top (push), and remove them from the top as well (pop). This structure follows the Last-In, First-Out (LIFO) approach, meaning the most recently added item is removed first. Stacks are particularly helpful in managing function calls (like in the call stack of a program) or enabling "undo" operations in applications.
+
+```
+Top
+ ┌───┐
+ │ C │  ← most recent (pop/push here)
+ ├───┤
+ │ B │
+ ├───┤
+ │ A │
+ └───┘
+Bottom
+```
+
+**III. Queue**
+
+A **queue** is similar to a line at the grocery store checkout. People join at the end (enqueue) and leave from the front (dequeue), adhering to the First-In, First-Out (FIFO) principle. This ensures the first person (or item) that arrives is also the first to leave. Queues work great for handling tasks or events in the exact order they occur, like scheduling print jobs or processing messages.
+
+```
+Front → [A] → [B] → [C] → [D] ← Rear
+(dequeue)                 (enqueue)
+```
+
+**IV. Linked List**
+
+You can picture a **linked list** as a treasure hunt, where each clue leads you to the next one. Each clue, or node, holds data and a pointer directing you to the next node. Because nodes can be added or removed without shifting other elements around, linked lists offer dynamic and flexible management of data at any position.
+
+```
+Head -> [A] -> [B] -> [C] -> NULL
+```
+
+**V. Tree**
+
+A **tree** resembles a family tree, starting from one ancestor (the root) and branching out into multiple descendants (nodes), each of which can have their own children. Formally, trees are hierarchical structures organized across various levels. They’re excellent for showing hierarchical relationships, such as organizing files on your computer or visualizing company structures.
+
+```
+# Tree
+        (Root)
+        /    \
+     (L)     (R)
+    /  \       \
+ (LL) (LR)     (RR)
+```
+
+**VI. Graph**
+
+Consider a **graph** like a network of cities connected by roads. Each city represents a node, and the roads connecting them are edges, which can either be one-way (directed) or two-way (undirected). Graphs effectively illustrate complex relationships and networks, such as social media connections, website link structures, or even mapping transportation routes.
+
+```
+(A) ↔ (B)
+ |       \
+(C) ---> (D)
+```
+
+(↔ undirected edge, ---> directed edge)
+
 
 ![image](https://github.com/user-attachments/assets/f1962de7-aa28-4348-9933-07e49c737cd9)
 
@@ -88,10 +149,7 @@ sum = num1 + num2
 print("The sum is", sum)
 ```
 
-To recap:
-
-- Algorithms are abstract instructions designed to terminate after a finite number of steps.
-- Programs are concrete implementations, which may sometimes run indefinitely or until an external action stops them. For instance, an operating system is a program designed to run continuously until explicitly terminated.
+Programs may sometimes run indefinitely or until an external action stops them. For instance, an operating system is a program designed to run continuously until explicitly terminated.
 
 #### Types of Algorithms
 
@@ -101,13 +159,14 @@ I. **Sorting Algorithms** arrange data in a specific order, such as ascending or
 
 Example: Bubble Sort
 
-```
-Initial Array: [5, 3, 8, 4, 2]
+Initial Array: `[5, 3, 8, 4, 2]`
 
 Steps:
+
 1. Compare adjacent elements and swap if needed.
 2. Repeat for all elements.
 
+```
 After 1st Pass: [3, 5, 4, 2, 8]
 After 2nd Pass: [3, 4, 2, 5, 8]
 After 3rd Pass: [3, 2, 4, 5, 8]
@@ -118,16 +177,17 @@ II. **Search Algorithms** are designed to find a specific item or value within a
 
 Example: Binary Search
 
-```
-Searching 33 in Sorted Array: [1, 3, 5, 7, 9, 11, 33, 45, 77, 89]
+Searching 33 in Sorted Array: `[1, 3, 5, 7, 9, 11, 33, 45, 77, 89]`
 
 Steps:
+
 1. Start with the middle element.
 2. If the middle element is the target, return it.
 3. If the target is greater, ignore the left half.
 4. If the target is smaller, ignore the right half.
 5. Repeat until the target is found or the subarray is empty.
 
+```
 Mid element at start: 9
 33 > 9, so discard left half
 New mid element: 45
@@ -137,64 +197,98 @@ New mid element: 11
 The remaining element is 33, which is the target.
 ```
 
-**Graph Algorithms** address problems related to graphs, such as finding the shortest path between nodes or determining if a graph is connected. Examples include Dijkstra's algorithm and the Floyd-Warshall algorithm.
+III. **Graph Algorithms** address problems related to graphs, such as finding the shortest path between nodes or determining if a graph is connected. Examples include Dijkstra's algorithm and the Floyd-Warshall algorithm.
 
 Example: Dijkstra's Algorithm
 
-```
 Given a graph with weighted edges, find the shortest path from a starting node to all other nodes.
 
 Steps:
+
 1. Initialize the starting node with a distance of 0 and all other nodes with infinity.
 2. Visit the unvisited node with the smallest known distance.
 3. Update the distances of its neighboring nodes.
 4. Repeat until all nodes have been visited.
 
 Example Graph:
+
+```
 A -> B (1)
 A -> C (4)
 B -> C (2)
 B -> D (5)
 C -> D (1)
+```
+
+Trace Table
+
+| Iter | Extracted Node (u) | PQ before extraction               | dist[A,B,C,D] | prev[A,B,C,D] | Visited   | Comments / Updates                                                                      |
+| ---- | ------------------ | ---------------------------------- | -------------- | -------------- | --------- | --------------------------------------------------------------------------------------- |
+| 0    | — (initial)        | (0, A)                             | [0, ∞, ∞, ∞]  | [-, -, -, -]  | {}        | Initialization: A=0, others ∞                                                           |
+| 1    | A (0)              | (0, A)                             | [0, 1, 4, ∞]  | [-, A, A, -]  | {A}       | Relax A→B (1), A→C (4); push (1,B), (4,C)                                               |
+| 2    | B (1)              | (1, B), (4, C)                     | [0, 1, 3, 6]  | [-, A, B, B]  | {A, B}    | Relax B→C: alt=3 <4 ⇒ update C; B→D: dist[D]=6; push (3,C), (6,D). (4,C) becomes stale |
+| 3    | C (3)              | (3, C), (4, C) stale, (6, D)       | [0, 1, 3, 4]  | [-, A, B, C]  | {A, B, C} | Relax C→D: alt=4 <6 ⇒ update D; push (4,D). (6,D) becomes stale                         |
+| 4    | D (4)              | (4, D), (4, C) stale, (6, D) stale | [0, 1, 3, 4]  | [-, A, B, C]  | {A,B,C,D} | No outgoing improvements; done                                                          |
+
+Legend:
+
+* `dist[X]`: current best known distance from A to X
+* `prev[X]`: predecessor of X on that best path
+* PQ: min-heap of (tentative distance, node); stale entries (superseded by better distance) are shown in parentheses
+* Visited: nodes whose shortest distance is finalized
 
 Starting from A:
+
 - Shortest path to B: A -> B (1)
 - Shortest path to C: A -> B -> C (3)
 - Shortest path to D: A -> B -> C -> D (4)
-```
 
-**String Algorithms** deal with problems related to strings, such as finding patterns or matching sequences. Examples include the Knuth-Morris-Pratt (KMP) algorithm and the Boyer-Moore algorithm.
+IV. **String Algorithms** deal with problems related to strings, such as finding patterns or matching sequences. Examples include the Knuth-Morris-Pratt (KMP) algorithm and the Boyer-Moore algorithm.
 
 Example: Boyer-Moore Algorithm
 
 ```
 Text:    "ABABDABACDABABCABAB"
 Pattern: "ABABCABAB"
+```
 
 Steps:
+
 1. Compare the pattern from right to left.
 2. If a mismatch occurs, use the bad character and good suffix heuristics to skip alignments.
 3. Repeat until the pattern is found or the text is exhausted.
 
+| Iter | Start | Text window | Mismatch (pattern vs text)                | Shift applied                                      | Next Start | Result          |
+| ---- | ----- | ----------- | ----------------------------------------- | -------------------------------------------------- | ---------- | --------------- |
+| 1    | 0     | `ABABDABAC` | pattern[8]=B vs text[8]=C                 | bad char C → last in pattern at idx4 ⇒ 8−4 = **4** | 4          | no match        |
+| 2    | 4     | `DABACDABA` | pattern[8]=B vs text[12]=A                | bad char A → last at idx7 ⇒ 8−7 = **1**            | 5          | no match        |
+| 3    | 5     | `ABACDABAB` | pattern[4]=C vs text[9]=D                 | D not in pattern ⇒ 4−(−1)= **5**                   | 10         | no match        |
+| 4    | 10    | `ABABCABAB` | full right-to-left comparison → **match** | —                                                  | —          | **found** at 10 |
+
 Pattern matched starting at index 10 in the text.
-```
 
 #### Important Algorithms for Software Engineers
 
-- As a software engineer, it is not necessary to **master every algorithm**. Instead, knowing how to effectively use libraries and packages that implement widely-used algorithms is more practical.
+- As a software engineer, it is not necessary to **master every algorithm**. Instead, knowing how to use libraries and packages that implement widely-used algorithms is more practical.
 - The important skill is the ability to **select the right algorithm** for a task by considering factors such as its efficiency, the problem’s requirements, and any specific constraints.
 - Learning **algorithms** during the early stages of programming enhances problem-solving skills. It builds a solid foundation in logical thinking, introduces various problem-solving strategies, and helps in understanding how to approach complex issues.
 - Once the **fundamentals of algorithms** are understood, the focus often shifts to utilizing pre-built libraries and tools for solving real-world problems, as writing algorithms from scratch is rarely needed in practice.
+
+Real Life Story:
+
+```
+When Zara landed her first job at a logistics-tech startup, her assignment was to route delivery vans through a sprawling city in under a second—something she’d never tackled before.  She remembered the semester she’d wrestled with graph theory and Dijkstra’s algorithm purely for practice, so instead of hand-coding the logic she opened the company’s Python stack and pulled in NetworkX, benchmarking its built-in shortest-path routines against the map’s size and the firm’s latency budget.  The initial results were sluggish, so she compared A* with Dijkstra, toggling heuristics until the run time dipped below 500 ms, well under the one-second target.  Her teammates were impressed not because she reinvented an algorithm, but because she knew which one to choose, how to reason about its complexity, and where to find a rock-solid library implementation.  Later, in a sprint retrospective, Zara admitted that mastering algorithms in college hadn’t been about memorizing code—it had trained her to dissect problems, weigh trade-offs, and plug in the right tool when every millisecond and memory block counted.
+```
 
 ### Understanding Algorithmic Complexity
 
 Algorithmic complexity helps us understand the computational resources (time or space) an algorithm needs as the input size increases. Here’s a breakdown of different types of complexity:
 
-* *Best-case complexity* describes how quickly or efficiently an algorithm runs under the most favorable conditions. For example, an algorithm with a best-case complexity of O(1) performs its task instantly, regardless of how much data it processes.
-* *Average-case complexity* reflects the typical performance of an algorithm across all possible inputs. Determining this can be complex, as it involves analyzing how often different inputs occur and how each one influences the algorithm's overall performance.
-* *Worst-case complexity* defines the maximum amount of time or resources an algorithm could consume when faced with the most difficult or demanding inputs. Understanding the worst-case scenario is crucial because it sets an upper limit on performance, ensuring predictable and reliable behavior.
-* *Space complexity* refers to how much memory an algorithm needs relative to the amount of data it processes. It's an important consideration when memory availability is limited or when optimizing an algorithm to be resource-efficient.
-* *Time complexity* indicates how the execution time of an algorithm increases as the input size grows. Typically, this is the primary focus when evaluating algorithm efficiency because faster algorithms are generally more practical and user-friendly.
+* In an ideal input scenario, *best-case complexity* shows the minimum work an algorithm will do; include it to set expectations for quick interactions, omit it and you may overlook fast paths that are useful for user experience, as when insertion sort finishes almost immediately on a nearly sorted list.
+* When you ask what to expect most of the time, *average-case complexity* estimates typical running time; include it to make useful forecasts under normal workloads, omit it and designs can seem fine in tests but lag on common inputs, as with randomly ordered customer IDs that need $O(n log n)$ sorting.
+* By establishing an upper bound, *worst-case complexity* tells you the maximum time or space an algorithm might need; include it to ensure predictable behavior, omit it and peak loads can surprise you, as when quicksort degrades to $O(n^2)$ on already sorted input without careful pivot selection.
+* On memory-limited devices, *space complexity* measures how much extra storage an algorithm requires; include it to fit within available RAM, omit it and an otherwise fast solution may crash or swap, as when merge sort’s $O(n)$ auxiliary array overwhelms a phone with little free memory.
+* As your dataset scales, *time complexity* describes how running time expands with input size; include it to choose faster approaches, omit it and performance can degrade sharply, as when an $O(n^2)$ deduplication routine turns a minute-long job into hours after a customer list doubles.
 
 #### Analyzing Algorithm Growth Rates
 
@@ -208,6 +302,8 @@ If we designate $f(n)$ as the actual complexity and $g(n)$ as the function in Bi
 
 For instance, if an algorithm has a time complexity of $O(n)$, it signifies that the algorithm's running time does not grow more rapidly than a linear function of the input size, in the worst-case scenario.
 
+<img width="1750" height="1110" alt="0902bace-952d-4c80-9533-5706e28ef3e9" src="https://github.com/user-attachments/assets/152fe1b7-3e0b-4a6d-b2d1-abf248ca90cf" />
+
 ##### Big Omega Notation (Ω-notation)
 
 The Big Omega notation provides an asymptotic lower bound that expresses the best-case scenario for the time or space complexity of an algorithm.
@@ -216,13 +312,17 @@ If $f(n) = Ω(g(n))$, this means that $f(n)$ grows at a rate that is at least as
 
 For example, if an algorithm has a time complexity of $Ω(n)$, it implies that the running time is at the bare minimum proportional to the input size in the best-case scenario.
 
+<img width="1707" height="1103" alt="d189ece7-e9c2-4797-8e0d-720336c4ba4a" src="https://github.com/user-attachments/assets/9984cad4-e131-4d52-bcad-8206b03e625f" />
+
 ##### Theta Notation (Θ-notation)
 
 Theta notation offers a representation of the average-case scenario for an algorithm's time or space complexity. It sets an asymptotically tight bound, implying that the function grows neither more rapidly nor slower than the bound.
 
 Stating $f(n) = Θ(g(n))$ signifies that $f(n)$ grows at the same rate as $g(n)$ under average circumstances. This indicates the time or space complexity is both at most and at least a linear function of the input size.
 
-Remember, these notations primarily address the growth rate as the input size becomes significantly large. While they offer a high-level comprehension of an algorithm's performance, the actual running time in practice can differ based on various factors, such as the specific input data, the hardware or environment where the algorithm is operating, and the precise way the algorithm is implemented in the code.
+<img width="1707" height="1103" alt="ef39373a-8e6a-4e5b-832f-698b4dde7c7e" src="https://github.com/user-attachments/assets/bb11e34a-da8f-45a6-9eab-cbc05676a334" />
+
+These notations primarily address the growth rate as the input size becomes significantly large. While they offer a high-level comprehension of an algorithm's performance, the actual running time in practice can differ based on various factors, such as the specific input data, the hardware or environment where the algorithm is operating, and the precise way the algorithm is implemented in the code.
 
 #### Diving into Big O Notation Examples
 
