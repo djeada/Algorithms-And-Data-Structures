@@ -167,9 +167,17 @@ Reverse each row left $\leftrightarrow$ right.
 *Example*
 
 $$
-\text{Input: }\begin{bmatrix}1&2&3\\4&5&6\end{bmatrix}
+\text{Input: }
+\begin{bmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6
+\end{bmatrix}
 \quad\Rightarrow\quad
-\text{Output: }\begin{bmatrix}3&2&1\\6&5&4\end{bmatrix}
+\text{Output: }
+\begin{bmatrix}
+3 & 2 & 1 \\
+6 & 5 & 4
+\end{bmatrix}
 $$
 
 * Time: $O(R\cdot C)$
@@ -184,9 +192,19 @@ Reverse each column top $\leftrightarrow$ bottom.
 *Example*
 
 $$
-\text{Input: }\begin{bmatrix}1&2&3\\4&5&6\\7&8&9\end{bmatrix}
+\text{Input: }
+\begin{bmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{bmatrix}
 \quad\Rightarrow\quad
-\text{Output: }\begin{bmatrix}7&8&9\\4&5&6\\1&2&3\end{bmatrix}
+\text{Output: }
+\begin{bmatrix}
+7 & 8 & 9 \\
+4 & 5 & 6 \\
+1 & 2 & 3
+\end{bmatrix}
 $$
 
 * Time: $O(R\cdot C)$
