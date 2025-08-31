@@ -1,6 +1,3 @@
-TODO:
-- topological sort
-
 ## Graphs
 
 In many areas of life, we come across systems where elements are deeply interconnected—whether through physical routes, digital networks, or abstract relationships. Graphs offer a flexible way to represent and make sense of these connections.
@@ -197,7 +194,18 @@ Attempting to avoid one crossing in $K_5$ inevitably forces another crossing els
 
 ### Traversals
 
-- When we **traverse** a graph, we visit its vertices in an organized way to make sure we don’t miss any vertices or edges.
+What does it mean to traverse a graph?
+
+Graph traversal **can** be done in a way that visits *all* vertices and edges (like a full DFS/BFS), but it doesn’t *have to*.
+
+* If you start DFS or BFS from a single source vertex, you’ll only reach the **connected component** containing that vertex. Any vertices in other components won’t be visited.
+* Some algorithms (like shortest path searches, A\*, or even partial DFS) intentionally stop early, meaning not all vertices or edges are visited.
+* In weighted or directed graphs, you may also skip certain edges depending on the traversal rules.
+
+So the precise way to answer that question is:
+
+> **Graph traversal is a systematic way of exploring vertices and edges, often ensuring complete coverage of the reachable part of the graph — but whether all vertices/edges are visited depends on the algorithm and stopping conditions.**
+
 - Graphs, unlike **trees**, don’t have a single starting point like a root. This means we either need to be given a starting vertex or pick one randomly.
 - Let’s say we start from a specific vertex, like **$i$**. From there, the traversal explores all connected vertices according to the rules of the chosen method.
 - In both **breadth-first search (BFS)** and **depth-first search (DFS)**, the order of visiting vertices depends on how the algorithm is implemented.
@@ -206,524 +214,869 @@ Attempting to avoid one crossing in $K_5$ inevitably forces another crossing els
 
 #### Breadth-First Search (BFS)
 
-Breadth-First Search (BFS) is a fundamental graph traversal algorithm that explores the vertices of a graph in layers, starting from a specified source vertex. It progresses by visiting all immediate neighbors of the starting point, then the neighbors of those neighbors, and so on.
+Breadth-First Search (BFS) is a fundamental graph traversal algorithm that explores a graph **level by level** from a specified start vertex. It first visits all vertices at distance 1 from the start, then all vertices at distance 2, and so on. This makes BFS the natural choice whenever “closest in number of edges” matters.
 
 To efficiently keep track of the traversal, BFS employs two primary data structures:
 
-* A queue, typically named `unexplored` or `queue`, to store nodes that are pending exploration.
-* A hash table or a set called `visited` to ensure that we do not revisit nodes.
+* A **queue** (often named `queue` or `unexplored`) that stores vertices pending exploration in **first-in, first-out (FIFO)** order.
+* A **`visited` set** (or boolean array) that records which vertices have already been discovered to prevent revisiting.
 
-##### Algorithm Steps
+*Useful additions in practice:*
 
-1. Begin from a starting vertex, $i$.
-2. Mark the vertex $i$ as visited.
-3. Explore each of its neighbors. If the neighbor hasn't been visited yet, mark it as visited and enqueue it in `unexplored`.
-4. Dequeue the front vertex from `unexplored` and repeat step 3.
-5. Continue this process until the `unexplored` queue becomes empty.
+* An optional **`parent` map** to reconstruct shortest paths (store `parent[child] = current` when you first discover `child`).
+* An optional **`dist` map** to record the edge-distance from the start (`dist[start] = 0`, and when discovering `v` from `u`, set `dist[v] = dist[u] + 1`).
 
-To ensure the algorithm doesn't fall into an infinite loop due to cycles in the graph, it could be useful to mark nodes as visited as soon as they are enqueued. This prevents them from being added to the queue multiple times.
+**Algorithm Steps**
 
-##### Example
+1. Begin from a starting vertex, \$i\$.
+2. Initialize `visited = {i}`, set `parent[i] = None`, optionally `dist[i] = 0`, and **enqueue** \$i\$ into `queue`.
+3. While `queue` is not empty:
+1. **Dequeue** the front vertex `u`.
+2. For **each neighbor** `v` of `u`:
+* If `v` is **not** in `visited`, add `v` to `visited`, set `parent[v] = u` (and `dist[v] = dist[u] + 1` if tracking distances), and **enqueue** `v`.
+4. Continue until the queue becomes empty.
+
+Marking nodes as **visited at the moment they are enqueued** (not when dequeued) is crucial: it prevents the same node from being enqueued multiple times in graphs with cycles or multiple incoming edges.
+
+*Reference pseudocode (adjacency-list graph):*
 
 ```
-Queue: Empty          Visited: A, B, C, D, E
+BFS(G, i):
+    visited = {i}
+    parent  = {i: None}
+    dist    = {i: 0}            # optional
+    queue   = [i]
 
-   A
-  / \
- B   C
- |   |
- D   E
+    order = []                  # optional: visitation order
+
+    while queue:
+        u = queue.pop(0)        # dequeue
+        order.append(u)
+
+        for v in G[u]:          # iterate neighbors
+            if v not in visited:
+                visited.add(v)
+                parent[v] = u
+                dist[v] = dist[u] + 1   # if tracking
+                queue.append(v)
+
+    return order, parent, dist
 ```
 
-In this example, BFS started at the top of the graph and worked its way down, visiting nodes in order of their distance from the starting node. The ASCII representation provides a step-by-step visualization of BFS using a queue and a list of visited nodes.
+*Sanity notes:*
 
-##### Applications
+* **Time:** $O(V + E)$ for a graph with $V$ vertices and $E$ edges (each vertex enqueued once; each edge considered once).
+* **Space:** $O(V)$ for the queue + visited (+ parent/dist if used).
+* BFS order can differ depending on **neighbor iteration order**.
 
-BFS is not only used for simple graph traversal. Its applications span multiple domains:
+**Example**
 
-1. BFS can determine the **shortest path** in an unweighted graph from a source to all other nodes.
-2. To find all **connected components** in an undirected graph, you can run BFS on every unvisited node.
-3. BFS mirrors the propagation in broadcasting networks, where a message is forwarded to neighboring nodes, and they subsequently forward it to their neighbors.
-4. If during BFS traversal, an already visited node is encountered (and it's not the parent of the current node in traversal), then there exists a cycle in the graph.
+Graph (undirected) with start at **A**:
 
-##### Implementation
+```
+           ┌─────┐
+           │  A  │
+           └──┬──┘
+          ┌───┘ └───┐
+        ┌─▼─┐     ┌─▼─┐
+        │ B │     │ C │
+        └─┬─┘     └─┬─┘
+        ┌─▼─┐     ┌─▼─┐
+        │ D │     │ E │
+        └───┘     └───┘
+
+Edges: A–B, A–C, B–D, C–E
+```
+
+*Queue/Visited evolution (front → back):*
+
+```
+Step | Dequeued | Action                                   | Queue            | Visited
+-----+----------+-------------------------------------------+------------------+----------------
+0    | —        | enqueue A                                 | [A]              | {A}
+1    | A        | discover B, C; enqueue both               | [B, C]           | {A, B, C}
+2    | B        | discover D; enqueue                       | [C, D]           | {A, B, C, D}
+3    | C        | discover E; enqueue                       | [D, E]           | {A, B, C, D, E}
+4    | D        | no new neighbors                          | [E]              | {A, B, C, D, E}
+5    | E        | no new neighbors                          | []               | {A, B, C, D, E}
+```
+
+*BFS tree and distances from A:*
+
+```
+dist[A]=0
+A → B (1), A → C (1)
+B → D (2), C → E (2)
+
+Parents: parent[B]=A, parent[C]=A, parent[D]=B, parent[E]=C
+Shortest path A→E: backtrack E→C→A  ⇒  A - C - E
+```
+
+**Applications**
+
+1. **Shortest paths in unweighted graphs.**
+   BFS computes the minimum number of edges from the source to every reachable node. Use the `parent` map to reconstruct actual paths.
+
+2. **Connected components (undirected graphs).**
+   Repeatedly run BFS from every unvisited vertex; each run discovers exactly one component.
+
+3. **Broadcast/propagation modeling.**
+   BFS mirrors “wavefront” spread (e.g., message fan-out, infection spread, multi-hop neighborhood queries).
+
+4. **Cycle detection (undirected graphs).**
+   During BFS, if you encounter a neighbor that is already **visited** and is **not** the parent of the current vertex, a cycle exists.
+   *Note:* For **directed graphs**, detecting cycles typically uses other techniques (e.g., DFS with recursion stack or Kahn’s algorithm on indegrees).
+
+5. **Bipartite testing.**
+   While BFS’ing, assign alternating “colors” by level; if you ever see an edge connecting the **same** color, the graph isn’t bipartite.
+
+6. **Multi-source searches.**
+   Initialize the queue with **several** starting nodes at once (all with `dist=0`). This solves “nearest facility” style problems efficiently.
+
+7. **Topological sorting via Kahn’s algorithm (DAGs).**
+   A BFS-like process over vertices of indegree 0 (using a queue) produces a valid topological order for directed acyclic graphs.
+
+**Implementation**
+
+*Implementation tip:* For dense graphs or when memory locality matters, an adjacency **matrix** can be used, but the usual adjacency **list** representation is more space- and time-efficient for sparse graphs.
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/bfs)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bfs)
 
 #### Depth-First Search (DFS)
 
-Depth-First Search (DFS) is another fundamental graph traversal algorithm, but unlike BFS which traverses level by level, DFS dives deep into the graph, exploring as far as possible along each branch before backtracking.
+Depth-First Search (DFS) is a fundamental graph traversal algorithm that explores **as far as possible** along each branch before backtracking. Starting from a source vertex, it dives down one neighbor, then that neighbor’s neighbor, and so on—only backing up when it runs out of new vertices to visit.
 
-To implement DFS, we use two main data structures:
+To track the traversal efficiently, DFS typically uses:
 
-* A stack, either implicitly using the call stack through recursion or explicitly using a data structure. This stack is responsible for tracking vertices that are to be explored.
-* A hash table or set called `visited` to ensure nodes aren't revisited.
+* A **call stack** via **recursion** *or* an explicit **stack** data structure (LIFO).
+* A **`visited` set** (or boolean array) to avoid revisiting vertices.
 
-##### Algorithm Steps
+*Useful additions in practice:*
 
-1. Begin from a starting vertex, $i$.
-2. Mark vertex $i$ as visited.
-3. Visit an unvisited neighbor of $i$, mark it as visited, and move to that vertex.
-4. Repeat the above step until the current vertex has no unvisited neighbors.
-5. Backtrack to the previous vertex and explore other unvisited neighbors.
-6. Continue this process until you've visited all vertices connected to the initial start vertex.
+* A **`parent` map** to reconstruct paths and build the DFS tree (`parent[child] = current` on discovery).
+* Optional **timestamps** (`tin[u]` on entry, `tout[u]` on exit) to reason about edge types, topological order, and low-link computations.
+* Optional **`order` lists**: pre-order (on entry) and post-order (on exit).
 
-Marking nodes as visited as soon as you encounter them is important to avoid infinite loops, particularly in graphs with cycles.
+**Algorithm Steps**
 
-##### Example
+1. Begin at starting vertex $i$.
+2. Mark $i$ as **visited**, optionally set `parent[i] = None`, record `tin[i]`.
+3. For each neighbor $v$ of the current vertex $u$:
+
+   * If $v$ is **unvisited**, set `parent[v] = u` and **recurse** (or push onto a stack) into $v$.
+4. After all neighbors of $u$ are explored, record `tout[u]` and **backtrack** (return or pop).
+5. Repeat for any remaining unvisited vertices (to cover disconnected graphs).
+
+Mark vertices **when first discovered** (on entry/push) to prevent infinite loops in cyclic graphs.
+
+*Pseudocode (recursive, adjacency list):*
 
 ```
-Stack: Empty          Visited: A, B, D, C, E
+time = 0
 
-   A
-  / \
- B   C
- |   |
- D   E
+DFS(G, i):
+    visited = set()
+    parent  = {i: None}
+    tin     = {}
+    tout    = {}
+    pre     = []       # optional: order on entry
+    post    = []       # optional: order on exit
+
+    def explore(u):
+        nonlocal time
+        visited.add(u)
+        time += 1
+        tin[u] = time
+        pre.append(u)               # preorder
+
+        for v in G[u]:
+            if v not in visited:
+                parent[v] = u
+                explore(v)
+
+        time += 1
+        tout[u] = time
+        post.append(u)              # postorder
+
+    explore(i)
+    return pre, post, parent, tin, tout
 ```
 
-In this example, DFS explored as deep as possible along the left side (branch with B and D) of the graph before backtracking and moving to the right side (branch with C and E). The ASCII representation provides a step-by-step visualization of DFS using a stack and a list of visited nodes.
+*Pseudocode (iterative, traversal order only):*
 
-##### Applications
+```
+DFS_iter(G, i):
+    visited = set()
+    parent  = {i: None}
+    order   = []
+    stack   = [i]
 
-DFS, with its inherent nature of diving deep, has several intriguing applications:
+    while stack:
+        u = stack.pop()             # take the top
+        if u in visited: 
+            continue
+        visited.add(u)
+        order.append(u)
 
-1. Topological Sorting is used in scheduling tasks, where one task should be completed before another starts.
-2. To find all strongly connected components in a directed graph.
-3. DFS can be employed to find a path between two nodes, though it might not guarantee the shortest path.
-4. If during DFS traversal, an already visited node is encountered (and it's not the direct parent of the current node in traversal), then there's a cycle in the graph.
+        # Push neighbors in reverse of desired visiting order
+        for v in reversed(G[u]):
+            if v not in visited:
+                parent[v] = u
+                stack.append(v)
 
-##### Implementation
+    return order, parent
+```
+
+*Sanity notes:*
+
+* **Time:** $O(V + E)$ — each vertex/edge handled a constant number of times.
+* **Space:** $O(V)$ — visited + recursion/stack. Worst-case recursion depth can reach $V$; use the iterative form on very deep graphs.
+
+**Example**
+
+Same graph as the BFS section, start at **A**; assume neighbor order: `B` before `C`, and for `B` the neighbor `D`; for `C` the neighbor `E`.
+
+```
+                 ┌─────────┐
+                 │    A    │
+                 └───┬─┬───┘
+                     │ │
+           ┌─────────┘ └─────────┐
+           ▼                     ▼
+      ┌─────────┐           ┌─────────┐
+      │    B    │           │    C    │
+      └───┬─────┘           └───┬─────┘
+          │                     │
+          ▼                     ▼
+     ┌─────────┐           ┌─────────┐
+     │    D    │           │    E    │
+     └─────────┘           └─────────┘
+
+Edges: A–B, A–C, B–D, C–E  (undirected)
+```
+
+*Recursive DFS trace (pre-order):*
+
+```
+call DFS(A)
+  visit A
+    -> DFS(B)
+         visit B
+           -> DFS(D)
+                visit D
+                return D
+         return B
+    -> DFS(C)
+         visit C
+           -> DFS(E)
+                visit E
+                return E
+         return C
+  return A
+```
+
+*Discovery/finish times (one valid outcome):*
+
+```
+Vertex | tin | tout | parent
+-------+-----+------+---------
+A      |  1  | 10   | None
+B      |  2  |  5   | A
+D      |  3  |  4   | B
+C      |  6  |  9   | A
+E      |  7  |  8   | C
+```
+
+*Stack/Visited evolution (iterative DFS, top = right):*
+
+```
+Step | Action                       | Stack                 | Visited
+-----+------------------------------+-----------------------+-----------------
+0    | push A                       | [A]                   | {}
+1    | pop A; visit                 | []                    | {A}
+     | push C, B                    | [C, B]                | {A}
+2    | pop B; visit                 | [C]                   | {A, B}
+     | push D                       | [C, D]                | {A, B}
+3    | pop D; visit                 | [C]                   | {A, B, D}
+4    | pop C; visit                 | []                    | {A, B, D, C}
+     | push E                       | [E]                   | {A, B, D, C}
+5    | pop E; visit                 | []                    | {A, B, D, C, E}
+```
+
+*DFS tree (tree edges shown), with preorder: A, B, D, C, E*
+
+```
+A
+├── B
+│   └── D
+└── C
+    └── E
+```
+
+**Applications**
+
+1. **Path existence & reconstruction.**
+   Use `parent` to backtrack from a target to the start after a DFS that finds it.
+
+2. **Topological sorting (DAGs).**
+   Run DFS on a directed acyclic graph; the **reverse postorder** (vertices sorted by decreasing `tout`) is a valid topological order.
+
+3. **Cycle detection.**
+   *Undirected:* seeing a visited neighbor that isn’t the parent ⇒ cycle.
+   *Directed:* maintain states (`unvisited`, `in_stack`, `done`); encountering an edge to a vertex **in\_stack** (a back edge) ⇒ cycle.
+
+4. **Connected components (undirected).**
+   Run DFS from every unvisited node; each run discovers exactly one component.
+
+5. **Bridges & articulation points (cut vertices).**
+   Using DFS **low-link** values (`low[u] = min(tin[u], tin[v] over back edges, low of children)`), you can find edges whose removal disconnects the graph (bridges) and vertices whose removal increases components (articulation points).
+
+6. **Strongly Connected Components (SCCs, directed graphs).**
+   Tarjan’s (single-pass with a stack and low-link) or Kosaraju’s (two DFS passes) algorithms are built on DFS.
+
+7. **Backtracking & search in state spaces.**
+   Classic for maze solving, puzzles (N-Queens, Sudoku), and constraint satisfaction: DFS systematically explores choices and backtracks on dead ends.
+
+8. **Detecting and classifying edges (directed).**
+   With timestamps, classify edges as **tree**, **back**, **forward**, or **cross**—useful for reasoning about structure and correctness.
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/dfs)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/dfs)
+
+*Implementation tips:*
+
+* For **very deep** or skewed graphs, prefer the **iterative** form to avoid recursion limits.
+* If neighbor order matters (e.g., lexicographic traversal), control push order (push in reverse for stacks) or sort adjacency lists.
+* For sparse graphs, adjacency **lists** are preferred over adjacency matrices for time/space efficiency.
 
 ### Shortest paths
 
 A common task when dealing with weighted graphs is to find the shortest route between two vertices, such as from vertex $A$ to vertex $B$. Note that there might not be a unique shortest path, since several paths could have the same length.
 
-#### Dijkstra's Algorithm
+#### Dijkstra’s Algorithm
 
-- **Dijkstra's algorithm** is a method to find the shortest paths from a starting vertex to all other vertices in a weighted graph.
-- A **weighted graph** is one where each edge has a numerical value (cost, distance, or time).
-- The algorithm starts at a **starting vertex**, often labeled **A**, and computes the shortest path to every other vertex.
-- It keeps a **tentative distance** for each vertex, representing the current known shortest distance from the start.
-- It repeatedly **selects the vertex** with the smallest tentative distance that hasn't been finalized (or "finished") yet.
-- Once a vertex is selected, the algorithm **relaxes all its edges**: it checks if going through this vertex offers a shorter path to its neighbors.
-- This continues until all vertices are processed, yielding the shortest paths from the starting vertex to every other vertex.
-- **Important**: Dijkstra’s algorithm requires **non-negative edge weights**, or else results can be incorrect.
+Dijkstra’s algorithm computes **shortest paths** from a specified start vertex in a graph with **non-negative edge weights**. It grows a “settled” region outward from the start, always choosing the unsettled vertex with the **smallest known distance** and relaxing its outgoing edges to improve neighbors’ distances.
 
-##### Algorithm Steps
+To efficiently keep track of the traversal, Dijkstra’s algorithm employs two primary data structures:
 
-**Input**
+* A **min-priority queue** (often named `pq`, `open`, or `unexplored`) keyed by each vertex’s current best known distance from the start.
+* A **`dist` map** storing the best known distance to each vertex (∞ initially, except the start), a **`visited`/`finalized` set** to mark vertices whose shortest distance is proven, and a **`parent` map** to reconstruct paths.
 
-- A weighted graph where each edge has a cost or distance
-- A starting vertex `A`
+*Useful additions in practice:*
 
-**Output**
+* A **target-aware early stop**: if you only need the distance to a specific target, you can stop when that target is popped from the priority queue.
+* **Decrease-key or lazy insertion**: if the PQ doesn’t support decrease-key, push an updated entry and ignore popped stale ones by checking against `dist`.
+* Optional **`pred` lists** for counting shortest paths or reconstructing multiple optimal routes.
 
-- An array `distances` where `distances[v]` is the shortest distance from `A` to vertex `v`
+**Algorithm Steps**
 
-**Containers and Data Structures**
+1. Begin from a starting vertex, \$i\$.
 
-- An array `distances`, initialized to `∞` for all vertices except `A`, which is set to `0`
-- A hash table `finished` to mark vertices with confirmed shortest paths
-- A priority queue to efficiently select the vertex with the smallest current distance
+2. Initialize `dist[i] = 0`, `parent[i] = None`; for all other vertices `v`, set `dist[v] = ∞`. Push \$i\$ into the min-priority queue keyed by `dist[i]`.
 
-**Steps**
+3. While the priority queue is not empty:
 
-I. Initialize `distances[A]` to `0`
+   1. **Extract** the vertex `u` with the **smallest** `dist[u]`.
+   2. If `u` is already finalized, continue; otherwise **finalize** `u` (add to `visited`/`finalized`).
+   3. For **each neighbor** `v` of `u` with edge weight `w(u,v) ≥ 0`:
 
-II. Initialize `distances[v]` to `∞` for every other vertex `v`
+      * If `dist[u] + w(u,v) < dist[v]`, then **relax** the edge: set
+        `dist[v] = dist[u] + w(u,v)` and `parent[v] = u`, and **push** `v` into the PQ keyed by the new `dist[v]`.
 
-III. While not all vertices are marked as finished
+4. Continue until the queue becomes empty (all reachable vertices finalized) or until your **target** has been finalized (early stop).
 
-- Select vertex `u` with the smallest `distances[u]` among unfinished vertices
-- Mark `finished[u]` as `true`
-- For each neighbor `w` of `u`, if `distances[u] + weights[u][w]` is less than `distances[w]`, update `distances[w]` to `distances[u] + weights[u][w]`
+5. Reconstruct any shortest path by following `parent[·]` **backwards** from the target to the start.
 
-##### Step by Step Example
+Vertices are **finalized when they are dequeued** (popped) from the priority queue. With **non-negative** weights, once a vertex is popped the recorded `dist` is **provably optimal**.
 
-Consider a graph with vertices A, B, C, D, and E, and edges:
+*Reference pseudocode (adjacency-list graph):*
 
 ```
-A-B: 4
-A-C: 2
-C-B: 1
-B-D: 5
-C-D: 8
-C-E: 10
-D-E: 2
+Dijkstra(G, i, target=None):
+    INF = +infinity
+    dist   = defaultdict(lambda: INF)
+    parent = {i: None}
+    dist[i] = 0
+
+    pq = MinPriorityQueue()
+    pq.push(i, 0)
+
+    finalized = set()
+
+    while pq:
+        u, du = pq.pop_min()                 # smallest current distance
+        if u in finalized:                   # ignore stale entries
+            continue
+
+        finalized.add(u)
+
+        if target is not None and u == target:
+            break                            # early exit: target finalized
+
+        for (v, w_uv) in G[u]:               # w_uv >= 0
+            alt = du + w_uv
+            if alt < dist[v]:
+                dist[v]   = alt
+                parent[v] = u
+                pq.push(v, alt)              # decrease-key or lazy insert
+
+    return dist, parent
+
+# Reconstruct path i -> t (if t reachable):
+reconstruct(parent, t):
+    path = []
+    while t is not None:
+        path.append(t)
+        t = parent.get(t)
+    return list(reversed(path))
 ```
 
-The adjacency matrix looks like this (∞ means no direct edge):
+*Sanity notes:*
 
-|   |  A |  B |  C |  D |  E |
-|---|----|----|----|----|----|
-| **A** |  0 |  4 |  2 |  ∞ |  ∞ |
-| **B** |  4 |  0 |  1 |  5 |  ∞ |
-| **C** |  2 |  1 |  0 |  8 | 10 |
-| **D** |  ∞ |  5 |  8 |  0 |  2 |
-| **E** |  ∞ |  ∞ | 10 |  2 |  0 |
+* **Time:** with a binary heap, \$O((V + E)\log V)\$; with a Fibonacci heap, \$O(E + V\log V)\$; with a plain array (no heap), \$O(V^2)\$.
+* **Space:** \$O(V)\$ for `dist`, `parent`, PQ bookkeeping.
+* **Preconditions:** All edge weights must be **\$\ge 0\$**. Negative edges invalidate correctness.
+* **Ordering:** Different neighbor iteration orders don’t affect correctness, only tie behavior/performance.
 
-**Starting from A**, here’s how Dijkstra’s algorithm proceeds:
+**Example**
 
-I. Initialize all distances with ∞ except A=0:
+Weighted, undirected graph; start at **A**. Edge weights are on the links.
 
 ```
-A: 0
-B: ∞
-C: ∞
-D: ∞
-E: ∞
+                          ┌────────┐
+                          │   A    │
+                          └─┬──┬───┘
+                         4/   │1
+                       ┌──    │    ──┐
+                 ┌─────▼──┐  │     ┌▼──────┐
+                 │   B    │──┘2    │   C   │
+                 └───┬────┘        └──┬────┘
+                   1 │               4 │
+                     │                 │
+                 ┌───▼────┐      3  ┌──▼───┐
+                 │   E    │────────│   D   │
+                 └────────┘         └──────┘
+
+Edges: A–B(4), A–C(1), C–B(2), B–E(1), C–D(4), D–E(3)
 ```
 
-II. From A (distance 0), update neighbors:
+*Priority queue / Finalized evolution (front = smallest key):*
 
 ```
-A: 0
-B: 4  (via A)
-C: 2  (via A)
-D: ∞
-E: ∞
+Step | Pop (u,dist) | Relaxations (v: new dist, parent)         | PQ after push                   | Finalized
+-----+--------------+--------------------------------------------+----------------------------------+----------------
+0    | —            | init A: dist[A]=0                          | [(A,0)]                          | {}
+1    | (A,0)        | B:4←A  , C:1←A                             | [(C,1), (B,4)]                   | {A}
+2    | (C,1)        | B:3←C  , D:5←C                             | [(B,3), (B,4), (D,5)]            | {A,C}
+3    | (B,3)        | E:4←B                                      | [(E,4), (B,4), (D,5)]            | {A,C,B}
+4    | (E,4)        | D:7 via E  (no improve; current 5)         | [(B,4), (D,5)]                   | {A,C,B,E}
+5    | (B,4) stale  | (ignore; B already finalized)              | [(D,5)]                          | {A,C,B,E}
+6    | (D,5)        | —                                          | []                               | {A,C,B,E,D}
 ```
 
-III. Pick the smallest unvisited vertex (C with distance 2). Update its neighbors:
-
-- B can be updated to 3 if 2 + 1 < 4  
-- D can be updated to 10 if 2 + 8 < ∞  
-- E can be updated to 12 if 2 + 10 < ∞
+*Distances and parents (final):*
 
 ```
-A: 0
-B: 3  (via C)
-C: 2
-D: 10 (via C)
-E: 12 (via C)
+dist[A]=0 (—)
+dist[C]=1 (A)
+dist[B]=3 (C)
+dist[E]=4 (B)
+dist[D]=5 (C)
+
+Shortest path A→E: A → C → B → E  (total cost 4)
 ```
 
-IV. Pick the next smallest unvisited vertex (B with distance 3). Update its neighbors:
-
-- D becomes 8 if 3 + 5 < 10  
-- E remains 12 (no direct edge from B to E)
+*Big-picture view of the expanding frontier:*
 
 ```
-A: 0
-B: 3
-C: 2
-D: 8  (via B)
-E: 12
+   Settled set grows outward from A by increasing distance.
+   After Step 1: {A}
+   After Step 2: {A, C}
+   After Step 3: {A, C, B}
+   After Step 4: {A, C, B, E}
+   After Step 6: {A, C, B, E, D}  (all reachable nodes done)
 ```
 
-V. Pick the next smallest unvisited vertex (D with distance 8). Update its neighbors:
+**Applications**
 
-- E becomes 10 if 8 + 2 < 12
+1. **Single-source shortest paths** on graphs with **non-negative** weights (roads, networks, transit).
+2. **Navigation/routing** with early stop: stop when the goal is popped to avoid extra work.
+3. **Network planning & QoS:** minimum latency/cost routing, bandwidth-weighted paths (when additive and non-negative).
+4. **As a building block:** A\* with $h \equiv 0$; **Johnson’s algorithm** (all-pairs on sparse graphs); **k-shortest paths** variants.
+5. **Multi-source Dijkstra:** seed the PQ with multiple starts at distance 0 (e.g., nearest facility / multi-sink problems).
+6. **Label-setting baseline** for comparing heuristics (A\*, ALT landmarks, contraction hierarchies).
+7. **Grid pathfinding with terrain costs** (non-negative cell costs) when no admissible heuristic is available.
 
-```
-A: 0
-B: 3
-C: 2
-D: 8
-E: 10 (via D)
-```
-
-VI. The only remaining vertex is E (distance 10). No further updates are possible.
-
-**Final shortest paths from A**:
-
-```
-A: 0
-B: 3
-C: 2
-D: 8
-E: 10
-```
-
-##### Optimizing Time Complexity
-
-- A basic (array-based) implementation of Dijkstra's algorithm runs in **O(n^2)** time.
-- Using a priority queue (min-heap) to select the vertex with the smallest distance reduces the complexity to **O((V+E) log V)**, where **V** is the number of vertices and **E** is the number of edges.
-
-##### Applications
-
-- **Internet routing** protocols use it to determine efficient paths for data packets.
-- **Mapping software** (e.g., Google Maps, Waze) employ variations of Dijkstra to compute driving routes.
-- **Telecommunication networks** use it to determine paths with minimal cost.
-
-##### Implementation
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/dijkstra)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/dijkstra)
 
+*Implementation tip:* If your PQ has no decrease-key, **push duplicates** on improvement and, when popping a vertex, **skip it** if it’s already finalized or if the popped key doesn’t match `dist[u]`. This “lazy” approach is simple and fast in practice.
+
 #### Bellman-Ford Algorithm
 
-- **Bellman-Ford algorithm** is a method for finding the shortest paths from a single starting vertex to all other vertices in a weighted graph.
-- Unlike **Dijkstra’s algorithm**, Bellman-Ford can handle **negative edge weights**, making it more flexible for certain types of graphs.
-- The algorithm works by **repeatedly relaxing all edges** in the graph. Relaxing an edge means updating the current shortest distance to a vertex if a shorter path is found via another vertex.
-- The algorithm performs this **relaxation process** exactly **$V - 1$ times**, where $V$ is the number of vertices. This ensures that every possible shortest path is discovered.
-- After completing $V - 1$ relaxations, the algorithm does one more pass to detect **negative weight cycles**. If any edge can still be relaxed, a negative cycle exists and no finite shortest path is defined.
-- Bellman-Ford’s time complexity is **$O(V \times E)$**, which is generally slower than Dijkstra’s algorithm for large graphs.
+#### Bellman–Ford Algorithm
 
-##### Algorithm Steps
+Bellman–Ford computes **shortest paths** from a start vertex in graphs that may have **negative edge weights** (but no negative cycles reachable from the start). It works by repeatedly **relaxing** every edge; each full pass can reduce some distances until they stabilize. A final check detects **negative cycles**: if an edge can still be relaxed after $(V-1)$ passes, a reachable negative cycle exists.
 
-**Input**
+To efficiently keep track of the computation, Bellman–Ford employs two primary data structures:
 
-- A weighted graph with possible negative edge weights
-- A starting vertex `A`
+* A **`dist` map** (or array) with the best-known distance to each vertex (initialized to ∞ except the start).
+* A **`parent` map** to reconstruct shortest paths (store `parent[v] = u` when relaxing edge $u\!\to\!v$).
 
-**Output**
+*Useful additions in practice:*
 
-- An array `distances` where `distances[v]` represents the shortest path from `A` to vertex `v`
+* **Edge list**: iterate edges directly (fast and simple) even if your graph is stored as adjacency lists.
+* **Early exit**: stop as soon as a full pass makes **no updates**.
+* **Negative-cycle extraction**: if an update occurs on pass $V$, backtrack through `parent` to find a cycle.
+* **Reachability guard**: you can skip edges whose source has `dist[u] = ∞` (still unreached).
 
-**Containers and Data Structures**
+**Algorithm Steps**
 
-- An array `distances`, set to `∞` for all vertices except the start vertex (set to `0`)
-- A `predecessor` array to help reconstruct the actual shortest path
+1. Begin from a starting vertex, $i$.
 
-**Steps**
+2. Initialize `dist[i] = 0`, `parent[i] = None`; for all other vertices $v$, set `dist[v] = ∞`.
 
-I. Initialize `distances[A]` to `0` and `distances[v]` to `∞` for all other vertices `v`
+3. Repeat **$V-1$ passes** (where $V$ is the number of vertices):
 
-II. Repeat `V - 1` times
+   1. Set `changed = False`.
+   2. For **each directed edge** $(u,v,w)$ (weight $w$):
 
-- For every edge `(u, v)` with weight `w`, if `distances[u] + w < distances[v]`, update `distances[v]` to `distances[u] + w` and `predecessor[v]` to `u`
+      * If `dist[u] + w < dist[v]`, then **relax** the edge:
+        `dist[v] = dist[u] + w`, `parent[v] = u`, and set `changed = True`.
+   3. If `changed` is **False**, break early (all distances stabilized).
 
-III. Check for negative cycles by iterating over all edges `(u, v)` again
+4. **Negative-cycle detection** (optional but common):
+   For each edge $(u,v,w)$, if `dist[u] + w < dist[v]`, then a **negative cycle is reachable**.
+   *To extract a cycle:* follow `parent` from `v` **V times** to land inside the cycle; then keep following until you revisit a vertex, collecting the cycle.
 
-- If `distances[u] + w < distances[v]` for any edge, a negative weight cycle exists
+5. To get a shortest path to a target $t$ (if no negative cycle affects it), follow `parent[t]` backward to $i$.
 
-##### Step by Step Example
-
-We have vertices A, B, C, D, and E. The edges and weights (including a self-loop on E):
-
-```
-A-B: 6
-A-C: 7
-B-C: 8
-B-D: -4
-B-E: 5
-C-E: -3
-D-A: 2
-D-C: 7
-E-E: 9
-```
-
-Adjacency matrix (∞ means no direct edge):
-
-|   |  A |  B |  C |  D |  E |
-|---|----|----|----|----|----|
-| **A** |  0 |  6 |  7 |  ∞ |  ∞ |
-| **B** |  ∞ |  0 |  8 | -4 |  5 |
-| **C** |  ∞ |  ∞ |  0 |  ∞ | -3 |
-| **D** |  2 |  ∞ |  7 |  0 |  ∞ |
-| **E** |  ∞ |  ∞ |  ∞ |  ∞ |  9 |
-
-**Initialization**:
+*Reference pseudocode (edge list):*
 
 ```
-dist[A] = 0
-dist[B] = ∞
-dist[C] = ∞
-dist[D] = ∞
-dist[E] = ∞
+BellmanFord(V, E, i):                 # V: set/list of vertices
+    INF = +infinity                   # E: list of (u, v, w) edges
+    dist   = {v: INF for v in V}
+    parent = {v: None for v in V}
+    dist[i] = 0
+
+    # (V-1) relaxation passes
+    for _ in range(len(V) - 1):
+        changed = False
+        for (u, v, w) in E:
+            if dist[u] != INF and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                parent[v] = u
+                changed = True
+        if not changed:
+            break
+
+    # Negative-cycle check
+    cycle_vertex = None
+    for (u, v, w) in E:
+        if dist[u] != INF and dist[u] + w < dist[v]:
+            cycle_vertex = v
+            break
+
+    return dist, parent, cycle_vertex     # cycle_vertex=None if no neg cycle
+
+# Reconstruct shortest path i -> t (if safe):
+reconstruct(parent, t):
+    path = []
+    while t is not None:
+        path.append(t)
+        t = parent[t]
+    return list(reversed(path))
 ```
 
-**Iteration 1** (relax edges from A):
+*Sanity notes:*
+
+* **Time:** $O(VE)$ (each pass scans all edges; up to $V-1$ passes).
+* **Space:** $O(V)$ for `dist` and `parent`.
+* **Handles negative weights**; **detects** reachable negative cycles.
+* If a reachable **negative cycle** exists, true shortest paths to vertices it can reach are **undefined** (effectively $-\infty$).
+
+**Example**
+
+Directed, weighted graph; start at **A**. (Negative edges allowed; **no** negative cycles here.)
 
 ```
-dist[B] = 6
-dist[C] = 7
+                               ┌─────────┐
+                               │    A    │
+                               └──┬───┬──┘
+                              4  │   │  2
+                                 │   │
+                      ┌──────────▼───┐   -1    ┌─────────┐
+                      │      B       │ ───────►│    C    │
+                      └──────┬───────┘          └──┬─────┘
+                           2 │                     5│
+                             │                      │
+                      ┌──────▼──────┐    -3    ┌───▼─────┐
+                      │      D       │ ◄────── │    E    │
+                      └──────────────┘          └─────────┘
+
+Also:
+A → C (2)
+C → B (1)
+C → E (3)
+(Edges shown with weights on arrows)
 ```
 
-**Iteration 2** (relax edges from B, then C):
+*Edges list:*
+`A→B(4), A→C(2), B→C(-1), B→D(2), C→B(1), C→D(5), C→E(3), D→E(-3)`
+
+*Relaxation trace (dist after each full pass; start A):*
 
 ```
-dist[D] = 2        (6 + (-4))
-dist[E] = 11       (6 + 5)
-dist[E] = 4        (7 + (-3))  // C → E is better
+Init (pass 0):
+  dist[A]=0, dist[B]=∞, dist[C]=∞, dist[D]=∞, dist[E]=∞
+
+After pass 1:
+  A=0, B=3, C=2, D=6, E=3
+    (A→B=4, A→C=2; C→B improved B to 3; B→D=5? (via B gives 6); D→E=-3 gives E=3)
+
+After pass 2:
+  A=0, B=3, C=2, D=5, E=2
+    (B→D improved D to 5; D→E improved E to 2)
+
+After pass 3:
+  A=0, B=3, C=2, D=5, E=2   (no changes → early stop)
 ```
 
-**Iteration 3** (relax edges from D):
+*Parents / shortest paths (one valid set):*
 
 ```
-dist[A] = 4        (2 + 2)
-(No update for C since dist[C]=7 is already < 9)
+parent[A]=None
+parent[C]=A
+parent[B]=C
+parent[D]=B
+parent[E]=D
+
+Example shortest path A→E:
+A → C → B → D → E   with total cost 2 + 1 + 2 + (-3) = 2
 ```
 
-**Iteration 4**:
+*Negative-cycle detection (illustration):*
+If we **add** an extra edge `E→C(-4)`, the cycle `C → D → E → C` has total weight `5 + (-3) + (-4) = -2` (negative).
+Bellman–Ford would perform a $V$-th pass and still find an improvement (e.g., relaxing `E→C(-4)`), so it reports a **reachable negative cycle**.
 
-```
-No changes in this round
-```
+**Applications**
 
-**Final distances from A**:
-
-```
-dist[A] = 0
-dist[B] = 6
-dist[C] = 7
-dist[D] = 2
-dist[E] = 4
-```
-
-##### Special Characteristics
-
-- It can manage **negative edge weights** but cannot produce valid results when **negative cycles** are present.
-- It is often used when edges can be negative, though it is slower than Dijkstra’s algorithm.
-
-##### Applications
-
-- **Financial arbitrage** detection in currency exchange markets.
-- **Routing** in networks where edges might have negative costs.
-- **Game development** scenarios with penalties or negative terrain effects.
+1. **Shortest paths with negative edges** (when Dijkstra/A\* don’t apply).
+2. **Arbitrage detection** in currency/markets by summing $\log$ weights along cycles.
+3. **Feasibility checks** in difference constraints (systems like $x_v - x_u \le w$).
+4. **Robust baseline** for verifying or initializing faster methods (e.g., Johnson’s algorithm for all-pairs).
+5. **Graphs with penalties/credits** where some transitions reduce accumulated cost.
 
 ##### Implementation
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/bellman_ford)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/bellman_ford)
-  
+
+*Implementation tip:* For **all-pairs** on sparse graphs with possible negative edges, use **Johnson’s algorithm**: run Bellman–Ford once from a super-source to reweight edges (no negatives), then run **Dijkstra** from each vertex.
+
 #### A* (A-Star) Algorithm
 
-- **A\*** is an informed search algorithm used for **pathfinding** and **graph traversal**.
-- It is a **best-first search** because it prioritizes the most promising paths first, combining known and estimated costs.
-- The algorithm relies on:
-- **g(n)**: The actual cost from the start node to the current node **n**.
-- **h(n)**: A **heuristic** estimating the cost from **n** to the goal.
-- The total cost function is **f(n) = g(n) + h(n)**, guiding the search toward a potentially optimal path.
-- At each step, A* expands the node with the **lowest f(n)** in the priority queue.
-- The heuristic **h(n)** must be **admissible** (never overestimates the real cost) to guarantee an optimal result.
-- A* terminates when it either reaches the **goal** or exhausts all possibilities if no solution exists.
-- It is efficient for many applications because it balances **exploration** with being **goal-directed**, but its performance depends on the heuristic quality.
-- A* is broadly used in **games**, **robotics**, and **navigation** due to its effectiveness in real-world pathfinding.
+A\* is a best-first search that finds a **least-cost path** from a start to a goal by minimizing
 
-##### Algorithm Steps
+$$
+f(n) = g(n) + h(n),
+$$
 
-**Input**
+where:
 
-- A graph
-- A start vertex `A`
-- A goal vertex `B`
-- A heuristic function `h(v)` that estimates the cost from `v` to `B`
+* $g(n)$ = cost from start to $n$ (so far),
+* $h(n)$ = heuristic estimate of the remaining cost from $n$ to the goal.
 
-**Output**
+If $h$ is **admissible** (never overestimates) and **consistent** (triangle inequality), A\* is **optimal** and never needs to “reopen” closed nodes.
 
-- The shortest path from `A` to `B` if one exists
+**Core data structures**
 
-**Used Data Structures**
+* **Open set**: min-priority queue keyed by $f$ (often called `open` or `frontier`).
+* **Closed set**: a set (or map) of nodes already expanded (finalized).
+* **`g` map**: best known cost-so-far to each node.
+* **`parent` map**: to reconstruct the path on success.
+* (Optional) **`h` cache** and a **tie-breaker** (e.g., prefer larger $g$ or smaller $h$ when $f$ ties).
 
-I. **g(n)**: The best-known cost from the start vertex to vertex `n`
+**Algorithm Steps**
 
-II. **h(n)**: The heuristic estimate from vertex `n` to the goal
+1. Initialize `open = {start}` with `g[start]=0`, `f[start]=h(start)`; `parent[start]=None`.
+2. While `open` is not empty:
+   a. Pop `u` with **smallest** `f(u)` from `open`.
+   b. If `u` is the **goal**, reconstruct the path via `parent` and return.
+   c. Add `u` to **closed**.
+   d. For each neighbor `v` of `u` with edge cost `w(u,v) ≥ 0`:
 
-III. **f(n) = g(n) + h(n)**: The estimated total cost from start to goal via `n`
+   * `tentative = g[u] + w(u,v)`
+   * If `v` not in `g` or `tentative < g[v]`: update `parent[v]=u`, `g[v]=tentative`, `f[v]=g[v]+h(v)` and push `v` into `open` (even if it was there before with a worse key).
+3. If `open` empties without reaching the goal, no path exists.
 
-IV. **openSet**: Starting with the initial node, contains nodes to be evaluated
+*Mark neighbors **when you enqueue them** (by storing their best `g`) to avoid duplicate work; with **consistent** $h$, any node popped from `open` is final and will not improve later.*
 
-V. **closedSet**: Contains nodes already fully evaluated
-
-VI. **cameFrom**: Structure to record the path taken
-
-**Steps**
-
-I. Add the starting node to the **openSet**
-
-II. While the **openSet** is not empty
-
-- Get the node `current` in **openSet** with the lowest **f(n)**
-- If `current` is the goal node, reconstruct the path and return it
-- Remove `current` from **openSet** and add it to **closedSet**
-- For each neighbor `n` of `current`, skip it if it is in **closedSet**
-- If `n` is not in **openSet**, add it and compute **g(n)**, **h(n)**, and **f(n)**
-- If a better path to `n` is found, update **cameFrom** for `n`
-
-III. If the algorithm terminates without finding the goal, no path exists
-
-##### Step by Step Example
-
-We have a graph with vertices A, B, C, D, and E:
+**Reference pseudocode**
 
 ```
-A-B: 1
-A-C: 2
-B-D: 3
-C-D: 2
-D-E: 1
+A_star(G, start, goal, h):
+    open = MinPQ()                        # keyed by f = g + h
+    open.push(start, h(start))
+    g = {start: 0}
+    parent = {start: None}
+    closed = set()
+
+    while open:
+        u = open.pop_min()                # node with smallest f
+        if u == goal:
+            return reconstruct_path(parent, goal), g[goal]
+
+        closed.add(u)
+
+        for (v, w_uv) in G.neighbors(u):  # w_uv >= 0
+            tentative = g[u] + w_uv
+            if v in closed and tentative >= g.get(v, +inf):
+                continue
+
+            if tentative < g.get(v, +inf):
+                parent[v] = u
+                g[v] = tentative
+                f_v = tentative + h(v)
+                open.push(v, f_v)         # decrease-key OR push new entry
+
+    return None, +inf
+
+reconstruct_path(parent, t):
+    path = []
+    while t is not None:
+        path.append(t)
+        t = parent[t]
+    return list(reversed(path))
 ```
 
-Heuristic estimates to reach E:
+*Sanity notes:*
+
+* **Time:** Worst-case exponential; practically much faster with informative $h$.
+* **Space:** $O(V)$ for maps + PQ (A\* is memory-hungry).
+* **Special cases:** If $h \equiv 0$, A\* ≡ **Dijkstra**. If all edges cost 1 and $h \equiv 0$, it behaves like **BFS**.
+
+**Visual walkthrough (grid with 4-neighborhood, Manhattan $h$)**
+
+Legend: `S` start, `G` goal, `#` wall, `.` free, `◉` expanded (closed), `•` frontier (open), `×` final path
 
 ```
-h(A) = 3
-h(B) = 2
-h(C) = 2
-h(D) = 1
-h(E) = 0
+Row/Col →   1 2 3 4 5 6 7 8 9
+           ┌───────────────────┐
+1   S  .  .  .  .  #  .  .  .  │
+2   .  #  #  .  .  #  .  #  .  │
+3   .  .  .  .  .  .  .  #  .  │
+4   #  .  #  #  .  #  .  .  .  │
+5   .  .  .  #  .  .  .  #  G  │
+           └───────────────────┘
+Movement cost = 1 per step; 4-dir moves; h = Manhattan distance
 ```
 
-Adjacency matrix (∞ = no direct path):
-
-|   | A | B | C | D |  E |
-|---|---|---|---|---|----|
-| **A** | 0 | 1 | 2 | ∞ |  ∞ |
-| **B** | ∞ | 0 | ∞ | 3 |  ∞ |
-| **C** | ∞ | ∞ | 0 | 2 |  ∞ |
-| **D** | ∞ | ∞ | ∞ | 0 |  1 |
-| **E** | ∞ | ∞ | ∞ | ∞ |  0 |
-
-**Initialization**:
+**Early expansion snapshot (conceptual):**
 
 ```
-g(A) = 0
-f(A) = g(A) + h(A) = 0 + 3 = 3
-openSet = [A]
-closedSet = []
+Step 0:
+Open: [(S, g=0, h=|S-G|, f=g+h)]         Closed: {}
+Grid: S is • (on frontier)
+
+Step 1: pop S → expand neighbors
+Open: [((1,2), g=1, h=?, f=?), ((2,1), g=1, h=?, f=?)]
+Closed: {S}
+Marks: S→ ◉, its valid neighbors → •
+
+Step 2..k:
+A* keeps popping the lowest f, steering toward G.
+Nodes near the straight line to G are preferred over detours around '#'.
 ```
 
-Expand **A**:
+**When goal is reached, reconstruct the path:**
 
 ```
-f(B) = 0 + 1 + 2 = 3
-f(C) = 0 + 2 + 2 = 4
+Final path (example rendering):
+           ┌───────────────────┐
+1   ×  ×  ×  ×  .  #  .  .  .  │
+2   ×  #  #  ×  ×  #  .  #  .  │
+3   ×  ×  ×  ×  ×  ×  ×  #  .  │
+4   #  .  #  #  ×  #  ×  ×  ×  │
+5   .  .  .  #  ×  ×  ×  #  G  │
+           └───────────────────┘
+Path length (g at G) equals number of × steps (optimal with admissible/consistent h).
 ```
 
-Expand **B** next (lowest f=3):
+**Priority queue evolution (toy example)**
 
 ```
-f(D) = g(B) + cost(B,D) + h(D) = 1 + 3 + 1 = 5
+Step | Popped u | Inserted neighbors (v: g,h,f)                  | Note
+-----+----------+-------------------------------------------------+---------------------------
+0    | —        | push S: g=0, h=14, f=14                        | S at (1,1), G at (5,9)
+1    | S        | (1,2): g=1,h=13,f=14 ; (2,1): g=1,h=12,f=13    | pick (2,1) next
+2    | (2,1)    | (3,1): g=2,h=11,f=13 ; (2,2) blocked           | ...
+3    | (3,1)    | (4,1) wall; (3,2): g=3,h=10,f=13               | still f=13 band
+…    | …        | frontier slides along the corridor toward G    | A* hugs the beeline
 ```
 
-Next lowest is **C** (f=4):
+(Exact numbers depend on the specific grid and walls; shown for intuition.)
 
-```
-f(D) = g(C) + cost(C,D) + h(D) = 2 + 2 + 1 = 5 (no improvement)
-```
+---
 
-Expand **D** (f=5):
+### Heuristic design
 
-```
-f(E) = g(D) + cost(D,E) + h(E) = 5 + 1 + 0 = 6
-E is the goal; algorithm stops.
-```
+For **grids**:
 
-Resulting path: **A -> B -> D -> E** with total cost **5**.
+* **4-dir moves:** $h(n)=|x_n-x_g|+|y_n-y_g|$ (Manhattan).
+* **8-dir (diag cost √2):** **Octile**: $h=\Delta_{\max} + (\sqrt{2}-1)\Delta_{\min}$.
+* **Euclidean** when motion is continuous and diagonal is allowed.
 
-##### Special Characteristics
+For **sliding puzzles (e.g., 8/15-puzzle)**:
 
-- **A\*** finds an optimal path if the heuristic is **admissible**.
-- Edges must have **non-negative weights** for A* to work correctly.
-- A good heuristic drastically improves its efficiency.
+* **Misplaced tiles** (admissible, weak).
+* **Manhattan sum** (stronger).
+* **Linear conflict / pattern databases** (even stronger).
 
-##### Applications
+**Admissible vs. consistent**
 
-- Used in **video games** for enemy AI or player navigation.
-- Employed in **robotics** for motion planning.
-- Integral to **mapping** and **GPS** systems for shortest route calculations.
+* **Admissible:** $h(n) \leq h^\*(n)$ (true remaining cost). Guarantees optimality.
+* **Consistent (monotone):** $h(u) \le w(u,v) + h(v)$ for every edge.
+  Ensures $f$-values are nondecreasing along paths; once a node is popped, its `g` is final (no reopen).
 
-##### Implementation
+**Applications**
+
+1. **Pathfinding** in maps, games, robotics (shortest or least-risk routes).
+2. **Route planning** with road metrics (time, distance, tolls) and constraints.
+3. **Planning & scheduling** in AI as a general shortest-path in state spaces.
+4. **Puzzle solving** (8-puzzle, Sokoban variants) with domain-specific $h$.
+5. **Network optimization** where edge costs are nonnegative and heuristics exist.
+
+**Variants & practical tweaks**
+
+* **Dijkstra** = A\* with $h \equiv 0$.
+* **Weighted A\***: use $f = g + \varepsilon h$ ($\varepsilon>1$) for faster, **bounded-suboptimal** search.
+* **A\*ε / Anytime A\***: start with $\varepsilon>1$, reduce over time to approach optimal.
+* **IDA\***: iterative deepening on $f$-bound; **much lower memory**, sometimes slower.
+* **RBFS / Fringe Search**: memory-bounded alternatives.
+* **Tie-breaking**: on equal $f$, prefer **larger $g$** (deeper) or **smaller $h$** to reduce node re-expansions.
+* **Closed-set policy**: if $h$ is **inconsistent**, allow **reopening** when a better `g` is found.
+
+**Pitfalls & tips**
+
+* **No negative edges.** A\* assumes $w(u,v) \ge 0$.
+* **Overestimating $h$** breaks optimality.
+* **Precision issues:** with floats, compare $f$ using small epsilons.
+* **State hashing:** ensure equal states hash equal (avoid exploding duplicates).
+* **Neighbor order:** doesn’t affect optimality, but affects performance/trace aesthetics.
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/a_star)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/a_star)
+
+*Implementation tip:* If your PQ lacks decrease-key, **push duplicates** with improved keys and ignore stale entries when popped (check if popped `g` matches current `g[u]`). This is simple and fast in practice.
 
 ### Minimal Spanning Trees
 
@@ -737,226 +1090,467 @@ Such a subgraph is called a minimal spanning tree.
 
 #### Prim's Algorithm
 
-- **Prim's Algorithm** is used to find a **minimum spanning tree (MST)**, which is a subset of a graph that connects all its vertices with the smallest total edge weight.  
-- It works on a **weighted undirected graph**, meaning the edges have weights, and the direction of edges doesn’t matter.  
-- It starts with an **arbitrary vertex** and grows the MST by adding one edge at a time.  
-- At each step, it chooses the **smallest weight edge** that connects a vertex in the MST to a vertex not yet in the MST (a **greedy** approach).  
-- This process continues until **all vertices** are included.  
-- The resulting MST is **connected**, ensuring a path between any two vertices, and the total edge weight is minimized.  
-- Using a **priority queue** (min-heap), it can achieve a time complexity of **O(E log V)** with adjacency lists, where E is the number of edges and V is the number of vertices.  
-- With an adjacency matrix, the algorithm can be implemented in **O(V^2)** time.
+#### Prim’s Algorithm
 
-##### Algorithm Steps
+Prim’s algorithm builds a **minimum spanning tree (MST)** of a **weighted, undirected** graph by growing a tree from a start vertex. At each step it adds the **cheapest edge** that connects a vertex **inside** the tree to a vertex **outside** the tree.
 
-**Input**
+To efficiently keep track of the construction, Prim’s algorithm employs two primary data structures:
 
-- A connected, undirected graph with weighted edges
-- A start vertex `A`
+* A **min-priority queue** (often named `pq`, `open`, or `unexplored`) keyed by a vertex’s **best known connection cost** to the current tree.
+* A **`in_mst`/`visited` set** to mark vertices already added to the tree, plus a **`parent` map** to record the chosen incoming edge for each vertex.
 
-**Output**
+*Useful additions in practice:*
 
-- A minimum spanning tree, which is a subset of the edges that connects all vertices together without any cycles and with the minimum total edge weight
+* A **`key` map** where `key[v]` stores the lightest edge weight found so far that connects `v` to the current tree (∞ initially, except the start which is 0).
+* **Lazy updates** if your PQ has no decrease-key: push improved `(v, key[v])` again and skip stale pops.
+* **Component handling**: if the graph can be **disconnected**, either run Prim once per component (restarting at an unvisited vertex) or seed the PQ with **multiple starts** (`key=0`) to produce a **spanning forest**.
 
-**Containers and Data Structures**
+**Algorithm Steps**
 
-- An array `key[]` to store the minimum reachable edge weight for each vertex. Initially, `key[v] = ∞` for all `v` except the first chosen vertex (set to `0`)
-- A boolean array `mstSet[]` to keep track of whether a vertex is included in the MST. Initially, all values are `false`
-- An array `parent[]` to store the MST. Each `parent[v]` indicates the vertex connected to `v` in the MST
+1. Begin from a starting vertex, \$i\$.
 
-**Steps**
+2. Initialize `key[i] = 0`, `parent[i] = None`; for all other vertices `v`, set `key[v] = ∞`. Push \$i\$ into the min-priority queue keyed by `key`.
 
-I. Start with an arbitrary node as the initial MST node
+3. While the priority queue is not empty:
 
-II. While there are vertices not yet included in the MST
+   1. **Extract** the vertex `u` with the **smallest** `key[u]`.
+   2. If `u` is already in the MST, continue; otherwise **add `u` to the MST** (insert into `in_mst`).
+      If `parent[u]` is not `None`, record the tree edge `(parent[u], u)`.
+   3. For **each neighbor** `v` of `u` with edge weight `w(u,v)`:
 
-- Pick a vertex `v` with the smallest `key[v]`
-- Include `v` in `mstSet[]`
-- For each neighboring vertex `u` of `v` not in the MST
-- If the weight of edge `(u, v)` is less than `key[u]`, update `key[u]` and set `parent[u]` to `v`
+      * If `v` is **not** in the MST **and** `w(u,v) < key[v]`, then **improve** the connection to `v`:
+        set `key[v] = w(u,v)`, `parent[v] = u`, and **push** `v` into the PQ keyed by the new `key[v]`.
 
-III. The MST is formed using the `parent[]` array once all vertices are included
+4. Continue until the queue is empty (or until all vertices are in the MST for a connected graph).
 
-##### Step by Step Example
+5. The set of edges `{ (parent[v], v) : v ≠ i }` forms an MST; the MST **total weight** is `∑ key[v]` when each `v` is added.
 
-Consider a simple graph with vertices **A**, **B**, **C**, **D**, and **E**. The edges with weights are:
+Vertices are **finalized when they are dequeued**: at that moment, `key[u]` is the **minimum** cost to connect `u` to the growing tree (by the **cut property**).
+
+*Reference pseudocode (adjacency-list graph):*
 
 ```
-A-B: 2
-A-C: 3
-B-D: 1
-B-E: 3
-C-D: 4
-C-E: 5
-D-E: 2
+Prim(G, i):
+    INF = +infinity
+    key    = defaultdict(lambda: INF)
+    parent = {i: None}
+    key[i] = 0
+
+    pq = MinPriorityQueue()              # holds (key[v], v)
+    pq.push((0, i))
+
+    in_mst = set()
+    mst_edges = []
+
+    while pq:
+        ku, u = pq.pop_min()             # smallest key
+        if u in in_mst:
+            continue
+        in_mst.add(u)
+
+        if parent[u] is not None:
+            mst_edges.append((parent[u], u, ku))
+
+        for (v, w_uv) in G[u]:           # undirected: each edge seen twice
+            if v not in in_mst and w_uv < key[v]:
+                key[v] = w_uv
+                parent[v] = u
+                pq.push((key[v], v))     # decrease-key or lazy insert
+
+    return mst_edges, parent, sum(w for (_,_,w) in mst_edges)
 ```
 
-The adjacency matrix for the graph (using ∞ where no direct edge exists) is:
+*Sanity notes:*
 
-|   | A | B | C | D | E |
-|---|---|---|---|---|---|
-| **A** | 0 | 2 | 3 | ∞ | ∞ |
-| **B** | 2 | 0 | ∞ | 1 | 3 |
-| **C** | 3 | ∞ | 0 | 4 | 5 |
-| **D** | ∞ | 1 | 4 | 0 | 2 |
-| **E** | ∞ | 3 | 5 | 2 | 0 |
+* **Time:** with a binary heap, $O(E \log V)$; with a Fibonacci heap, $O(E + V \log V)$.
+  Dense graph (adjacency matrix + no PQ) variant runs in $O(V^2)$.
+* **Space:** $O(V)$ for `key`, `parent`, and MST bookkeeping.
+* **Graph type:** **weighted, undirected**; weights may be negative or positive (no restriction like Dijkstra).
+  If the graph is **disconnected**, Prim yields a **minimum spanning forest** (one tree per component).
+* **Uniqueness:** If all edge weights are **distinct**, the MST is **unique**.
 
-Run Prim's algorithm starting from vertex **A**:
+**Example**
 
-I. **Initialization**  
-
-```
-Chosen vertex: A  
-Not in MST: B, C, D, E  
-```
-
-II. **Pick the smallest edge from A**  
+Undirected, weighted graph; start at **A**. Edge weights shown on links.
 
 ```
-Closest vertex is B with a weight of 2.  
-MST now has: A, B  
-Not in MST: C, D, E  
+                          ┌────────┐
+                          │   A    │
+                          └─┬──┬───┘
+                         4/   │1
+                       ┌──    │    ──┐
+                 ┌─────▼──┐  │     ┌▼──────┐
+                 │   B    │──┘2    │   C   │
+                 └───┬────┘        └──┬────┘
+                   1 │               4 │
+                     │                 │
+                 ┌───▼────┐      3  ┌──▼───┐
+                 │   E    │────────│   D   │
+                 └────────┘         └──────┘
+
+Edges: A–B(4), A–C(1), C–B(2), B–E(1), C–D(4), D–E(3)
 ```
 
-III. **From A and B, pick the smallest edge**  
+*Frontier (keys) / In-tree evolution (min at front):*
 
 ```
-Closest vertex is D (from B) with a weight of 1.  
-MST now has: A, B, D  
-Not in MST: C, E  
+Legend: key[v] = cheapest known connection to tree; parent[v] = chosen neighbor
+
+Step | Action                          | PQ (key:vertex) after push         | In MST | Updated keys / parents
+-----+---------------------------------+------------------------------------+--------+-------------------------------
+0    | init at A                       | [0:A]                               | {}     | key[A]=0, others=∞
+1    | pop A → add                     | [1:C, 4:B]                          | {A}    | key[C]=1 (A), key[B]=4 (A)
+2    | pop C → add                     | [2:B, 4:D, 4:B]                     | {A,C}  | key[B]=min(4,2)=2 (C), key[D]=4 (C)
+3    | pop B(2) → add                  | [1:E, 4:D, 4:B]                     | {A,C,B}| key[E]=1 (B)
+4    | pop E(1) → add                  | [3:D, 4:D, 4:B]                     | {A,C,B,E}| key[D]=min(4,3)=3 (E)
+5    | pop D(3) → add                  | [4:D, 4:B]                          | {A,C,B,E,D}| done
 ```
 
-IV. **Next smallest edge from A, B, or D**  
+*MST edges chosen (with weights):*
 
 ```
-Closest vertex is E (from D) with a weight of 2.  
-MST now has: A, B, D, E  
-Not in MST: C  
+A—C(1), C—B(2), B—E(1), E—D(3)
+Total weight = 1 + 2 + 1 + 3 = 7
 ```
 
-V. **Pick the final vertex**  
+*Resulting MST (tree edges only):*
 
 ```
-The closest remaining vertex is C (from A) with a weight of 3.  
-MST now has: A, B, D, E, C  
+A
+└── C (1)
+    └── B (2)
+        └── E (1)
+            └── D (3)
 ```
 
-The MST includes the edges: **A-B (2), B-D (1), D-E (2),** and **A-C (3)**, with a total weight of **8**.
+**Applications**
 
-##### Special Characteristics
-
-- It always selects the smallest edge that can connect a new vertex to the existing MST.  
-- Different choices of starting vertex can still result in the same total MST weight (though the exact edges might differ if multiple edges have the same weight).  
-- With adjacency lists and a priority queue, the time complexity is **O(E log V)**; with an adjacency matrix, it is **O(V^2)**.
-
-##### Applications
-
-- **Network design**: Building telecommunication networks with minimal cable length.  
-- **Road infrastructure**: Constructing roads, tunnels, or bridges at minimal total cost.  
-- **Utility services**: Designing water, electrical, or internet infrastructure to connect all locations at minimum cost.
+1. **Network design** (least-cost wiring/piping/fiber) connecting all sites with minimal total cost.
+2. **Approximation for TSP** (metric TSP 2-approx via MST preorder walk).
+3. **Clustering (single-linkage)**: remove the **k−1** heaviest edges of the MST to form **k** clusters.
+4. **Image processing / segmentation**: MST over pixels/superpixels to find low-contrast boundaries.
+5. **Map generalization / simplification**: keep a connectivity backbone with minimal redundancy.
+6. **Circuit design / VLSI**: minimal interconnect length under simple models.
 
 ##### Implementation
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/prim)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/prim)
 
+*Implementation tip:*
+For **dense graphs** ($E \approx V^2$), skip heaps: store `key` in an array and, at each step, scan all non-MST vertices to pick the minimum `key` in $O(V)$. Overall $O(V^2)$ but often **faster in practice** on dense inputs due to low overhead.
+
+
 #### Kruskal's Algorithm
+#### Kruskal’s Algorithm
 
-- **Kruskal's Algorithm** is used to find a **minimum spanning tree (MST)** in a connected, undirected graph with weighted edges.  
-- It **sorts all edges** from smallest to largest by weight.  
-- It **adds edges** one by one to the MST if they do not form a cycle.  
-- **Cycle detection** is managed by a **disjoint-set** (union-find) data structure, which helps quickly determine if two vertices belong to the same connected component.  
-- If adding an edge connects two different components, it is safe to include; if both vertices are already in the same component, including that edge would create a cycle and is skipped.  
-- The process continues until the MST has **V-1** edges, where **V** is the number of vertices.  
-- Its time complexity is **O(E \log E)**, dominated by sorting the edges, while union-find operations typically take near-constant time (**O(α(V))**, where α is the inverse Ackermann function).
+Kruskal’s algorithm builds a **minimum spanning tree (MST)** for a **weighted, undirected** graph by sorting all edges by weight (lightest first) and repeatedly adding the next lightest edge that **does not create a cycle**. It grows the MST as a forest of trees that gradually merges until all vertices are connected.
 
-##### Algorithm Steps
+To efficiently keep track of the construction, Kruskal’s algorithm employs two primary data structures:
 
-**Input**
+* A **sorted edge list** (ascending by weight) that drives which edge to consider next.
+* A **Disjoint Set Union (DSU)**, also called **Union–Find**, to detect whether an edge’s endpoints are already in the same tree (cycle) or in different trees (safe to unite).
 
-- A connected, undirected graph with weighted edges
+*Useful additions in practice:*
 
-**Output**
+* **Union–Find with path compression** + **union by rank/size** for near-constant-time merges and finds.
+* **Early stop**: in a connected graph with $V$ vertices, once you’ve added **$V-1$** edges, the MST is complete.
+* **Deterministic tie-breaking**: when equal weights occur, break ties consistently for reproducible MSTs.
+* **Disconnected graphs**: Kruskal naturally yields a **minimum spanning forest** (one MST per component).
 
-- A subset of edges forming a MST, ensuring all vertices are connected with no cycles and minimal total weight
+**Algorithm Steps**
 
-**Containers and Data Structures**
+1. Gather all edges $E=\{(u,v,w)\}$ and **sort** them by weight $w$ (ascending).
 
-- A list or priority queue to sort the edges by weight
-- A `disjoint-set (union-find)` structure to manage and merge connected components
+2. Initialize **DSU** with each vertex in its **own set**; `parent[v]=v`, `rank[v]=0`.
 
-**Steps**
+3. Traverse the sorted edges one by one:
 
-I. Sort all edges in increasing order of their weights
+   1. For edge $(u,v,w)$, compute `ru = find(u)`, `rv = find(v)` in DSU.
+   2. If `ru ≠ rv` (endpoints in **different** sets), **add** $(u,v,w)$ to the MST and **union** the sets.
+   3. Otherwise, **skip** the edge (it would create a cycle).
 
-II. Initialize a forest where each vertex is its own tree
+4. Stop when either **$V-1$** edges are chosen (connected case) or edges are exhausted (forest case).
 
-III. Iterate through the sorted edges
+5. The chosen edges form the **MST**; the **total weight** is the sum of their weights.
 
-- If the edge `(u, v)` connects two different components, include it in the MST and perform a `union` of the sets
-- If it connects vertices in the same component, skip it
+By the **cycle** and **cut** properties of MSTs, selecting the minimum-weight edge that crosses any cut between components is always safe; rejecting edges that close a cycle preserves optimality.
 
-IV. Once `V-1` edges have been added, the MST is complete
-
-##### Step by Step Example
-
-Consider a graph with vertices **A**, **B**, **C**, **D**, and **E**. The weighted edges are:
+*Reference pseudocode (edge list + DSU):*
 
 ```
-A-B: 2
-A-C: 3
-B-D: 1
-B-E: 3
-C-D: 4
-C-E: 5
-D-E: 2
+Kruskal(V, E):
+    # V: iterable of vertices
+    # E: list of edges (u, v, w) for undirected graph
+
+    sort E by weight ascending
+
+    make_set(v) for v in V        # DSU init: parent[v]=v, rank[v]=0
+
+    mst_edges = []
+    total = 0
+
+    for (u, v, w) in E:
+        if find(u) != find(v):
+            union(u, v)
+            mst_edges.append((u, v, w))
+            total += w
+            if len(mst_edges) == len(V) - 1:   # early stop if connected
+                break
+
+    return mst_edges, total
+
+# Union-Find helpers (path compression + union by rank):
+find(x):
+    if parent[x] != x:
+        parent[x] = find(parent[x])
+    return parent[x]
+
+union(x, y):
+    rx, ry = find(x), find(y)
+    if rx == ry: return
+    if rank[rx] < rank[ry]:
+        parent[rx] = ry
+    elif rank[rx] > rank[ry]:
+        parent[ry] = rx
+    else:
+        parent[ry] = rx
+        rank[rx] += 1
 ```
 
-The adjacency matrix (∞ indicates no direct edge):
+*Sanity notes:*
 
-|   | A | B | C | D | E |
-|---|---|---|---|---|---|
-| **A** | 0 | 2 | 3 | ∞ | ∞ |
-| **B** | 2 | 0 | ∞ | 1 | 3 |
-| **C** | 3 | ∞ | 0 | 4 | 5 |
-| **D** | ∞ | 1 | 4 | 0 | 2 |
-| **E** | ∞ | 3 | 5 | 2 | 0 |
+* **Time:** Sorting dominates: $O(E \log E)$ = $O(E \log V)$. DSU operations are almost $O(1)$ amortized (inverse Ackermann).
+* **Space:** $O(V)$ for DSU; $O(E)$ to store edges.
+* **Weights:** May be **negative or positive** (unlike Dijkstra); graph must be **undirected**.
+* **Uniqueness:** If all edge weights are **distinct**, the MST is **unique**.
 
-**Sort edges** by weight:
+**Example**
+
+Undirected, weighted graph (we’ll draw the key edges clearly and list the rest).
+Start with all vertices as separate sets: `{A} {B} {C} {D} {E} {F}`.
 
 ```
-B-D: 1
-A-B: 2
-D-E: 2
-A-C: 3
-B-E: 3
-C-D: 4
-C-E: 5
+Top row:                 A────────4────────B────────2────────C
+                         │                     │
+                         │                     │
+                         7                     3
+                         │                     │
+Bottom row:              F────────1────────E───┴──────────────D
+                               (E–F)
+Other edges (not all drawn to keep the picture clean):
+A–C(4), B–D(5), C–D(5), C–E(5), D–E(6), D–F(2)
 ```
 
-1. **Pick B-D (1)**: Include it. MST has {B-D}, weight = 1.  
-2. **Pick A-B (2)**: Include it. MST has {B-D, A-B}, weight = 3.  
-3. **Pick D-E (2)**: Include it. MST has {B-D, A-B, D-E}, weight = 5.  
-4. **Pick A-C (3)**: Include it. MST has {B-D, A-B, D-E, A-C}, weight = 8.  
-5. **Pick B-E (3)**: Would form a cycle (B, D, E already connected), skip.  
-6. **Pick C-D (4)**: Would form a cycle (C, D already connected), skip.  
-7. **Pick C-E (5)**: Would form a cycle as well, skip.  
+*Sorted edge list (ascending):*
+`E–F(1), B–C(2), D–F(2), B–E(3), A–B(4), A–C(4), B–D(5), C–D(5), C–E(5), D–E(6), A–F(7)`
 
-The MST edges are **B-D, A-B, D-E, and A-C**, total weight = **8**.
+*Union–Find / MST evolution (take the edge if it connects different sets):*
 
-##### Special Characteristics
+```
+Step | Edge (w)  | Find(u), Find(v) | Action     | Components after union            | MST so far                 | Total
+-----+-----------+-------------------+------------+-----------------------------------+----------------------------+------
+ 1   | E–F (1)   | {E}, {F}          | TAKE       | {E,F} {A} {B} {C} {D}            | [E–F(1)]                   | 1
+ 2   | B–C (2)   | {B}, {C}          | TAKE       | {E,F} {B,C} {A} {D}              | [E–F(1), B–C(2)]           | 3
+ 3   | D–F (2)   | {D}, {E,F}        | TAKE       | {B,C} {D,E,F} {A}                | [E–F(1), B–C(2), D–F(2)]   | 5
+ 4   | B–E (3)   | {B,C}, {D,E,F}    | TAKE       | {A} {B,C,D,E,F}                  | [..., B–E(3)]              | 8
+ 5   | A–B (4)   | {A}, {B,C,D,E,F}  | TAKE       | {A,B,C,D,E,F} (all connected)    | [..., A–B(4)]              | 12
+     | (stop: we have V−1 = 5 edges for 6 vertices)
+```
 
-- It always picks the **smallest available edge** that won't create a cycle.  
-- In case of a **tie**, any equally weighted edge can be chosen.  
-- The approach is particularly efficient for **sparse graphs**.  
-- Sorting edges takes **O(E \log E)** time, and disjoint-set operations can be considered almost **O(1)** on average.
+*Resulting MST edges and weight:*
 
-##### Applications
+```
+E–F(1), B–C(2), D–F(2), B–E(3), A–B(4)    ⇒  Total = 1 + 2 + 2 + 3 + 4 = 12
+```
 
-- **Network design**: Connecting servers or cities using minimal cable length.  
-- **Infrastructure**: Building road systems, water lines, or power grids with the smallest total cost.  
-- **Any MST requirement**: Ensuring connectivity among all nodes at minimum cost.
+*Clean MST view (tree edges only):*
 
-##### Implementation
+```
+A
+└── B (4)
+    ├── C (2)
+    └── E (3)
+        └── F (1)
+            └── D (2)
+```
+
+**Applications**
+
+1. **Network design:** least-cost backbone (roads, fiber, pipes) connecting all sites with minimal total length/cost.
+2. **Clustering (single-linkage):** build MST, then cut the **k−1** heaviest edges to form **k** clusters.
+3. **Image segmentation:** graph-based grouping by intensity/feature differences via MST.
+4. **Approximation for metric TSP:** preorder walk of MST gives a 2-approx tour (with shortcutting).
+5. **Circuit/VLSI layout:** minimal interconnect under simple models.
+6. **Maze generation:** randomized Kruskal picks edges in random order subject to acyclicity.
+
+**Implementation**
 
 * [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/kruskal)
 * [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/kruskal)
+
+*Implementation tip:*
+On huge graphs that **stream from disk**, you can **external-sort** edges by weight, then perform a single pass with DSU. For reproducibility across platforms, **stabilize** sorting by `(weight, min(u,v), max(u,v))`.
+
+### Topological Sort
+
+Topological sort orders the vertices of a **directed acyclic graph (DAG)** so that **every directed edge** $u \rightarrow v$ goes **from left to right** in the order (i.e., $u$ appears before $v$). It’s the canonical tool for scheduling tasks with dependencies.
+
+To efficiently keep track of the process (Kahn’s algorithm), we use:
+
+* A **queue** (or min-heap if you want lexicographically smallest order) holding all vertices with **indegree = 0** (no unmet prerequisites).
+* An **`indegree` map/array** that counts for each vertex how many prerequisites remain.
+* An **`order` list** to append vertices as they are “emitted.”
+
+*Useful additions in practice:*
+
+* A **`visited_count`** (or length of `order`) to detect cycles: if, after processing, fewer than $V$ vertices were output, the graph has a cycle.
+* A **min-heap** instead of a FIFO queue to get the **lexicographically smallest** valid topological order.
+* A **DFS-based alternative**: run DFS and take vertices in **reverse postorder** (also $O(V+E)$); with DFS you detect cycles via a 3-color/stack state.
+
+**Algorithm Steps (Kahn’s algorithm)**
+
+1. Compute `indegree[v]` for every vertex $v$.
+
+2. Initialize a queue `Q` with **all** vertices of indegree 0.
+
+3. While `Q` is not empty:
+
+   1. **Dequeue** a vertex `u` and append it to `order`.
+   2. For each outgoing edge `u → v`:
+
+      * Decrement `indegree[v]` by 1.
+      * If `indegree[v]` becomes 0, **enqueue** `v`.
+
+4. If `len(order) < V`, a **cycle exists** (topological order does not exist). Otherwise, `order` is a valid topological ordering.
+
+*Reference pseudocode (adjacency-list graph):*
+
+```
+TopoSort_Kahn(G):
+    # G[u] = iterable of neighbors v with edge u -> v
+    V = all_vertices(G)
+    indeg = {v: 0 for v in V}
+    for u in V:
+        for v in G[u]:
+            indeg[v] += 1
+
+    Q = Queue()
+    for v in V:
+        if indeg[v] == 0:
+            Q.enqueue(v)
+
+    order = []
+
+    while not Q.empty():
+        u = Q.dequeue()
+        order.append(u)
+        for v in G[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                Q.enqueue(v)
+
+    if len(order) != len(V):
+        return None    # cycle detected
+    return order
+```
+
+*Sanity notes:*
+
+* **Time:** $O(V + E)$ — each vertex enqueued once; each edge decreases an indegree once.
+* **Space:** $O(V)$ — for indegrees, queue, and output.
+* **Input:** Must be a **DAG**; if a cycle exists, **no** topological order exists.
+
+**Example**
+
+DAG; we’ll start with all indegree-0 vertices. (Edges shown as arrows.)
+
+```
+                           ┌───────┐
+                           │   A   │
+                           └───┬───┘
+                               │
+                               │
+        ┌───────┐          ┌───▼───┐          ┌───────┐
+        │   B   │──────────│   C   │──────────│   D   │
+        └───┬───┘          └───┬───┘          └───┬───┘
+            │                  │                  │
+            │                  │                  │
+            │              ┌───▼───┐              │
+            │              │   E   │──────────────┘
+            │              └───┬───┘
+            │                  │
+            │                  │
+        ┌───▼───┐          ┌───▼───┐
+        │   G   │          │   F   │
+        └───────┘          └───────┘
+
+Edges:
+A→C, B→C, C→D, C→E, E→D, B→G
+```
+
+*Initial indegrees:*
+
+```
+indeg[A]=0, indeg[B]=0, indeg[C]=2, indeg[D]=2, indeg[E]=1, indeg[F]=0, indeg[G]=1
+```
+
+*Queue/Indegree evolution (front → back; assume we keep the queue **lexicographically** by using a min-heap):*
+
+```
+Step | Pop u | Emit order         | Decrease indeg[...]         | Newly 0 → Enqueue | Q after
+-----+-------+--------------------+------------------------------+-------------------+-----------------
+0    | —     | []                 | —                            | A, B, F           | [A, B, F]
+1    | A     | [A]                | C:2→1                        | —                 | [B, F]
+2    | B     | [A, B]             | C:1→0, G:1→0                | C, G              | [C, F, G]
+3    | C     | [A, B, C]          | D:2→1, E:1→0                | E                 | [E, F, G]
+4    | E     | [A, B, C, E]       | D:1→0                       | D                 | [D, F, G]
+5    | D     | [A, B, C, E, D]    | —                            | —                 | [F, G]
+6    | F     | [A, B, C, E, D, F] | —                            | —                 | [G]
+7    | G     | [A, B, C, E, D, F, G] | —                         | —                 | []
+```
+
+*A valid topological order:*
+`A, B, C, E, D, F, G` (others like `B, A, C, E, D, F, G` are also valid.)
+
+*Clean left-to-right view (one possible ordering):*
+
+```
+A   B   F   C   E   D   G
+│   │       │   │   │
+└──►└──►    └──►└──►└──►   (all arrows go left→right)
+```
+
+**Cycle detection (why it fails on cycles)**
+
+If there’s a cycle, some vertices **never** reach indegree 0. Example:
+
+```
+   ┌─────┐      ┌─────┐
+   │  X  │ ───► │  Y  │
+   └──┬──┘      └──┬──┘
+      └───────────►┘
+        (Y ───► X creates a cycle)
+```
+
+Here `indeg[X]=indeg[Y]=1` initially; `Q` starts empty ⇒ `order=[]` and `len(order) < V` ⇒ **cycle reported**.
+
+**Applications**
+
+1. **Build systems / compilation** (compile a file only after its prerequisites).
+2. **Course scheduling** (take courses in an order respecting prerequisites).
+3. **Data pipelines / DAG workflows** (Airflow, Spark DAGs): execute stages when inputs are ready.
+4. **Dependency resolution** (package managers, container layers).
+5. **Dynamic programming on DAGs** (longest/shortest path, path counting) by processing vertices in topological order.
+6. **Circuit evaluation / spreadsheets** (evaluate cells/nets after their dependencies).
+
+**Implementation**
+
+* [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/cpp/topological_sort)
+* [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/topological_sort/kruskal)
+
+*Implementation tips:*
+
+* Use a **deque** for FIFO behavior; use a **min-heap** to get the **lexicographically smallest** topological order.
+* When the graph is large and sparse, store adjacency as **lists** and compute indegrees in one pass for $O(V+E)$.
+* **DFS variant** (brief): color states `0=unseen,1=visiting,2=done`; on exploring `u`, mark `1`; DFS to neighbors; if you see `1` again, there’s a cycle; on finish, push `u` to a stack. Reverse the stack for the order.
