@@ -167,12 +167,12 @@ VII. *Other Important Concepts*:
 
 Hash tables store key-value pairs for efficient lookup, insertion, and deletion.
 
-- When *choosing a good hash function*, ensure it distributes keys uniformly across the table to reduce the likelihood of collisions. For custom objects, it's important to override hash functions carefully, ensuring they are consistent and align with the object’s equality logic.
-- To deal with *collisions*, two main methods are commonly used: *Chaining*, where multiple elements that hash to the same index are stored in a linked list or another structure at that index. *Open addressing*, which resolves collisions by finding another empty slot through probing methods, such as linear probing, quadratic probing, or double hashing.
-- The *load factor and resizing* are important aspects of hash table management. The load factor, which is the ratio of the number of elements to the number of buckets, should be monitored. When the load factor exceeds a certain threshold (often around 0.7), it's time to resize and rehash the table to maintain performance.
-- Always use *immutable keys* in a hash table to avoid complications from key mutation. If a key changes after insertion, it can corrupt the structure of the hash table and lead to retrieval failures.
-- Hash tables have numerous *applications*, including frequency counting, caching, indexing, and implementing associative arrays like dictionaries or maps in various programming languages.
-- While hash tables offer *$O(1)$ average-case time complexity*, it’s important to understand that the worst-case time complexity can degrade to $O(n)$ if the hash function leads to many collisions, particularly when the load factor is too high.
+* When *choosing a good hash function*, ensure it distributes keys uniformly across the table to reduce the likelihood of collisions. For custom objects, it's important to override hash functions carefully, ensuring they are consistent and align with the object’s equality logic.
+* To deal with *collisions*, two main methods are commonly used: *Chaining*, where multiple elements that hash to the same index are stored in a linked list or another structure at that index. *Open addressing*, which resolves collisions by finding another empty slot through probing methods, such as linear probing, quadratic probing, or double hashing.
+* The *load factor and resizing* are important aspects of hash table management. The load factor, which is the ratio of the number of elements to the number of buckets, should be monitored. When the load factor exceeds a certain threshold (often around 0.7), it's time to resize and rehash the table to maintain performance.
+* Always use *immutable keys* in a hash table to avoid complications from key mutation. If a key changes after insertion, it can corrupt the structure of the hash table and lead to retrieval failures.
+* Hash tables have numerous *applications*, including frequency counting, caching, indexing, and implementing associative arrays like dictionaries or maps in various programming languages.
+* While hash tables offer *$O(1)$ average-case time complexity*, it’s important to understand that the worst-case time complexity can degrade to $O(n)$ if the hash function leads to many collisions, particularly when the load factor is too high.
 
 ### Algorithms
 
