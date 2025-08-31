@@ -594,7 +594,7 @@ Pass 4:  [ 10 | 30 ] [40] [50] [70] [90  80]
 ### Heap sort
 
 Heap Sort is a **comparison-based sorting algorithm** that uses a special data structure called a **binary heap**.
-It is efficient, with guaranteed \$O(n \log n)\$ performance, and sorts **in-place** (no extra array needed).
+It is efficient, with guaranteed $O(n \log n)$ performance, and sorts **in-place** (no extra array needed).
 
 The basic idea:
 
