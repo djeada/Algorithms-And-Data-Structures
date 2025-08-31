@@ -177,7 +177,7 @@ Sorted! ✅
 
 **Optimizations**
 
-* This makes Bubble Sort’s **best case** much faster ($O(n)$).
+* By keeping track of whether any swaps were made during a pass, Bubble Sort can terminate early if the array is already sorted. This optimization makes Bubble Sort’s **best case** much faster ($O(n)$).
 
 **Stability**
 
