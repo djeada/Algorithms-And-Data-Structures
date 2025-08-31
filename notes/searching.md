@@ -404,7 +404,7 @@ We probe every 2nd index:
 * probe = 2 → $A[2] = 9 < 25$ → jump to 4
 * probe = 4 → $A[4] = 25 \geq 25$ → stop
 
-So target is in block $(2..4]$.
+So target is in block $(2..4]$
 
 ```
 [ 1 ][ 4 ] | [ 9 ][16 ] | [25 ][36 ] | [49 ]
