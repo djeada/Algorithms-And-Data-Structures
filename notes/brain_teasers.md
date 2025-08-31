@@ -1,8 +1,4 @@
-todo:
-
-- heaps
-- fast and slow pointer for lists
-- tree traversal in order, post oreder etc.
+- tree traversal in order, post order etc.
 
 ## Solving Programming Brain Teasers
 
