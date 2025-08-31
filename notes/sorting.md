@@ -379,7 +379,7 @@ Before:  [ 11 ][ 12 ][ 13 ][ 5 ][ 6 ]
 After:   [ 11 ][ 12 ][ 13 ][ 5 ][ 6 ]
 ```
 
-✔ Sorted portion: \[11, 12, 13]
+✔ Sorted portion: [11, 12, 13]
 
 **Pass 3: Insert 5**
 
