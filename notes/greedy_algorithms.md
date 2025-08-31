@@ -2,12 +2,10 @@
 
 Greedy algorithms build a solution one step at a time. At each step, grab the option that looks best *right now* by some simple rule (highest value, earliest finish, shortest length, etc.). Keep it if it doesn’t break the rules of the problem.
 
-```
-1) Sort by your rule (the “key”).
-2) Scan items in that order.
-3) If adding this item keeps the partial answer valid, keep it.
-4) Otherwise skip it.
-```
+1. Sort by your rule (the “key”).
+2. Scan items in that order.
+3. If adding this item keeps the partial answer valid, keep it.
+4. Otherwise skip it.
 
 Picking the best “now” doesn’t obviously give the best “overall.” The real work is showing that these local choices still lead to a globally best answer.
 
@@ -36,24 +34,23 @@ There’s a tidy setting where greedy is *always* right (for nonnegative weights
 
 That third rule prevents dead ends and is exactly what exchange arguments rely on. In matroids, the simple “sort by weight and take what fits” greedy is guaranteed optimal. Outside matroids, greedy can still work—but you must justify it for the specific problem using exchange/invariants.
 
-
 ### Reachability on a line
 
-- You stand at square \$0\$ on squares \$0,1,\dots,n-1\$.
-- Each square \$i\$ has a jump power \$a\[i]\$. From \$i\$ you may land on any of \$i+1, i+2, \dots, i+a\[i]\$.
-- Goal: decide if you can reach \$n-1\$; if not, report the furthest reachable square.
+- You stand at square $0$ on squares $0,1,dots,n-1$.
+- Each square $i$ has a jump power $a\[i]$. From $i$ you may land on any of $i+1, i+2, \dots, i+a\[i]$.
+- Goal: decide if you can reach $n-1$; if not, report the furthest reachable square.
 
-Example
+**Example**
 
-* Input: \$a=\[3,1,0,0,4,1]\$, so \$n=6\$ (squares \$0..5\$).
+Input: $a=\[3,1,0,0,4,1]$, so $n=6$ (squares $0..5$).
 
 ```
 indices:  0   1   2   3   4   5
 a[i]   :  3   1   0   0   4   1
-reach   :  ^ start at 0
+reach  :  ^ start at 0
 ```
 
-From any \$i\$, the allowed landings are a range:
+From any $i$, the allowed landings are a range:
 
 ```
 i=0 (a[0]=3): 1..3
@@ -63,17 +60,15 @@ i=3 (a[3]=0): —
 i=4 (a[4]=4): 5..8 (board ends at 5)
 ```
 
----
-
-Baseline idea (waves)
+**Baseline idea**
 
 “Paint everything reachable, one wave at a time.”
 
-1. Start with \${0}\$ reachable.
-2. For each already-reachable \$i\$, add all \$i+1..i+a\[i]\$.
+1. Start with ${0}$ reachable.
+2. For each already-reachable $i$, add all $i+1..i+a\[i]$.
 3. Stop when nothing new appears.
 
-Walk on the example:
+*Walkthrough:*
 
 ```
 start:   reachable = {0}
@@ -86,23 +81,21 @@ stop:    no new squares  → furthest = 3; last (5) unreachable
 
 Correct, but can reprocess many squares.
 
----
+**One-pass trick**
 
-One-pass trick (frontier)
-
-Carry one number while scanning left→right: the furthest frontier \$F\$ seen so far.
+Carry one number while scanning left→right: the furthest frontier $F$ seen so far.
 
 Rules:
 
-* If you are at \$i\$ with \$i>F\$, you hit a gap → stuck forever.
-* Otherwise, extend \$F \leftarrow \max(F,\ i+a\[i])\$ and continue.
+* If you are at $i$ with $i>F$, you hit a gap → stuck forever.
+* Otherwise, extend $F \leftarrow \max(F, i+a\[i])$ and continue.
 
 At the end:
 
-* Can reach last iff \$F \ge n-1\$.
-* Furthest reachable square is \$F\$ (capped by \$n-1\$).
+* Can reach last iff $F \ge n-1$.
+* Furthest reachable square is $F$ (capped by $n-1$).
 
-Pseudocode
+*Pseudocode*
 
 ```
 F = 0
@@ -114,13 +107,13 @@ can_reach_last = (F >= n-1)
 furthest = min(F, n-1)
 ```
 
-Why this is safe (one line): \$F\$ always equals “best jump end discovered from any truly-reachable square \$\le i\$,” and never decreases; if \$i>F\$, no earlier jump can help because its effect was already folded into \$F\$.
+Why this is safe (one line): $F$ always equals “best jump end discovered from any truly-reachable square $\le i$,” and never decreases; if $i>F$, no earlier jump can help because its effect was already folded into $F$.
 
- walkthrough on the example
+*Walkthrough:*
 
-We draw the frontier as a bracket reaching to \$F\$.
+We draw the frontier as a bracket reaching to $F$.
 
-Step \$i=0\$ (inside frontier since \$0\le F\$); update \$F=\max(0,0+3)=3\$.
+Step $i=0$ (inside frontier since $0\le F$); update $F=\max(0,0+3)=3$.
 
 ```
 indices:  0   1   2   3   4   5
@@ -129,11 +122,11 @@ indices:  0   1   2   3   4   5
 F=3
 ```
 
-Step \$i=1\$: still \$i\le F\$. Update \$F=\max(3,1+1)=3\$ (no change).
-Step \$i=2\$: \$F=\max(3,2+0)=3\$ (no change).
-Step \$i=3\$: \$F=\max(3,3+0)=3\$ (no change).
+Step $i=1$: still $i\le F$. Update $F=\max(3,1+1)=3$ (no change).
+Step $i=2$: $F=\max(3,2+0)=3$ (no change).
+Step $i=3$: $F=\max(3,3+0)=3$ (no change).
 
-Now \$i=4\$ but \$4>F(=3)\$ → gap → stuck.
+Now $i=4$ but $4>F(=3)$ → gap → stuck.
 
 ```
 indices:  0   1   2   3   4   5
@@ -141,10 +134,9 @@ indices:  0   1   2   3   4   5
 F=3
 ```
 
-Final: \$F=3\$. Since \$F\<n-1=5\$, last is unreachable; furthest reachable square is \$3\$.
+Final: $F=3$. Since $F\<n-1=5$, last is unreachable; furthest reachable square is $3$.
 
-Complexity: time \$O(n)\$, space \$O(1)\$.
-
+Complexity: time $O(n)$, space $O(1)$.
 
 ### Minimum spanning trees
 
@@ -152,35 +144,36 @@ You’ve got a connected weighted graph and you want the cheapest way to connect
 
 **Example inputs and outputs**
 
-Vertices: $V=\{A,B,C,D,E\}$
+```
+V = {A,B,C,D,E}
 
-Edges with weights:
-
-* $A\!-\!B:1,\ A\!-\!C:5,\ A\!-\!E:9$
-* $B\!-\!C:4,\ B\!-\!D:2,\ B\!-\!E:7$
-* $C\!-\!D:6,\ C\!-\!E:3$
-* $D\!-\!E:8$
+Edges (u-v:w):
+A-B:1  A-C:5  A-E:9
+B-C:4  B-D:2  B-E:7
+C-D:6  C-E:3
+D-E:8
+```
 
 A correct MST for this graph is:
 
 $$
-\{A\!-\!B(1),\ B\!-\!D(2),\ C\!-\!E(3),\ B\!-\!C(4)\}
+{A ⁣− ⁣B(1), B ⁣− ⁣D(2), C ⁣− ⁣E(3), B ⁣− ⁣C(4)}
 $$
 
 Total weight $=1+2+3+4=10$.
 
 You can’t do better: any cheaper set of 4 edges would either miss a vertex or create a cycle.
 
-Baseline (slow)
+*Baseline*
 
 Enumerate every spanning tree and pick the one with the smallest total weight. That’s conceptually simple—“try all combinations of $n-1$ edges that connect everything and have no cycles”—but it explodes combinatorially. Even medium graphs have an astronomical number of spanning trees, so this approach is only good as a thought experiment.
 
-**How it works**
+*How it works*
 
 Both fast methods rely on two facts:
 
-* **Cut rule (safe to add):** for any cut $(S, V\setminus S)$, the cheapest edge that crosses the cut appears in some MST. Intuition: if your current partial connection is on one side, the cheapest bridge to the other side is never a bad idea.
-* **Cycle rule (safe to skip):** in any cycle, the most expensive edge is never in an MST. Intuition: if you already have a loop, drop the priciest link and you’ll still be connected but strictly cheaper.
+* **Cut rule (safe to add)** - for any cut $(S, V\setminus S)$, the cheapest edge that crosses the cut appears in some MST. Intuition: if your current partial connection is on one side, the cheapest bridge to the other side is never a bad idea.
+* **Cycle rule (safe to skip)** - in any cycle, the most expensive edge is never in an MST. Intuition: if you already have a loop, drop the priciest link and you’ll still be connected but strictly cheaper.
 
 #### Kruskal’s method
 
@@ -189,7 +182,7 @@ Both fast methods rely on two facts:
 Use the same graph as above. A valid MST is
 
 $$
-\{A\!-\!B(1),\ B\!-\!D(2),\ C\!-\!E(3),\ B\!-\!C(4)\}\quad\Rightarrow\quad \text{total} = 10.
+\{A\!-\!B(1), B\!-\!D(2), C\!-\!E(3), B\!-\!C(4)\}\quad\Rightarrow\quad \text{total} = 10
 $$
 
 **How it works**
@@ -198,41 +191,52 @@ Sort edges from lightest to heaviest; walk down that list and keep an edge if it
 
 Sorted edges by weight:
 
-$$
-1: A\!-\!B,\quad
-2: B\!-\!D,\quad
-3: C\!-\!E,\quad
-4: B\!-\!C,\quad
-5: A\!-\!C,\quad
-6: C\!-\!D,\quad
-7: B\!-\!E,\quad
-8: D\!-\!E,\quad
-9: A\!-\!E
-$$
+```
+1: A-B
+2: B-D
+3: C-E
+4: B-C
+5: A-C
+6: C-D
+7: B-E
+8: D-E
+9: A-E
+```
 
 We’ll keep a running view of the components; initially each vertex is alone.
 
-1. $A\!-\!B(1)$ connects $\{A\}$ and $\{B\}$ → **keep**
-   Components: $\{A,B\},\{C\},\{D\},\{E\}$
+```
+start:   {A} {B} {C} {D} {E}
 
-2. $B\!-\!D(2)$ connects $\{A,B\}$ and $\{D\}$ → **keep**
-   Components: $\{A,B,D\},\{C\},\{E\}$
+take 1:  A-B(1)   → {AB} {C} {D} {E}
+take 2:  B-D(2)   → {ABD} {C} {E}
+take 3:  C-E(3)   → {ABD} {CE}
+take 4:  B-C(4)   → {ABCDE}   ← all connected (|V|-1 edges) → stop
 
-3. $C\!-\!E(3)$ connects $\{C\}$ and $\{E\}$ → **keep**
-   Components: $\{A,B,D\},\{C,E\}$
+kept: A-B(1), B-D(2), C-E(3), B-C(4)  → total = 10
+```
 
-4. $B\!-\!C(4)$ connects $\{A,B,D\}$ and $\{C,E\}$ → **keep**
-   Components: $\{A,B,C,D,E\}$  ← all connected; we have 4 edges → stop.
+- Edges kept: $A\!-\!B(1), B\!-\!D(2), C\!-\!E(3), B\!-\!C(4)$.
+- Total $=10$. Every later edge would create a cycle and is skipped by the cycle rule.
 
-Edges kept: $A\!-\!B(1), B\!-\!D(2), C\!-\!E(3), B\!-\!C(4)$.
-Total $=10$. Every later edge would create a cycle and is skipped by the cycle rule.
+Kruskal pseudocode
+
+```python
+MST = ∅
+make_set(v) for v in V
+for (w,u,v) in edges sorted by w:
+    if find(u) != find(v):
+        MST.add((u,v,w))
+        union(u,v)
+        if |MST| == |V|-1: break
+```
 
 Complexity
 
 * Time: $O(E \log E)$ to sort edges + near-constant $\alpha(V)$ for DSU unions; often written $O(E \log V)$ since $E\le V^2$.
 * Space: $O(V)$ for disjoint-set structure.
 
-### Prim's method
+#### Prim's method
 
 **Example inputs and outputs**
 
@@ -244,129 +248,174 @@ Start from any vertex; repeatedly add the lightest edge that leaves the current 
 
 Let’s start from $A$. The “tree” grows one cheapest boundary edge at a time.
 
-Start: tree = $\{A\}$. Boundary edges from $A$: $A\!-\!B(1), A\!-\!C(5), A\!-\!E(9)$.
+```
+step 0:
+Tree = {A}
+Boundary = { A-B(1), A-C(5), A-E(9) }
 
-1. Take $A\!-\!B(1)$ (lightest leaving the tree).
-   Tree vertices: $\{A,B\}$. New boundary includes $B\!-\!D(2), B\!-\!C(4), B\!-\!E(7)$ as well.
+take A-B(1)
+Tree = {A,B}
+Boundary = { B-D(2), B-C(4), B-E(7), A-C(5), A-E(9) }
 
-2. Take $B\!-\!D(2)$ (now the lightest boundary edge).
-   Tree: $\{A,B,D\}$. Boundary now has $B\!-\!C(4), A\!-\!C(5), D\!-\!C(6), B\!-\!E(7), D\!-\!E(8), A\!-\!E(9)$.
+take B-D(2)
+Tree = {A,B,D}
+Boundary = { B-C(4), A-C(5), D-C(6), B-E(7), D-E(8), A-E(9) }
 
-3. Take $B\!-\!C(4)$.
-   Tree: $\{A,B,C,D\}$. Boundary updates to include $C\!-\!E(3)$.
+take B-C(4)
+Tree = {A,B,C,D}
+Boundary = { C-E(3), A-E(9), B-E(7), D-E(8) }
 
-4. Take $C\!-\!E(3)$ (cheapest boundary edge now).
-   Tree: $\{A,B,C,D,E\}$ → all vertices included → stop.
+take C-E(3)
+Tree = {A,B,C,D,E}  → done
+
+kept: A-B(1), B-D(2), B-C(4), C-E(3) → total = 10
+```
 
 Edges chosen: exactly the same four as Kruskal, total $=10$.
 
 Why did step 4 grab a weight-3 edge after we already took a 4? Because earlier that 3 wasn’t **available**—it didn’t cross from the tree to the outside until $C$ joined the tree. Prim never regrets earlier picks because of the cut rule: at each moment it adds the cheapest bridge from “inside” to “outside,” and that’s always safe.
+
+Prim pseudocode (binary heap)
+
+```python
+pick any root r
+Tree = {r}
+push all edges (r→v,w) into heap
+while |Tree| < |V|:
+    pop (w,u→v) with minimum w where v ∉ Tree
+    add v to Tree; record edge (u,v,w) in MST
+    push all edges (v→x,wvx) with x ∉ Tree
+```
 
 Complexity
 
 * Time: $O(E \log V)$ with a binary heap and adjacency lists; $O(E + V\log V)$ with a Fibonacci heap.
 * Space: $O(V)$ for keys/parents and visited set.
 
-### Shortest paths with non-negative weights
+### Shortest paths with non-negative weights (Dijkstra)
 
-You’ve got a weighted graph and a starting node $s$. Every edge has a cost $\ge 0$. The task is to find the cheapest cost to reach every node from $s$, and a cheapest route for each if you want it.
+Goal: from start $s$, compute cheapest costs $d(\cdot)$ to every node (and routes if you keep parents).
 
-**Example inputs and outputs**
+Non-negative edges only; that’s what makes the greedy step safe.
 
-Nodes: $A,B,C,D,E$
+Example
 
-Edges (undirected, weights in parentheses):
+```
+Nodes: A B C D E   (start s=A)
 
-* $A\!-\!B(2)$, $A\!-\!C(5)$
-* $B\!-\!C(1)$, $B\!-\!D(2)$, $B\!-\!E(7)$
-* $C\!-\!D(3)$, $C\!-\!E(1)$
-* $D\!-\!E(2)$
+Edges (undirected):
+A-B:2  A-C:5
+B-C:1  B-D:2  B-E:7
+C-D:3  C-E:1
+D-E:2
+```
 
-Start at $A$.
+Correct answers from A: $d(A)=0, d(B)=2, d(C)=3, d(D)=4, d(E)=4$.
 
-Correct shortest-path costs from $A$:
+*Baseline* 
 
-* $d(A)=0$
-* $d(B)=2$ via $A\!\to\!B$
-* $d(C)=3$ via $A\!\to\!B\!\to\!C$
-* $d(D)=4$ via $A\!\to\!B\!\to\!D$
-* $d(E)=4$ via $A\!\to\!B\!\to\!C\!\to\!E$
+Repeat relaxations $|V|-1$ rounds (Bellman–Ford-style).
 
-Baseline (slow)
+Work $\approx |V|\cdot|E|$. Handles negatives; we don’t need that here.
 
-One safe—but slower—approach is to relax all edges repeatedly until nothing improves. Think of it as “try to shorten paths by one edge at a time, do that $|V|-1$ rounds.” This eventually converges to the true shortest costs, but it touches every edge many times, so its work is about $|V|\cdot|E|$. It also handles negative edges, which is why it has to be cautious and keep looping.
+Fast method (Dijkstra): “settle the smallest label”
 
-**How it works**
+1. Initialize distance labels: set $d(s)=0$, and $d(x)=\infty$ for all other nodes.
+2. Initialize parent pointers $\pi(\cdot)$.
+3. Initialize the settled set $S=\emptyset$.
+4. Initialize the unsettled set as $V\setminus S$.
+5. Select the unsettled node $u$ with the smallest distance label $d(u)$.
+6. Move node $u$ from the unsettled set into the settled set.
+7. Update each neighbor $v$ of $u$ by assigning $d(v) \leftarrow \min\bigl(d(v), d(u) + w(u,v)\bigr)$.
+8. If the update in step 7 improves $d(v)$, then set $\pi(v) \leftarrow u$.
+9. Repeat from step 5 until all nodes are settled or no reachable unsettled nodes remain.
+10. Justification of correctness: with non-negative edge weights, any path reaching an unsettled node must have length at least $d(u)$ plus a non-negative exit edge, so the chosen $d(u)$ is final and cannot later be decreased.
 
-Carry two sets and a distance label for each node.
+Pseudocode (binary heap)
 
-* “Settled” nodes are done forever; their labels are final.
-* “Unsettled” nodes still might improve.
+```
+for v in V: d[v]=∞; π[v]=nil
+d[s]=0
+push (0,s) into min-heap H
+S = ∅
+while H not empty:
+    (du,u) = pop-min(H)
+    if u in S: continue         # ignore stale heap entries
+    S.add(u)
+    for (u,v,w) in adj[u]:
+        if d[v] > d[u] + w:
+            d[v] = d[u] + w
+            π[v] = u
+            push (d[v], v) into H
+```
 
-Initialize all labels to $\infty$ except $d(s)=0$. Over and over:
+Time $O((|V|+|E|)\log|V|)$; space $O(|V|)$.
 
-1. Pick the **unsettled** node with the **smallest** label. Call it $u$. Move $u$ to settled.
-2. For each neighbor $v$ of $u$, try to improve $d(v)$ using the route through $u$:
+*Walkthrough*
 
-   $$
-   d(v)\ \leftarrow\ \min\bigl(d(v),\ d(u)+w(u,v)\bigr).
-   $$
+Legend: “S” = settled, “π\[x]” = parent of $x$. Ties break arbitrarily.
 
-Greedy “settle and forget” is safe **because all edges are non-negative**. At the moment you pick the smallest-label unsettled node $u$, every route to any other unsettled node must cost at least $d(u)$ plus some non-negative edge to leave the settled set, so nobody can beat $d(u)$ later.
+Round 0 (init)
 
-#### Plugging the numbers
+```
+S = ∅
+d:  A:0  B:∞  C:∞  D:∞  E:∞
+π:  A:-  B:-  C:-  D:-  E:-
+```
 
-We’ll keep a tiny table each round. “S” means settled. Ties can be broken arbitrarily.
+Round 1 — pick min unsettled → A(0); relax neighbors
 
-Start:
+```
+S = {A}
+relax A-B (2):  d[B]=2  π[B]=A
+relax A-C (5):  d[C]=5  π[C]=A
+d:  A:0S  B:2  C:5  D:∞  E:∞
+π:  A:-   B:A  C:A  D:-  E:-
+```
 
-* Labels: $d(A)=0$; $d(B)=d(C)=d(D)=d(E)=\infty$
-* Settled: $\varnothing$
+Round 2 — pick B(2); relax
 
-Round 1
-Pick min unsettled → $A$ (0). Settle $A$. Relax its neighbors.
+```
+S = {A,B}
+B→C (1): 2+1=3 <5 → d[C]=3  π[C]=B
+B→D (2): 2+2=4     → d[D]=4  π[D]=B
+B→E (7): 2+7=9     → d[E]=9  π[E]=B
+d:  A:0S  B:2S  C:3  D:4  E:9
+π:  A:-   B:A   C:B  D:B  E:B
+```
 
-* Update via $A$: $d(B)=2$, $d(C)=5$
-* Labels now: $A:0\text{ (S)},\ B:2,\ C:5,\ D:\infty,\ E:\infty$
+Round 3 — pick C(3); relax
 
-Round 2
-Pick min unsettled → $B$ (2). Settle $B$. Relax neighbors of $B$.
+```
+S = {A,B,C}
+C→D (3): 3+3=6  (no improv; keep 4)
+C→E (1): 3+1=4 <9 → d[E]=4  π[E]=C
+d:  A:0S  B:2S  C:3S  D:4  E:4
+π:  A:-   B:A   C:B   D:B  E:C
+```
 
-* $C$ via $B$: $2+1=3 < 5$ → $d(C)=3$
-* $D$ via $B$: $2+2=4$ → $d(D)=4$
-* $E$ via $B$: $2+7=9$ → $d(E)=9$
-* Labels: $A:0\text{ (S)},\ B:2\text{ (S)},\ C:3,\ D:4,\ E:9$
+Round 4 — pick D(4); relax
 
-Round 3
-Pick min unsettled → $C$ (3). Settle $C$. Relax neighbors of $C$.
+```
+S = {A,B,C,D}
+D→E (2): 4+2=6 (no improv; keep 4)
+d:  A:0S  B:2S  C:3S  D:4S  E:4
+```
 
-* $D$ via $C$: $3+3=6$ (worse than 4) → no change
-* $E$ via $C$: $3+1=4 < 9$ → $d(E)=4$
-* Labels: $A:0\text{ (S)},\ B:2\text{ (S)},\ C:3\text{ (S)},\ D:4,\ E:4$
+Round 5 — pick E(4); done
 
-Round 4
-Pick min unsettled → tie $D$ or $E$ at 4. Take $D$. Settle $D$. Relax neighbors.
+```
+S = {A,B,C,D,E}  (all settled)
+Final d: A:0  B:2  C:3  D:4  E:4
+Parents π: B←A, C←B, D←B, E←C
+```
 
-* $E$ via $D$: $4+2=6$ (worse than 4) → no change
-* Labels: $A:0\text{ (S)},\ B:2\text{ (S)},\ C:3\text{ (S)},\ D:4\text{ (S)},\ E:4$
+Reconstruct routes by following parents backward:
 
-Round 5
-Pick $E$ (4). Settle $E$. No better updates. Done: all settled.
-
-Final labels:
-
-* $d(A)=0$
-* $d(B)=2$
-* $d(C)=3$
-* $d(D)=4$
-* $d(E)=4$
-
-Recovering paths by remembering “who improved whom” gives:
-
-* $B$ from $A$
-* $C$ from $B$
-* $D$ from $B$
-* $E$ from $C$
+* $B$: $A\to B$
+* $C$: $A\to B\to C$
+* $D$: $A\to B\to D$
+* $E$: $A\to B\to C\to E$
 
 Complexity
 
@@ -379,17 +428,19 @@ You’re given a list of numbers laid out in a line. You may pick one **contiguo
 
 **Example inputs and outputs**
 
-Take $x = [\,2,\,-3,\,4,\,-1,\,2,\,-5,\,3\,]$.
+```
+x = [ 2, -3, 4, -1, 2, -5, 3 ]
+best block = [ 4, -1, 2 ]  → sum = 5
+```
 
-A best block is $[\,4,\,-1,\,2\,]$. Its sum is $5$.
 So the correct output is “maximum sum $=5$” and one optimal segment is positions $3$ through $5$ (1-based).
 
-Baseline (slow)
+*Baseline*
 
 Try every possible block and keep the best total. To sum any block $i..j$ quickly, precompute **prefix sums** $S_0=0$ and $S_j=\sum_{k=1}^j x_k$. Then
 
 $$
-\sum_{k=i}^j x_k \;=\; S_j - S_{i-1}.
+\sum_{k=i}^j x_k = S_j - S_{i-1}
 $$
 
 Loop over all $j$ and all $i\le j$, compute $S_j-S_{i-1}$, and take the maximum. This is easy to reason about and always correct, but it does $O(n^2)$ block checks.
@@ -404,7 +455,7 @@ Walk left to right once and carry two simple numbers.
 At each step $j$, the best block **ending at** $j$ is “current prefix minus the smallest older prefix”:
 
 $$
-\text{best\_ending\_at\ }j \;=\; S_j - \min_{0\le t<j} S_t.
+\text{best\_ending\_at\ }j = S_j - \min_{0\le t<j} S_t.
 $$
 
 So during the scan:
@@ -415,11 +466,11 @@ So during the scan:
 
 This is the whole algorithm. In words: keep the lowest floor you’ve ever seen and measure how high you are above it now. If you dip to a new floor, remember it; if you rise, maybe you’ve set a new record.
 
-A widely used equivalent form keeps a “best sum ending here” value $E$: set $E \leftarrow \max(x_j,\; E+x_j)$ and track a global maximum. It’s the same idea written incrementally: if the running sum ever hurts you, you “reset” and start fresh at the current element.
+A widely used equivalent form keeps a “best sum ending here” value $E$: set $E \leftarrow \max(x_j,; E+x_j)$ and track a global maximum. It’s the same idea written incrementally: if the running sum ever hurts you, you “reset” and start fresh at the current element.
 
-#### Work the example by hand
+Work the example by hand
 
-Sequence $x = [\,2,\,-3,\,4,\,-1,\,2,\,-5,\,3\,]$.
+Sequence $x = [\,2,,-3,,4,,-1,,2,,-5,,3\,]$.
 Initialize $S=0$, $M=0$, and $\text{best}=-\infty$. Keep the index $t$ where the current $M$ occurred so we can reconstruct the block as $(t+1)..j$.
 
 ```
@@ -458,7 +509,7 @@ gap S-M: 0    2     0    4   3   5    0   3
                              ^ peak gap = 5 here
 ```
 
-#### Edge cases
+Edge cases
 
 When all numbers are negative, the best block is the **least negative single element**. The scan handles this automatically because $M$ keeps dropping with every step, so the maximum of $S_j-M$ happens when you take just the largest entry.
 
@@ -494,7 +545,7 @@ Sort by finishing time, then walk once from earliest finisher to latest. Keep an
 Sorted by finish:
 
 $$
-(1,3),\ (2,5),\ (4,7),\ (6,9),\ (8,10),\ (9,11)
+(1,3), (2,5), (4,7), (6,9), (8,10), (9,11)
 $$
 
 Run the scan and track the end of the last kept interval.
@@ -559,7 +610,7 @@ Order jobs by nondecreasing deadlines (earliest due date first, often called EDD
 Deadlines in increasing order:
 
 $$
-J_2(d=1),\ J_4(d=2),\ J_1(d=3),\ J_3(d=4)
+J_2(d=1), J_4(d=2), J_1(d=3), J_3(d=4)
 $$
 
 Run them one by one and compute completion times and lateness.
@@ -612,10 +663,10 @@ is as small as possible. Prefix codes exactly correspond to full binary trees wh
 Frequencies:
 
 $$
-A:0.40,\quad B:0.20,\quad C:0.20,\quad D:0.10,\quad E:0.10.
+A:0.40,quad B:0.20,quad C:0.20,quad D:0.10,quad E:0.10.
 $$
 
-A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L_A,\dots,L_E$, plus a concrete codebook.
+A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L_A,dots,L_E$, plus a concrete codebook.
 
 Baseline (slow)
 
@@ -626,7 +677,7 @@ One conceptual baseline is to enumerate all full binary trees with five labeled 
 Huffman’s rule repeats one tiny step: always merge the two least frequent items. When you merge two “symbols” with weights $p$ and $q$, you create a parent of weight $p+q$. The act of merging adds exactly $p+q$ to the objective $\mathbb{E}[L]$ because every leaf inside those two subtrees becomes one level deeper. Summing over all merges yields the final cost:
 
 $$
-\mathbb{E}[L]=\sum_{\text{merges}} (p+q)=\sum_{\text{internal nodes}} \text{weight}.
+\mathbb{E}[L]=\sum_{\text{merges}} (p+q)=\sum_{\text{internal nodes}} \text{weight}
 $$
 
 The greedy choice is safe because in an optimal tree the two deepest leaves must be siblings and must be the two least frequent symbols; otherwise swapping depths strictly reduces the cost by at least $f_{\text{heavy}}-f_{\text{light}}>0$. Collapsing those siblings into one pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof.
@@ -659,7 +710,7 @@ Now assign actual lengths. Record who merged with whom:
 Depths follow directly:
 
 $$
-L_A=2,\quad L_B=L_C=2,\quad L_D=L_E=3.
+L_A=2,quad L_B=L_C=2,quad L_D=L_E=3.
 $$
 
 Check the Kraft sum $3\cdot 2^{-2}+2\cdot 2^{-3}=3/4+1/4=1$ and the cost $0.4\cdot2+0.2\cdot2+0.2\cdot2+0.1\cdot3+0.1\cdot3=2.2$.
@@ -698,7 +749,7 @@ The $0\text{–}1$ knapsack with arbitrary weights defeats the obvious density-b
 Approximation guarantees rescue several hard problems with principled greedy performance. For set cover on a universe $U$ with $|U|=n$, the greedy rule that repeatedly picks the set covering the largest number of uncovered elements achieves an $H_n$ approximation:
 
 $$
-\text{cost}_{\text{greedy}} \le H_n\cdot \text{OPT},\qquad H_n=\sum_{k=1}^n \frac{1}{k}\le \ln n+1.
+\text{cost}_{\text{greedy}} \le H_n\cdot \text{OPT},qquad H_n=\sum_{k=1}^n \frac{1}{k}\le \ln n+1.
 $$
 
 A tight charging argument proves it: each time you cover new elements, charge them equally; no element is charged more than the harmonic sum relative to the optimum’s coverage.
@@ -706,7 +757,7 @@ A tight charging argument proves it: each time you cover new elements, charge th
 Maximizing a nondecreasing submodular set function $f:2^E\to\mathbb{R}_{\ge 0}$ under a cardinality constraint $|S|\le k$ is a crown jewel. Submodularity means diminishing returns:
 
 $$
-A\subseteq B,\ x\notin B \ \Rightarrow\ f(A\cup\{x\})-f(A)\ \ge\ f(B\cup\{x\})-f(B).
+A\subseteq B, x\notin B \ \Rightarrow\ f(A\cup\{x\})-f(A)\ \ge\ f(B\cup\{x\})-f(B).
 $$
 
 The greedy algorithm that adds the element with largest marginal gain at each step satisfies the celebrated bound
