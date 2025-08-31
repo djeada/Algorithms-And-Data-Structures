@@ -314,7 +314,7 @@ What does it mean to traverse a graph?
 Graph traversal **can** be done in a way that visits *all* vertices and edges (like a full DFS/BFS), but it doesn’t *have to*.
 
 * If you start DFS or BFS from a single source vertex, you’ll only reach the **connected component** containing that vertex. Any vertices in other components won’t be visited.
-* Some algorithms (like shortest path searches, A\*, or even partial DFS) intentionally stop early, meaning not all vertices or edges are visited.
+* Some algorithms (like shortest path searches, A*, or even partial DFS) intentionally stop early, meaning not all vertices or edges are visited.
 * In weighted or directed graphs, you may also skip certain edges depending on the traversal rules.
 
 So the precise way to answer that question is:
@@ -784,9 +784,9 @@ Shortest path A→E: A → C → B → E  (total cost 4)
 * In *single-source shortest paths* with non-negative edge weights, Dijkstra’s algorithm efficiently finds minimum-cost routes in settings like roads, communication networks, or transit systems; without it, travel times or costs could not be computed reliably when distances vary.
 * For *navigation and routing*, stopping the search as soon as the destination is extracted from the priority queue avoids unnecessary work; without this early stop, route planning in a road map continues exploring irrelevant regions of the network.
 * In *network planning and quality of service (QoS)*, Dijkstra selects minimum-latency or minimum-cost routes when weights are additive and non-negative; without this, designing efficient data or logistics paths becomes more error-prone.
-* As a *building block*, Dijkstra underlies algorithms like A\* (with zero heuristic), Johnson’s algorithm for all-pairs shortest paths in sparse graphs, and $k$-shortest path variants; without it, these higher-level methods would lack a reliable core procedure.
+* As a *building block*, Dijkstra underlies algorithms like A* (with zero heuristic), Johnson’s algorithm for all-pairs shortest paths in sparse graphs, and $k$-shortest path variants; without it, these higher-level methods would lack a reliable core procedure.
 * In *multi-source Dijkstra*, initializing the priority queue with several starting nodes at distance zero solves nearest-facility queries, such as finding the closest hospital; without this extension, repeated single-source runs would waste time.
-* As a *label-setting baseline*, Dijkstra provides the reference solution against which heuristics like A\*, ALT landmarks, or contraction hierarchies are compared; without this baseline, heuristic correctness and performance cannot be properly evaluated.
+* As a *label-setting baseline*, Dijkstra provides the reference solution against which heuristics like A*, ALT landmarks, or contraction hierarchies are compared; without this baseline, heuristic correctness and performance cannot be properly evaluated.
 * For *grid pathfinding with terrain costs*, Dijkstra handles non-negative cell costs when no admissible heuristic is available; without it, finding a least-effort path across weighted terrain would require less efficient exhaustive search.
 
 **Implementation**
@@ -932,7 +932,7 @@ Bellman–Ford would perform a $V$-th pass and still find an improvement (e.g., 
 
 **Applications**
 
-* In *shortest path problems with negative edges*, Bellman–Ford is applicable where Dijkstra or A\* fail, such as road networks with toll credits; without this method, these graphs cannot be handled correctly.
+* In *shortest path problems with negative edges*, Bellman–Ford is applicable where Dijkstra or A* fail, such as road networks with toll credits; without this method, these graphs cannot be handled correctly.
 * For *arbitrage detection* in currency or financial markets, converting exchange rates into $\log$ weights makes profit loops appear as negative cycles; without Bellman–Ford, such opportunities cannot be systematically identified.
 * In solving *difference constraints* of the form $x_v - x_u \leq w$, the algorithm checks feasibility by detecting whether any negative cycles exist; without this check, inconsistent scheduling or timing systems may go unnoticed.
 * As a *robust baseline*, Bellman–Ford verifies results of faster algorithms or initializes methods like Johnson’s for all-pairs shortest paths; without it, correctness guarantees in sparse-graph all-pairs problems would be weaker.
@@ -947,7 +947,7 @@ Bellman–Ford would perform a $V$-th pass and still find an improvement (e.g., 
 
 #### A* (A-Star) Algorithm
 
-A\* is a best-first search that finds a **least-cost path** from a start to a goal by minimizing
+A* is a best-first search that finds a **least-cost path** from a start to a goal by minimizing
 
 $$
 f(n) = g(n) + h(n),
@@ -958,7 +958,7 @@ where:
 * $g(n)$ = cost from start to $n$ (so far),
 * $h(n)$ = heuristic estimate of the remaining cost from $n$ to the goal.
 
-If $h$ is **admissible** (never overestimates) and **consistent** (triangle inequality), A\* is **optimal** and never needs to “reopen” closed nodes.
+If $h$ is **admissible** (never overestimates) and **consistent** (triangle inequality), A* is **optimal** and never needs to “reopen” closed nodes.
 
 **Core data structures**
 
@@ -1021,23 +1021,23 @@ reconstruct_path(parent, t):
 
 *Sanity notes:*
 
-* The *time* complexity of A\* is worst-case exponential, though in practice it runs much faster when the heuristic $h$ provides useful guidance; without an informative heuristic, the search can expand nearly the entire graph, as in navigating a large grid without directional hints.
-* The *space* complexity is $O(V)$, covering the priority queue and bookkeeping maps, which makes A\* memory-intensive; without recognizing this, applications such as robotics pathfinding may exceed available memory on large maps.
-* In *special cases*, A\* reduces to Dijkstra’s algorithm when $h \equiv 0$, and further reduces to BFS when all edges have cost 1 and $h \equiv 0$; without this perspective, one might overlook how A\* generalizes these familiar shortest-path algorithms.
+* The *time* complexity of A* is worst-case exponential, though in practice it runs much faster when the heuristic $h$ provides useful guidance; without an informative heuristic, the search can expand nearly the entire graph, as in navigating a large grid without directional hints.
+* The *space* complexity is $O(V)$, covering the priority queue and bookkeeping maps, which makes A* memory-intensive; without recognizing this, applications such as robotics pathfinding may exceed available memory on large maps.
+* In *special cases*, A* reduces to Dijkstra’s algorithm when $h \equiv 0$, and further reduces to BFS when all edges have cost 1 and $h \equiv 0$; without this perspective, one might overlook how A* generalizes these familiar shortest-path algorithms.
 
 **Visual walkthrough (grid with 4-neighborhood, Manhattan $h$)**
 
 Legend: `S` start, `G` goal, `#` wall, `.` free, `◉` expanded (closed), `•` frontier (open), `×` final path
 
 ```
-Row/Col →   1 2 3 4 5 6 7 8 9
-           ┌───────────────────┐
-1   S  .  .  .  .  #  .  .  .  │
-2   .  #  #  .  .  #  .  #  .  │
-3   .  .  .  .  .  .  .  #  .  │
-4   #  .  #  #  .  #  .  .  .  │
-5   .  .  .  #  .  .  .  #  G  │
-           └───────────────────┘
+Row/Col →    1  2  3  4  5  6  7  8  9
+           ┌────────────────────────────┐
+         1 │ S  .  .  .  .  #  .  .  .  │
+         2 │ .  #  #  .  .  #  .  #  .  │
+         3 │ .  .  .  .  .  .  .  #  .  │
+         4 │ #  .  #  #  .  #  .  .  .  │
+         5 │ .  .  .  #  .  .  .  #  G  │
+           └────────────────────────────┘
 Movement cost = 1 per step; 4-dir moves; h = Manhattan distance
 ```
 
@@ -1062,13 +1062,14 @@ Nodes near the straight line to G are preferred over detours around '#'.
 
 ```
 Final path (example rendering):
-           ┌───────────────────┐
-1   ×  ×  ×  ×  .  #  .  .  .  │
-2   ×  #  #  ×  ×  #  .  #  .  │
-3   ×  ×  ×  ×  ×  ×  ×  #  .  │
-4   #  .  #  #  ×  #  ×  ×  ×  │
-5   .  .  .  #  ×  ×  ×  #  G  │
-           └───────────────────┘
+Row/Col →     1  2  3  4  5  6  7  8  9
+           ┌─────────────────────────────┐
+         1 │  ×  ×  ×  ×  .  #  .  .  .  │
+         2 │  ×  #  #  ×  ×  #  .  #  .  │
+         3 │  ×  ×  ×  ×  ×  ×  ×  #  .  │
+         4 │  #  .  #  #  ×  #  ×  ×  ×  │
+         5 │  .  .  .  #  ×  ×  ×  #  G  │
+           └─────────────────────────────┘
 Path length (g at G) equals number of × steps (optimal with admissible/consistent h).
 ```
 
@@ -1102,31 +1103,31 @@ For **sliding puzzles (e.g., 8/15-puzzle)**:
 
 **Admissible vs. consistent**
 
-* An *admissible* heuristic satisfies $h(n) \leq h^*(n)$, meaning it never overestimates the true remaining cost, which guarantees that A\* finds an optimal path; without admissibility, the algorithm may return a suboptimal route, such as a longer-than-necessary driving path.
+* An *admissible* heuristic satisfies $h(n) \leq h^*(n)$, meaning it never overestimates the true remaining cost, which guarantees that A* finds an optimal path; without admissibility, the algorithm may return a suboptimal route, such as a longer-than-necessary driving path.
 * A *consistent (monotone)* heuristic obeys $h(u) \leq w(u,v) + h(v)$ for every edge, ensuring that $f$-values do not decrease along paths and that once a node is removed from the open set, its $g$-value is final; without consistency, nodes may need to be reopened, increasing complexity in searches like grid navigation.
 
 **Applications**
 
-* In *pathfinding* for maps, games, and robotics, A\* computes shortest or least-risk routes by combining actual travel cost with heuristic guidance; without it, movement planning in virtual or physical environments becomes slower or less efficient.
-* For *route planning* with road metrics such as travel time, distance, or tolls, A\* incorporates these costs and constraints into its evaluation; without heuristic search, navigation systems must fall back to slower methods like plain Dijkstra.
-* In *planning and scheduling* tasks, A\* serves as a general shortest-path algorithm in abstract state spaces, supporting AI decision-making; without it, solving resource allocation or task sequencing problems may require less efficient exhaustive search.
-* In *puzzle solving* domains such as the 8-puzzle or Sokoban, A\* uses problem-specific heuristics to guide the search efficiently; without heuristics, the state space may grow exponentially and become impractical to explore.
-* For *network optimization* problems with nonnegative edge costs, A\* applies whenever a useful heuristic is available to speed convergence; without heuristics, computations on communication or logistics networks may take longer than necessary.
+* In *pathfinding* for maps, games, and robotics, A* computes shortest or least-risk routes by combining actual travel cost with heuristic guidance; without it, movement planning in virtual or physical environments becomes slower or less efficient.
+* For *route planning* with road metrics such as travel time, distance, or tolls, A* incorporates these costs and constraints into its evaluation; without heuristic search, navigation systems must fall back to slower methods like plain Dijkstra.
+* In *planning and scheduling* tasks, A* serves as a general shortest-path algorithm in abstract state spaces, supporting AI decision-making; without it, solving resource allocation or task sequencing problems may require less efficient exhaustive search.
+* In *puzzle solving* domains such as the 8-puzzle or Sokoban, A* uses problem-specific heuristics to guide the search efficiently; without heuristics, the state space may grow exponentially and become impractical to explore.
+* For *network optimization* problems with nonnegative edge costs, A* applies whenever a useful heuristic is available to speed convergence; without heuristics, computations on communication or logistics networks may take longer than necessary.
 
 **Variants & practical tweaks**
 
-* Viewing *Dijkstra* as A\* with $h \equiv 0$ shows that A\* generalizes the classic shortest-path algorithm; without this equivalence, the connection between uninformed and heuristic search may be overlooked.
-* In *Weighted A\**, the evaluation function becomes $f = g + \varepsilon h$ with $\varepsilon > 1$, trading exact optimality for faster performance with bounded suboptimality; without this variant, applications needing quick approximate routing, like logistics planning, would run slower.
-* The *A\*ε / Anytime A\** approach begins with $\varepsilon > 1$ for speed and gradually reduces it to converge toward optimal paths; without this strategy, incremental refinement in real-time systems like navigation aids is harder to achieve.
-* With *IDA\** (Iterative Deepening A\*), the search is conducted by gradually increasing an $f$-cost threshold, greatly reducing memory usage but sometimes increasing runtime; without it, problems like puzzle solving could exceed memory limits.
+* Viewing *Dijkstra* as A* with $h \equiv 0$ shows that A* generalizes the classic shortest-path algorithm; without this equivalence, the connection between uninformed and heuristic search may be overlooked.
+* In *Weighted A**, the evaluation function becomes $f = g + \varepsilon h$ with $\varepsilon > 1$, trading exact optimality for faster performance with bounded suboptimality; without this variant, applications needing quick approximate routing, like logistics planning, would run slower.
+* The *A*ε / Anytime A** approach begins with $\varepsilon > 1$ for speed and gradually reduces it to converge toward optimal paths; without this strategy, incremental refinement in real-time systems like navigation aids is harder to achieve.
+* With *IDA** (Iterative Deepening A*), the search is conducted by gradually increasing an $f$-cost threshold, greatly reducing memory usage but sometimes increasing runtime; without it, problems like puzzle solving could exceed memory limits.
 * *RBFS and Fringe Search* are memory-bounded alternatives that manage recursion depth or fringe sets more carefully; without these, large state spaces in AI planning can overwhelm storage.
 * In *tie-breaking*, preferring larger $g$ or smaller $h$ when $f$ ties reduces unnecessary re-expansions; without careful tie-breaking, searches on uniform-cost grids may explore more nodes than needed.
 * For the *closed-set policy*, when heuristics are inconsistent, nodes must be reopened if a better $g$ value is found; without allowing this, the algorithm may miss shorter paths, as in road networks with varying travel times.
 
 **Pitfalls & tips**
 
-* The algorithm requires *non-negative edge weights* because A\* assumes $w(u,v) \ge 0$; without this, negative costs can cause nodes to be expanded too early, breaking correctness in applications like navigation.
-* If the heuristic *overestimates* actual costs, A\* loses its guarantee of optimality; without enforcing admissibility, a routing system may return a path that is faster to compute but longer in distance.
+* The algorithm requires *non-negative edge weights* because A* assumes $w(u,v) \ge 0$; without this, negative costs can cause nodes to be expanded too early, breaking correctness in applications like navigation.
+* If the heuristic *overestimates* actual costs, A* loses its guarantee of optimality; without enforcing admissibility, a routing system may return a path that is faster to compute but longer in distance.
 * With *floating-point precision issues*, comparisons of $f$-values should include small epsilons to avoid instability; without this safeguard, two nearly equal paths may lead to inconsistent queue ordering in large-scale searches.
 * In *state hashing*, equivalent states must hash identically so duplicates are merged properly; without this, search in puzzles or planning domains may blow up due to treating the same state as multiple distinct ones.
 * While *neighbor order* does not affect correctness, it influences performance and the aesthetics of the returned path trace; without considering this, two identical problems might yield very different expansion sequences or outputs.
