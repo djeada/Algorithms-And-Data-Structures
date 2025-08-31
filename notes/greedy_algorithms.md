@@ -455,7 +455,7 @@ Walk left to right once and carry two simple numbers.
 At each step $j$, the best block **ending at** $j$ is “current prefix minus the smallest older prefix”:
 
 $$
-\text{best\_ending\_at\ }j = S_j - \min_{0\le t<j} S_t.
+\text{best ending at j} = S_j - \min_{0\le t \le j} S_t
 $$
 
 So during the scan:
@@ -468,9 +468,10 @@ This is the whole algorithm. In words: keep the lowest floor you’ve ever seen 
 
 A widely used equivalent form keeps a “best sum ending here” value $E$: set $E \leftarrow \max(x_j,; E+x_j)$ and track a global maximum. It’s the same idea written incrementally: if the running sum ever hurts you, you “reset” and start fresh at the current element.
 
-Work the example by hand
+*Walkthrough*
 
-Sequence $x = [\,2,,-3,,4,,-1,,2,,-5,,3\,]$.
+Sequence $x = [2,-3,4,-1,2,-5,3]$.
+
 Initialize $S=0$, $M=0$, and $\text{best}=-\infty$. Keep the index $t$ where the current $M$ occurred so we can reconstruct the block as $(t+1)..j$.
 
 ```
@@ -504,25 +505,52 @@ You can picture $S_j$ as a hilly skyline and $M$ as the lowest ground you’ve t
 
 ```
 prefix S: 0 → 2 → -1 → 3 → 2 → 4 → -1 → 2
-ground M: 0    0    -1   -1  -1  -1   -1  -1
-gap S-M: 0    2     0    4   3   5    0   3
-                             ^ peak gap = 5 here
+ground M: 0   0   -1   -1  -1  -1   -1  -1
+gap S-M:  0   2    0    4   3   5    0   3
+                                ^ peak gap = 5 here
 ```
 
-Edge cases
+Pseudocode (prefix-floor form):
+
+```
+best = -∞          # or x[0] if you require non-empty
+S = 0
+M = 0              # 0 makes empty prefix available
+t = 0              # index where M happened (0 means before first element)
+best_i = best_j = None
+
+for j in 1..n:
+    S = S + x[j]
+    if S - M > best:
+        best = S - M
+        best_i = t + 1
+        best_j = j
+    if S < M:
+        M = S
+        t = j
+
+return best, (best_i, best_j)
+```
+
+*Edge cases*
 
 When all numbers are negative, the best block is the **least negative single element**. The scan handles this automatically because $M$ keeps dropping with every step, so the maximum of $S_j-M$ happens when you take just the largest entry.
 
 Empty-block conventions matter. If you define the answer to be strictly nonempty, initialize $\text{best}$ with $x_1$ and $E=x_1$ in the incremental form; if you allow empty blocks with sum $0$, initialize $\text{best}=0$ and $M=0$. Either way, the one-pass logic doesn’t change.
 
-Summary
+*Complexity*
 
 * Time: $O(n)$
 * Space: $O(1)$
 
 ### Scheduling themes
 
-Two everyday scheduling goals keep popping up. One tries to pack as many non-overlapping intervals as possible, like booking the most meetings in a single room. The other tries to keep lateness under control when jobs have deadlines, like finishing homework so the worst overrun is as small as possible. Both have crisp greedy rules, and both are easy to run by hand once you see them.
+Two classics:
+
+- Pick as many non-overlapping intervals as possible (one room, max meetings).
+- Keep maximum lateness small when jobs have deadlines.
+
+They’re both greedy—and both easy to run by hand.
 
 Imagine you have time intervals on a single line, and you can keep an interval only if it doesn’t overlap anything you already kept. The aim is to keep as many as possible.
 
@@ -530,17 +558,22 @@ Imagine you have time intervals on a single line, and you can keep an interval o
 
 Intervals (start, finish):
 
-* $(1,3)$, $(2,5)$, $(4,7)$, $(6,9)$, $(8,10)$, $(9,11)$
+```
+(1,3) (2,5) (4,7) (6,9) (8,10) (9,11)
+```
 
-A best answer keeps four intervals, for instance $(1,3),(4,7),(8,10),(10,11)$. I wrote $(10,11)$ for clarity even though the original end was $11$; think half-open $[s,e)$ if you want “touching” to be allowed.
+A best answer keeps four intervals, for instance $(1,3),(4,7),(8,10),(10,11)$.
 
-Baseline (slow)
+**Baseline (slow)**
 
 Try all subsets and keep the largest that has no overlaps. That’s conceptually simple and always correct, but it’s exponential in the number of intervals, which is a non-starter for anything but tiny inputs.
 
-**How it works**
+**Greedy rule:** 
 
-Sort by finishing time, then walk once from earliest finisher to latest. Keep an interval if its start is at least the end time of the last one you kept. Ending earlier leaves more room for the future, and that is the whole intuition.
+Sort by finish time and take what fits.
+
+- Scan from earliest finisher to latest.
+- Keep $(s,e)$ iff $s \ge \text{last_end}$; then set $\text{last_end}\leftarrow e$.
 
 Sorted by finish:
 
@@ -566,14 +599,27 @@ A tiny picture helps the “finish early” idea feel natural:
 
 ```
 time →
-kept:   [1──3)      [4───7)        [8─10)
-skip:      [2────5)    [6────9)        [9───11)
+kept:  [1────3) [4─────7)  [8────10)
+skip:      [2────5)  [6──────9)[9─────11)
 ending earlier leaves more open space to the right
 ```
 
-Why this works in one sentence: at the first place an optimal schedule would choose a later-finishing interval, swapping in the earlier finisher cannot reduce what still fits afterward, so you can push the optimal schedule to match greedy without losing size.
+Why this works: at the first place an optimal schedule would choose a later-finishing interval, swapping in the earlier finisher cannot reduce what still fits afterward, so you can push the optimal schedule to match greedy without losing size.
 
-Complexity
+Handy pseudocode
+
+```python
+# Interval scheduling (max cardinality)
+sort intervals by end time
+last_end = -∞
+keep = []
+for (s,e) in intervals:
+    if s >= last_end:
+        keep.append((s,e))
+        last_end = e
+```
+
+*Complexity*
 
 * Time: $O(n \log n)$ to sort by finishing time; $O(n)$ scan.
 * Space: $O(1)$ (beyond input storage).
@@ -599,11 +645,11 @@ Jobs and deadlines:
 
 An optimal schedule is $J_2,J_4, J_1, J_3$. The maximum lateness there is $0$.
 
-Baseline (slow)
+**Baseline (slow)**
 
 Try all $n!$ orders, compute every job’s completion time and lateness, and take the order with the smallest $L_{\max}$. This explodes even for modest $n$.
 
-**How it works**
+**Greedy rule**
 
 Order jobs by nondecreasing deadlines (earliest due date first, often called EDD). Fixing any “inversion” where a later deadline comes before an earlier one can only help the maximum lateness, so sorting by deadlines is safe.
 
@@ -641,48 +687,61 @@ EDD:   [J2][J4][J1][J3]   deadlines: 1   2   3   4
 late?    0    0    0    0  → max lateness 0
 ```
 
-Why this works in one sentence: if two adjacent jobs are out of deadline order, swapping them never increases any completion time relative to its own deadline, and strictly improves at least one, so repeatedly fixing these inversions leads to the sorted-by-deadline order with no worse maximum lateness.
+Why this works: if two adjacent jobs are out of deadline order, swapping them never increases any completion time relative to its own deadline, and strictly improves at least one, so repeatedly fixing these inversions leads to the sorted-by-deadline order with no worse maximum lateness.
 
-Complexity
+Pseudocode
+
+```
+# Minimize L_max (EDD)
+sort jobs by increasing deadline d_j
+t = 0; Lmax = -∞
+for job j in order:
+    t += p_j           # completion time C_j
+    L = t - d_j
+    Lmax = max(Lmax, L)
+return order, Lmax
+```
+
+*Complexity*
 
 * Time: $O(n \log n)$ to sort by deadlines; $O(n)$ evaluation.
 * Space: $O(1)$.
 
 ### Huffman coding
 
-You have symbols that occur with known frequencies $f_i>0$ and $\sum_i f_i=1$. The goal is to assign each symbol a binary codeword so that no codeword is a prefix of another (a prefix code), and the average length
+You have symbols that occur with known frequencies \$f\_i>0\$ and \$\sum\_i f\_i=1\$ (if you start with counts, first normalize by their total). The goal is to assign each symbol a binary codeword so that no codeword is a prefix of another (a **prefix code**, i.e., uniquely decodable without separators), and the average length
 
 $$
 \mathbb{E}[L]=\sum_i f_i\,L_i
 $$
 
-is as small as possible. Prefix codes exactly correspond to full binary trees whose leaves are the symbols and whose leaf depths are the codeword lengths $L_i$. The Kraft inequality $\sum_i 2^{-L_i}\le 1$ is the feasibility condition; equality holds for full trees.
+is as small as possible. Prefix codes correspond exactly to **full binary trees** (every internal node has two children) whose leaves are the symbols and whose leaf depths equal the codeword lengths \$L\_i\$. The **Kraft inequality** \$\sum\_i 2^{-L\_i}\le 1\$ characterizes feasibility; equality holds for full trees (so an optimal prefix code “fills” the inequality).
 
 **Example inputs and outputs**
 
 Frequencies:
 
 $$
-A:0.40,quad B:0.20,quad C:0.20,quad D:0.10,quad E:0.10.
+A:0.40,\quad B:0.20,\quad C:0.20,\quad D:0.10,\quad E:0.10.
 $$
 
-A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L_A,dots,L_E$, plus a concrete codebook.
+A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths \$L\_A,\dots,L\_E\$, plus a concrete codebook. (There can be multiple optimal codebooks when there are ties in frequencies; their **lengths** agree, though the exact bitstrings may differ.)
 
-Baseline (slow)
+**Baseline**
 
-One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum f_i\,L_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log_2 5\rceil=3$. That fixed-length code has $\mathbb{E}[L]=3$.
+One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing \$\sum f\_i,L\_i\$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length \$\lceil \log\_2 5\rceil=3\$. That fixed-length code has \$\mathbb{E}\[L]=3\$.
 
-**How it works**
+**Greedy Approach**
 
-Huffman’s rule repeats one tiny step: always merge the two least frequent items. When you merge two “symbols” with weights $p$ and $q$, you create a parent of weight $p+q$. The act of merging adds exactly $p+q$ to the objective $\mathbb{E}[L]$ because every leaf inside those two subtrees becomes one level deeper. Summing over all merges yields the final cost:
+Huffman’s rule repeats one tiny step: always merge the two least frequent items. When you merge two “symbols” with weights \$p\$ and \$q\$, you create a parent of weight \$p+q\$. **Why does this change the objective by exactly \$p+q\$?** Every leaf in those two subtrees increases its depth (and thus its code length) by \$1\$, so the total increase in \$\sum f\_i L\_i\$ is \$\sum\_{\ell\in\text{subtrees}} f\_\ell\cdot 1=(p+q)\$ by definition of \$p\$ and \$q\$. Summing over all merges yields the final cost:
 
 $$
-\mathbb{E}[L]=\sum_{\text{merges}} (p+q)=\sum_{\text{internal nodes}} \text{weight}
+\mathbb{E}[L]=\sum_{\text{merges}} (p+q)=\sum_{\text{internal nodes}} \text{weight}.
 $$
 
-The greedy choice is safe because in an optimal tree the two deepest leaves must be siblings and must be the two least frequent symbols; otherwise swapping depths strictly reduces the cost by at least $f_{\text{heavy}}-f_{\text{light}}>0$. Collapsing those siblings into one pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof.
+**Why is the greedy choice optimal?** In an optimal tree the two deepest leaves must be siblings; if not, pairing them to be siblings never increases any other depth and strictly reduces cost whenever a heavier symbol is deeper than a lighter one (an **exchange argument**: swapping depths changes the cost by \$f\_{\text{heavy}}-f\_{\text{light}}>0\$ in our favor). Collapsing those siblings into a single pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof. (Ties can be broken arbitrarily; all tie-breaks achieve the same minimum \$\mathbb{E}\[L]\$.)
 
-Start with the multiset $\{0.40, 0.20, 0.20, 0.10, 0.10\}$. At each line, merge the two smallest weights and add their sum to the running cost.
+Start with the multiset \${0.40, 0.20, 0.20, 0.10, 0.10}\$. At each line, merge the two smallest weights and add their sum to the running cost.
 
 ```
 1) merge 0.10 + 0.10 → 0.20        cost += 0.20   (total 0.20)
@@ -698,79 +757,48 @@ Start with the multiset $\{0.40, 0.20, 0.20, 0.10, 0.10\}$. At each line, merge 
    multiset becomes {1.00}  (done)
 ```
 
-So the optimal expected length is $\boxed{\mathbb{E}[L]=2.20}$ bits per symbol. This already beats the naive fixed-length baseline $3$. It also matches the information-theoretic bound $H(f)\le \mathbb{E}[L]<H(f)+1$, since the entropy here is $H\approx 2.122$.
+So the optimal expected length is \$\boxed{\mathbb{E}\[L]=2.20}\$ bits per symbol. This already beats the naive fixed-length baseline \$3\$. It also matches the information-theoretic bound \$H(f)\le \mathbb{E}\[L]\<H(f)+1\$, since the entropy here is \$H\approx 2.1219\$.
 
 Now assign actual lengths. Record who merged with whom:
 
-* Step 1 merges $D(0.10)$ and $E(0.10)$ → those two become siblings.
-* Step 2 merges $B(0.20)$ and $C(0.20)$ → those two become siblings.
-* Step 3 merges the pair $D\!E(0.20)$ with $A(0.40)$.
-* Step 4 merges the pair from step 3 with the pair $B\!C(0.40)$.
+* Step 1 merges \$D(0.10)\$ and \$E(0.10)\$ → those two become siblings.
+* Step 2 merges \$B(0.20)\$ and \$C(0.20)\$ → those two become siblings.
+* Step 3 merges the pair \$D!E(0.20)\$ with \$A(0.40)\$.
+* Step 4 merges the pair from step 3 with the pair \$B!C(0.40)\$.
 
-Depths follow directly:
+Depths follow directly (each merge adds one level to its members):
 
 $$
-L_A=2,quad L_B=L_C=2,quad L_D=L_E=3.
+L_A=2,\quad L_B=L_C=2,\quad L_D=L_E=3.
 $$
 
-Check the Kraft sum $3\cdot 2^{-2}+2\cdot 2^{-3}=3/4+1/4=1$ and the cost $0.4\cdot2+0.2\cdot2+0.2\cdot2+0.1\cdot3+0.1\cdot3=2.2$.
+Check the Kraft sum \$3\cdot 2^{-2}+2\cdot 2^{-3}=3/4+1/4=1\$ and the cost \$0.4\cdot2+0.2\cdot2+0.2\cdot2+0.1\cdot3+0.1\cdot3=2.2\$.
 
-A tidy ASCII tree (weights shown for clarity):
+A tidy tree (weights shown for clarity):
 
 ```
-                [1.00]
-               /      \
-           [0.60]     [0.40]=BC
-           /    \        /   \
-       [0.40]=A [0.20]=DE    B     C
-                    /   \
-                   D     E
+[1.00]
++--0--> [0.60]
+|       +--0--> A(0.40)
+|       `--1--> [0.20]
+|                +--0--> D(0.10)
+|                `--1--> E(0.10)
+`--1--> [0.40]
+        +--0--> B(0.20)
+        `--1--> C(0.20)
 ```
 
-One concrete codebook arises by reading left edges as 0 and right edges as 1:
+One concrete codebook arises by reading left edges as 0 and right edges as 1 (the left/right choice is arbitrary; flipping all bits in a subtree yields an equivalent optimal code):
 
-* $A \mapsto 00$
-* $B \mapsto 10$
-* $C \mapsto 11$
-* $D \mapsto 010$
-* $E \mapsto 011$
+* \$A \mapsto 00\$
+* \$B \mapsto 10\$
+* \$C \mapsto 11\$
+* \$D \mapsto 010\$
+* \$E \mapsto 011\$
 
-You can verify the prefix property immediately and recompute $\mathbb{E}[L]$ from these lengths to get $2.20$ again.
+You can verify the prefix property immediately and recompute \$\mathbb{E}\[L]\$ from these lengths to get \$2.20\$ again. (From these lengths you can also construct the **canonical Huffman code**, which orders codewords lexicographically—useful for compactly storing the codebook.)
 
-Complexity
+*Complexity*
 
-* Time: $O(k \log k)$ using a min-heap over $k$ symbol frequencies.
-* Space: $O(k)$ for the heap and $O(k)$ for the resulting tree.
-
-### When greedy fails (and how to quantify “not too bad”)
-
-The $0\text{–}1$ knapsack with arbitrary weights defeats the obvious density-based rule. A small, dense item can block space needed for a medium-density item that pairs perfectly with a third, leading to a globally superior pack. Weighted interval scheduling similarly breaks the “earliest finish” rule; taking a long, heavy meeting can beat two short light ones that finish earlier.
-
-Approximation guarantees rescue several hard problems with principled greedy performance. For set cover on a universe $U$ with $|U|=n$, the greedy rule that repeatedly picks the set covering the largest number of uncovered elements achieves an $H_n$ approximation:
-
-$$
-\text{cost}_{\text{greedy}} \le H_n\cdot \text{OPT},qquad H_n=\sum_{k=1}^n \frac{1}{k}\le \ln n+1.
-$$
-
-A tight charging argument proves it: each time you cover new elements, charge them equally; no element is charged more than the harmonic sum relative to the optimum’s coverage.
-
-Maximizing a nondecreasing submodular set function $f:2^E\to\mathbb{R}_{\ge 0}$ under a cardinality constraint $|S|\le k$ is a crown jewel. Submodularity means diminishing returns:
-
-$$
-A\subseteq B, x\notin B \ \Rightarrow\ f(A\cup\{x\})-f(A)\ \ge\ f(B\cup\{x\})-f(B).
-$$
-
-The greedy algorithm that adds the element with largest marginal gain at each step satisfies the celebrated bound
-
-$$
-f(S_k)\ \ge\ \Bigl(1-\frac{1}{e}\Bigr)\,f(S^\star),
-$$
-
-where $S^\star$ is an optimal size-$k$ set. The proof tracks the residual gap $g_i=f(S^\star)-f(S_i)$ and shows
-
-$$
-g_{i+1}\ \le\ \Bigl(1-\frac{1}{k}\Bigr)g_i,
-$$
-
-hence $g_k\le e^{-k/k}g_0=e^{-1}g_0$. Diminishing returns is exactly what makes the greedy increments add up to a constant-factor slice of the unreachable optimum.
-
+* Time: \$O(k \log k)\$ using a min-heap over \$k\$ symbol frequencies (each of the \$k-1\$ merges performs two extractions and one insertion).
+* Space: \$O(k)\$ for the heap and \$O(k)\$ for the resulting tree (plus \$O(k)\$ for an optional map from symbols to codewords).
