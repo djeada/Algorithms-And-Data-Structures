@@ -288,30 +288,33 @@ We build a two-dimensional table $L[0..m][0..n]$ using the above recurrence.
 
 **Time Complexity**: $O(mn)$
 
-### Practical Considerations in Dynamic Programming
+### Practical Considerations
 
 #### Identifying DP Problems
 
-Not all problems are amenable to dynamic programming. To determine if DP is appropriate:
-
-- Can the problem's optimal solution be constructed from optimal solutions to its subproblems?
-- Are the same subproblems being solved multiple times?
+* If the problem asks for the number of *ways* to do something, DP usually works because smaller counts combine into larger ones; without it, counting paths in a grid would require enumerating every route.
+* If the task is to find the *minimum* or *maximum* value under constraints, DP is useful because it compares partial solutions; without it, knapsack would require checking every subset of items.
+* If the same *inputs* appear again during recursion, DP saves time by storing answers; without it, Fibonacci numbers would be recomputed many times.
+* If the solution depends on both the *current step* and *remaining resources* (time, weight, money, length), DP fits naturally; without it, scheduling tasks within a time limit would require brute force.
+* If the problem works with *prefixes, substrings, or subsequences*, DP is often a match because these can be built step by step; without it, longest common subsequence would need exponential checking.
+* If choices at each step must be explored and combined carefully, DP provides structure; without it, coin change with mixed denominations cannot guarantee the fewest coins.
+* If the state space can be stored in a *table or array*, DP is feasible; without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
 
 #### State Design and Transition
 
-- Choose variables that capture the essence of subproblems.
-- Clearly define how to move from one state to another.
+* A well-chosen *state* defines what each subproblem represents, while a poorly chosen one leaves the formulation incomplete; for example, `dp[i][w]` in the knapsack problem captures value using `i` items and capacity `w`.
+* A correct *transition* connects states consistently, while skipping this leads to undefined progress; in knapsack, the choice to include or exclude an item gives the formula for moving between states.
 
 #### Complexity Optimization
 
-- Reduce the storage requirements by identifying and storing only necessary states.
-- Prune unnecessary computations, possibly using techniques like memoization with pruning.
+* Reducing *memory usage* by discarding unnecessary states makes solutions efficient, while failing to do so can waste resources; for example, knapsack space can shrink from `O(nW)` to `O(W)` with a one-dimensional array.
+* Using *pruning* to skip impossible paths speeds up computation, while omitting it allows redundant work; in recursive search with memoization, branches exceeding a current best value can be safely ignored.
 
 #### Common Pitfalls
 
-- Leads to missing subproblems or incorrect dependencies.
-- Can cause incorrect results or infinite recursion.
-- Failing to handle special inputs can result in errors.
+* Missing *base cases* causes results to fail, while including them ensures correct foundations; in grid path counting, setting `dp[0][0] = 1` allows all later counts to build properly.
+* Updating *dependencies* in the wrong order leads to invalid reuse, while correct order avoids errors; in knapsack with a 1D array, iterating weights backward prevents an item from being counted twice.
+* Ignoring *edge inputs* results in crashes or incorrect answers, while handling them ensures robustness; for example, knapsack with zero capacity must return a value of zero instead of failing.
 
 ### List of Problems
 
