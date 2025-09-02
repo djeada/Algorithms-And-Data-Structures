@@ -288,30 +288,71 @@ We build a two-dimensional table $L[0..m][0..n]$ using the above recurrence.
 
 **Time Complexity**: $O(mn)$
 
-### Practical Considerations in Dynamic Programming
+### Practical Considerations
 
 #### Identifying DP Problems
 
-Not all problems are amenable to dynamic programming. To determine if DP is appropriate:
+I. If the problem asks for the number of *ways* to do something:
 
-- Can the problem's optimal solution be constructed from optimal solutions to its subproblems?
-- Are the same subproblems being solved multiple times?
+* *Example:* Counting paths in a grid.
+* *Consequence:* Without DP, you would need to enumerate every route.
+
+II. If the task is to find the *minimum* or *maximum* value under constraints:
+
+* *Example:* Knapsack problem.
+* *Consequence:* Without DP, you would need to check every subset of items.
+
+III. If the same *inputs* appear again during recursion:
+
+* *Example:* Fibonacci numbers.
+* *Consequence:* Without DP, Fibonacci numbers would be recomputed many times.
+
+IV. If the solution depends on both the *current step* and *remaining resources* (time, weight, money, length):
+
+* *Example:* Scheduling tasks within a time limit.
+* *Consequence:* Without DP, brute force would be required.
+
+V. If the problem works with *prefixes, substrings, or subsequences*:
+
+* *Example:* Longest common subsequence.
+* *Consequence:* Without DP, exponential checking would be needed.
+
+VI. If choices at each step must be explored and combined carefully:
+
+* *Example:* Coin change with mixed denominations.
+* *Consequence:* Without DP, you cannot guarantee the fewest coins.
+
+VII. If the state space can be stored in a *table or array*:
+
+* *Example:* Problems with discrete states.
+* *Consequence:* Without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
 
 #### State Design and Transition
 
-- Choose variables that capture the essence of subproblems.
-- Clearly define how to move from one state to another.
+* A well-chosen *state* defines what each subproblem represents, while a poorly chosen one leaves the formulation incomplete; for example, `dp[i][w]` in the knapsack problem captures value using `i` items and capacity `w`.
+* A correct *transition* connects states consistently, while skipping this leads to undefined progress; in knapsack, the choice to include or exclude an item gives the formula for moving between states.
 
 #### Complexity Optimization
 
-- Reduce the storage requirements by identifying and storing only necessary states.
-- Prune unnecessary computations, possibly using techniques like memoization with pruning.
+* Reducing *memory usage* by discarding unnecessary states makes solutions efficient, while failing to do so can waste resources; for example, knapsack space can shrink from `O(nW)` to `O(W)` with a one-dimensional array.
+* Using *pruning* to skip impossible paths speeds up computation, while omitting it allows redundant work; in recursive search with memoization, branches exceeding a current best value can be safely ignored.
 
 #### Common Pitfalls
 
-- Leads to missing subproblems or incorrect dependencies.
-- Can cause incorrect results or infinite recursion.
-- Failing to handle special inputs can result in errors.
+I. Failure to Define Proper Base Cases
+
+* *Example*: In grid path counting, omitting `dp[0][0] = 1` prevents any valid paths from being constructed.
+* *Consequence*: Without correct starting values, the DP table propagates errors and produces incorrect results.
+
+II. Updating States in the Wrong Dependency Order
+
+* *Example*: In knapsack with a 1D array, iterating weights from low to high causes items to be reused multiple times.
+* *Consequence*: Using the wrong order inflates computed values and leads to invalid or impossible solutions.
+
+III. Ignoring Special or Edge Case Inputs
+
+* *Example*: In knapsack, a zero-capacity input should return zero value rather than throwing an error.
+* *Consequence*: Overlooking edge inputs causes crashes or incorrect answers in boundary conditions.
 
 ### List of Problems
 
