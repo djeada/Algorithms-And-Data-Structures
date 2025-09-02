@@ -37,12 +37,12 @@ That third rule prevents dead ends and is exactly what exchange arguments rely o
 ### Reachability on a line
 
 - You stand at square $0$ on squares $0,1,\ldots,n-1$.
-- Each square $i$ has a jump power $a\[i]$. From $i$ you may land on any of $i+1, i+2, \dots, i+a\[i]$.
+- Each square $i$ has a jump power $a[i]$. From $i$ you may land on any of $i+1, i+2, \dots, i+a[i]$.
 - Goal: decide if you can reach $n-1$; if not, report the furthest reachable square.
 
 **Example**
 
-Input: $a=\[3,1,0,0,4,1]$, so $n=6$ (squares $0..5$).
+Input: $a=[3,1,0,0,4,1]$, so $n=6$ (squares $0..5$).
 
 ```
 indices:  0   1   2   3   4   5
@@ -65,7 +65,7 @@ i=4 (a[4]=4): 5..8 (board ends at 5)
 “Paint everything reachable, one wave at a time.”
 
 1. Start with ${0}$ reachable.
-2. For each already-reachable $i$, add all $i+1..i+a\[i]$.
+2. For each already-reachable $i$, add all $i+1..i+a[i]$.
 3. Stop when nothing new appears.
 
 *Walkthrough:*
@@ -88,7 +88,7 @@ Carry one number while scanning left→right: the furthest frontier $F$ seen so 
 Rules:
 
 * If you are at $i$ with $i>F$, you hit a gap → stuck forever.
-* Otherwise, extend $F \leftarrow \max(F, i+a\[i])$ and continue.
+* Otherwise, extend $F \leftarrow \max(F, i+a[i])$ and continue.
 
 At the end:
 
@@ -134,7 +134,7 @@ indices:  0   1   2   3   4   5
 F=3
 ```
 
-Final: $F=3$. Since $F\<n-1=5$, last is unreachable; furthest reachable square is $3$.
+Final: $F=3$. Since $F <n-1=5$, last is unreachable; furthest reachable square is $3$.
 
 Complexity: time $O(n)$, space $O(1)$.
 
@@ -353,7 +353,7 @@ Time $O((|V|+|E|)\log|V|)$; space $O(|V|)$.
 
 *Walkthrough*
 
-Legend: “S” = settled, “π\[x]” = parent of $x$. Ties break arbitrarily.
+Legend: “S” = settled, “π[x]” = parent of $x$. Ties break arbitrarily.
 
 Round 0 (init)
 
@@ -729,7 +729,7 @@ A valid optimal answer will be a prefix code with expected length as small as po
 
 **Baseline**
 
-One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum f\_i,L\_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log\_2 5\rceil=3$. That fixed-length code has $\mathbb{E}\[L]=3$.
+One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum f\_i,L\_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log\_2 5\rceil=3$. That fixed-length code has $\mathbb{E}[L]=3$.
 
 **Greedy Approach**
 
@@ -739,7 +739,7 @@ $$
 \mathbb{E}[L]=\sum_{\text{merges}} (p+q)=\sum_{\text{internal nodes}} \text{weight}.
 $$
 
-**Why is the greedy choice optimal?** In an optimal tree the two deepest leaves must be siblings; if not, pairing them to be siblings never increases any other depth and strictly reduces cost whenever a heavier symbol is deeper than a lighter one (an **exchange argument**: swapping depths changes the cost by $f\_{\text{heavy}}-f\_{\text{light}}>0$ in our favor). Collapsing those siblings into a single pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof. (Ties can be broken arbitrarily; all tie-breaks achieve the same minimum $\mathbb{E}\[L]$.)
+**Why is the greedy choice optimal?** In an optimal tree the two deepest leaves must be siblings; if not, pairing them to be siblings never increases any other depth and strictly reduces cost whenever a heavier symbol is deeper than a lighter one (an **exchange argument**: swapping depths changes the cost by $f\_{\text{heavy}}-f\_{\text{light}}>0$ in our favor). Collapsing those siblings into a single pseudo-symbol reduces the problem size without changing optimality, so induction finishes the proof. (Ties can be broken arbitrarily; all tie-breaks achieve the same minimum $\mathbb{E}[L]$.)
 
 Start with the multiset ${0.40, 0.20, 0.20, 0.10, 0.10}$. At each line, merge the two smallest weights and add their sum to the running cost.
 
@@ -757,7 +757,7 @@ Start with the multiset ${0.40, 0.20, 0.20, 0.10, 0.10}$. At each line, merge th
    multiset becomes {1.00}  (done)
 ```
 
-So the optimal expected length is $\boxed{\mathbb{E}\[L]=2.20}$ bits per symbol. This already beats the naive fixed-length baseline $3$. It also matches the information-theoretic bound $H(f)\le \mathbb{E}\[L]\<H(f)+1$, since the entropy here is $H\approx 2.1219$.
+So the optimal expected length is $\boxed{\mathbb{E}[L]=2.20}$ bits per symbol. This already beats the naive fixed-length baseline $3$. It also matches the information-theoretic bound $H(f)\le \mathbb{E}[L] <H(f)+1$, since the entropy here is $H\approx 2.1219$.
 
 Now assign actual lengths. Record who merged with whom:
 
@@ -796,7 +796,7 @@ One concrete codebook arises by reading left edges as 0 and right edges as 1 (th
 * $D \mapsto 010$
 * $E \mapsto 011$
 
-You can verify the prefix property immediately and recompute $\mathbb{E}\[L]$ from these lengths to get $2.20$ again. (From these lengths you can also construct the **canonical Huffman code**, which orders codewords lexicographically—useful for compactly storing the codebook.)
+You can verify the prefix property immediately and recompute $\mathbb{E}[L]$ from these lengths to get $2.20$ again. (From these lengths you can also construct the **canonical Huffman code**, which orders codewords lexicographically—useful for compactly storing the codebook.)
 
 *Complexity*
 
