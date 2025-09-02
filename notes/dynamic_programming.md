@@ -292,27 +292,40 @@ We build a two-dimensional table $L[0..m][0..n]$ using the above recurrence.
 
 #### Identifying DP Problems
 
-* If the problem asks for the number of *ways* to do something:
-    * Example: Counting paths in a grid.
-    * Consequence: Without DP, you would need to enumerate every route.
-* If the task is to find the *minimum* or *maximum* value under constraints:
-    * Example: Knapsack problem.
-    * Consequence: Without DP, you would need to check every subset of items.
-* If the same *inputs* appear again during recursion:
-    * Example: Fibonacci numbers.
-    * Consequence: Without DP, Fibonacci numbers would be recomputed many times.
-* If the solution depends on both the *current step* and *remaining resources* (time, weight, money, length):
-    * Example: Scheduling tasks within a time limit.
-    * Consequence: Without DP, brute force would be required.
-* If the problem works with *prefixes, substrings, or subsequences*:
-    * Example: Longest common subsequence.
-    * Consequence: Without DP, exponential checking would be needed.
-* If choices at each step must be explored and combined carefully:
-    * Example: Coin change with mixed denominations.
-    * Consequence: Without DP, you cannot guarantee the fewest coins.
-* If the state space can be stored in a *table or array*:
-    * Example: Problems with discrete states.
-    * Consequence: Without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
+I. If the problem asks for the number of *ways* to do something:
+
+* *Example:* Counting paths in a grid.
+* *Consequence:* Without DP, you would need to enumerate every route.
+
+II. If the task is to find the *minimum* or *maximum* value under constraints:
+
+* *Example:* Knapsack problem.
+* *Consequence:* Without DP, you would need to check every subset of items.
+
+III. If the same *inputs* appear again during recursion:
+
+* *Example:* Fibonacci numbers.
+* *Consequence:* Without DP, Fibonacci numbers would be recomputed many times.
+
+IV. If the solution depends on both the *current step* and *remaining resources* (time, weight, money, length):
+
+* *Example:* Scheduling tasks within a time limit.
+* *Consequence:* Without DP, brute force would be required.
+
+V. If the problem works with *prefixes, substrings, or subsequences*:
+
+* *Example:* Longest common subsequence.
+* *Consequence:* Without DP, exponential checking would be needed.
+
+VI. If choices at each step must be explored and combined carefully:
+
+* *Example:* Coin change with mixed denominations.
+* *Consequence:* Without DP, you cannot guarantee the fewest coins.
+
+VII. If the state space can be stored in a *table or array*:
+
+* *Example:* Problems with discrete states.
+* *Consequence:* Without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
 
 #### State Design and Transition
 
@@ -326,9 +339,20 @@ We build a two-dimensional table $L[0..m][0..n]$ using the above recurrence.
 
 #### Common Pitfalls
 
-* Missing *base cases* causes results to fail, while including them ensures correct foundations; in grid path counting, setting `dp[0][0] = 1` allows all later counts to build properly.
-* Updating *dependencies* in the wrong order leads to invalid reuse, while correct order avoids errors; in knapsack with a 1D array, iterating weights backward prevents an item from being counted twice.
-* Ignoring *edge inputs* results in crashes or incorrect answers, while handling them ensures robustness; for example, knapsack with zero capacity must return a value of zero instead of failing.
+I. Failure to Define Proper Base Cases
+
+* *Example*: In grid path counting, omitting `dp[0][0] = 1` prevents any valid paths from being constructed.
+* *Consequence*: Without correct starting values, the DP table propagates errors and produces incorrect results.
+
+II. Updating States in the Wrong Dependency Order
+
+* *Example*: In knapsack with a 1D array, iterating weights from low to high causes items to be reused multiple times.
+* *Consequence*: Using the wrong order inflates computed values and leads to invalid or impossible solutions.
+
+III. Ignoring Special or Edge Case Inputs
+
+* *Example*: In knapsack, a zero-capacity input should return zero value rather than throwing an error.
+* *Consequence*: Overlooking edge inputs causes crashes or incorrect answers in boundary conditions.
 
 ### List of Problems
 
