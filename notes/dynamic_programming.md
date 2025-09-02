@@ -292,13 +292,27 @@ We build a two-dimensional table $L[0..m][0..n]$ using the above recurrence.
 
 #### Identifying DP Problems
 
-* If the problem asks for the number of *ways* to do something, DP usually works because smaller counts combine into larger ones; without it, counting paths in a grid would require enumerating every route.
-* If the task is to find the *minimum* or *maximum* value under constraints, DP is useful because it compares partial solutions; without it, knapsack would require checking every subset of items.
-* If the same *inputs* appear again during recursion, DP saves time by storing answers; without it, Fibonacci numbers would be recomputed many times.
-* If the solution depends on both the *current step* and *remaining resources* (time, weight, money, length), DP fits naturally; without it, scheduling tasks within a time limit would require brute force.
-* If the problem works with *prefixes, substrings, or subsequences*, DP is often a match because these can be built step by step; without it, longest common subsequence would need exponential checking.
-* If choices at each step must be explored and combined carefully, DP provides structure; without it, coin change with mixed denominations cannot guarantee the fewest coins.
-* If the state space can be stored in a *table or array*, DP is feasible; without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
+* If the problem asks for the number of *ways* to do something:
+    * Example: Counting paths in a grid.
+    * Consequence: Without DP, you would need to enumerate every route.
+* If the task is to find the *minimum* or *maximum* value under constraints:
+    * Example: Knapsack problem.
+    * Consequence: Without DP, you would need to check every subset of items.
+* If the same *inputs* appear again during recursion:
+    * Example: Fibonacci numbers.
+    * Consequence: Without DP, Fibonacci numbers would be recomputed many times.
+* If the solution depends on both the *current step* and *remaining resources* (time, weight, money, length):
+    * Example: Scheduling tasks within a time limit.
+    * Consequence: Without DP, brute force would be required.
+* If the problem works with *prefixes, substrings, or subsequences*:
+    * Example: Longest common subsequence.
+    * Consequence: Without DP, exponential checking would be needed.
+* If choices at each step must be explored and combined carefully:
+    * Example: Coin change with mixed denominations.
+    * Consequence: Without DP, you cannot guarantee the fewest coins.
+* If the state space can be stored in a *table or array*:
+    * Example: Problems with discrete states.
+    * Consequence: Without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
 
 #### State Design and Transition
 
