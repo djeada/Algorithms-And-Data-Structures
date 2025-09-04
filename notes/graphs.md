@@ -1503,6 +1503,7 @@ TopoSort_Kahn(G):
 DAG; we’ll start with all indegree-0 vertices. (Edges shown as arrows.)
 
 ```
+DAG
                            ┌───────┐
                            │   A   │
                            └───┬───┘
@@ -1548,6 +1549,7 @@ Step | Pop u | Emit order         | Decrease indeg[...]         | Newly 0 → En
 ```
 
 *A valid topological order:*
+
 `A, B, C, E, D, F, G` (others like `B, A, C, E, D, F, G` are also valid.)
 
 *Clean left-to-right view (one possible ordering):*
@@ -1563,11 +1565,11 @@ A   B   F   C   E   D   G
 If there’s a cycle, some vertices **never** reach indegree 0. Example:
 
 ```
-   ┌─────┐      ┌─────┐
-   │  X  │ ───► │  Y  │
-   └──┬──┘      └──┬──┘
-      └───────────►┘
-        (Y ───► X creates a cycle)
+┌─────┐      ┌─────┐
+│  X  │ ───► │  Y  │
+└──┬──┘      └──┬──┘
+   └───────────►┘
+   (Y ───► X creates a cycle)
 ```
 
 Here `indeg[X]=indeg[Y]=1` initially; `Q` starts empty ⇒ `order=[]` and `len(order) < V` ⇒ **cycle reported**.
