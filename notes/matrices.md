@@ -38,9 +38,9 @@ Handy conversions (for linearization / array-of-arrays):
 ```
 Row-major (r, then c):                  Column-major (c, then r):
 → → → → → →                              ↓ ↓ ↓
-↓             ↓                          ↓ ↓ ↓
+          ↓                              ↓ ↓ ↓
 ← ← ← ← ← ←                              ↓ ↓ ↓
-↓             ↓                          ↓ ↓ ↓
+↓                                        ↓ ↓ ↓
 → → → → → →                              ↓ ↓ ↓
 ```
 
@@ -51,6 +51,7 @@ The offsets $(\Delta r,\Delta c)$ are applied as $(r+\Delta r,\ c+\Delta c)$.
 **4-neighborhood (“+”):**
 
 ```
+#
 		   (r-1,c)
 			 ↑
   (r,c-1) ← (r,c) → (r,c+1)
@@ -61,13 +62,13 @@ The offsets $(\Delta r,\Delta c)$ are applied as $(r+\Delta r,\ c+\Delta c)$.
 **8-neighborhood (“×” adds diagonals):**
 
 ```
-   (r-1,c-1)   (r-1,c)   (r-1,c+1)
-		  \       ↑       /
-		   \      │      /
-  (r,c-1) ←———  (r,c)  ———→ (r,c+1)
-		   /      │      \
-		  /       ↓       \
-   (r+1,c-1)   (r+1,c)   (r+1,c+1)
+(r-1,c-1)   (r-1,c)   (r-1,c+1)
+	  \       ↑       /
+	   \      │      /
+(r,c-1) ←———  (r,c)  ———→ (r,c+1)
+	   /      │      \
+	  /       ↓       \
+(r+1,c-1)   (r+1,c)   (r+1,c+1)
 ```
 
 Typical direction arrays (keep them consistent to avoid bugs):
