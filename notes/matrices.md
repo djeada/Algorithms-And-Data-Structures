@@ -635,7 +635,7 @@ while top <= bottom and left <= right:
 Maintain top, bottom, left, right. Walk edges in order; after each edge, move the corresponding bound inward.
 
 * Time: $O(R\cdot C)$
-* Space: $O(1)$ beyond output
+* Space: $O(1)$ beyond output.
 
 #### Diagonal Order (r+c layers)
 
