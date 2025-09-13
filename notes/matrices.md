@@ -891,7 +891,7 @@ Place words to slots with crossings; verify consistency at intersections.
 
 Let $S$ be the set of slots (across/down). Each slot $s\in S$ has a length $\ell(s)$ and ordered cell coordinates
 $\mathrm{cells}(s) = \big((r_0,c_0),\ldots,(r_{\ell(s)-1},c_{\ell(s)-1})\big)$.
-Let $D$ be the dictionary; define $D_\ell=\{w\in D:,|w|=\ell\}$.
+Let $D$ be the dictionary; define $D_\ell=\{w\in D:|w|=\ell\}$.
 Known letters from the grid induce a pattern constraint $P_s\in(\Sigma\cup\{_\})^{\ell(s)}$.
 
 Find an assignment $f:S\to D$ such that, for all $s\in S$,
