@@ -983,6 +983,6 @@ else:
 
 Backtrack over slot assignments; use a trie for prefix feasibility; order by most constrained slot first.
 
-* Time: exponential in slots; strong pruning and good heuristics important.
+* Time: exponential in slots; strong pruning and good heuristics are important.
 
 
