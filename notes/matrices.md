@@ -586,15 +586,15 @@ $$
 Let the matrix indices be $(r,c)$ with $0\le r<R,\ 0\le c<C$. For layer $\ell=0,1,\dots,L-1$ where $L=\left\lceil \tfrac{\min(R,C)}{2}\right\rceil$, set
 
 $$
-t=\ell,\quad b=R-1-\ell,\quad \ellft=\ell,\quad rgt=C-1-\ell .
+t=\ell,\quad b=R-1-\ell,\quad left=\ell,\quad rgt=C-1-\ell .
 $$
 
 Visit, in order:
 
-* Top edge: $(t,c)$ for $c=\ellft,\ldots,rgt$.
+* Top edge: $(t,c)$ for $c=left,\ldots,rgt$.
 * Right edge: $(r,rgt)$ for $r=t+1,\ldots,b$.
-* Bottom edge (if $b>t$): $(b,c)$ for $c=rgt-1,\ldots,\ellft$ (decreasing).
-* Left edge (if $rgt>\ellft$): $(r,\ellft)$ for $r=b-1,\ldots,t+1$ (decreasing).
+* Bottom edge (if $b>t$): $(b,c)$ for $c=rgt-1,\ldots,left$ (decreasing).
+* Left edge (if $rgt>left$): $(r,left)$ for $r=b-1,\ldots,t+1$ (decreasing).
 
 Concatenate these per layer until all elements are visited.
 
