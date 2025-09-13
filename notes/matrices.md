@@ -669,7 +669,7 @@ Traverse with alternating direction:
 
 $$
 \begin{cases}
-\text{if } s \text{ even: } r=r_{\max}(s), r_{\max}(s)-1,\dots,r_{\min}(s);\ [2pt]
+\text{if } s \text{ even: } r=r_{\max}(s), r_{\max}(s)-1,\dots,r_{\min}(s);\\[2pt]
 \text{if } s \text{ odd: } r=r_{\min}(s), r_{\min}(s)+1,\dots,r_{\max}(s).
 \end{cases}
 $$
