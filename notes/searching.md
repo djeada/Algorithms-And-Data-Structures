@@ -832,7 +832,7 @@ Path followed:
 * Simple and cache-friendly; clusters form (“primary clustering”) which can slow probes.
 * Deletion uses **tombstones** to keep probe chains intact.
 * Performance depends sharply on load factor; keep α well below 1 (e.g., α ≤ 0.7).
-* Expected search \~ $O(1)$ at low α; degrades as clusters grow.
+* Expected search~ $O(1)$ at low α; degrades as clusters grow.
 
 #### Open Addressing — Quadratic Probing
 
@@ -1293,7 +1293,7 @@ T₂: [   ][20 ][   ][10 ][15 ]
 
 * Lookups probe at **most two places** (with two hashes) → excellent constant factors.
 * Inserts may trigger a chain of evictions; detect cycles and **rehash** with new functions.
-* High load factors achievable (e.g., \~0.5–0.9 depending on variant and number of hashes/tables).
+* High load factors achievable (e.g.,~0.5–0.9 depending on variant and number of hashes/tables).
 * Deletions are easy (remove key); no tombstones, but ensure invariants remain.
 * Sensitive to hash quality; poor hashes increase cycle risk.
 
@@ -1416,7 +1416,7 @@ All ones → **MAYBE PRESENT** (could be a **false positive**)
 
 * Answers: **maybe present** / **definitely not present**; never false negatives (without deletions).
 * False-positive rate is tunable via bit-array size **m**, number of hashes **k**, and items **n**; more space & good **k** → lower FPR.
-* Time: $O(k)$ per insert/lookup; Space: \~m bits.
+* Time: $O(k)$ per insert/lookup; Space:~m bits.
 * No deletions in the basic form; duplicates are harmless (idempotent sets).
 * Union = bitwise OR; intersection = bitwise AND (for same m,k,hashes).
 * Choose independent, well-mixed hash functions to avoid correlated bits.
