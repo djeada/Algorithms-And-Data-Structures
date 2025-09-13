@@ -664,7 +664,7 @@ r_{\min}(s)=\max\!\big(0,\ s-(C-1)\big),\qquad
 r_{\max}(s)=\min\!\big(R-1,\ s\big).
 $$
 
-The diagonal set is $\{(r,,s-r)\mid r_{\min}(s)\le r\le r_{\max}(s)\}$.
+The diagonal set is $\{(r,s-r)\mid r_{\min}(s)\le r\le r_{\max}(s)\}$.
 Traverse with alternating direction:
 
 $$
