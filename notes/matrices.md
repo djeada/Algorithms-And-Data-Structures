@@ -132,7 +132,7 @@ $$
 **Mathematical formula (3×3)**
 
 $$
-(A^{\mathsf T})_{r,c}=A_{c,r},\quad 0\le r,c<3.
+(A^T)_{r,c}=A_{c,r},\quad 0\le r,c<3
 $$
 
 **Pseudocode (square, in-place)**
@@ -168,7 +168,7 @@ $$
 **Mathematical formula (2×3 → 3×2)**
 
 $$
-(A^{\mathsf T})_{r,c}=A_{c,r},\quad 0\le r<3,\ 0\le c<2.
+(A^{\mathsf T})_{r,c}=A_{c,r},\quad 0\le r<3,\ 0\le c<2
 $$
 
 **Pseudocode (rectangular, new matrix)**
@@ -213,7 +213,7 @@ $$
 **Mathematical formula (2×3)**
 
 $$
-B_{r,c}=A_{r,\ C-1-c},\quad 0\le r<2,\ 0\le c<3.
+B_{r,c}=A_{r,\ C-1-c},\quad 0\le r<2,\ 0\le c<3
 $$
 
 **Pseudocode (in-place)**
@@ -255,7 +255,7 @@ $$
 **Mathematical formula (3×3)**
 
 $$
-B_{r,c}=A_{R-1-r,\ c},\quad 0\le r,c<3.
+B_{r,c}=A_{R-1-r,\ c},\quad 0\le r,c<3
 $$
 
 **Pseudocode (in-place)**
@@ -301,7 +301,7 @@ $$
 **Mathematical formula (n×n)**
 
 $$
-B_{r,c}=A_{n-1-c,\ r},\quad 0\le r,c<n.
+B_{r,c}=A_{n-1-c,\ r},\quad 0\le r,c<n
 $$
 
 **Pseudocode (square, in-place via basics)**
@@ -338,7 +338,7 @@ $$
 **Mathematical formula (R×C → C×R)**
 
 $$
-B_{r,c}=A_{R-1-c,\ r},\quad 0\le r<C,\ 0\le c<R\ \ (R{=}2,\ C{=}3).
+B_{r,c}=A_{R-1-c,\ r},\quad 0\le r<C,\ 0\le c<R\ \ (R{=}2,\ C{=}3)
 $$
 
 **Pseudocode (rectangular, direct mapping)**
@@ -385,7 +385,7 @@ $$
 **Mathematical formula (n×n)**
 
 $$
-B_{r,c}=A_{c,\ n-1-r},\quad 0\le r,c<n.
+B_{r,c}=A_{c,\ n-1-r},\quad 0\le r,c<n
 $$
 
 **Pseudocode (square, via basics)**
@@ -446,7 +446,7 @@ $$
 **Mathematical formula (R×C → R×C)**
 
 $$
-B_{r,c}=A_{R-1-r,\ C-1-c},\quad 0\le r<R,\ 0\le c<C.
+B_{r,c}=A_{R-1-r,\ C-1-c},\quad 0\le r<R,\ 0\le c<C
 $$
 
 **Pseudocode (in-place via two flips)**
@@ -526,7 +526,7 @@ top ← left, left ← bottom, bottom ← right, right ← top
 For an $n\times n$ matrix and a position $(r,c)$ on layer $\ell$, a 90° CW rotation sends
 
 $$
-(r,c)\ \mapsto\ (c,\ n-1-r)\ \mapsto\ (n-1-r,\ n-1-c)\ \mapsto\ (n-1-c,\ r).
+(r,c)\ \mapsto\ (c,\ n-1-r)\ \mapsto\ (n-1-r,\ n-1-c)\ \mapsto\ (n-1-c,\ r)
 $$
 
 **Pseudocode (explicit loops, in-place)**
@@ -586,7 +586,7 @@ $$
 Let the matrix indices be $(r,c)$ with $0\le r<R,\ 0\le c<C$. For layer $\ell=0,1,\dots,L-1$ where $L=\left\lceil \tfrac{\min(R,C)}{2}\right\rceil$, set
 
 $$
-t=\ell,\quad b=R-1-\ell,\quad left=\ell,\quad rgt=C-1-\ell .
+t=\ell,\quad b=R-1-\ell,\quad left=\ell,\quad rgt=C-1-\ell
 $$
 
 Visit, in order:
@@ -660,11 +660,15 @@ $$
 Let $s=r+c$. For $s=0,1,\dots,R+C-2$, define
 
 $$
-r_{\min}(s)=\max\!\big(0,\ s-(C-1)\big),\qquad
-r_{\max}(s)=\min\!\big(R-1,\ s\big).
+r_{\min}(s)=\max\!\big(0,\ s-(C-1)\big)
+$$
+
+$$
+r_{\max}(s)=\min\!\big(R-1,\ s\big)
 $$
 
 The diagonal set is $\{(r,s-r)\mid r_{\min}(s)\le r\le r_{\max}(s)\}$.
+
 Traverse with alternating direction:
 
 $$
@@ -708,6 +712,7 @@ Each cell is a node; edges connect neighboring walkable cells.
 **Grid-as-graph view (4-dir edges).** Each cell is a node; edges connect neighbors that are “passable”. Great for BFS shortest paths on unweighted grids.
 
 **Example map (walls `#`, free `.`, start `S`, target `T`).**
+
 Left: the map. Right: BFS distances (4-dir) from `S` until `T` is reached.
 
 ```
@@ -772,7 +777,8 @@ $$
 
 Push S to a queue, expand in 4-dir layers, track distance/visited; stop when T is dequeued.
 
-* Time: $O(R\cdot C)$; Space: $O(R\cdot C)$.
+* Time: $O(R\cdot C)$
+* Space: $O(R\cdot C)$
 
 #### Connected Components (Islands)
 
