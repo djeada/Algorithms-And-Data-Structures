@@ -56,7 +56,7 @@ Graph theory has its own language, full of terms that make it easier to talk abo
 
 ### Representation of Graphs in Computer Memory
 
-Graphs, with their versatile applications in numerous domains, necessitate efficient storage and manipulation mechanisms in computer memory. The choice of representation often depends on the graph's characteristics (e.g., dense vs. sparse, directed vs. undirected, weighted vs. unweighted) and the specific operations to be performed. Among the various methods available, the adjacency matrix and the adjacency list are the most prevalent.
+Graphs show how things are connected. To work with them on a computer, we need a good way to store and update those connections. The “right” choice depends on what the graph looks like (dense or sparse, directed or undirected, weighted or not) and what you plan to do with it. In practice, most people use one of two formats: an adjacency matrix or an adjacency list.
 
 #### Adjacency Matrix
 
