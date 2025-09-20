@@ -333,7 +333,7 @@ So the precise way to answer that question is:
 
 #### Breadth-First Search (BFS)
 
-Breadth-First Search (BFS) is a fundamental graph traversal algorithm that explores a graph **level by level** from a specified start vertex. It first visits all vertices at distance 1 from the start, then all vertices at distance 2, and so on. This makes BFS the natural choice whenever “closest in number of edges” matters.
+Breadth-First Search (BFS) is a graph traversal algorithm that explores a graph **level by level** from a specified start vertex. It first visits all vertices at distance 1 from the start, then all vertices at distance 2, and so on. This makes BFS the natural choice whenever “closest in number of edges” matters.
 
 To efficiently keep track of the traversal, BFS employs two primary data structures:
 
@@ -450,7 +450,7 @@ Shortest path A→E: backtrack E→C→A  ⇒  A - C - E
 
 #### Depth-First Search (DFS)
 
-Depth-First Search (DFS) is a fundamental graph traversal algorithm that explores **as far as possible** along each branch before backtracking. Starting from a source vertex, it dives down one neighbor, then that neighbor’s neighbor, and so on—only backing up when it runs out of new vertices to visit.
+Depth-First Search (DFS) is a graph traversal algorithm that explores **as far as possible** along each branch before backtracking. Starting from a source vertex, it dives down one neighbor, then that neighbor’s neighbor, and so on—only backing up when it runs out of new vertices to visit.
 
 To track the traversal efficiently, DFS typically uses:
 
