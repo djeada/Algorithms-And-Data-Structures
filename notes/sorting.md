@@ -618,6 +618,7 @@ We will sort the array:
 Binary tree view:
 
 ```
+Heap:
         4
       /   \
     10     3
@@ -628,6 +629,7 @@ Binary tree view:
 Heapify → Largest at top:
 
 ```
+Heap:
        10
       /   \
      5     3
@@ -648,6 +650,7 @@ Swap 10 ↔ 1 → largest (10) moves to correct final place.
 Heapify the reduced heap \[1,5,3,4]:
 
 ```
+Heap:
        5
       / \
      4   3
@@ -668,6 +671,7 @@ Swap 5 ↔ 1.
 Heapify reduced heap \[1,4,3]:
 
 ```
+Heap:
        4
       / \
      1   3
@@ -686,6 +690,7 @@ Swap 4 ↔ 3.
 Heapify reduced heap \[3,1]:
 
 ```
+Heap:
        3
       /
      1
