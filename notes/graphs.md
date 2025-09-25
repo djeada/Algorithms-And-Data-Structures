@@ -410,7 +410,7 @@ Edges: A–B, A–C, B–D, C–E
 *Queue/Visited evolution (front → back):*
 
 ```
-Step | Dequeued | Action                                   | Queue            | Visited
+Step | Dequeued | Action                                    | Queue            | Visited
 -----+----------+-------------------------------------------+------------------+----------------
 0    | —        | enqueue A                                 | [A]              | {A}
 1    | A        | discover B, C; enqueue both               | [B, C]           | {A, B, C}
@@ -752,7 +752,7 @@ Edges: A–B(4), A–C(1), C–B(2), B–E(1), C–D(4), D–E(3)
 *Priority queue / Finalized evolution (front = smallest key):*
 
 ```
-Step | Pop (u,dist) | Relaxations (v: new dist, parent)         | PQ after push                   | Finalized
+Step | Pop (u,dist) | Relaxations (v: new dist, parent)          | PQ after push                    | Finalized
 -----+--------------+--------------------------------------------+----------------------------------+----------------
 0    | —            | init A: dist[A]=0                          | [(A,0)]                          | {}
 1    | (A,0)        | B:4←A  , C:1←A                             | [(C,1), (B,4)]                   | {A}
@@ -1084,13 +1084,13 @@ Path length (g at G) equals number of × steps (optimal with admissible/consiste
 **Priority queue evolution (toy example)**
 
 ```
-Step | Popped u | Inserted neighbors (v: g,h,f)                  | Note
+Step | Popped u | Inserted neighbors (v: g,h,f)                   | Note
 -----+----------+-------------------------------------------------+---------------------------
-0    | —        | push S: g=0, h=14, f=14                        | S at (1,1), G at (5,9)
-1    | S        | (1,2): g=1,h=13,f=14 ; (2,1): g=1,h=12,f=13    | pick (2,1) next
-2    | (2,1)    | (3,1): g=2,h=11,f=13 ; (2,2) blocked           | ...
-3    | (3,1)    | (4,1) wall; (3,2): g=3,h=10,f=13               | still f=13 band
-…    | …        | frontier slides along the corridor toward G    | A* hugs the beeline
+0    | —        | push S: g=0, h=14, f=14                         | S at (1,1), G at (5,9)
+1    | S        | (1,2): g=1,h=13,f=14 ; (2,1): g=1,h=12,f=13     | pick (2,1) next
+2    | (2,1)    | (3,1): g=2,h=11,f=13 ; (2,2) blocked            | ...
+3    | (3,1)    | (4,1) wall; (3,2): g=3,h=10,f=13                | still f=13 band
+…    | …        | frontier slides along the corridor toward G     | A* hugs the beeline
 ```
 
 (Exact numbers depend on the specific grid and walls; shown for intuition.)
@@ -1255,14 +1255,14 @@ Edges: A–B(4), A–C(1), C–B(2), B–E(1), C–D(4), D–E(3)
 ```
 Legend: key[v] = cheapest known connection to tree; parent[v] = chosen neighbor
 
-Step | Action                          | PQ (key:vertex) after push         | In MST | Updated keys / parents
------+---------------------------------+------------------------------------+--------+-------------------------------
-0    | init at A                       | [0:A]                               | {}     | key[A]=0, others=∞
-1    | pop A → add                     | [1:C, 4:B]                          | {A}    | key[C]=1 (A), key[B]=4 (A)
-2    | pop C → add                     | [2:B, 4:D, 4:B]                     | {A,C}  | key[B]=min(4,2)=2 (C), key[D]=4 (C)
-3    | pop B(2) → add                  | [1:E, 4:D, 4:B]                     | {A,C,B}| key[E]=1 (B)
-4    | pop E(1) → add                  | [3:D, 4:D, 4:B]                     | {A,C,B,E}| key[D]=min(4,3)=3 (E)
-5    | pop D(3) → add                  | [4:D, 4:B]                          | {A,C,B,E,D}| done
+Step | Action                          | PQ (key:vertex) after push         | In MST      | Updated keys / parents
+-----+---------------------------------+------------------------------------+-------------+-------------------------------
+0    | init at A                       | [0:A]                              | {}          | key[A]=0, others=∞
+1    | pop A → add                     | [1:C, 4:B]                         | {A}         | key[C]=1 (A), key[B]=4 (A)
+2    | pop C → add                     | [2:B, 4:D, 4:B]                    | {A,C}       | key[B]=min(4,2)=2 (C), key[D]=4 (C)
+3    | pop B(2) → add                  | [1:E, 4:D, 4:B]                    | {A,C,B}     | key[E]=1 (B)
+4    | pop E(1) → add                  | [3:D, 4:D, 4:B]                    | {A,C,B,E}   | key[D]=min(4,3)=3 (E)
+5    | pop D(3) → add                  | [4:D, 4:B]                         | {A,C,B,E,D} | done
 ```
 
 *MST edges chosen (with weights):*
@@ -1400,13 +1400,13 @@ A–C(4), B–D(5), C–E(5), D–E(6), D–F(2)
 *Union–Find / MST evolution (take the edge if it connects different sets):*
 
 ```
-Step | Edge (w)  | Find(u), Find(v) | Action     | Components after union            | MST so far                 | Total
+Step | Edge (w)  | Find(u), Find(v) | Action      | Components after union            | MST so far                 | Total
 -----+-----------+-------------------+------------+-----------------------------------+----------------------------+------
- 1   | E–F (1)   | {E}, {F}          | TAKE       | {E,F} {A} {B} {C} {D}            | [E–F(1)]                   | 1
- 2   | B–C (2)   | {B}, {C}          | TAKE       | {E,F} {B,C} {A} {D}              | [E–F(1), B–C(2)]           | 3
- 3   | D–F (2)   | {D}, {E,F}        | TAKE       | {B,C} {D,E,F} {A}                | [E–F(1), B–C(2), D–F(2)]   | 5
- 4   | B–E (3)   | {B,C}, {D,E,F}    | TAKE       | {A} {B,C,D,E,F}                  | [..., B–E(3)]              | 8
- 5   | A–B (4)   | {A}, {B,C,D,E,F}  | TAKE       | {A,B,C,D,E,F} (all connected)    | [..., A–B(4)]              | 12
+ 1   | E–F (1)   | {E}, {F}          | TAKE       | {E,F} {A} {B} {C} {D}             | [E–F(1)]                   | 1
+ 2   | B–C (2)   | {B}, {C}          | TAKE       | {E,F} {B,C} {A} {D}               | [E–F(1), B–C(2)]           | 3
+ 3   | D–F (2)   | {D}, {E,F}        | TAKE       | {B,C} {D,E,F} {A}                 | [E–F(1), B–C(2), D–F(2)]   | 5
+ 4   | B–E (3)   | {B,C}, {D,E,F}    | TAKE       | {A} {B,C,D,E,F}                   | [..., B–E(3)]              | 8
+ 5   | A–B (4)   | {A}, {B,C,D,E,F}  | TAKE       | {A,B,C,D,E,F} (all connected)     | [..., A–B(4)]              | 12
      | (stop: we have V−1 = 5 edges for 6 vertices)
 ```
 
@@ -1545,16 +1545,16 @@ indeg[A]=0, indeg[B]=0, indeg[C]=2, indeg[D]=2, indeg[E]=1, indeg[F]=0, indeg[G]
 *Queue/Indegree evolution (front → back; assume we keep the queue **lexicographically** by using a min-heap):*
 
 ```
-Step | Pop u | Emit order         | Decrease indeg[...]         | Newly 0 → Enqueue | Q after
------+-------+--------------------+------------------------------+-------------------+-----------------
-0    | —     | []                 | —                            | A, B, F           | [A, B, F]
-1    | A     | [A]                | C:2→1                        | —                 | [B, F]
-2    | B     | [A, B]             | C:1→0, G:1→0                | C, G              | [C, F, G]
-3    | C     | [A, B, C]          | D:2→1, E:1→0                | E                 | [E, F, G]
-4    | E     | [A, B, C, E]       | D:1→0                       | D                 | [D, F, G]
-5    | D     | [A, B, C, E, D]    | —                            | —                 | [F, G]
-6    | F     | [A, B, C, E, D, F] | —                            | —                 | [G]
-7    | G     | [A, B, C, E, D, F, G] | —                         | —                 | []
+Step | Pop u | Emit order            | Decrease indeg[...]   | Newly 0 → Enqueue | Q after
+-----+-------+-----------------------+-----------------------+-------------------+-----------------
+0    | —     | []                    | —                     | A, B, F           | [A, B, F]
+1    | A     | [A]                   | C:2→1                 | —                 | [B, F]
+2    | B     | [A, B]                | C:1→0, G:1→0          | C, G              | [C, F, G]
+3    | C     | [A, B, C]             | D:2→1, E:1→0          | E                 | [E, F, G]
+4    | E     | [A, B, C, E]          | D:1→0                 | D                 | [D, F, G]
+5    | D     | [A, B, C, E, D]       | —                     | —                 | [F, G]
+6    | F     | [A, B, C, E, D, F]    | —                     | —                 | [G]
+7    | G     | [A, B, C, E, D, F, G] | —                     | —                 | []
 ```
 
 *A valid topological order:*
