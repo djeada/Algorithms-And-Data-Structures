@@ -914,8 +914,8 @@ h(k) = k mod 11
 *Probe sequence (relative offsets):*
 
 ```
-+1², +2², +3², +4², +5², ... mod 11
-= +1, +4, +9, +5, +3, +3, +5, +9, ... (wrapping around table size)
++1², +2², +3², +4², +5², +6², +7², +8², +9², +10², +11², ... mod 11
+= +1, +4, +9, +5, +3, +3, +5, +9, +4, +1, +0, ... (full cycle, then repeats)
 ```
 
 So from `h(k)`, we try slots in this order:
