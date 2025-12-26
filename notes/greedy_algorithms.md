@@ -1,21 +1,5 @@
 ## Greedy algorithms
 
-**Table of Contents**
-1. [What Is Greedy?](#what-is-greedy)
-2. [The Greedy Proof Toolkit](#the-greedy-proof-toolkit)
-3. [Examples Grouped by Pattern](#examples-grouped-by-pattern)
-   - [Frontier/Reachability Greedy: Jump Game](#reachability-on-a-line)
-   - [Cut-Based Greedy on Graphs: MST and Dijkstra](#minimum-spanning-trees)
-   - [Scheduling Greedy: Interval Scheduling and EDD Lateness](#scheduling-themes)
-   - [Merge-the-Two-Smallest Greedy: Huffman Coding](#huffman-coding)
-   - [Discard-Negative-Prefix Greedy: Maximum Subarray](#maximum-contiguous-sum)
-4. [When Greedy Is Guaranteed: Matroids](#when-greedy-is-guaranteed-matroids)
-5. [Common Failure Modes](#common-failure-modes)
-
----
-
-### What Is Greedy?
-
 Greedy algorithms build a solution one step at a time. At each step, grab the option that looks best *right now* by some simple rule (highest value, earliest finish, shortest length, etc.). Keep it if it doesn't break the rules of the problem.
 
 **The general pattern:**
@@ -26,8 +10,6 @@ Greedy algorithms build a solution one step at a time. At each step, grab the op
 4. Otherwise skip it.
 
 Picking the best "now" doesn't obviously give the best "overall." **Greedy isn't magic; you must prove the choice is safe.** The real work is showing that these local choices still lead to a globally best answer.
-
----
 
 ### The Greedy Proof Toolkit
 
