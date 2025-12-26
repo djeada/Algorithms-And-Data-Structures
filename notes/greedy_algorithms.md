@@ -447,6 +447,8 @@ Loop over all $j$ and all $i\le j$, compute $S_j-S_{i-1}$, and take the maximum.
 
 **How it works**
 
+This is greedy in the sense that any negative prefix is never worth keeping—we discard it immediately. The local decision is: "Does adding the current element to my running sum help, or should I start fresh here?" That greedy choice turns out to be safe.
+
 Walk left to right once and carry two simple numbers.
 
 * $S$: the running prefix sum up to the current position.
@@ -466,7 +468,7 @@ So during the scan:
 
 This is the whole algorithm. In words: keep the lowest floor you’ve ever seen and measure how high you are above it now. If you dip to a new floor, remember it; if you rise, maybe you’ve set a new record.
 
-A widely used equivalent form keeps a “best sum ending here” value $E$: set $E \leftarrow \max(x_j,; E+x_j)$ and track a global maximum. It’s the same idea written incrementally: if the running sum ever hurts you, you “reset” and start fresh at the current element.
+A widely used equivalent form keeps a “best sum ending here” value $E$: set $E \leftarrow \max(x_j, E+x_j)$ and track a global maximum. It’s the same idea written incrementally: if the running sum ever hurts you, you “reset” and start fresh at the current element.
 
 *Walkthrough*
 
@@ -562,7 +564,7 @@ Intervals (start, finish):
 (1,3) (2,5) (4,7) (6,9) (8,10) (9,11)
 ```
 
-A best answer keeps four intervals, for instance $(1,3),(4,7),(8,10),(10,11)$.
+A best answer keeps three intervals, for instance $(1,3),(4,7),(8,10)$.
 
 **Baseline (slow)**
 
@@ -593,7 +595,7 @@ last_end = -∞
 (9,11): 9 < 10 → skip
 ```
 
-Kept intervals: $(1,3),(4,7),(8,10)$. If we allow a meeting that starts exactly at $10$, we can also keep $(10,11)$ if it exists. Four kept, which matches the claim.
+Kept intervals: $(1,3),(4,7),(8,10)$. Three kept, which matches the claim.
 
 A tiny picture helps the “finish early” idea feel natural:
 
@@ -725,11 +727,11 @@ $$
 A:0.40,\quad B:0.20,\quad C:0.20,\quad D:0.10,\quad E:0.10.
 $$
 
-A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L\_A,\dots,L\_E$, plus a concrete codebook. (There can be multiple optimal codebooks when there are ties in frequencies; their **lengths** agree, though the exact bitstrings may differ.)
+A valid optimal answer will be a prefix code with expected length as small as possible. We will compute the exact minimum and one optimal set of lengths $L\_A,\dots,L\_E$, plus a concrete codebook. (There can be multiple optimal codebooks when there are ties in frequencies; expected length is the same; codeword/leaf assignments may differ (especially among equal-frequency symbols).)
 
 **Baseline**
 
-One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum f\_i,L\_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log\_2 5\rceil=3$. That fixed-length code has $\mathbb{E}[L]=3$.
+One conceptual baseline is to enumerate all full binary trees with five labeled leaves and pick the one minimizing $\sum_i f_i L_i$. That is correct but explodes combinatorially as the number of symbols grows. A simpler but usually suboptimal baseline is to give every symbol the same length $\lceil \log\_2 5\rceil=3$. That fixed-length code has $\mathbb{E}[L]=3$.
 
 **Greedy Approach**
 
