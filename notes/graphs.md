@@ -1561,14 +1561,6 @@ Step | Pop u | Emit order            | Decrease indeg[...]   | Newly 0 → Enque
 
 `A, B, C, E, D, F, G` (others like `B, A, C, E, D, F, G` are also valid.)
 
-*Clean left-to-right view (one possible ordering):*
-
-```
-A   B   F   C   E   D   G
-│   │       │   │   │
-└──►└──►    └──►└──►└──►   (all arrows go left→right)
-```
-
 **Cycle detection (why it fails on cycles)**
 
 If there’s a cycle, some vertices **never** reach indegree 0. Example:
