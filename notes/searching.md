@@ -1,6 +1,68 @@
 ## Searching
 
-Searching refers to the process of finding the location of a specific element within a collection of data, such as an array, list, tree, or graph. It underpins many applications, from databases and information retrieval to routing and artificial intelligence. Depending on the organization of the data, different search techniques are used—such as linear search for unsorted data, binary search for sorted data, and more advanced approaches like hash-based lookup or tree traversals for hierarchical structures. Efficient searching is important because it directly impacts the performance and scalability of software systems.
+Searching refers to the process of finding the location of a specific element within a collection of data. It underpins many applications, from databases and information retrieval to routing and artificial intelligence. This guide focuses on practical search algorithms for **arrays**, **hash tables**, **probabilistic membership filters**, and **string matching**. Efficient searching is important because it directly impacts the performance and scalability of software systems.
+
+### Which Search Should I Use?
+
+Choosing the right search algorithm depends on your data structure, constraints, and use case. Use this decision guide to quickly identify the best approach:
+
+#### For Arrays and Lists
+
+**Unsorted data + need exact match?**
+* **Linear Search** — Simple scan left-to-right; $O(n)$ time, works on any list
+* **Sentinel Linear Search** — Slight optimization removing bounds checks; still $O(n)$
+
+**Sorted array + random access?**
+* **Binary Search** (default choice) — Repeatedly halve the search space; $O(\log n)$ time
+  * *When target likely near start or unknown bounds?* → **Exponential Search** — Double index until range found, then binary search
+  * *Values uniformly distributed numeric?* → **Interpolation Search** — Estimate position based on value; expected $O(\log \log n)$ but can degrade to $O(n)$
+  * *Want blocky scanning behavior?* → **Jump Search** — Jump by $\sqrt{n}$ blocks, then linear scan; $O(\sqrt{n})$ time; better cache locality than binary in some cases
+
+**Sorted array + finding first/last occurrence?**
+* **Binary Search variant** — Adjust binary search to continue after finding match
+
+#### For Key-Based Lookup and Membership
+
+**Key → value lookup or set membership?**
+* **Hash Tables** — Expected $O(1)$ lookup with good hash function and load factor
+  * *Collision resolution:* Choose based on your needs:
+    * **Separate Chaining** — Lists/arrays per bucket; easiest deletions; steady performance at α ≈ 1
+    * **Linear Probing** — Simple and cache-friendly; watch for primary clustering; keep α < 0.7
+    * **Quadratic Probing** — Reduces primary clustering; use prime table sizes
+    * **Double Hashing** — Best probe distribution; minimizes clustering; slightly more complex
+    * **Cuckoo Hashing** — Guarantees $O(1)$ worst-case lookup (checks 2 positions); insertions may trigger rehashing
+
+#### For Approximate Membership (Space-Efficient)
+
+**Need to test "is element in set?" with space priority?**
+* **Bloom Filter** — Probabilistic membership; answers "maybe present" or "definitely not"; no false negatives; no deletions
+* **Counting Bloom Filter** — Like Bloom but supports deletions via counters; uses more space
+* **Cuckoo Filter** — Space-efficient with deletions; high load factors (90%+); better performance than Bloom in many cases
+
+#### For Substring/Pattern Search
+
+**Need to find pattern in text?**
+* **Naive String Search** — Simple sliding window; $O(n \cdot m)$ worst case; fine for short patterns
+* **Knuth–Morris–Pratt (KMP)** — Guaranteed $O(n + m)$; uses failure function to avoid rechecks; best all-rounder
+* **Boyer–Moore (BM)** — Often fastest in practice; scans right-to-left with smart skips; excellent for long patterns and large alphabets
+* **Rabin–Karp (RK)** — Rolling hash comparison; $O(n + m)$ expected; great for multiple patterns or streaming data
+
+#### Quick Comparison Table
+
+| Use Case | Data Type | Algorithm | Time Complexity | Notes |
+|----------|-----------|-----------|-----------------|-------|
+| Unsorted lookup | Array | Linear Search | $O(n)$ | Simple, works anywhere |
+| Sorted lookup | Array | Binary Search | $O(\log n)$ | Default for sorted arrays |
+| Target near start | Sorted Array | Exponential Search | $O(\log p)$ | p = position found |
+| Uniform distribution | Sorted Array | Interpolation Search | $O(\log \log n)$ avg | Can degrade to $O(n)$ |
+| Block-based scan | Sorted Array | Jump Search | $O(\sqrt{n})$ | Better cache locality |
+| Key-value pairs | Hash Table | Hash + Chaining/Probing | $O(1)$ expected | Depends on load factor |
+| Guaranteed O(1) lookup | Cuckoo Hash | Cuckoo Hashing | $O(1)$ worst | 2 hash positions |
+| Set membership (space-first) | Bit Array | Bloom Filter | $O(k)$ | k = hash functions; FPR tunable |
+| Set with deletions | Counters | Counting Bloom / Cuckoo Filter | $O(k)$ | Supports removal |
+| Substring search | String | KMP | $O(n + m)$ | Guaranteed linear time |
+| Substring (fast average) | String | Boyer–Moore | $O(n/m)$ avg | Best for long patterns |
+| Multiple patterns | String | Rabin–Karp | $O(n + m)$ | Rolling hash enables batching |
 
 ### Linear & Sequential Search
 
@@ -427,7 +489,7 @@ The element $25$ is found at **index 4**.
 
 * Works on sorted arrays; pick jump ≈ √n for good balance.
 * Time: $O(√n)$ comparisons on average; Space: $O(1)$.
-* Useful when random access is cheap but full binary search isn’t desirable (e.g., limited CPU branch prediction, or when scanning in blocks is cache-friendly).
+* Useful when binary search isn’t desirable: binary search has poor locality (random jumps); jump search scans a block sequentially, which is more cache-friendly and has better branch prediction.
 * Degrades gracefully to “scan block then stop.”
 
 #### Exponential Search
