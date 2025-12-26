@@ -1,6 +1,39 @@
 ## Searching
 
-Searching refers to the process of finding the location of a specific element within a collection of data, such as an array, list, tree, or graph. It underpins many applications, from databases and information retrieval to routing and artificial intelligence. Depending on the organization of the data, different search techniques are used—such as linear search for unsorted data, binary search for sorted data, and more advanced approaches like hash-based lookup or tree traversals for hierarchical structures. Efficient searching is important because it directly impacts the performance and scalability of software systems.
+Searching refers to the process of finding the location of a specific element within a collection of data, such as an array or list. It underpins many applications, from databases and information retrieval to routing and artificial intelligence. Depending on the organization of the data, different search techniques are used—such as linear search for unsorted data, binary search for sorted data, hash-based lookup for key-value mappings, probabilistic filters for approximate membership, and string matching algorithms for pattern finding. Efficient searching is important because it directly impacts the performance and scalability of software systems.
+
+### Which Search Algorithm Should I Use?
+
+Choosing the right search algorithm depends on your data organization and requirements. Here's a quick decision guide:
+
+**Unsorted data + exact match needed?**
+* Linear Search (simple, works anywhere)
+* Sentinel Linear Search (micro-optimization of linear)
+
+**Sorted array + random access?**
+* Binary Search (default choice, O(log n))
+* Exponential Search (when target likely near start or array unbounded)
+* Interpolation Search (when values uniformly distributed)
+* Jump Search (when cache locality / block scanning preferred)
+
+**Key → value lookup / set membership?**
+* Hash Tables with separate chaining (easy deletions, steady O(1))
+* Hash Tables with open addressing (better cache locality)
+  - Linear probing (simple, watch clustering)
+  - Quadratic probing (reduces primary clustering)
+  - Double hashing (best probe quality)
+* Cuckoo Hashing (predictable lookup, read-heavy workloads)
+
+**Approximate membership testing (space-efficient)?**
+* Bloom Filter (no deletions, tunable false-positive rate)
+* Counting Bloom Filter (supports deletions via counters)
+* Cuckoo Filter (supports deletions, high load factors)
+
+**Substring / pattern search?**
+* KMP (guaranteed O(n+m), small memory)
+* Boyer-Moore (fastest on long patterns / large alphabets)
+* Rabin-Karp (great for multiple patterns or streaming)
+* Naive (fine for tiny inputs or baseline)
 
 ### Linear & Sequential Search
 
@@ -388,7 +421,7 @@ $$
 
 **How it works**
 
-Perfect — that’s a **jump search trace**. Let me reformat and polish it so the steps are crystal clear and the “jump + linear scan” pattern pops visually:
+Here's a clear trace of jump search showing the "jump + linear scan" pattern:
 
 We’re applying **jump search** to find $25$ in
 
@@ -592,7 +625,7 @@ Probe formula:
 pos ≈ low + (high - low) * (target - A[low]) / (A[high] - A[low])
 ```
 
-Let say we have following array and target:
+Let's say we have the following array and target:
 
 ```
 A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
@@ -851,7 +884,7 @@ h(k) = k \bmod m, \quad h(33) = 33 \bmod 11 = 0
 $$
 
 $$
-\text{Output: found (index 4)}
+\text{Output: found (index 1)}
 $$
 
 *Example 2*
@@ -881,8 +914,8 @@ h(k) = k mod 11
 *Probe sequence (relative offsets):*
 
 ```
-+1², +2², +3², ... mod 11
-= +1, +4, +9, +5, +3, +3²… (wrapping around table size)
++1², +2², +3², +4², +5², ... mod 11
+= +1, +4, +9, +5, +3, +3, +5, +9, ... (wrapping around table size)
 ```
 
 So from `h(k)`, we try slots in this order:
@@ -1620,7 +1653,7 @@ Each key `x` → short **fingerprint** `f = FP(x)`
 Two candidate buckets:
 
 * `i1 = H(x) mod b`
-* `i2 = i1 XOR H(f) mod b`
+* `i2 = (i1 XOR H(f)) mod b`
   (`f` can be stored in either bucket; moving between buckets preserves the invariant.)
 
 Start (empty)
@@ -1852,7 +1885,7 @@ $$
 
 **How it works**
 
-We want to find the pattern `"ababd"` in the text `"ababcabca babab d"`.
+We want to find the pattern `"ababd"` in the text `"ababcabcabababd"`.
 
 *1) Precompute LPS (Longest Proper Prefix that is also a Suffix)*
 
