@@ -437,6 +437,8 @@ So the correct output is “maximum sum $=5$” and one optimal segment is posit
 
 *Baseline*
 
+(Note: This section uses 1-based indexing for mathematical convenience with prefix sums, following standard textbook conventions.)
+
 Try every possible block and keep the best total. To sum any block $i..j$ quickly, precompute **prefix sums** $S_0=0$ and $S_j=\sum_{k=1}^j x_k$. Then
 
 $$
