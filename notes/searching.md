@@ -388,7 +388,7 @@ $$
 
 **How it works**
 
-Perfect — that’s a **jump search trace**. Let me reformat and polish it so the steps are crystal clear and the “jump + linear scan” pattern pops visually:
+Here’s a clear trace of **jump search** in action:
 
 We’re applying **jump search** to find $25$ in
 
@@ -592,7 +592,7 @@ Probe formula:
 pos ≈ low + (high - low) * (target - A[low]) / (A[high] - A[low])
 ```
 
-Let say we have following array and target:
+Let's say we have the following array and target:
 
 ```
 A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
@@ -851,7 +851,7 @@ h(k) = k \bmod m, \quad h(33) = 33 \bmod 11 = 0
 $$
 
 $$
-\text{Output: found (index 4)}
+\text{Output: found (index 1)}
 $$
 
 *Example 2*
@@ -881,8 +881,8 @@ h(k) = k mod 11
 *Probe sequence (relative offsets):*
 
 ```
-+1², +2², +3², ... mod 11
-= +1, +4, +9, +5, +3, +3²… (wrapping around table size)
++1², +2², +3², +4², +5², ... mod 11
+= +1, +4, +9, +5, +3, +3, +5, +9, +4, +1, ... (wrapping around table size)
 ```
 
 So from `h(k)`, we try slots in this order:
@@ -1620,7 +1620,7 @@ Each key `x` → short **fingerprint** `f = FP(x)`
 Two candidate buckets:
 
 * `i1 = H(x) mod b`
-* `i2 = i1 XOR H(f) mod b`
+* `i2 = (i1 XOR H(f)) mod b`
   (`f` can be stored in either bucket; moving between buckets preserves the invariant.)
 
 Start (empty)
@@ -1852,7 +1852,7 @@ $$
 
 **How it works**
 
-We want to find the pattern `"ababd"` in the text `"ababcabca babab d"`.
+We want to find the pattern `"ababd"` in the text `"ababcabcabababd"`.
 
 *1) Precompute LPS (Longest Proper Prefix that is also a Suffix)*
 
