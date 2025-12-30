@@ -191,7 +191,9 @@ level k=2: {a,b} {a,c} {b,c}
 2^n = |𝒫(A)| = Σ_{k=0..n} C(n,k)
 ```
 
-More cleanly: $2^n = |\mathcal{P}(A)| = \sum_{k=0}^{n} \binom{n}{k}$.
+Proper math:
+
+$$2^n = |\mathcal{P}(A)| = \sum_{k=0}^{n} \binom{n}{k}$$
 
 #### Algorithms + time
 
@@ -240,7 +242,9 @@ Count:
 P(n,k) = n·(n-1)·...·(n-k+1) = n!/(n-k)!
 ```
 
-Written as LaTeX: $P(n,k)=n(n-1)\cdots(n-k+1)=\dfrac{n!}{(n-k)!}$.
+Proper math: 
+
+$$P(n,k)=n(n-1)\cdots(n-k+1)=\dfrac{n!}{(n-k)!}$$
 
 A do/don’t that prevents classic mistakes: **do** decide early whether repetition is allowed; **don’t** mix “without repetition” formulas (like $P(n,k)$) with “with repetition” reasoning (like $n^k$).
 
