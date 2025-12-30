@@ -311,7 +311,9 @@ A^k = A × A × ... × A   (k times)
 
 Proper Math: 
 
-$$A^k = \underbrace{A\times A\times\cdots\times A}_{k\text{ times}}$ and $|A^k|=n^k$$
+$$A^k = \underbrace{A\times A\times\cdots\times A}_{k\text{ times}}$$
+
+$$|A^k|=n^k$$
 
 This is exactly “all $k$-length sequences over $A$” (like passwords).
 
