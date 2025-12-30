@@ -2,7 +2,7 @@
 
 Greedy algorithms are the “make progress now” strategy: build a solution one step at a time, and at each step take the option that looks best *right now* according to a simple rule (highest value, earliest finish, smallest weight, smallest distance label, etc.). You keep the choice only if it doesn’t break the problem’s rules.
 
-The story you should keep in your head is: **greedy is fast because it refuses to look ahead**, but that means it earns its correctness only when you can prove that local choices are *safe*. The fun part is that the *proof patterns* repeat across problems, so once you learn the toolkit, new greedy problems stop feeling like magic tricks and start feeling like “apply the template.”
+The story you should keep in your head is **greedy is fast because it refuses to look ahead**, but that means it earns its correctness only when you can prove that local choices are *safe*. The fun part is that the *proof patterns* repeat across problems, so once you learn the toolkit, new greedy problems stop feeling like magic tricks and start feeling like “apply the template.”
 
 **The general pattern:**
 
