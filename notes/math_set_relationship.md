@@ -61,7 +61,7 @@ c  | c,0 | c,1 |
 
 **Do** remember these are *ordered* pairs, $(a,0)\neq(0,a)$, and **don’t** treat it like “a set of two things.” Order is the entire point.
 
-### Counting
+#### Counting
 
 If $|A| = n$ and $|B| = m$ then:
 
@@ -69,7 +69,7 @@ If $|A| = n$ and $|B| = m$ then:
 |A × B| = n·m
 ```
 
-### Why it matters
+#### Why it matters
 
 This is the foundation of:
 
@@ -120,7 +120,7 @@ Subset lattice (Boolean lattice):
 
 Here’s the “why you should care” moment: the power set is the search space behind “try all subsets” algorithms, feature selection, subset sum, knapsack-style brute force, and lots of graph subset problems. The lattice diagram is the map of that search space.
 
-### Counting
+#### Counting
 
 If $|A| = n$ then:
 
@@ -372,7 +372,7 @@ So:
 
 A do/don’t here: **do** use “functions” when you’re stuck; **don’t** overcomplicate it with new symbols, this is meant to be the simplest mental model.
 
-### Complexity reality check: output size dominates
+#### Complexity reality check: output size dominates
 
 If you *generate* these objects, the **minimum time** is at least the number of outputs.
 
@@ -391,18 +391,16 @@ This is why many problems that ask you to “try all subsets” are exponential:
 
 One last do/don’t that matters in real projects: **do** treat these counts like early warning signs (a design review for your algorithm), and **don’t** wait until you’ve implemented everything to realize you built an $n!$ machine.
 
----
-
-## 9) Quick “how to choose the right formula” cheat-sheet
+### Quick “how to choose the right formula” cheat-sheet
 
 Ask two questions:
 
-### Q1: Does order matter?
+#### Q1: Does order matter?
 
 * **No** → combinations / subsets / multisets
 * **Yes** → permutations / sequences / tuples
 
-### Q2: Can you reuse elements?
+#### Q2: Can you reuse elements?
 
 * **No repetition** → factorial / falling factorial
 * **Repetition allowed** → powers / stars-and-bars
