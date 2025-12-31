@@ -278,7 +278,7 @@ P(n,k) = C(n,k) · k!
 
 Proper math: 
 
-$$P(n,k)=\binom{n}{k},k!$$
+$$P(n,k)=\binom{n}{k} k!$$
 
 Because:
 
