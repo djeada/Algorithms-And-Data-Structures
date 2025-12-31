@@ -111,14 +111,14 @@ Subset lattice (Boolean lattice):
         {a,b,c}
        /   |   \
    {a,b} {a,c} {b,c}
-     | \    |    / |
-     |  \   |   /  |
+     |  \ /   \ /  |
+     |  / \   / \  |
     {a}    {b}    {c}
        \    |     /
             ∅
 ```
 
-Here’s the “why you should care” moment: the power set is the search space behind “try all subsets” algorithms, feature selection, subset sum, knapsack-style brute force, and lots of graph subset problems. The lattice diagram is the map of that search space.
+The power set is the search space behind “try all subsets” algorithms, feature selection, subset sum, knapsack-style brute force, and lots of graph subset problems. The lattice diagram is the map of that search space.
 
 #### Counting
 
@@ -175,7 +175,11 @@ If $|A| = n$:
 C(n,k) = "n choose k" = n! / (k!(n-k)!)
 ```
 
-In standard notation, this is $C(n,k)=\binom{n}{k}=\dfrac{n!}{k!(n-k)!}$. A do/don’t: **do** use $\binom{n}{k}$ when you write math (it’s clearer), and **don’t** forget the “order doesn’t matter” rule, if you start ordering the chosen elements, you’ve switched problems.
+In standard notation, this is 
+
+$$C(n,k)=\binom{n}{k}=\dfrac{n!}{k!(n-k)!}$$
+
+**Do** use $\binom{n}{k}$ when you write math (it’s clearer), and **don’t** forget the “order doesn’t matter” rule, if you start ordering the chosen elements, you’ve switched problems.
 
 combinations are a “level” in the power-set lattice
 
@@ -294,7 +298,7 @@ Classic algorithms:
 * next_permutation (lexicographic)
 * backtracking swap recursion
 
-Practical do/don’t: **do** use in-place swapping if you want low memory, and **don’t** generate permutations “just to test something” unless you’re sure $n$ is tiny, $n!$ grows so fast it’s basically a jump scare.
+**Do** use in-place swapping if you want low memory, and **don’t** generate permutations “just to test something” unless you’re sure $n$ is tiny, $n!$ grows so fast it’s basically a jump scare.
 
 ### “With repetition” variants (multisets and strings)
 
@@ -325,7 +329,7 @@ Number of size-$k$ multisets from $n$ types:
 C(n+k-1, k)
 ```
 
-That is $\binom{n+k-1}{k}$ (a “stars and bars” result). Do/don’t: **do** picture $k$ identical picks distributed among $n$ bins; **don’t** treat this like normal combinations, repetition changes the geometry.
+That is $\binom{n+k-1}{k}$ (a “stars and bars” result). **Do** picture $k$ identical picks distributed among $n$ bins; **don’t** treat this like normal combinations, repetition changes the geometry.
 
 #### Permutations with repetition
 
