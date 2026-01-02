@@ -72,7 +72,7 @@ So one possible **unstable-sorted** sequence is:
 [Lancelot2] [Lancelot0] [Gawain4] [Gawain1] [Percival3]
 ```
 
-If you then did a second pass (say, sorting by rank or battle-honors) you’d only want to reorder knights of different names, trusting that ties (same-name knights) are still in their intended original order—something only a stable sort guarantees.
+If you then did a second pass (say, sorting by rank or battle-honors) you’d only want to reorder knights of different names, trusting that ties (same-name knights) are still in their intended original order, something only a stable sort guarantees.
 
 ---
 
@@ -95,7 +95,7 @@ The basic idea:
 * Swap them if they are in the wrong order.
 * Repeat until no swaps are needed.
 
-Bubble sort is valuable mostly as a teaching tool: it helps you build intuition for comparison-based sorting, swapping, and passes. In real programs, it’s rarely the best choice—but understanding why it’s slow teaches you what *good* sorting algorithms avoid (repeated full scans with tiny progress each pass).
+Bubble sort is valuable mostly as a teaching tool: it helps you build intuition for comparison-based sorting, swapping, and passes. In real programs, it’s rarely the best choice, but understanding why it’s slow teaches you what *good* sorting algorithms avoid (repeated full scans with tiny progress each pass).
 
 **Step-by-Step Walkthrough**
 
@@ -194,7 +194,7 @@ Sorted! ✅
 
 * By keeping track of whether any swaps were made during a pass, Bubble Sort can terminate early if the array is already sorted. This optimization makes Bubble Sort’s **best case** much faster ($O(n)$).
 
-This “early exit” is bubble sort’s one redeeming trick: when data is already nearly sorted, it doesn’t keep doing pointless work. That idea—detecting when you can stop early—shows up in far better algorithms too.
+This “early exit” is bubble sort’s one redeeming trick: when data is already nearly sorted, it doesn’t keep doing pointless work. That idea, detecting when you can stop early, shows up in far better algorithms too.
 
 **Stability**
 
@@ -457,7 +457,7 @@ Pass 4:  [ 5  6  11  12  13 ]
 * Useful as a **helper inside more complex sorts** (e.g., Quick Sort or Merge Sort) for small subarrays.
 * Can be optimized with **binary search** to find insertion positions faster (but shifting still takes linear time).
 
-That last bullet is a subtle but important point: binary search reduces comparisons, not movement. If moving elements is the expensive part (and it often is), the big win comes from having fewer shifts—which happens naturally when the array is already nearly sorted.
+That last bullet is a subtle but important point: binary search reduces comparisons, not movement. If moving elements is the expensive part (and it often is), the big win comes from having fewer shifts, which happens naturally when the array is already nearly sorted.
 
 **Stability**
 
@@ -469,7 +469,7 @@ Insertion sort is **stable** (equal elements keep their relative order).
 | ---------------- | --------------- | -------------------------------------------------- |
 | **Worst Case**   | $O(n^2)$        | Reverse-sorted input                               |
 | **Average Case** | $O(n^2)$        |                                                    |
-| **Best Case**    | $O(n)$          | Already sorted input — only comparisons, no shifts |
+| **Best Case**    | $O(n)$          | Already sorted input ,  only comparisons, no shifts |
 | **Space**        | $O(1)$          | In-place                                           |
 
 **Implementation**
@@ -600,7 +600,7 @@ Pass 4:  [ 10 | 30 ] [40] [50] [70] [90  80]
 * **Small Subarrays:** For very small partitions, switch to Insertion Sort for efficiency.
 * **Tail Recursion:** Can optimize recursion depth.
 
-These are not “nice-to-haves”—they’re what separates textbook quick sort from industrial quick sort. Real implementations work hard to avoid worst-case behavior, because worst-case quick sort can be painfully slow on already-sorted or adversarial inputs.
+These are not “nice-to-haves”, they’re what separates textbook quick sort from industrial quick sort. Real implementations work hard to avoid worst-case behavior, because worst-case quick sort can be painfully slow on already-sorted or adversarial inputs.
 
 **Stability**
 
