@@ -1,62 +1,72 @@
 ## Graphs
 
-In many areas of life, we come across systems where elements are deeply interconnected—whether through physical routes, digital networks, or abstract relationships. Graphs offer a flexible way to represent and make sense of these connections.
+In many areas of life, we come across systems where elements are deeply interconnected, whether through physical routes, digital networks, or abstract relationships. Graphs offer a flexible way to represent and make sense of these connections.
+
+The reason graphs matter isn’t just that they *describe* connections, it’s that they let you **reason** about them. Once you turn a messy “web of relationships” into a graph, you can start asking precise questions: *What’s the fastest route? What’s the weakest link? Who or what is most connected? What happens if this node fails?* That’s the moment graphs stop being a picture and become a tool.
 
 Some real-world examples include:
 
-- Underground tunnel networks (subways and transportation systems below the city surface)
-- Railway maps (train routes connecting different towns and cities)
-- Cities linked by flights (air travel routes between global destinations)
-- Networks of pipes (piping systems transporting water, gas, or oil)
-- Electrical grids (networks distributing electricity across regions)
-- Carbon atoms in a molecule (chemical compounds and the bonds between their constituent atoms)
-- Internet (webpages interlinked through hyperlinks or networks of computers)
-- Task scheduling (dependencies among tasks that determine their sequence or priority)
-- Spread of a disease (understanding how diseases propagate through populations)
-- Social networks (people connected through friendships, family ties, or professional relationships)
-- Countries and their political alliances (diplomatic ties, trade partnerships, or defense pacts between nations)
+* Underground tunnel networks (subways and transportation systems below the city surface)
+* Railway maps (train routes connecting different towns and cities)
+* Cities linked by flights (air travel routes between global destinations)
+* Networks of pipes (piping systems transporting water, gas, or oil)
+* Electrical grids (networks distributing electricity across regions)
+* Carbon atoms in a molecule (chemical compounds and the bonds between their constituent atoms)
+* Internet (webpages interlinked through hyperlinks or networks of computers)
+* Task scheduling (dependencies among tasks that determine their sequence or priority)
+* Spread of a disease (understanding how diseases propagate through populations)
+* Social networks (people connected through friendships, family ties, or professional relationships)
+* Countries and their political alliances (diplomatic ties, trade partnerships, or defense pacts between nations)
 
 Viewing these systems as graphs lets us dig deeper into how they work, optimize them better, and even predict their behavior more accurately. In fields like computer science and math, graphs are a powerful tool that helps us model and understand these systems effectively.
+
+A helpful way to think about this is: graphs are a “universal adapter.” They don’t care whether your nodes are cities, atoms, or tasks. If you can describe “things” and “relationships,” you can model it as a graph, and suddenly a huge library of algorithms becomes available to you.
 
 ### Graph Terminology
 
 Graph theory has its own language, full of terms that make it easier to talk about and define different types of graphs and their features. Here's an explanation of some important terms:
 
-- A *graph* $G$ is a mathematical structure composed of vertices (also known as nodes or points), forming the set $V(G)$, and edges (also called links or lines), forming the set $E(G)$. Each edge connects two distinct vertices, denoted by pairs $\{x, y\} \in E(G)$.
-- When two vertices, say $x$ and $y$, share an edge, they are termed *adjacent*. The count of adjacent vertices to any vertex $v$ defines its *degree*. Notably, summing the degrees of all vertices in a graph always yields an even number.
-- A *path* of length $n$ is a sequence of vertices $v_1 \sim v_2 \sim dots \sim v_{n+1}$, each consecutively connected by edges, with no vertex repeated.
-- A *cycle* is a special path where the first and last vertices are identical, forming a closed loop, and no other vertex is repeated within the cycle.
-- *Distance* in a graph refers to the shortest path length between two vertices. Essentially, it measures how closely two vertices are connected through the minimal number of edges.
-- A *simple graph* is characterized by the absence of self-loops—edges that connect vertices to themselves—and contains no more than one edge between any two distinct vertices.
-- A *directed graph* (or digraph) includes edges with specific directions, known as arcs, represented as ordered pairs of vertices. Conversely, an undirected graph treats connections symmetrically, meaning the connection between vertices $A$ and $B$ is identical to the one from $B$ to $A$.
-- A *weighted graph* assigns numerical values (weights) to edges, typically non-negative integers. Binary weights (0 or 1) indicate connection presence or absence; numeric weights quantify costs or strengths; and normalized weights scale outgoing connections from a vertex to sum to one, commonly used in probability models.
-- Regarding *connectivity*, an undirected graph is *connected* if there's a path linking any pair of vertices. For directed graphs, *weak connectivity* means at least one directional path exists between vertex pairs, while *strong connectivity* demands a path in both directions between every vertex pair.
-- Two vertices connected by an edge are called *neighbors*, and the edge itself is said to be *incident* to these vertices. Edges sharing a common vertex are described as *adjacent* edges.
-- An *isolated vertex* refers to a vertex with no connecting edges, hence having a degree of zero and no neighbors.
-- *Subgraphs* are smaller structures derived from selecting subsets of vertices and edges from a larger graph. Formally, a subgraph $H$ of a graph $G$ has vertex and edge sets entirely contained within those of $G$.
-- A *spanning tree* of a graph $G$ is a subgraph that connects all vertices using the minimal number of edges required, specifically $|V| - 1$ edges, and contains no cycles.
-- *Bipartite graphs* partition vertices into two distinct groups such that no edges connect vertices within the same group. Formally, a graph is bipartite if it can be split into sets $V_1$ and $V_2$ where each edge links vertices across the two sets only.
-- A *complete graph*, denoted by $K_n$, is a simple graph with an edge between every possible pair of vertices. Thus, a complete graph with $n$ vertices contains exactly $\frac{n(n-1)}{2}$ edges.
-- *Planar graphs* are graphs that can be drawn on a flat plane without edge intersections except at vertices. Such graphs can be embedded clearly onto a two-dimensional surface without visual confusion.
-- An *Eulerian path* travels through each edge exactly once. If this path forms a loop, starting and ending at the same vertex, it becomes an *Eulerian circuit*. For a graph to have an Eulerian circuit, all vertices must have even degrees and the graph must be connected; an Eulerian path exists if exactly zero or two vertices have odd degrees.
-- A *Hamiltonian path* traverses every vertex exactly once. If such a path returns to its starting vertex, it becomes a *Hamiltonian circuit*. The decision about the existence of Hamiltonian paths or circuits is notably difficult and classified as an NP-complete problem.
-- *Graph isomorphism* describes two graphs, $G$ and $H$, that are structurally identical despite potentially different vertex or edge labels. Formally, an isomorphism is a one-to-one correspondence preserving adjacency between their vertex sets.
-- The *degree sequence* of a graph lists all vertex degrees, typically ordered from highest to lowest. This sequence serves as a graph invariant, meaning it is consistent across isomorphic graphs.
-- *Graph coloring* involves assigning different labels or "colors" to adjacent vertices. The minimum number of colors required to color a graph without adjacent vertices sharing the same color is called the chromatic number.
-- A *tree* is a connected graph with no cycles. It possesses a unique path between every pair of vertices, and adding any extra edge will inevitably create a cycle. Trees are important in many computational applications, especially algorithms and data structures.
-- A *forest* consists of multiple disconnected trees. It's essentially an acyclic graph that isn't necessarily connected, serving as a generalization of trees.
-- Regarding *connectivity*, a vertex whose removal increases the number of disconnected parts is an *articulation vertex* (or cut vertex). Similarly, an edge whose removal disconnects the graph is called a *bridge* or cut edge.
-- A *matching* in a graph is a set of edges with no shared vertices. A *maximum matching* is the largest possible such set.
-- An *independent set* is a vertex set with no edges connecting any two vertices. The largest size of such a set is known as the independence number.
-- A *clique* is a subset of vertices in which each vertex connects directly to all others. The largest clique size is called the clique number.
-- A *vertex cover* is a collection of vertices such that every graph edge touches at least one vertex from the collection.
-- A *clique* is the opposite concept—vertices in a clique are all mutually adjacent. The largest possible clique size defines the clique number.
-- *Planarity testing* checks if a graph can be drawn without intersecting edges. Kuratowski’s theorem states that non-planarity occurs precisely when a graph contains subgraphs similar to $K_5$ (complete graph of five vertices) or $K_{3,3}$ (complete bipartite graph).
-- Common algorithms on graphs include methods for finding shortest paths (Bellman-Ford, Dijkstra's algorithm), discovering minimum spanning trees (Kruskal’s, Prim’s algorithm), and graph traversal (DFS, BFS). These algorithms help solve important graph-related problems in computing and operations research.
+This vocabulary isn’t just academic; it’s how you avoid confusion later. Graph problems often look similar on the surface, but one word, *directed*, *weighted*, *connected*, can completely change which algorithms work and which ones fail. Learning the terms is like learning traffic signs before driving.
+
+* A *graph* $G$ is a mathematical structure composed of vertices (also known as nodes or points), forming the set $V(G)$, and edges (also called links or lines), forming the set $E(G)$. Each edge connects two distinct vertices, denoted by pairs ${x, y} \in E(G)$.
+* When two vertices, say $x$ and $y$, share an edge, they are termed *adjacent*. The count of adjacent vertices to any vertex $v$ defines its *degree*. Notably, summing the degrees of all vertices in a graph always yields an even number.
+* A *path* of length $n$ is a sequence of vertices $v_1 \sim v_2 \sim dots \sim v_{n+1}$, each consecutively connected by edges, with no vertex repeated.
+* A *cycle* is a special path where the first and last vertices are identical, forming a closed loop, and no other vertex is repeated within the cycle.
+* *Distance* in a graph refers to the shortest path length between two vertices. Essentially, it measures how closely two vertices are connected through the minimal number of edges.
+* A *simple graph* is characterized by the absence of self-loops, edges that connect vertices to themselves, and contains no more than one edge between any two distinct vertices.
+* A *directed graph* (or digraph) includes edges with specific directions, known as arcs, represented as ordered pairs of vertices. Conversely, an undirected graph treats connections symmetrically, meaning the connection between vertices $A$ and $B$ is identical to the one from $B$ to $A$.
+* A *weighted graph* assigns numerical values (weights) to edges, typically non-negative integers. Binary weights (0 or 1) indicate connection presence or absence; numeric weights quantify costs or strengths; and normalized weights scale outgoing connections from a vertex to sum to one, commonly used in probability models.
+* Regarding *connectivity*, an undirected graph is *connected* if there's a path linking any pair of vertices. For directed graphs, *weak connectivity* means at least one directional path exists between vertex pairs, while *strong connectivity* demands a path in both directions between every vertex pair.
+* Two vertices connected by an edge are called *neighbors*, and the edge itself is said to be *incident* to these vertices. Edges sharing a common vertex are described as *adjacent* edges.
+* An *isolated vertex* refers to a vertex with no connecting edges, hence having a degree of zero and no neighbors.
+* *Subgraphs* are smaller structures derived from selecting subsets of vertices and edges from a larger graph. Formally, a subgraph $H$ of a graph $G$ has vertex and edge sets entirely contained within those of $G$.
+* A *spanning tree* of a graph $G$ is a subgraph that connects all vertices using the minimal number of edges required, specifically $|V| - 1$ edges, and contains no cycles.
+* *Bipartite graphs* partition vertices into two distinct groups such that no edges connect vertices within the same group. Formally, a graph is bipartite if it can be split into sets $V_1$ and $V_2$ where each edge links vertices across the two sets only.
+* A *complete graph*, denoted by $K_n$, is a simple graph with an edge between every possible pair of vertices. Thus, a complete graph with $n$ vertices contains exactly $\frac{n(n-1)}{2}$ edges.
+* *Planar graphs* are graphs that can be drawn on a flat plane without edge intersections except at vertices. Such graphs can be embedded clearly onto a two-dimensional surface without visual confusion.
+* An *Eulerian path* travels through each edge exactly once. If this path forms a loop, starting and ending at the same vertex, it becomes an *Eulerian circuit*. For a graph to have an Eulerian circuit, all vertices must have even degrees and the graph must be connected; an Eulerian path exists if exactly zero or two vertices have odd degrees.
+* A *Hamiltonian path* traverses every vertex exactly once. If such a path returns to its starting vertex, it becomes a *Hamiltonian circuit*. The decision about the existence of Hamiltonian paths or circuits is notably difficult and classified as an NP-complete problem.
+* *Graph isomorphism* describes two graphs, $G$ and $H$, that are structurally identical despite potentially different vertex or edge labels. Formally, an isomorphism is a one-to-one correspondence preserving adjacency between their vertex sets.
+* The *degree sequence* of a graph lists all vertex degrees, typically ordered from highest to lowest. This sequence serves as a graph invariant, meaning it is consistent across isomorphic graphs.
+* *Graph coloring* involves assigning different labels or "colors" to adjacent vertices. The minimum number of colors required to color a graph without adjacent vertices sharing the same color is called the chromatic number.
+* A *tree* is a connected graph with no cycles. It possesses a unique path between every pair of vertices, and adding any extra edge will inevitably create a cycle. Trees are important in many computational applications, especially algorithms and data structures.
+* A *forest* consists of multiple disconnected trees. It's essentially an acyclic graph that isn't necessarily connected, serving as a generalization of trees.
+* Regarding *connectivity*, a vertex whose removal increases the number of disconnected parts is an *articulation vertex* (or cut vertex). Similarly, an edge whose removal disconnects the graph is called a *bridge* or cut edge.
+* A *matching* in a graph is a set of edges with no shared vertices. A *maximum matching* is the largest possible such set.
+* An *independent set* is a vertex set with no edges connecting any two vertices. The largest size of such a set is known as the independence number.
+* A *clique* is a subset of vertices in which each vertex connects directly to all others. The largest clique size is called the clique number.
+* A *vertex cover* is a collection of vertices such that every graph edge touches at least one vertex from the collection.
+* A *clique* is the opposite concept, vertices in a clique are all mutually adjacent. The largest possible clique size defines the clique number.
+* *Planarity testing* checks if a graph can be drawn without intersecting edges. Kuratowski’s theorem states that non-planarity occurs precisely when a graph contains subgraphs similar to $K_5$ (complete graph of five vertices) or $K_{3,3}$ (complete bipartite graph).
+* Common algorithms on graphs include methods for finding shortest paths (Bellman-Ford, Dijkstra's algorithm), discovering minimum spanning trees (Kruskal’s, Prim’s algorithm), and graph traversal (DFS, BFS). These algorithms help solve important graph-related problems in computing and operations research.
+
+A quick “do/don’t” that saves a lot of pain: always decide early whether your edges are **directed** and/or **weighted**. Many beginner mistakes come from using the right algorithm on the wrong kind of graph (for example, treating one-way roads as two-way, or ignoring weights when “shortest” actually means “cheapest,” not “fewest steps”).
 
 ### Representation of Graphs in Computer Memory
 
 Graphs show how things are connected. To work with them on a computer, we need a good way to store and update those connections. The “right” choice depends on what the graph looks like (dense or sparse, directed or undirected, weighted or not) and what you plan to do with it. In practice, most people use one of two formats: an adjacency matrix or an adjacency list.
+
+This choice matters because it quietly determines performance. Two programs can run the same algorithm and get the same answers, but one finishes in milliseconds while the other crawls, purely because the graph was stored in a form that made common operations expensive.
 
 #### Adjacency Matrix
 
@@ -131,6 +141,8 @@ Row   A | 0 | 1 | 0 | 1 |
 * Using a *boolean or bitset matrix* allows each adjacency entry to be stored in just one bit, which reduces memory consumption by a factor of eight compared to storing each entry as a byte; if this method is not applied, representing even moderately sized graphs, such as a network of 10,000 nodes, can require far more storage than necessary.
 * The approach is most useful when the graph is *dense*, the number of vertices is relatively small, or constant-time edge queries are the primary operation; without these conditions, such as in a sparse graph with millions of vertices, the $V^2$ bit requirement remains wasteful and alternative representations like adjacency lists become more beneficial.
 
+A good way to “feel” adjacency matrices is to imagine a spreadsheet of all possible connections. That’s why they shine when you constantly ask “Is there an edge between u and v?”, but also why they get expensive when most of the spreadsheet is empty.
+
 #### Adjacency List
 
 An adjacency list stores, for each vertex, the list of its neighbors. It’s usually implemented as an array/vector of lists (or vectors), hash sets, or linked structures. For weighted graphs, each neighbor entry also stores the weight.
@@ -159,7 +171,7 @@ D-list:  head -> [A] -> [C] -> NULL
 
 **Variants & Notes**
 
-* In an *undirected graph* stored as adjacency lists, each edge is represented twice—once in the list of each endpoint—so that both directions can be traversed easily; if this duplication is omitted, traversing from one node to its neighbor may be possible in one direction but not in the other, as with a friendship relation that should be mutual but is stored only once.
+* In an *undirected graph* stored as adjacency lists, each edge is represented twice, once in the list of each endpoint, so that both directions can be traversed easily; if this duplication is omitted, traversing from one node to its neighbor may be possible in one direction but not in the other, as with a friendship relation that should be mutual but is stored only once.
 * For a *directed graph*, only out-neighbors are recorded in each vertex’s list, meaning that edges can be followed in their given direction; without a separate structure for in-neighbors, tasks like finding all users who link to a webpage require inefficient scanning of every adjacency list.
 * In a *weighted graph*, each adjacency list entry stores both the neighbor and the associated weight, such as $(\text{destination}, \text{distance})$; if weights are not included, algorithms like Dijkstra’s shortest path cannot be applied correctly.
 * The *order of neighbors* in adjacency lists may be arbitrary, though keeping them sorted allows faster checks for membership; if left unsorted, testing whether two people are directly connected in a social network could require scanning the entire list rather than performing a quicker search.
@@ -190,6 +202,8 @@ The choice between these (and other) representations often depends on the graph'
 * Choosing an *adjacency matrix* is helpful when the graph is dense, the number of vertices is moderate, and constant-time edge queries or linear-algebra formulations are beneficial; if this choice is ignored, operations such as repeatedly checking flight connections in a fully connected air network may become slower or harder to express mathematically.
 * Opting for an *adjacency list* is useful when the graph is sparse or when neighbor traversal dominates, as in breadth-first search or shortest-path algorithms; without this structure, exploring a large but lightly connected road network would waste time scanning nonexistent edges.
 
+A simple “do”: pick the representation that makes your *most common operation* cheap. If your algorithm spends most of its time iterating neighbors, adjacency lists are usually the happy path. If it spends most of its time checking whether edges exist, matrices can be surprisingly effective.
+
 **Hybrids/Alternatives:**
 
 * With *CSR/CSC (Compressed Sparse Row/Column)* formats, all neighbors of a vertex are stored contiguously in memory, which improves cache locality and enables fast traversals; without this layout, as in basic pointer-based adjacency lists, high-performance analytics on graphs like web link networks would suffer from slower memory access.
@@ -202,9 +216,11 @@ The choice between these (and other) representations often depends on the graph'
 
 Why it matters: layouts of circuits, road networks, maps, and data visualizations often rely on planar drawings.
 
+Planarity is one of those ideas that sounds like “just drawing,” but it has real consequences. If a graph is non-planar, then any attempt to draw it cleanly in 2D will eventually hit unavoidable clutter. For things like circuit design, that clutter can mean extra layers, extra cost, and harder debugging, so planarity becomes a practical constraint, not a visual preference.
+
 #### What is a planar graph?
 
-A graph is **planar** if it has **some** drawing in the plane with **no edge crossings**. A messy drawing with crossings doesn’t disqualify it—if you can **redraw** it without crossings, it’s planar.
+A graph is **planar** if it has **some** drawing in the plane with **no edge crossings**. A messy drawing with crossings doesn’t disqualify it, if you can **redraw** it without crossings, it’s planar.
 
 * A crossing-free drawing of a planar graph is called a **planar embedding** (or **plane graph** once embedded).
 * In a planar embedding, the plane is divided into **faces** (regions), including the unbounded **outer face**.
@@ -216,8 +232,10 @@ $$
 $$
 
 $$
-\text{(for \(c\) connected components: } |V|-|E|+|F|=1+c)
+\text{(for (c) connected components: } |V|-|E|+|F|=1+c)
 $$
+
+Euler’s formula is more than a neat identity: it’s a quick reality check. If your counts can’t possibly satisfy it (given the constraints for planar graphs), you already know something must give, either your assumption of planarity is wrong, or your representation is incomplete.
 
 #### Kuratowski’s & Wagner’s characterizations
 
@@ -225,6 +243,8 @@ $$
 * By *Wagner’s Theorem*, a graph is planar if and only if it has no $K_5$ or $K_{3,3}$ minor, meaning such structures cannot be formed through edge deletions, vertex deletions, or edge contractions; without ruling out these minors, a graph like the complete bipartite structure of three stations each linked to three others cannot be embedded in the plane without overlaps.
 
 These are equivalent “forbidden pattern” views.
+
+The “do” here is to look for *structure*, not literal pictures. You don’t need to see a perfect $K_5$ sitting in your graph; you need to spot the ways a graph can *collapse* into one via contractions or subdivisions. That’s why these theorems are powerful: they tell you exactly what kind of complexity ruins planarity.
 
 #### Handy planar edge bounds (quick tests)
 
@@ -237,6 +257,8 @@ These give fast non-planarity proofs:
 
 * $K_5$: $|V|=5, |E|=10 > 3\cdot5-6=9$ ⇒ **non-planar**.
 * $K_{3,3}$: $|V|=6, |E|=9 > 2\cdot6-4=8$ ⇒ **non-planar**.
+
+These bounds are the “quick detective test.” They won’t prove a graph *is* planar, but they can often prove it’s *not* planar instantly, especially when graphs get dense. That’s incredibly useful when you want a fast answer before investing time in more complex checks.
 
 #### Examples
 
@@ -285,7 +307,7 @@ The edge bound $10>9$ (above) certifies non-planarity.
 
 **IV. Complete bipartite $K_{3,3}$ (non-planar)**
 
-Two sets $\{u_1,u_2,u_3\}$ and $\{v_1,v_2,v_3\}$, all cross-set pairs connected:
+Two sets ${u_1,u_2,u_3}$ and ${v_1,v_2,v_3}$, all cross-set pairs connected:
 
 ```
 u1   u2   u3
@@ -295,6 +317,8 @@ v1───v2───v3  (many edges must cross in the plane)
 ```
 
 The bipartite bound $9>8$ proves non-planarity.
+
+These examples also build intuition: some graphs “want” to live on a plane (cycles, $K_4$), while others contain too much cross-connection pressure ($K_5$, $K_{3,3}$). When you feel that pressure, you start recognizing non-planarity before doing any formal proof.
 
 #### How to check planarity in practice
 
@@ -311,6 +335,8 @@ The bipartite bound $9>8$ proves non-planarity.
 
 Both are widely used in graph drawing, EDA (circuit layout), GIS, and network visualization.
 
+The key practical point is that planarity testing isn’t just theoretical, it’s something real tools rely on. If software can quickly decide planarity (and even produce an embedding), it can automatically generate cleaner diagrams and layouts instead of leaving you to manually untangle crossings.
+
 ### Traversals
 
 What does it mean to traverse a graph?
@@ -323,13 +349,17 @@ Graph traversal **can** be done in a way that visits *all* vertices and edges (l
 
 So the precise way to answer that question is:
 
-> **Graph traversal is a systematic way of exploring vertices and edges, often ensuring complete coverage of the reachable part of the graph — but whether all vertices/edges are visited depends on the algorithm and stopping conditions.**
+> **Graph traversal is a systematic way of exploring vertices and edges, often ensuring complete coverage of the reachable part of the graph ,  but whether all vertices/edges are visited depends on the algorithm and stopping conditions.**
 
-- Graphs, unlike **trees**, don’t have a single starting point like a root. This means we either need to be given a starting vertex or pick one randomly.
-- Let’s say we start from a specific vertex, like **$i$**. From there, the traversal explores all connected vertices according to the rules of the chosen method.
-- In both **breadth-first search (BFS)** and **depth-first search (DFS)**, the order of visiting vertices depends on how the algorithm is implemented.
-- For example, if the starting vertex **A** has three neighbors, like $C, F,$ and $G$, the algorithm doesn’t have a fixed rule for which neighbor to visit first. It could choose any of them based on the way it’s programmed.
-- Because of this flexibility, we talk about **a result** of BFS or DFS, rather than **the result**, since different implementations might visit vertices in different orders.
+Traversal is the heartbeat of graph algorithms. Almost everything you do on a graph, finding components, shortest paths, detecting cycles, building spanning trees, starts with “walk the graph in a disciplined way.” If graphs are the map, traversal is how you actually move through the territory.
+
+* Graphs, unlike **trees**, don’t have a single starting point like a root. This means we either need to be given a starting vertex or pick one randomly.
+* Let’s say we start from a specific vertex, like **$i$**. From there, the traversal explores all connected vertices according to the rules of the chosen method.
+* In both **breadth-first search (BFS)** and **depth-first search (DFS)**, the order of visiting vertices depends on how the algorithm is implemented.
+* For example, if the starting vertex **A** has three neighbors, like $C, F,$ and $G$, the algorithm doesn’t have a fixed rule for which neighbor to visit first. It could choose any of them based on the way it’s programmed.
+* Because of this flexibility, we talk about **a result** of BFS or DFS, rather than **the result**, since different implementations might visit vertices in different orders.
+
+A useful “do” before you choose BFS vs DFS: decide what “close” means in your problem. If “close” means *fewest edges*, BFS naturally fits. If “close” means “go deep and explore structure,” DFS often fits better. Choosing the traversal is choosing the shape of your exploration.
 
 #### Breadth-First Search (BFS)
 
@@ -344,6 +374,8 @@ To efficiently keep track of the traversal, BFS employs two primary data structu
 
 * An optional **`parent` map** to reconstruct shortest paths (store `parent[child] = current` when you first discover `child`).
 * An optional **`dist` map** to record the edge-distance from the start (`dist[start] = 0`, and when discovering `v` from `u`, set `dist[v] = dist[u] + 1`).
+
+BFS feels like ripples in water: start at one node and expand outward in rings. That “ripple” behavior is exactly why BFS gives shortest paths in unweighted graphs, because the first time you reach a node is guaranteed to be via the fewest edges.
 
 **Algorithm Steps**
 
@@ -385,7 +417,7 @@ BFS(G, i):
 
 * The *time* complexity of breadth-first search is $O(V+E)$ because each vertex is enqueued once and each edge is examined once; if this property is overlooked, one might incorrectly assume that exploring a large social graph requires quadratic time rather than scaling efficiently with its size.
 * The *space* requirement is $O(V)$ since the algorithm maintains a queue and a visited array, with optional parent or distance arrays if needed; without accounting for this, applying BFS to a network of millions of nodes could be underestimated in memory cost.
-* The order in which BFS visits vertices depends on the *neighbor iteration order*, meaning that traversal results can vary between implementations; if this variation is not recognized, two runs on the same graph—such as exploring a road map—may appear inconsistent even though both are correct BFS traversals.
+* The order in which BFS visits vertices depends on the *neighbor iteration order*, meaning that traversal results can vary between implementations; if this variation is not recognized, two runs on the same graph, such as exploring a road map, may appear inconsistent even though both are correct BFS traversals.
 
 **Example**
 
@@ -412,7 +444,7 @@ Edges: A–B, A–C, B–D, C–E
 ```
 Step | Dequeued | Action                                    | Queue            | Visited
 -----+----------+-------------------------------------------+------------------+----------------
-0    | —        | enqueue A                                 | [A]              | {A}
+0    | ,         | enqueue A                                 | [A]              | {A}
 1    | A        | discover B, C; enqueue both               | [B, C]           | {A, B, C}
 2    | B        | discover D; enqueue                       | [C, D]           | {A, B, C, D}
 3    | C        | discover E; enqueue                       | [D, E]           | {A, B, C, D, E}
@@ -448,9 +480,11 @@ Shortest path A→E: backtrack E→C→A  ⇒  A - C - E
 
 *Implementation tip:* For dense graphs or when memory locality matters, an adjacency **matrix** can be used, but the usual adjacency **list** representation is more space- and time-efficient for sparse graphs.
 
+A practical “do” for BFS code: use a real queue (like `collections.deque` in Python) instead of `pop(0)` on a list, because list dequeues are $O(n)$. The algorithm stays BFS either way, but performance can change drastically on large graphs.
+
 #### Depth-First Search (DFS)
 
-Depth-First Search (DFS) is a graph traversal algorithm that explores **as far as possible** along each branch before backtracking. Starting from a source vertex, it dives down one neighbor, then that neighbor’s neighbor, and so on—only backing up when it runs out of new vertices to visit.
+Depth-First Search (DFS) is a graph traversal algorithm that explores **as far as possible** along each branch before backtracking. Starting from a source vertex, it dives down one neighbor, then that neighbor’s neighbor, and so on, only backing up when it runs out of new vertices to visit.
 
 To track the traversal efficiently, DFS typically uses:
 
@@ -462,6 +496,8 @@ To track the traversal efficiently, DFS typically uses:
 * A **`parent` map** to reconstruct paths and build the DFS tree (`parent[child] = current` on discovery).
 * Optional **timestamps** (`tin[u]` on entry, `tout[u]` on exit) to reason about edge types, topological order, and low-link computations.
 * Optional **`order` lists**: pre-order (on entry) and post-order (on exit).
+
+DFS is the explorer’s walk: pick a direction, go until you can’t, then backtrack and try the next path. That “go deep first” behavior is why DFS is so useful for structure: it naturally builds trees, reveals cycles, and powers classic algorithms like topological sort and strongly connected components.
 
 **Algorithm Steps**
 
@@ -643,6 +679,8 @@ A
 * If neighbor order matters (e.g., lexicographic traversal), control push order (push in reverse for stacks) or sort adjacency lists.
 * For sparse graphs, adjacency **lists** are preferred over adjacency matrices for time/space efficiency.
 
+Once you can represent a problem as a graph and you’re fluent in storing it (matrix/list) and traversing it (BFS/DFS), you’ve unlocked the foundation for almost every other graph technique, shortest paths, minimum spanning trees, flows, matchings, connectivity analysis, and more. Graphs are the doorway; traversal is the first step through it.
+
 ### Shortest paths
 
 A common task when dealing with weighted graphs is to find the shortest route between two vertices, such as from vertex $A$ to vertex $B$. Note that there might not be a unique shortest path, since several paths could have the same length.
@@ -754,19 +792,19 @@ Edges: A–B(4), A–C(1), C–B(2), B–E(1), C–D(4), D–E(3)
 ```
 Step | Pop (u,dist) | Relaxations (v: new dist, parent)          | PQ after push                    | Finalized
 -----+--------------+--------------------------------------------+----------------------------------+----------------
-0    | —            | init A: dist[A]=0                          | [(A,0)]                          | {}
+0    | ,             | init A: dist[A]=0                          | [(A,0)]                          | {}
 1    | (A,0)        | B:4←A  , C:1←A                             | [(C,1), (B,4)]                   | {A}
 2    | (C,1)        | B:3←C  , D:5←C                             | [(B,3), (B,4), (D,5)]            | {A,C}
 3    | (B,3)        | E:4←B                                      | [(E,4), (B,4), (D,5)]            | {A,C,B}
 4    | (E,4)        | D:7 via E  (no improve; current 5)         | [(B,4), (D,5)]                   | {A,C,B,E}
 5    | (B,4) stale  | (ignore; B already finalized)              | [(D,5)]                          | {A,C,B,E}
-6    | (D,5)        | —                                          | []                               | {A,C,B,E,D}
+6    | (D,5)        | ,                                           | []                               | {A,C,B,E,D}
 ```
 
 *Distances and parents (final):*
 
 ```
-dist[A]=0 (—)
+dist[A]=0 (, )
 dist[C]=1 (A)
 dist[B]=3 (C)
 dist[E]=4 (B)
@@ -944,7 +982,7 @@ Bellman–Ford would perform a $V$-th pass and still find an improvement (e.g., 
 * For *arbitrage detection* in currency or financial markets, converting exchange rates into $\log$ weights makes profit loops appear as negative cycles; without Bellman–Ford, such opportunities cannot be systematically identified.
 * In solving *difference constraints* of the form $x_v - x_u \leq w$, the algorithm checks feasibility by detecting whether any negative cycles exist; without this check, inconsistent scheduling or timing systems may go unnoticed.
 * As a *robust baseline*, Bellman–Ford verifies results of faster algorithms or initializes methods like Johnson’s for all-pairs shortest paths; without it, correctness guarantees in sparse-graph all-pairs problems would be weaker.
-* For *graphs with penalties or credits*, where some transitions decrease accumulated cost, Bellman–Ford models these adjustments accurately; without it, such systems—like transport discounts or energy recovery paths—cannot be represented properly.
+* For *graphs with penalties or credits*, where some transitions decrease accumulated cost, Bellman–Ford models these adjustments accurately; without it, such systems, like transport discounts or energy recovery paths, cannot be represented properly.
 
 ##### Implementation
 
@@ -1086,7 +1124,7 @@ Path length (g at G) equals number of × steps (optimal with admissible/consiste
 ```
 Step | Popped u | Inserted neighbors (v: g,h,f)                   | Note
 -----+----------+-------------------------------------------------+---------------------------
-0    | —        | push S: g=0, h=14, f=14                         | S at (1,1), G at (5,9)
+0    | ,         | push S: g=0, h=14, f=14                         | S at (1,1), G at (5,9)
 1    | S        | (1,2): g=1,h=13,f=14 ; (2,1): g=1,h=12,f=13     | pick (2,1) next
 2    | (2,1)    | (3,1): g=2,h=11,f=13 ; (2,2) blocked            | ...
 3    | (3,1)    | (4,1) wall; (3,2): g=3,h=10,f=13                | still f=13 band
@@ -1268,7 +1306,7 @@ Step | Action                          | PQ (key:vertex) after push         | In
 *MST edges chosen (with weights):*
 
 ```
-A—C(1), C—B(2), B—E(1), E—D(3)
+A, C(1), C, B(2), B, E(1), E, D(3)
 Total weight = 1 + 2 + 1 + 3 = 7
 ```
 
@@ -1547,14 +1585,14 @@ indeg[A]=0, indeg[B]=0, indeg[C]=2, indeg[D]=2, indeg[E]=1, indeg[F]=0, indeg[G]
 ```
 Step | Pop u | Emit order            | Decrease indeg[...]   | Newly 0 → Enqueue | Q after
 -----+-------+-----------------------+-----------------------+-------------------+-----------------
-0    | —     | []                    | —                     | A, B, F           | [A, B, F]
-1    | A     | [A]                   | C:2→1                 | —                 | [B, F]
+0    | ,      | []                    | ,                      | A, B, F           | [A, B, F]
+1    | A     | [A]                   | C:2→1                 | ,                  | [B, F]
 2    | B     | [A, B]                | C:1→0, G:1→0          | C, G              | [C, F, G]
 3    | C     | [A, B, C]             | D:2→1, E:1→0          | E                 | [E, F, G]
 4    | E     | [A, B, C, E]          | D:1→0                 | D                 | [D, F, G]
-5    | D     | [A, B, C, E, D]       | —                     | —                 | [F, G]
-6    | F     | [A, B, C, E, D, F]    | —                     | —                 | [G]
-7    | G     | [A, B, C, E, D, F, G] | —                     | —                 | []
+5    | D     | [A, B, C, E, D]       | ,                      | ,                  | [F, G]
+6    | F     | [A, B, C, E, D, F]    | ,                      | ,                  | [G]
+7    | G     | [A, B, C, E, D, F, G] | ,                      | ,                  | []
 ```
 
 *A valid topological order:*
