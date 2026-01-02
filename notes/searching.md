@@ -2298,8 +2298,6 @@ Compared to Bloom filters, cuckoo filters often:
 - No false negatives (for stored fingerprints, assuming correct implementation)
 - False positives possible (fingerprints can collide)
 
----
-
 ### String Matching (Substring/Pattern Search)
 
 Searching in strings is about finding a pattern of length `m` inside a text of length `n`. The naive method works by checking every alignment, but smarter algorithms exploit structure, especially the fact that mismatches can tell you how far you can skip ahead.
