@@ -74,8 +74,6 @@ So one possible **unstable-sorted** sequence is:
 
 If you then did a second pass (say, sorting by rank or battle-honors) you’d only want to reorder knights of different names, trusting that ties (same-name knights) are still in their intended original order, something only a stable sort guarantees.
 
----
-
 A quick rule of thumb:
 
 * If you’re sorting **primitive values** (just numbers), stability often doesn’t matter.
