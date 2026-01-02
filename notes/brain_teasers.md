@@ -2,26 +2,36 @@
 
 Programming puzzles and brain teasers are a fun way to sharpen your coding and problem-solving skills. You’ll often see them in technical interviews, where they’re used to test how you think, analyze problems, and come up with efficient solutions. To do well, it helps to practice and build solid strategies for tackling these kinds of challenges.
 
+The hidden goal of brain teasers is rarely “get the answer.” It’s “show your process.” Interviewers (and your future self) want to see that you can move from confusion to clarity: restate the problem, choose a direction, test assumptions, and iterate. If you treat each puzzle like a tiny engineering project, understand, design, validate, optimize, you’ll come across as calm, capable, and methodical.
+
 ### General Strategies
 
 When tackling programming puzzles, consider the following strategies:
 
-* Start with a *simple solution* to get a clear grasp of the problem—this often highlights what really needs optimizing later.
+These strategies work best when you use them in the right order. A common trap is trying to be clever too early, jumping straight into optimization, fancy data structures, or tricky math. The “do” is to build a correct baseline, then improve it deliberately. The “don’t” is to optimize a solution you don’t fully understand yet.
+
+* Start with a *simple solution* to get a clear grasp of the problem, this often highlights what really needs optimizing later.
 * Use *unit tests* to make sure your code works across different inputs, especially tricky edge cases.
 * Think about your algorithm’s *time and space complexity* to understand how efficient it is and where it can be improved.
 * Pick the *right data structure* (like an array, hash map, or tree) to make your solution faster and easier to reason about.
 * Break the problem into *smaller pieces* so it feels less overwhelming and easier to solve step by step.
-* Try both *recursive* and *iterative* approaches—you’ll often find one fits the problem more naturally.
+* Try both *recursive* and *iterative* approaches, you’ll often find one fits the problem more naturally.
 * Always keep *edge cases* and *constraints* in mind so your solution doesn’t break with unusual inputs.
-* Apply *targeted optimization* only where it matters—improve performance without making the code messy.
+* Apply *targeted optimization* only where it matters, improve performance without making the code messy.
+
+A practical mindset that ties all of these together: always be able to answer two questions at any moment, **“What do I know is true?”** and **“What am I trying next?”** That keeps you moving forward, even when the puzzle feels unfamiliar.
 
 ### Data Structures
 
 A solid grasp of data structures is helpful for effective programming. Below are some practical strategies and tips to help you use them more confidently and efficiently.
 
+Data structures are where puzzles become manageable. Most brain teasers aren’t about memorizing rare tricks, they’re about recognizing a pattern and picking a container that makes the pattern easy. A good “do” is to ask: *What operations am I doing most, lookup, insert, delete, min/max, traversal?* The right structure makes those operations feel natural.
+
 #### Working with Arrays
 
 Arrays are basic data structures that store elements in a continuous block of memory, making it easy to access any element quickly.
+
+Arrays are the default starting point because they’re simple and fast. The “why” behind many array techniques is that arrays give you **indexes**, and indexes give you powerful structure: order, boundaries, and the ability to use two pointers, binary search, and prefix computations. The main “don’t” is forgetting that many operations look cheap but hide expensive shifting or copying.
 
 * Sorting an array can often simplify many problems, with algorithms like Quick Sort and Merge Sort offering efficient $O(n \log n)$ time complexity. For nearly sorted or small arrays, *Insertion Sort* might be a better option due to its simplicity and efficiency in such cases.
 * In sorted arrays, *binary search* provides a fast way to find elements or their positions, working in $O(\log n)$. Be cautious with mid-point calculations in languages that may experience integer overflow due to fixed-size integer types.
@@ -43,14 +53,18 @@ Arrays are basic data structures that store elements in a continuous block of me
 * Don’t use on unsorted lists or when frequent updates are needed, as maintaining order can be inefficient.
 * Binary search operations like `bisect_left()` are `O(log n)`, but `insort()` can be `O(n)` due to shifting elements.
 
+A small but high-impact “do”: always sanity-check whether sorting is allowed. Sorting often unlocks elegant solutions, but it changes order. If the problem cares about original positions, keep track of indices or consider a hash-based approach instead.
+
 #### Working with Strings
 
 Strings, as sequences of characters, often require special handling due to their immutable nature in some languages and the variety of operations performed on them.
 
-* In languages with *immutable strings*, concatenating inside a loop with `+` can be very slow—$O(n^2)$ time. Instead, use tools like `StringBuilder` in Java or `''.join(list_of_strings)` in Python to bring it down to $O(n)$.
+String problems often look like array problems with extra rules, immutability, encoding, and more expensive slicing. The “why” here is performance surprises: what looks like a tiny operation (like concatenation or slicing) can secretly allocate lots of memory. A good “do” is to think in terms of *streams* and *indexes* when strings get large.
+
+* In languages with *immutable strings*, concatenating inside a loop with `+` can be very slow, $O(n^2)$ time. Instead, use tools like `StringBuilder` in Java or `''.join(list_of_strings)` in Python to bring it down to $O(n)$.
 * For *string searching*, algorithms like Knuth-Morris-Pratt (KMP), Rabin-Karp, or Boyer-Moore are much faster than the naive $O(nm)$ approach.
 * *Tries (prefix trees)* let you store and retrieve strings with shared prefixes efficiently. They’re common in autocomplete, spell-checkers, and IP routing.
-* *Regular expressions* are powerful for pattern matching, but they need careful design—badly written patterns can cause exponential slowdowns.
+* *Regular expressions* are powerful for pattern matching, but they need careful design, badly written patterns can cause exponential slowdowns.
 * Always keep *Unicode and character encoding* (UTF-8, ASCII, etc.) in mind when handling strings, especially with international text or external data. It prevents bugs and ensures proper compatibility.
 * For *anagram checks*, compare character counts with arrays or hash maps. For *palindrome checks*, the two-pointer method or comparing against the reversed string gives a simple, efficient solution.
 * *Substring and slicing operations* can vary in cost depending on the language. In some (like Python), slices create new strings, while in others (like Java, newer versions), substrings copy data. Always be mindful of hidden overhead.
@@ -60,18 +74,22 @@ Strings, as sequences of characters, often require special handling due to their
 * *String interning* (pooling identical strings) can save memory and speed up equality checks in languages like Java, but overuse can increase GC pressure.
 * For *case-insensitive comparisons*, normalize strings first (e.g., `.lower()` in Python, `.toLowerCase()` in Java), but remember locale-specific rules (e.g., Turkish dotted/dotless "i").
 * Use *string formatting libraries* (e.g., Python f-strings, Java’s `String.format`) instead of manual concatenation for cleaner, safer, and often more efficient code.
-* Be cautious with *regex backtracking traps*—even professional developers can accidentally write patterns that blow up on certain inputs. Tools like regex debuggers can help test patterns.
+* Be cautious with *regex backtracking traps*, even professional developers can accidentally write patterns that blow up on certain inputs. Tools like regex debuggers can help test patterns.
 * *Memory trade-offs* matter: a trie might be faster than a hash map for prefix searches but can use much more memory.
 * For *streaming algorithms* (like real-time log processing), sliding window techniques combined with hash maps or deques can efficiently handle substring or frequency problems.
+
+One useful “don’t” with strings: don’t assume “characters” are always one byte or one visible symbol. If Unicode matters, be explicit about whether you mean bytes, code points, or grapheme clusters, many bugs come from mixing those levels.
 
 #### Working with Linked Lists
 
 Linked lists are dynamic data structures consisting of nodes that contain data and references to the next (and possibly previous) nodes.
 
+Linked lists show up in puzzles because they force pointer thinking: you can’t jump around by index, so you learn to solve problems with *structure* instead of random access. The “do” is to rely on pointer patterns (fast/slow, dummy head, two-list merge). The “don’t” is to treat a list like an array, if you need frequent random access, you probably chose the wrong structure.
+
 * Choosing the *right type of linked list* depends on the problem requirements. A singly linked list is more memory-efficient and works well when traversal is only needed in one direction. A doubly linked list, on the other hand, is better suited when you need to move both forward and backward or when frequent insertions and deletions at both ends are required.
 * *Insertions and deletions* in a linked list are efficient if the position is already known, especially at the head or tail, where they can be done in constant time, $O(1)$. When deleting, it’s crucial to correctly update the previous node’s pointer so the list structure remains intact.
 * *Reversing a singly linked list* is done by iterating through the nodes and redirecting each node’s `next` pointer to its predecessor. This takes $O(n)$ time and requires only $O(1)$ extra space, making it a very efficient operation.
-* *Cycle detection* can be handled with Floyd’s Tortoise and Hare algorithm. By moving two pointers at different speeds—one slow and one fast—any cycle will eventually cause the two pointers to meet.
+* *Cycle detection* can be handled with Floyd’s Tortoise and Hare algorithm. By moving two pointers at different speeds, one slow and one fast, any cycle will eventually cause the two pointers to meet.
 * Handling *edge cases* is essential. For example, empty lists, single-node lists, and lists that contain cycles all require special care. Always check for null pointers to avoid runtime errors, especially in languages without built-in safety checks.
 * In environments with *manual memory management*, don’t forget to explicitly free memory for nodes that are no longer in use. This prevents memory leaks and helps keep resource usage efficient.
 * The *fast and slow pointer technique* (also called the two-pointer method) is widely used with linked lists. Besides cycle detection, it can be applied to find the middle of a list in a single pass: the slow pointer moves one step at a time, while the fast pointer moves two steps. When the fast pointer reaches the end, the slow pointer will be at the middle.
@@ -84,7 +102,11 @@ Linked lists are dynamic data structures consisting of nodes that contain data a
 * *Rotating a linked list* by $k$ positions requires computing the length, connecting the tail to the head to form a cycle, and then breaking the cycle at the right position to create the rotated list.
 * For very large datasets, *linked lists vs arrays* trade-offs become important. Linked lists excel at dynamic memory usage and frequent insertions/deletions, but they have poorer cache locality and slower random access compared to arrays.
 
+A small “do” that prevents a lot of bugs: when manipulating linked lists, use a **dummy head** for operations near the front. It simplifies edge cases like deleting the first node or building a new list.
+
 #### Working with Heaps
+
+Heaps tend to appear when the problem sounds like: “repeatedly get the best next thing.” If your loop is “pick minimum/maximum, update, repeat,” a heap often turns something expensive into something smooth. The “don’t” is using a heap when you actually need fast membership checks or deletion by value, heaps aren’t designed for that without extra indexing.
 
 * When you frequently need the next smallest or largest item, a *priority queue* offers O(1) peek and O(log n) updates, whereas rescanning a list is O(n) per step; e.g., choosing the earliest-deadline task.
 * For practical implementations, an array-backed *binary heap* is cache-friendly with O(n) build and O(log n) push/pop, whereas pointer trees add overhead; e.g., worker queues in backend services.
@@ -104,6 +126,8 @@ Linked lists are dynamic data structures consisting of nodes that contain data a
 * When priorities are small integers, a *bucket queue* (array of buckets) gives near O(1) operations, whereas a binary heap remains O(log n); e.g., Dijkstra with weights 0–100.
 
 #### Working with Trees and Binary Trees
+
+Trees show up everywhere because they model hierarchy, and many puzzles quietly hide a tree even if they don’t call it one (ranges, prefixes, decisions, ancestors). The “do” is to lean on traversal patterns and invariants (BST order, heap property, balance). The “don’t” is assuming every tree is balanced, shape matters, and it changes complexity.
 
 Trees are hierarchical data structures with a root node and child nodes. Binary trees are a specific type where each node has at most two children.
 
@@ -126,6 +150,9 @@ Trees are hierarchical data structures with a root node and child nodes. Binary 
 #### Working with Graphs
 
 Graphs consist of vertices (nodes) and edges connecting them, used to represent complex relationships.
+
+Graph puzzles feel intimidating until you realize most of them are built from a small set of moves: represent the graph well, traverse it correctly, and keep the right bookkeeping (visited sets, distances, parents). The “do” is to translate the story into edges and nodes early. The “don’t” is to hand-wave graph direction or weights, those details decide the algorithm.
+
 I. *Graph Representations*:
 
 * On sparse graphs, using an *adjacency list* reduces memory and speeds neighbor iteration, whereas choosing a dense structure wastes space and slows scans; for example, a road map where towns link to few highways.
@@ -167,6 +194,8 @@ VII. *Other Important Concepts*:
 
 Hash tables store key-value pairs for efficient lookup, insertion, and deletion.
 
+Hash tables are the go-to “make it fast” tool because they turn searching into (usually) constant time. In puzzles, they often appear when you need to remember what you’ve seen: duplicates, frequencies, complements, visited states. The “do” is to leverage them for counting and membership. The “don’t” is using mutable keys or assuming worst-case can’t happen.
+
 * When *choosing a good hash function*, ensure it distributes keys uniformly across the table to reduce the likelihood of collisions. For custom objects, it's important to override hash functions carefully, ensuring they are consistent and align with the object’s equality logic.
 * To deal with *collisions*, two main methods are commonly used: *Chaining*, where multiple elements that hash to the same index are stored in a linked list or another structure at that index. *Open addressing*, which resolves collisions by finding another empty slot through probing methods, such as linear probing, quadratic probing, or double hashing.
 * The *load factor and resizing* are important aspects of hash table management. The load factor, which is the ratio of the number of elements to the number of buckets, should be monitored. When the load factor exceeds a certain threshold (often around 0.7), it's time to resize and rehash the table to maintain performance.
@@ -178,6 +207,8 @@ Hash tables store key-value pairs for efficient lookup, insertion, and deletion.
 
 Mastering algorithms is helpful for solving programming problems more efficiently by understanding patterns and techniques that reduce time and space usage.
 
+Algorithms are the “moves” you apply once you’ve chosen your data structures. A simple way to build skill is to recognize the story the puzzle is telling: *pair finding* (two pointers), *explore choices* (backtracking), *best so far* (greedy), *reuse work* (DP), *split and combine* (divide and conquer). The “do” is to name the pattern out loud, once you name it, you can reach for proven templates.
+
 #### Two-Pointer Technique
 
 Use two pointers when:
@@ -187,6 +218,8 @@ Use two pointers when:
 
 Typical uses: 2-Sum (sorted), 3-Sum (outer loop + two pointers), merging intervals, palindrome checks, removing duplicates, sliding-window constraints.
 
+Two pointers are powerful because they replace nested loops with a single controlled scan. The “why” is geometry: when the array is sorted, moving left or right has a predictable effect, so you can steer toward the answer instead of brute forcing combinations.
+
 **How it works**
 
 * Before searching for pairs in a sorted array, set the *pointers* `left` to index 0 and `right` to index n−1, which is useful because without this setup you may miss edge combinations or scan redundantly (e.g., starting at the ends of prices [1,2,9,11] for budget 13 quickly reveals 2+11).
@@ -195,7 +228,7 @@ Typical uses: 2-Sum (sorted), 3-Sum (outer loop + two pointers), merging interva
 * After recording a valid pair, advance *indices* past duplicate values on both sides to avoid repeats, whereas failing to skip duplicates will emit the same pair multiple times (e.g., with prices [1,1,2,3,4,4] for 5 you keep {1,4} and {2,3} once each).
 * In terms of performance, a single pass runs in linear *time* O(n) with O(1) extra space after an O(n log n) sort, whereas omitting sorting or pointer discipline often devolves into quadratic checks with nested loops (e.g., ~10,000 versus ~50,000,000 comparisons on 10,000 items).
 
-**Walkthrough example — all pairs summing to 10**
+**Walkthrough example ,  all pairs summing to 10**
 
 Array (sorted): `[1, 2, 3, 4, 5, 6, 7, 8, 9]`
 
@@ -221,7 +254,7 @@ Two quick counter-examples for moves:
 **Variants you’ll use often**
 
 * When finding zero-sum triplets, apply the *3-sum* pattern by sorting and for each index scanning `i+1…n−1` with two pointers while skipping duplicates of `i` and inner pointers, which is useful because omitting sorting or duplicate skipping causes missed or repeated triplets (e.g., from `[-4,-1,-1,0,1,2]` you report `[-1,-1,2]` and `[-1,0,1]` once).
-* If you only need to know whether any pair reaches the target, treat the task as an *existence* check and stop at the first hit, whereas continuing the scan enumerates all pairs and—without duplicate skipping—repeats results (e.g., with target `10` in `[1,3,7,7,9]` you may stop at `3+7` or keep scanning to list it once despite the second `7`).
+* If you only need to know whether any pair reaches the target, treat the task as an *existence* check and stop at the first hit, whereas continuing the scan enumerates all pairs and, without duplicate skipping, repeats results (e.g., with target `10` in `[1,3,7,7,9]` you may stop at `3+7` or keep scanning to list it once despite the second `7`).
 * For range constraints over contiguous elements, use a *sliding window* by expanding `right` to grow and contracting `left` to restore the constraint, whereas moving pointers only in one direction can overshoot and miss beneficial ranges (e.g., counting subarrays with sum ≤ `8` in `[2,3,1,2,4,3]` or tracking at most `2` distinct items in a rolling shopping cart).
 
 #### Recursion
@@ -230,11 +263,13 @@ I. *Recursion* works by breaking a problem into smaller instances of itself, wit
 
 II. Recursion process includes:
 
-- Defining a clear *base case* to ensure that recursion terminates when the simplest version of the problem is solved.
-- Ensuring that the *recursive case* moves toward the base case by reducing the problem’s size or complexity with each call.
-- Verifying the *correctness* of your recursion logic to ensure it mirrors the structure of the problem.
+* Defining a clear *base case* to ensure that recursion terminates when the simplest version of the problem is solved.
+* Ensuring that the *recursive case* moves toward the base case by reducing the problem’s size or complexity with each call.
+* Verifying the *correctness* of your recursion logic to ensure it mirrors the structure of the problem.
 
 III. Consider *stack overflow* when recursion depth is too great. You can either switch to an iterative approach or use tail recursion optimization (if supported by the language). *Memoization* is another technique to improve efficiency by caching results of recursive calls to avoid redundant computations.
+
+Recursion is less about “calling yourself” and more about writing a solution that matches the shape of the problem. The “do” is to define what a smaller instance looks like and make sure each call gets you closer to it. The “don’t” is to hide progress, if the input doesn’t clearly shrink toward a base case, the recursion will either loop forever or crash.
 
 ```
 factorial(4)
@@ -256,18 +291,20 @@ I. *Backtracking* is well-suited for problems that require exploring all potenti
 
 II. *Implementation tips* for backtracking include:
 
-- Clearly defining how to represent the *current state* of the problem.
-- Using *constraints checking* before progressing to ensure that the current path meets the problem's criteria, which helps prune invalid paths early.
-- Recursively *exploring* valid options by modifying the state and recursively diving deeper into the solution space.
-- After exploring each path, *backtracking* involves undoing the last change and trying the next alternative, ensuring all possible solutions are considered.
-- Consider *optimizations* such as using heuristics to explore more promising paths first.
+* Clearly defining how to represent the *current state* of the problem.
+* Using *constraints checking* before progressing to ensure that the current path meets the problem's criteria, which helps prune invalid paths early.
+* Recursively *exploring* valid options by modifying the state and recursively diving deeper into the solution space.
+* After exploring each path, *backtracking* involves undoing the last change and trying the next alternative, ensuring all possible solutions are considered.
+* Consider *optimizations* such as using heuristics to explore more promising paths first.
 
 III. A classic example is solving the *N-Queens problem*, where queens are placed row by row, and conflicts are resolved by backtracking when necessary.
 
+Backtracking is structured trial-and-error. The “why” it works is that you don’t blindly try everything, you quickly reject choices that violate constraints, which can cut the search space down dramatically. The “do” is to make constraint checks cheap and early. The “don’t” is to forget to undo changes, state leaks are the most common backtracking bug.
+
 *Step 1: Start with an empty board.*
 
-- Place a queen in Row 1, Column 1.
-- Try placing queens row by row.
+* Place a queen in Row 1, Column 1.
+* Try placing queens row by row.
 
 ```
 +---+---+---+---+
@@ -283,9 +320,9 @@ III. A classic example is solving the *N-Queens problem*, where queens are place
 
 *Step 2: Move to Row 2.*
 
-- Try Column 1 → Conflict! (Same column as Queen in Row 1).
-- Try Column 2 → Conflict! (Diagonal from Queen in Row 1).
-- Try Column 3 → Place Queen.
+* Try Column 1 → Conflict! (Same column as Queen in Row 1).
+* Try Column 2 → Conflict! (Diagonal from Queen in Row 1).
+* Try Column 3 → Place Queen.
 
 ```
 +---+---+---+---+
@@ -301,8 +338,8 @@ III. A classic example is solving the *N-Queens problem*, where queens are place
 
 *Step 3: Move to Row 3.*
 
-- Try Column 1 → Conflict! (Same column as Queen in Row 1).
-- Try Column 2 → Place Queen.
+* Try Column 1 → Conflict! (Same column as Queen in Row 1).
+* Try Column 2 → Place Queen.
 
 ```
 +---+---+---+---+
@@ -318,23 +355,23 @@ III. A classic example is solving the *N-Queens problem*, where queens are place
 
 *Step 4: Move to Row 4.*
 
-- Try Column 1 → Conflict! (Same column as Queen in Row 1).
-- Try Column 2 → Conflict! (Same column as Queen in Row 3).
-- Try Column 3 → Conflict! (Diagonal from Queen in Row 2).
-- Try Column 4 → Conflict! (Diagonal from Queen in Row 1).
-- No valid positions! (All columns conflict).
-- Backtrack: Remove the queen from Row 3, Column 2.
+* Try Column 1 → Conflict! (Same column as Queen in Row 1).
+* Try Column 2 → Conflict! (Same column as Queen in Row 3).
+* Try Column 3 → Conflict! (Diagonal from Queen in Row 2).
+* Try Column 4 → Conflict! (Diagonal from Queen in Row 1).
+* No valid positions! (All columns conflict).
+* Backtrack: Remove the queen from Row 3, Column 2.
 
 *Step 5: Try other possibilities in Row 3.*
 
-- Try Column 3 → Conflict! (Diagonal from Queen in Row 1).
-- Try Column 4 → Conflict! (Diagonal from Queen in Row 2).
-- No valid positions in Row 3.
-- Backtrack: Remove the queen from Row 2, Column 3.
+* Try Column 3 → Conflict! (Diagonal from Queen in Row 1).
+* Try Column 4 → Conflict! (Diagonal from Queen in Row 2).
+* No valid positions in Row 3.
+* Backtrack: Remove the queen from Row 2, Column 3.
 
 *Step 6: Try other possibilities in Row 2.*
 
-- Try Column 4 → Place Queen.
+* Try Column 4 → Place Queen.
 
 ```
 +---+---+---+---+
@@ -350,8 +387,8 @@ III. A classic example is solving the *N-Queens problem*, where queens are place
 
 *Step 7: Move to Row 3.*
 
-- Try Column 1 → Conflict! (Same column as Queen in Row 1).
-- Try Column 2 → Place Queen.
+* Try Column 1 → Conflict! (Same column as Queen in Row 1).
+* Try Column 2 → Place Queen.
 
 ```
 +---+---+---+---+
@@ -370,23 +407,25 @@ Continue exploring alternatives and backtracking as necessary until all solution
 #### Dynamic Programming
 
 I. *Dynamic programming* is used to solve optimization problems by breaking them down into overlapping subproblems with an optimal substructure, meaning solutions to smaller subproblems can be reused to solve larger problems.
-  
+
 II. There are two primary *approaches* to dynamic programming:
 
-- The *top-down approach (memoization)* involves using recursion while caching the results of subproblems to avoid redundant computations.
-- The *bottom-up approach (tabulation)* builds a solution iteratively by solving the smallest subproblems first and using their solutions to solve larger subproblems.
-  
+* The *top-down approach (memoization)* involves using recursion while caching the results of subproblems to avoid redundant computations.
+* The *bottom-up approach (tabulation)* builds a solution iteratively by solving the smallest subproblems first and using their solutions to solve larger subproblems.
+
 III. Some steps that might be taken in dynamic programming:
 
-- *Defining the subproblems* to break the main problem into manageable parts.
-- *Identifying the state variables* that uniquely define each subproblem.
-- Establishing a *recurrence relation* to compute the solution of each subproblem based on smaller subproblems.
-- Proper *initialization* of base cases in a table or memoization cache.
-- Determining the correct *iteration order* to fill the DP table for bottom-up approaches.
+* *Defining the subproblems* to break the main problem into manageable parts.
+* *Identifying the state variables* that uniquely define each subproblem.
+* Establishing a *recurrence relation* to compute the solution of each subproblem based on smaller subproblems.
+* Proper *initialization* of base cases in a table or memoization cache.
+* Determining the correct *iteration order* to fill the DP table for bottom-up approaches.
 
 IV. *Space optimization* is often possible by realizing that only a few recent states are needed, reducing space complexity.
-  
+
 V. Classic examples include problems like the Fibonacci sequence, the Knapsack problem, or calculating the minimum edit distance between two strings.
+
+Dynamic programming is what you reach for when brute force repeats itself. The “why” is efficiency: if the same subproblem appears again and again, you should only solve it once. The “do” is to define a state you can memoize and a recurrence you trust. The “don’t” is to build a giant table without a clear meaning for what each cell represents.
 
 ```
 DP Table (Rows = Items, Columns = Knapsack Capacities):
@@ -403,8 +442,8 @@ DP Table (Rows = Items, Columns = Knapsack Capacities):
 
 For each cell $DP[i][w]$ if the weight of the item $i$ is less than or equal to the current capacity $w$, choose the maximum of:
 
-- Value without including the item ($DP[i-1][w]$).
-- Value including the item ($DP[i-1][w-\text{weight}[i]] + \text{value}[i]$).
+* Value without including the item ($DP[i-1][w]$).
+* Value including the item ($DP[i-1][w-\text{weight}[i]] + \text{value}[i]$).
 
 *Visualization of Choices*
 
@@ -436,34 +475,36 @@ To find the maximum value look at the last cell: $DP[4][7] = 11$.
 
 To find the items included trace back from $DP[4][7]$, checking where values changed:
 
-- $DP[4][7] → Include Item 4$
-- $DP[3][3] → Include Item 3$
+* $DP[4][7] → Include Item 4$
+* $DP[3][3] → Include Item 3$
 
 *Final Knapsack Contents:*
 
-- Item 3 (Weight 4, Value 5)
-- Item 4 (Weight 3, Value 7)
-- Total Weight = 7, Total Value = 11
+* Item 3 (Weight 4, Value 5)
+* Item 4 (Weight 3, Value 7)
+* Total Weight = 7, Total Value = 11
 
 ### Greedy Algorithms
 
 I. *Greedy algorithms* are used when making a locally optimal choice at each step leads to a globally optimal solution.
-  
+
 II. The two *characteristics* of greedy algorithms are:
 
-- *Optimal substructure*, meaning the overall solution incorporates optimal solutions to subproblems.
-- The *greedy choice property*, where making the best local decision at each step results in the globally best solution.
+* *Optimal substructure*, meaning the overall solution incorporates optimal solutions to subproblems.
+* The *greedy choice property*, where making the best local decision at each step results in the globally best solution.
 
 III. Common *implementation tips* for greedy algorithms include:
 
-- *Sorting* the input data according to a specific criterion before applying the greedy strategy.
-- Always ensure the greedy choice leads to an optimal solution by providing a *proof of correctness* or counterexamples.
+* *Sorting* the input data according to a specific criterion before applying the greedy strategy.
+* Always ensure the greedy choice leads to an optimal solution by providing a *proof of correctness* or counterexamples.
 
 IV. Examples of greedy algorithms include the activity selection problem, Huffman coding, and algorithms for finding minimum spanning trees (Prim's and Kruskal's).
 
+Greedy algorithms are tempting because they feel simple: pick the best-looking option and move on. Sometimes that works beautifully, and sometimes it fails spectacularly. The “do” is to either know the problem is greedy-friendly (via proof or known pattern) or actively search for a counterexample. The “don’t” is assuming that “best right now” must lead to “best overall.”
+
 *Example Huffman coding Input*:
 
-Characters: $[A, B, C, D, E, F]$  
+Characters: $[A, B, C, D, E, F]$
 
 Frequencies: $[5, 9, 12, 13, 16, 45]$
 
@@ -539,8 +580,8 @@ Tree:
 
 Traverse the tree to assign codes:
 
-- Left edge = `0`
-- Right edge = `1`
+* Left edge = `0`
+* Right edge = `1`
 
 ```
 Codes:
@@ -570,14 +611,16 @@ Tree:
 #### Divide and Conquer
 
 I. The *divide and conquer* strategy solves problems by dividing them into smaller subproblems, solving those independently, and then combining their solutions.
-  
+
 II. *Implementation tips* for divide and conquer:
 
-- Use *recursion* to divide the problem, with each recursive call handling a subproblem.
-- Pay attention to the *combine step*, as the efficiency of combining subproblem solutions can affect the overall performance.
-- Define *base cases* for small subproblems that can be solved directly without further division.
+* Use *recursion* to divide the problem, with each recursive call handling a subproblem.
+* Pay attention to the *combine step*, as the efficiency of combining subproblem solutions can affect the overall performance.
+* Define *base cases* for small subproblems that can be solved directly without further division.
 
 III. Examples of divide and conquer algorithms include Merge Sort, Quick Sort, and Binary Search.
+
+Divide and conquer is your “zoom lens.” Instead of trying to solve the whole problem at once, you solve smaller independent versions and merge results. The “do” is to keep subproblems truly independent and make the combine step efficient. The “don’t” is accidentally recomputing the same work across branches, if that happens, you may be drifting into dynamic programming territory.
 
 ### Sorting Algorithms
 
