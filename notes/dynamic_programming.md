@@ -2,15 +2,15 @@
 
 Dynamic Programming (DP) is a way to solve complex problems by breaking them into smaller, easier problems. Instead of solving the same small problems again and again, DP **stores their solutions** in a structure like an array, table, or map. This avoids wasting time on repeated calculations and makes the process much faster and more efficient.
 
-Before you even touch formulas, it helps to know *why DP feels like a superpower*: a lot of “hard” problems aren’t hard because each step is complicated—they’re hard because you keep stumbling into the **same** steps repeatedly. DP is basically the art of noticing that repetition and saying, “Cool, I’ll pay the cost once, then reuse it.”
+Before you even touch formulas, it helps to know *why DP feels like a superpower*: a lot of “hard” problems aren’t hard because each step is complicated, they’re hard because you keep stumbling into the **same** steps repeatedly. DP is basically the art of noticing that repetition and saying, “Cool, I’ll pay the cost once, then reuse it.”
 
 DP works best for problems that have two features. The first is **optimal substructure**, which means you can build the solution to a big problem from the solutions to smaller problems. The second is **overlapping subproblems**, where the same smaller problems show up multiple times during the process. By focusing on these features, DP ensures that each part of the problem is solved only once.
 
-A practical way to “care” about these two features is this: they’re your green lights. If a problem has both, DP usually turns what feels impossible into something routine. If it doesn’t, DP can become a slow, memory-hungry distraction. So these aren’t academic definitions—they’re decision tools.
+A practical way to “care” about these two features is this: they’re your green lights. If a problem has both, DP usually turns what feels impossible into something routine. If it doesn’t, DP can become a slow, memory-hungry distraction. So these aren’t academic definitions, they’re decision tools.
 
 This method was introduced by Richard Bellman in the 1950s and has become a valuable tool in areas like computer science, economics, and operations research. It has been used to solve problems that would otherwise take too long by turning slow, exponential-time algorithms into much faster polynomial-time solutions. DP is used in practice for tackling real-world optimization challenges.
 
-And that’s the real payoff: DP isn’t about writing big tables for fun—it’s about making your program behave like a thoughtful planner instead of a frantic guesser. When you see DP in the wild, it’s usually hiding inside something that needs to be fast *and* correct: routing, scheduling, matching, compression, resource allocation, and more.
+And that’s the real payoff: DP isn’t about writing big tables for fun, it’s about making your program behave like a thoughtful planner instead of a frantic guesser. When you see DP in the wild, it’s usually hiding inside something that needs to be fast *and* correct: routing, scheduling, matching, compression, resource allocation, and more.
 
 ### Principles
 
@@ -54,7 +54,7 @@ Let $S(n)$ be the set of subproblems for problem size $n$. If there exists $s \i
 
 The recursive computation of Fibonacci numbers $F(n) = F(n - 1) + F(n - 2)$ involves recalculating the same Fibonacci numbers multiple times. For instance, to compute $F(5)$, we need to compute $F(4)$ and $F(3)$, both of which require computing $F(2)$ and $F(1)$ multiple times.
 
-Fibonacci is the classic demo not because it’s deep, but because it’s obvious. It teaches the key emotional lesson: recursion can feel elegant while quietly doing ridiculous repeated work—DP keeps the elegance and removes the waste.
+Fibonacci is the classic demo not because it’s deep, but because it’s obvious. It teaches the key emotional lesson: recursion can feel elegant while quietly doing ridiculous repeated work, DP keeps the elegance and removes the waste.
 
 ### Techniques
 
@@ -100,7 +100,7 @@ One practical note when learning: top-down DP is often easier to write correctly
 
 **Tabulation** is a technique that solves a problem by working from the smallest subproblems up to the larger ones in a step-by-step, iterative way. It stores the solutions to these subproblems in a table, often an array, and uses these stored values to solve bigger subproblems until the final solution is reached. Unlike memoization, which works recursively and checks if a solution is already computed, tabulation systematically builds the solution from the ground up. This method is efficient and avoids the overhead of recursive calls.
 
-The “why” behind tabulation is control: you decide the exact order states are computed, and you avoid recursion limits and call overhead. The “do” is to fill the table in dependency order. The “don’t” is to fill it in a convenient order that violates dependencies—because then you’ll be reading values that aren’t valid yet.
+The “why” behind tabulation is control: you decide the exact order states are computed, and you avoid recursion limits and call overhead. The “do” is to fill the table in dependency order. The “don’t” is to fill it in a convenient order that violates dependencies, because then you’ll be reading values that aren’t valid yet.
 
 **Algorithm Steps**:
 
@@ -144,7 +144,7 @@ If you’re choosing between them, a simple rule of thumb is: start with memoiza
 
 Dynamic programming problems are often formulated using recurrence relations, which express the solution to a problem in terms of its subproblems.
 
-This step is where DP stops being “a concept” and becomes “a tool.” Your recurrence is the blueprint: it tells you what a state means and exactly how it is built. Without a recurrence (explicit or implicit), you don’t have DP—you have hope and a table.
+This step is where DP stops being “a concept” and becomes “a tool.” Your recurrence is the blueprint: it tells you what a state means and exactly how it is built. Without a recurrence (explicit or implicit), you don’t have DP, you have hope and a table.
 
 #### Formulating Recurrence Relations
 
@@ -174,7 +174,7 @@ Properly defining the state is crucial for dynamic programming.
 * **State variables** are the parameters that uniquely define each subproblem, helping to break down the problem into smaller, manageable components.
 * **State transition** refers to the rules or formulas that describe how to move from one state to another, typically using the results of smaller subproblems to solve larger ones.
 
-Think of state design like labeling drawers in a workshop. If the labels are precise, you can find what you need instantly and build bigger things confidently. If the labels are vague, you’ll keep opening drawers, guessing, and making mistakes—even if the math is technically “there.”
+Think of state design like labeling drawers in a workshop. If the labels are precise, you can find what you need instantly and build bigger things confidently. If the labels are vague, you’ll keep opening drawers, guessing, and making mistakes, even if the math is technically “there.”
 
 **Example**: 0/1 Knapsack Problem
 
@@ -194,7 +194,7 @@ We fill the table $dp[0..n][0..W]$ iteratively based on the state transition.
 * The **time complexity** is $O(nW)$, where $n$ is the number of items and $W$ is the capacity of the knapsack, as the algorithm iterates through both items and weights.
 * The **space complexity** is $O(nW)$, but this can be optimized to $O(W)$ because each row in the table depends only on the values from the previous row, allowing for space reduction.
 
-A key “do” here is to interpret your state in plain language. If you can’t say what `dp[i][w]` *means* in one sentence, debugging will be painful. A key “don’t” is mixing meanings (for example, letting `w` sometimes mean “remaining capacity” and sometimes mean “used weight”)—that’s how DP tables become nonsense.
+A key “do” here is to interpret your state in plain language. If you can’t say what `dp[i][w]` *means* in one sentence, debugging will be painful. A key “don’t” is mixing meanings (for example, letting `w` sometimes mean “remaining capacity” and sometimes mean “used weight”), that’s how DP tables become nonsense.
 
 ### Advanced Concepts
 
@@ -202,7 +202,7 @@ A key “do” here is to interpret your state in plain language. If you can’t
 
 In some cases, we can optimize space complexity by noticing dependencies between states.
 
-This is where DP graduates from “works” to “works well.” Once the recurrence is correct, you can ask: “Do I truly need *all* previous states, or only a slice of them?” Many DP solutions only depend on the previous row, previous column, or a small window—so storing everything is optional.
+This is where DP graduates from “works” to “works well.” Once the recurrence is correct, you can ask: “Do I truly need *all* previous states, or only a slice of them?” Many DP solutions only depend on the previous row, previous column, or a small window, so storing everything is optional.
 
 **Example**: Since $dp[i][w]$ depends only on $dp[i - 1][w]$ and $dp[i - 1][w - w_i]$, we can use a one-dimensional array and update it in reverse.
 
@@ -219,7 +219,7 @@ One important “do/don’t” hidden in this snippet is the reverse loop. Updat
 
 If a problem has **optimal substructure** but does not have **overlapping subproblems**, it is often better to use **Divide and Conquer** instead of Dynamic Programming. Divide and Conquer works by breaking the problem into independent subproblems, solving each one separately, and then combining their solutions. Since there are no repeated subproblems to reuse, storing intermediate results (as in Dynamic Programming) is unnecessary, making Divide and Conquer a more suitable and efficient choice in such cases.
 
-This distinction matters because DP isn’t “better recursion”—it’s “recursion plus reuse.” If there’s nothing to reuse, DP is extra work for no gain. Picking the right paradigm is part of writing efficient algorithms, not just correct ones.
+This distinction matters because DP isn’t “better recursion”, it’s “recursion plus reuse.” If there’s nothing to reuse, DP is extra work for no gain. Picking the right paradigm is part of writing efficient algorithms, not just correct ones.
 
 **Example**: Merge Sort algorithm divides the list into halves, sorts each half, and then merges the sorted halves.
 
@@ -278,7 +278,7 @@ Given $A = [3, 5, 7, 9]$, the subarray from index $1$ to $2$ is $[5, 7]$.
 
 Subarray problems include finding the maximum subarray sum (Kadane's algorithm), where dynamic programming efficiently computes optimal subarrays.
 
-Subarrays matter in DP because contiguity gives you a natural order—perfect for transitions. When a problem is about “best segment,” “best window,” or “best range,” DP patterns show up immediately.
+Subarrays matter in DP because contiguity gives you a natural order, perfect for transitions. When a problem is about “best segment,” “best window,” or “best range,” DP patterns show up immediately.
 
 #### Substring
 
@@ -383,7 +383,7 @@ VII. If the state space can be stored in a *table or array*:
 * Problems with discrete states.
 * Without this, problems with infinitely many possibilities (like arbitrary real numbers) cannot be handled.
 
-A good “do” when scanning a problem is to ask: “Can I describe a state with a small number of integers (like i, j, w)?” If yes, DP is often on the table. A good “don’t” is jumping into DP just because the problem is hard—hard problems also show up in greedy, graph, and divide-and-conquer territory.
+A good “do” when scanning a problem is to ask: “Can I describe a state with a small number of integers (like i, j, w)?” If yes, DP is often on the table. A good “don’t” is jumping into DP just because the problem is hard, hard problems also show up in greedy, graph, and divide-and-conquer territory.
 
 #### State Design and Transition
 
@@ -397,7 +397,7 @@ If DP ever feels “mysterious,” it’s usually because the state meaning isn�
 * Reducing *memory usage* by discarding unnecessary states makes solutions efficient, while failing to do so can waste resources; for example, knapsack space can shrink from `O(nW)` to `O(W)` with a one-dimensional array.
 * Using *pruning* to skip impossible paths speeds up computation, while omitting it allows redundant work; in recursive search with memoization, branches exceeding a current best value can be safely ignored.
 
-The key “why” here is that DP gives you structure, but structure can still be expensive. Optimization is about keeping the structure while trimming what you don’t truly need—whether that’s table size, transitions, or states that can never be reached.
+The key “why” here is that DP gives you structure, but structure can still be expensive. Optimization is about keeping the structure while trimming what you don’t truly need, whether that’s table size, transitions, or states that can never be reached.
 
 #### Common Pitfalls
 
@@ -406,14 +406,14 @@ I. Failure to Define Proper Base Cases
 * *Example*: In grid path counting, omitting `dp[0][0] = 1` prevents any valid paths from being constructed.
 * *Consequence*: Without correct starting values, the DP table propagates errors and produces incorrect results.
 
-A simple “do”: before filling anything, write down the smallest cases and ensure they make sense. A simple “don’t”: assume the base case is “obvious” and skip it—DP will punish that immediately.
+A simple “do”: before filling anything, write down the smallest cases and ensure they make sense. A simple “don’t”: assume the base case is “obvious” and skip it, DP will punish that immediately.
 
 II. Updating States in the Wrong Dependency Order
 
 * *Example*: In knapsack with a 1D array, iterating weights from low to high causes items to be reused multiple times.
 * *Consequence*: Using the wrong order inflates computed values and leads to invalid or impossible solutions.
 
-The ordering rule is not a style preference—it’s part of correctness. If your transition reads from states you’ve already updated in the same iteration, you may be solving a different problem than you think.
+The ordering rule is not a style preference, it’s part of correctness. If your transition reads from states you’ve already updated in the same iteration, you may be solving a different problem than you think.
 
 III. Ignoring Special or Edge Case Inputs
 
