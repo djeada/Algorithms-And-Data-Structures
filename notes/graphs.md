@@ -1604,6 +1604,7 @@ Step | Pop u | Emit order            | Decrease indeg[...]   | Newly 0 → Enque
 If there’s a cycle, some vertices **never** reach indegree 0. Example:
 
 ```
+#
 ┌─────┐      ┌─────┐
 │  X  │ ───► │  Y  │
 └──┬──┘      └──┬──┘
