@@ -1179,13 +1179,23 @@ $$
 Bucket contents after hashing:
 
 $$
-\begin{aligned}
-h(12) &= 12 \bmod 5 = 2 \Rightarrow&  \text{bucket 2: } [12] [6pt]
-h(22) &= 22 \bmod 5 = 2 \Rightarrow&  \text{bucket 2: } [12, 22] [6pt]
-h(7)  &= 7  \bmod 5 = 2 \Rightarrow&  \text{bucket 2: } [12, 22, 7] [6pt]
-h(3)  &= 3  \bmod 5 = 3 \Rightarrow&  \text{bucket 3: } [3] [6pt]
-h(14) &= 14 \bmod 5 = 4 \Rightarrow&  \text{bucket 4: } [14]
-\end{aligned}
+h(12) = 12 \bmod 5 = 2 \;\Rightarrow\; \text{bucket 2: } [12]
+$$
+
+$$
+h(22) = 22 \bmod 5 = 2 \;\Rightarrow\; \text{bucket 2: } [12, 22]
+$$
+
+$$
+h(7) = 7 \bmod 5 = 2 \;\Rightarrow\; \text{bucket 2: } [12, 22, 7]
+$$
+
+$$
+h(3) = 3 \bmod 5 = 3 \;\Rightarrow\; \text{bucket 3: } [3]
+$$
+
+$$
+h(14) = 14 \bmod 5 = 4 \;\Rightarrow\; \text{bucket 4: } [14]
 $$
 
 *Example 1*
