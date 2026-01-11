@@ -1,5 +1,4 @@
 #include "a_star.h"
-#include <climits>
 #include <limits>
 #include <queue>
 #include <unordered_map>
@@ -9,8 +8,10 @@
 template <class T>
 int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
           double (*heuristic)(T a, T b)) {
+  constexpr int INF = std::numeric_limits<int>::max();
+
   if (!graph.contains(source) || !graph.contains(destination))
-    return INT_MAX;
+    return INF;
 
   if (source == destination)
     return 0;
@@ -21,7 +22,7 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
   std::unordered_map<Vertex<T>, double, HashFunction<T>> fScore;
 
   for (const auto &vertex : graph.vertices()) {
-    gScore[vertex] = std::numeric_limits<int>::max();
+    gScore[vertex] = INF;
     fScore[vertex] = std::numeric_limits<double>::max();
   }
 
@@ -67,9 +68,7 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
   }
 
   // No path found
-  return gScore[destination] < std::numeric_limits<int>::max()
-             ? gScore[destination]
-             : INT_MAX;
+  return gScore[destination] < INF ? gScore[destination] : INF;
 }
 
 template int aStar<Point>(const Graph<Point> &graph, Vertex<Point> source,

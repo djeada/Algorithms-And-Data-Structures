@@ -1,5 +1,4 @@
 #include "bfs.h"
-#include <climits>
 #include <limits>
 #include <queue>
 #include <unordered_map>
@@ -7,8 +6,10 @@
 // Breadth-First Search with early termination
 template <class T>
 int bfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
+  constexpr int INF = std::numeric_limits<int>::max();
+
   if (!graph.contains(source) || !graph.contains(destination))
-    return INT_MAX;
+    return INF;
 
   if (source == destination)
     return 0;
@@ -17,7 +18,7 @@ int bfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
   for (const auto &vertex : graph.vertices()) {
-    distances[vertex] = std::numeric_limits<int>::max();
+    distances[vertex] = INF;
     visited[vertex] = false;
   }
 

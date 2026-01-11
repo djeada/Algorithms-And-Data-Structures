@@ -1,5 +1,4 @@
 #include "dijkstra.h"
-#include <climits>
 #include <limits>
 #include <queue>
 #include <unordered_map>
@@ -8,8 +7,10 @@
 // Dijkstra's algorithm using a priority queue for O((V+E) log V) complexity
 template <class T>
 int dijkstra(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
+  constexpr int INF = std::numeric_limits<int>::max();
+
   if (!graph.contains(source) || !graph.contains(destination))
-    return INT_MAX;
+    return INF;
 
   if (source == destination)
     return 0;
@@ -17,7 +18,7 @@ int dijkstra(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
 
   for (const auto &vertex : graph.vertices()) {
-    distances[vertex] = std::numeric_limits<int>::max();
+    distances[vertex] = INF;
   }
 
   distances[source] = 0;

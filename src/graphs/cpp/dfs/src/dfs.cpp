@@ -1,5 +1,4 @@
 #include "dfs.h"
-#include <climits>
 #include <functional>
 #include <limits>
 #include <unordered_map>
@@ -7,8 +6,10 @@
 // Depth-First Search using recursive approach
 template <class T>
 int dfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
+  constexpr int INF = std::numeric_limits<int>::max();
+
   if (!graph.contains(source) || !graph.contains(destination))
-    return INT_MAX;
+    return INF;
 
   if (source == destination)
     return 0;
@@ -17,7 +18,7 @@ int dfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
   for (const auto &vertex : graph.vertices()) {
-    distances[vertex] = std::numeric_limits<int>::max();
+    distances[vertex] = INF;
     visited[vertex] = false;
   }
 
@@ -47,9 +48,7 @@ int dfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
 
   search(source);
 
-  return distances[destination] == std::numeric_limits<int>::max()
-             ? INT_MAX
-             : distances[destination];
+  return distances[destination];
 }
 
 template int dfs<int>(const Graph<int> &graph, Vertex<int> source,
