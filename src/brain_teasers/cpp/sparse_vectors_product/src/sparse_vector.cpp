@@ -9,10 +9,10 @@ int sparseVectorProduct(const std::unordered_map<int, int>& vec1,
     const auto& smaller = (vec1.size() <= vec2.size()) ? vec1 : vec2;
     const auto& larger = (vec1.size() <= vec2.size()) ? vec2 : vec1;
     
-    for (const auto& [index, value] : smaller) {
-        auto it = larger.find(index);
+    for (const auto& pair : smaller) {
+        auto it = larger.find(pair.first);
         if (it != larger.end()) {
-            result += value * it->second;
+            result += pair.second * it->second;
         }
     }
     
