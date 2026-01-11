@@ -6,9 +6,12 @@ from typing import Optional
 
 
 class ListNode:
-    """A node in a doubly linked list."""
+    """A node in a doubly linked list storing key-value pairs."""
 
-    def __init__(self, value: int, next: Optional[ListNode] = None) -> None:
+    def __init__(
+        self, key: int, value: int, next: Optional[ListNode] = None
+    ) -> None:
+        self.key = key
         self.value = value
         self.next = next
         self.prev: Optional[ListNode] = None
@@ -21,9 +24,11 @@ class DoubleLinkedList:
         self.head: Optional[ListNode] = None
         self.tail: Optional[ListNode] = None
 
-    def insert_before(self, node: Optional[ListNode], value: int) -> ListNode:
-        """Insert a new node with the given value before the given node."""
-        new_node = ListNode(value)
+    def insert_before(
+        self, node: Optional[ListNode], key: int, value: int
+    ) -> ListNode:
+        """Insert a new node with the given key-value pair before the given node."""
+        new_node = ListNode(key, value)
         if not node:
             self.head = new_node
             self.tail = new_node
@@ -36,23 +41,6 @@ class DoubleLinkedList:
                 if node.prev:
                     node.prev.next = new_node
             node.prev = new_node
-        return new_node
-
-    def insert_after(self, node: Optional[ListNode], value: int) -> ListNode:
-        """Insert a new node with the given value after the given node."""
-        new_node = ListNode(value)
-        if not node:
-            self.head = new_node
-            self.tail = new_node
-        else:
-            new_node.prev = node
-            if node == self.tail:
-                self.tail = new_node
-            else:
-                new_node.next = node.next
-                if node.next:
-                    node.next.prev = new_node
-            node.next = new_node
         return new_node
 
     def delete(self, node: ListNode) -> None:
@@ -78,7 +66,7 @@ class DoubleLinkedList:
         return " -> ".join(map(str, self))
 
     def to_list(self) -> list[int]:
-        """Convert the linked list to a Python list."""
+        """Convert the linked list to a Python list of values."""
         return list(self)
 
 
@@ -114,7 +102,8 @@ class LRUCache:
         if key in self.cache:
             node = self.cache[key]
             self.list.delete(node)
-            self.list.insert_before(self.list.head, node.value)
+            new_node = self.list.insert_before(self.list.head, node.key, node.value)
+            self.cache[key] = new_node
             return node.value
         return -1
 
@@ -129,14 +118,14 @@ class LRUCache:
         if key in self.cache:
             node = self.cache[key]
             self.list.delete(node)
-            self.list.insert_before(self.list.head, value)
-            self.cache[key] = self.list.head
+            new_node = self.list.insert_before(self.list.head, key, value)
+            self.cache[key] = new_node
         else:
             if self.size == self.capacity:
                 if self.list.tail:
-                    del self.cache[self.list.tail.value]
+                    del self.cache[self.list.tail.key]
                     self.list.delete(self.list.tail)
                 self.size -= 1
-            self.list.insert_before(self.list.head, value)
-            self.cache[key] = self.list.head
+            new_node = self.list.insert_before(self.list.head, key, value)
+            self.cache[key] = new_node
             self.size += 1
