@@ -1,9 +1,22 @@
-class Graph:
-    def __init__(self):
-        self.num_vertices = 0
-        self.adjacency_dict = {}
+from typing import List, Dict
 
-    def add_edge(self, u, v):
+
+class Graph:
+    """A simple undirected graph represented using an adjacency dictionary."""
+
+    def __init__(self) -> None:
+        """Initialize an empty graph."""
+        self.num_vertices: int = 0
+        self.adjacency_dict: Dict[int, List[int]] = {}
+
+    def add_edge(self, u: int, v: int) -> None:
+        """
+        Add an undirected edge between vertices u and v.
+
+        Args:
+            u: First vertex.
+            v: Second vertex.
+        """
         if u not in self.adjacency_dict:
             self.adjacency_dict[u] = []
 
@@ -16,8 +29,22 @@ class Graph:
             self.num_vertices = len(self.adjacency_dict)
 
 
-def find_hamiltonian_paths(G):
-    def dfs(G, v, visited, path):
+def find_hamiltonian_paths(G: Graph) -> List[List[int]]:
+    """
+    Find all Hamiltonian paths in the graph.
+
+    A Hamiltonian path visits each vertex exactly once.
+
+    Args:
+        G: The graph to search.
+
+    Returns:
+        List of all Hamiltonian paths, where each path is a list of vertex indices.
+    """
+
+    def dfs(
+        G: Graph, v: int, visited: List[bool], path: List[int]
+    ) -> None:
         # if all the vertices are visited, then the Hamiltonian path exists
         if len(path) == len(G.adjacency_dict):
             # add the Hamiltonian path to the list of paths
@@ -44,7 +71,7 @@ def find_hamiltonian_paths(G):
                 path.pop()
 
     # start with every node
-    paths = []
+    paths: List[List[int]] = []
     for start in range(len(G.adjacency_dict)):
         # add starting node to the path
         path = [start]

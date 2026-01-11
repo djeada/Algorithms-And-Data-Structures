@@ -1,4 +1,19 @@
-def can_construct_basic(target, word_bank):
+from typing import List, Optional
+
+
+def can_construct_basic(target: str, word_bank: List[str]) -> bool:
+    """
+    Determine if target string can be constructed from words in word_bank.
+
+    Uses basic recursion without memoization.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        True if target can be constructed, False otherwise.
+    """
     if not target:
         return True
 
@@ -10,7 +25,22 @@ def can_construct_basic(target, word_bank):
     )
 
 
-def can_construct_memo(target, word_bank, memo=None):
+def can_construct_memo(
+    target: str, word_bank: List[str], memo: Optional[dict] = None
+) -> bool:
+    """
+    Determine if target string can be constructed from words in word_bank.
+
+    Uses memoization for efficient computation.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+        memo: Optional dictionary for memoization cache.
+
+    Returns:
+        True if target can be constructed, False otherwise.
+    """
     if memo is None:
         memo = {}
 
@@ -31,7 +61,19 @@ def can_construct_memo(target, word_bank, memo=None):
     return can_construct
 
 
-def can_construct_table(target, word_bank):
+def can_construct_table(target: str, word_bank: List[str]) -> bool:
+    """
+    Determine if target string can be constructed from words in word_bank.
+
+    Uses tabulation (bottom-up DP) for efficient computation.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        True if target can be constructed, False otherwise.
+    """
     table = [False] * (len(target) + 1)
     table[0] = True
 

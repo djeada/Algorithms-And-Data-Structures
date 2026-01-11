@@ -33,14 +33,14 @@ TEST(CanSumTest, TestNegativeMemo1) {
   std::vector<unsigned int> numbers = {2, 2, 4};
   unsigned int target = 7;
 
-  ASSERT_TRUE(canSumMemo(target, numbers));
+  ASSERT_FALSE(canSumMemo(target, numbers));
 }
 
 TEST(CanSumTest, TestNegativeMemo2) {
   std::vector<unsigned int> numbers = {3, 5, 9, 10};
   unsigned int target = 1;
 
-  ASSERT_TRUE(canSumMemo(target, numbers));
+  ASSERT_FALSE(canSumMemo(target, numbers));
 }
 
 TEST(CanSumTest, TestPositiveMemo1) {
@@ -61,14 +61,14 @@ TEST(CanSumTest, TestNegativeTable1) {
   std::vector<unsigned int> numbers = {2, 2, 4};
   unsigned int target = 7;
 
-  ASSERT_TRUE(canSumTable(target, numbers));
+  ASSERT_FALSE(canSumTable(target, numbers));
 }
 
 TEST(CanSumTest, TestNegativeTable2) {
   std::vector<unsigned int> numbers = {3, 5, 9, 10};
   unsigned int target = 1;
 
-  ASSERT_TRUE(canSumTable(target, numbers));
+  ASSERT_FALSE(canSumTable(target, numbers));
 }
 
 TEST(CanSumTest, TestPositiveTable1) {

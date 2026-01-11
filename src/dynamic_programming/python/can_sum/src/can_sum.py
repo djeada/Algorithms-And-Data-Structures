@@ -1,4 +1,19 @@
-def can_sum_basic(target, numbers):
+from typing import List, Optional
+
+
+def can_sum_basic(target: int, numbers: List[int]) -> bool:
+    """
+    Determine if it's possible to generate target sum using numbers from the list.
+
+    Uses basic recursion without memoization.
+
+    Args:
+        target: The target sum to achieve.
+        numbers: List of numbers that can be used (can be reused).
+
+    Returns:
+        True if target sum is achievable, False otherwise.
+    """
     if target == 0:
         return True
 
@@ -8,7 +23,22 @@ def can_sum_basic(target, numbers):
     return any(can_sum_basic(target - i, numbers) for i in numbers)
 
 
-def can_sum_memo(target, numbers, memo=None):
+def can_sum_memo(
+    target: int, numbers: List[int], memo: Optional[dict] = None
+) -> bool:
+    """
+    Determine if it's possible to generate target sum using numbers from the list.
+
+    Uses memoization for efficient computation.
+
+    Args:
+        target: The target sum to achieve.
+        numbers: List of numbers that can be used (can be reused).
+        memo: Optional dictionary for memoization cache.
+
+    Returns:
+        True if target sum is achievable, False otherwise.
+    """
     if memo is None:
         memo = {}
 
@@ -27,14 +57,26 @@ def can_sum_memo(target, numbers, memo=None):
     return can_sum
 
 
-def can_sum_table(target, numbers):
+def can_sum_table(target: int, numbers: List[int]) -> bool:
+    """
+    Determine if it's possible to generate target sum using numbers from the list.
+
+    Uses tabulation (bottom-up DP) for efficient computation.
+
+    Args:
+        target: The target sum to achieve.
+        numbers: List of numbers that can be used (can be reused).
+
+    Returns:
+        True if target sum is achievable, False otherwise.
+    """
     table = [False] * (target + 1)
     table[0] = True
 
     for i in range(target):
         if table[i]:
-            for number in [n for n in numbers if i + n <= target]:
-                if i + number > 0 and i + number <= target:
+            for number in numbers:
+                if i + number <= target:
                     table[i + number] = True
 
     return table[-1]

@@ -1,9 +1,23 @@
-def minimum_insertions_for_palindrome_basic(s):
+from typing import List
+
+
+def minimum_insertions_for_palindrome_basic(s: str) -> int:
+    """
+    Find minimum insertions needed to make a string a palindrome.
+
+    Uses basic recursion without memoization.
+
+    Args:
+        s: The input string.
+
+    Returns:
+        Minimum number of character insertions needed.
+    """
     n = len(s)
     if n == 0:
         return 0
 
-    def min_insertions_helper(s, l, h):
+    def min_insertions_helper(s: str, l: int, h: int) -> int:
         if l > h:
             return float("inf")
 
@@ -23,12 +37,23 @@ def minimum_insertions_for_palindrome_basic(s):
     return min_insertions_helper(s, 0, n - 1)
 
 
-def minimum_insertions_for_palindrome_memo(s):
+def minimum_insertions_for_palindrome_memo(s: str) -> int:
+    """
+    Find minimum insertions needed to make a string a palindrome.
+
+    Uses memoization for efficient computation.
+
+    Args:
+        s: The input string.
+
+    Returns:
+        Minimum number of character insertions needed.
+    """
     n = len(s)
     if n == 0:
         return 0
 
-    def min_insertions_helper(s, l, h, memo):
+    def min_insertions_helper(s: str, l: int, h: int, memo: dict) -> int:
         if l > h:
             return float("inf")
 
@@ -38,7 +63,7 @@ def minimum_insertions_for_palindrome_memo(s):
         if l == h - 1:
             return 0 if s[l] == s[h] else 1
 
-        key = f"{l},{h}"
+        key = (l, h)
         if key in memo:
             return memo[key]
 
@@ -51,13 +76,26 @@ def minimum_insertions_for_palindrome_memo(s):
             )
         return memo[key]
 
-    return min_insertions_helper(s, 0, n - 1, dict())
+    return min_insertions_helper(s, 0, n - 1, {})
 
 
-def minimum_insertions_for_palindrome_tab(s):
+def minimum_insertions_for_palindrome_tab(s: str) -> int:
+    """
+    Find minimum insertions needed to make a string a palindrome.
+
+    Uses tabulation (bottom-up DP) for efficient computation.
+
+    Args:
+        s: The input string.
+
+    Returns:
+        Minimum number of character insertions needed.
+    """
     n = len(s)
+    if n == 0:
+        return 0
 
-    table = [[0 for x in range(n)] for y in range(n)]
+    table: List[List[int]] = [[0 for _ in range(n)] for _ in range(n)]
 
     for i in range(n - 1, -1, -1):
         for j in range(i + 1, n):

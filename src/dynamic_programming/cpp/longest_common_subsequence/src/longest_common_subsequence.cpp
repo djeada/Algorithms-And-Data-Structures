@@ -17,13 +17,13 @@ struct hash {
 int longestCommonSubsequenceBasic(const std::vector<int> &arrayA,
                                   const std::vector<int> &arrayB) {
 
-  std::function<int(const std::vector<int> &, const std::vector<int> &,
-                    unsigned int, unsigned int)>
+  std::function<int(const std::vector<int> &, const std::vector<int> &, int,
+                    int)>
       _longestCommonSubsequenceBasic;
   _longestCommonSubsequenceBasic = [&](const std::vector<int> &arrayA,
-                                       const std::vector<int> &arrayB,
-                                       unsigned int m, unsigned int n) -> int {
-    if (m == -1 || n == -1)
+                                       const std::vector<int> &arrayB, int m,
+                                       int n) -> int {
+    if (m < 0 || n < 0)
       return 0;
 
     if (arrayA[m] == arrayB[n])
@@ -33,40 +33,46 @@ int longestCommonSubsequenceBasic(const std::vector<int> &arrayA,
                     _longestCommonSubsequenceBasic(arrayA, arrayB, m - 1, n));
   };
 
-  return _longestCommonSubsequenceBasic(arrayA, arrayB, arrayA.size() - 1,
-                                        arrayB.size() - 1);
+  return _longestCommonSubsequenceBasic(
+      arrayA, arrayB, static_cast<int>(arrayA.size()) - 1,
+      static_cast<int>(arrayB.size()) - 1);
 }
 
 int longestCommonSubsequenceMemo(const std::vector<int> &arrayA,
                                  const std::vector<int> &arrayB) {
 
-  std::function<int(const std::vector<int> &, const std::vector<int> &,
-                    unsigned int, unsigned int,
-                    std::unordered_map<std::pair<int, int>, int, hash> &)>
+  std::function<int(const std::vector<int> &, const std::vector<int> &, int,
+                    int, std::unordered_map<std::pair<int, int>, int, hash> &)>
       _longestCommonSubsequenceMemo;
   _longestCommonSubsequenceMemo =
-      [&](const std::vector<int> &arrayA, const std::vector<int> &arrayB,
-          unsigned int m, unsigned int n,
+      [&](const std::vector<int> &arrayA, const std::vector<int> &arrayB, int m,
+          int n,
           std::unordered_map<std::pair<int, int>, int, hash> &memo) -> int {
-    if (m == -1 || n == -1)
+    if (m < 0 || n < 0)
       return 0;
 
-    if (arrayA[m] == arrayB[n])
-      return _longestCommonSubsequenceMemo(arrayA, arrayB, m - 1, n - 1, memo) +
-             1;
+    std::pair<int, int> key(m, n);
 
-    std::pair<int, int> key(n, m);
-    memo[key] =
-        std::max(_longestCommonSubsequenceMemo(arrayA, arrayB, m, n - 1, memo),
-                 _longestCommonSubsequenceMemo(arrayA, arrayB, m - 1, n, memo));
+    if (memo.count(key))
+      return memo[key];
+
+    if (arrayA[m] == arrayB[n]) {
+      memo[key] =
+          _longestCommonSubsequenceMemo(arrayA, arrayB, m - 1, n - 1, memo) + 1;
+    } else {
+      memo[key] = std::max(
+          _longestCommonSubsequenceMemo(arrayA, arrayB, m, n - 1, memo),
+          _longestCommonSubsequenceMemo(arrayA, arrayB, m - 1, n, memo));
+    }
 
     return memo[key];
   };
 
   std::unordered_map<std::pair<int, int>, int, hash> memo;
 
-  return _longestCommonSubsequenceMemo(arrayA, arrayB, arrayA.size() - 1,
-                                       arrayB.size() - 1, memo);
+  return _longestCommonSubsequenceMemo(
+      arrayA, arrayB, static_cast<int>(arrayA.size()) - 1,
+      static_cast<int>(arrayB.size()) - 1, memo);
 }
 
 int longestCommonSubsequenceTable(const std::vector<int> &arrayA,
