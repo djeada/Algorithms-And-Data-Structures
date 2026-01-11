@@ -1,36 +1,53 @@
-from typing import List
+"""Binary tree right side view - return values visible from the right side."""
+
+from __future__ import annotations
+
+from collections import deque
+from typing import Optional
 
 
 class TreeNode:
-    def __init__(self, value: int, left: "TreeNode" = None, right: "TreeNode" = None):
+    """A node in a binary tree."""
+
+    def __init__(
+        self,
+        value: int,
+        left: Optional[TreeNode] = None,
+        right: Optional[TreeNode] = None,
+    ) -> None:
         self.value = value
         self.left = left
         self.right = right
 
 
-def right_side_view(root: TreeNode) -> List[int]:
-    # Edge case: if the tree is empty, return an empty list
+def right_side_view(root: Optional[TreeNode]) -> list[int]:
+    """
+    Return the values of nodes visible from the right side of a binary tree.
+
+    Uses level-order traversal (BFS) and returns the rightmost node at each level.
+
+    Args:
+        root: The root node of the binary tree.
+
+    Returns:
+        List of values visible from the right side, from top to bottom.
+    """
     if not root:
         return []
-    # Initialize a queue and a result list
-    queue = [root]
-    result = []
-    # Loop until the queue is empty
+
+    queue: deque[TreeNode] = deque([root])
+    result: list[int] = []
+
     while queue:
-        # Get the size of the queue
         size = len(queue)
-        # Loop through all the nodes in the queue
         for i in range(size):
-            # Remove the first node from the queue
-            node = queue.pop(0)
-            # If this is the last node in the current level, add its value to the result list
+            node = queue.popleft()
+            # If this is the last node in the current level, add its value
             if i == size - 1:
                 result.append(node.value)
-            # If the node has a left child, add it to the queue
             if node.left:
                 queue.append(node.left)
-            # If the node has a right child, add it to the queue
             if node.right:
                 queue.append(node.right)
-    # Return the result list
+
     return result
