@@ -1,5 +1,7 @@
 #include "prim.h"
-#include <bits/stdc++.h>
+#include <queue>
+#include <unordered_map>
+#include <vector>
 
 template <class T> int prim(const Graph<T> &graph) {
 

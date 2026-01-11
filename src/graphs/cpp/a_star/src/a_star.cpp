@@ -1,5 +1,8 @@
 #include "a_star.h"
-#include <bits/stdc++.h>
+#include <climits>
+#include <queue>
+#include <unordered_map>
+#include <vector>
 
 // chose the smallest edge of which the vertex hasnt been chosen
 template <class T>

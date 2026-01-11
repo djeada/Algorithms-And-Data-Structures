@@ -1,5 +1,7 @@
 #include "dijkstra.h"
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <climits>
+#include <unordered_map>
 
 // chose the smallest edge of which the vertex hasnt been chosen
 template <class T>

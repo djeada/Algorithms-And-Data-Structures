@@ -1,5 +1,7 @@
 #include "dfs.h"
-#include <bits/stdc++.h>
+#include <climits>
+#include <functional>
+#include <unordered_map>
 
 template <class T>
 int dfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {

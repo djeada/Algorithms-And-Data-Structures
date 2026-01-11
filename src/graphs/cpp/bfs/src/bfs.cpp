@@ -1,5 +1,7 @@
 #include "bfs.h"
-#include <bits/stdc++.h>
+#include <climits>
+#include <queue>
+#include <unordered_map>
 
 template <class T>
 int bfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
