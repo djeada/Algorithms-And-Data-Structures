@@ -3,47 +3,63 @@
 #include <unordered_map>
 #include <vector>
 
+// Prim's algorithm using a priority queue for efficient minimum edge selection
 template <class T> int prim(const Graph<T> &graph) {
-
-  std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
+  if (graph.empty())
+    return 0;
 
   auto vertices = graph.vertices();
+  if (vertices.empty())
+    return 0;
 
-  for (const auto vertex : vertices)
-    visited[vertex] = false;
+  std::unordered_map<Vertex<T>, bool, HashFunction<T>> inMST;
 
-  // pick random vertex
-  auto source = vertices.front();
-  visited[source] = true;
+  for (const auto &vertex : vertices)
+    inMST[vertex] = false;
 
-  auto cmp = [&](Edge<T> l, Edge<T> r) { return l.distance > r.distance; };
+  // Start from the first vertex
+  Vertex<T> source = vertices.front();
+  inMST[source] = true;
 
-  std::priority_queue<Edge<T>, std::vector<Edge<T>>, decltype(cmp)> unvisited(
+  // Min-heap of edges ordered by weight
+  auto cmp = [](const Edge<T> &a, const Edge<T> &b) {
+    return a.distance > b.distance;
+  };
+
+  std::priority_queue<Edge<T>, std::vector<Edge<T>>, decltype(cmp)> minHeap(
       cmp);
 
-  for (auto edge : graph.edgesFromVertex(source))
-    unvisited.push(edge);
+  // Add all edges from source to the heap
+  for (const auto &edge : graph.edgesFromVertex(source))
+    minHeap.push(edge);
 
-  int result = 0;
+  int mstWeight = 0;
+  size_t verticesInMST = 1;
+  const size_t totalVertices = vertices.size();
 
-  while (!unvisited.empty()) {
+  while (!minHeap.empty() && verticesInMST < totalVertices) {
+    Edge<T> minEdge = minHeap.top();
+    minHeap.pop();
 
-    auto currentEdge = unvisited.top();
-    unvisited.pop();
-    auto distance = currentEdge.distance;
-    auto vertex = currentEdge.destination;
+    const auto &v = minEdge.destination;
 
-    if (!visited[vertex]) {
-      visited[vertex] = true;
-      result += distance;
-      for (auto edge : graph.edgesFromVertex(vertex)) {
-        if (!visited[edge.destination])
-          unvisited.push(edge);
-      }
+    // Skip if vertex is already in MST
+    if (inMST[v])
+      continue;
+
+    // Add vertex to MST
+    inMST[v] = true;
+    mstWeight += minEdge.distance;
+    verticesInMST++;
+
+    // Add all edges from newly added vertex
+    for (const auto &edge : graph.edgesFromVertex(v)) {
+      if (!inMST[edge.destination])
+        minHeap.push(edge);
     }
   }
 
-  return result;
+  return mstWeight;
 }
 
 template int prim<int>(const Graph<int> &graph);

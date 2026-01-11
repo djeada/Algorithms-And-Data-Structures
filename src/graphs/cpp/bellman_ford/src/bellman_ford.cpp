@@ -1,11 +1,12 @@
 #include "bellman_ford.h"
 #include <climits>
+#include <limits>
 #include <unordered_map>
 
+// Bellman-Ford algorithm: handles negative edge weights and detects negative cycles
 template <class T>
 int bellmanFord(const Graph<T> &graph, Vertex<T> source,
                 Vertex<T> destination) {
-
   if (!graph.contains(source) || !graph.contains(destination))
     return INT_MAX;
 
@@ -13,36 +14,47 @@ int bellmanFord(const Graph<T> &graph, Vertex<T> source,
     return 0;
 
   std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
-  std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
-  for (const auto vertex : graph.vertices()) {
-    distances[vertex] = INT_MAX;
-    visited[vertex] = false;
+  for (const auto &vertex : graph.vertices()) {
+    distances[vertex] = std::numeric_limits<int>::max();
   }
 
   distances[source] = 0;
 
-  for (int i = 0; i < graph.size() - 1; i++) {
+  const auto allEdges = graph.edges();
+  const size_t numVertices = graph.size();
 
-    for (auto &edge : graph.edges()) {
-      auto newDistance = distances[edge.source] + edge.distance;
+  // Relax all edges V-1 times
+  for (size_t i = 0; i < numVertices - 1; ++i) {
+    bool updated = false;
 
-      if (distances[edge.source] != INT_MAX &&
-          newDistance < distances[edge.destination])
-        distances[edge.destination] = newDistance;
+    for (const auto &edge : allEdges) {
+      if (distances[edge.source] != std::numeric_limits<int>::max()) {
+        int newDistance = distances[edge.source] + edge.distance;
+        if (newDistance < distances[edge.destination]) {
+          distances[edge.destination] = newDistance;
+          updated = true;
+        }
+      }
+    }
+
+    // Early termination if no updates were made
+    if (!updated)
+      break;
+  }
+
+  // Check for negative-weight cycles
+  for (const auto &edge : allEdges) {
+    if (distances[edge.source] != std::numeric_limits<int>::max() &&
+        distances[edge.source] + edge.distance < distances[edge.destination]) {
+      // Negative cycle detected
+      return INT_MAX;
     }
   }
 
-  for (auto &edge : graph.edges()) {
-    if (distances[edge.source] != INT_MAX &&
-        distances[edge.source] + edge.distance < distances[edge.destination])
-      return INT_MAX;
-  }
-
-  if (distances[destination] < 0)
-    return INT_MAX;
-
-  return distances[destination];
+  return distances[destination] == std::numeric_limits<int>::max()
+             ? INT_MAX
+             : distances[destination];
 }
 
 template int bellmanFord<int>(const Graph<int> &graph, Vertex<int> source,

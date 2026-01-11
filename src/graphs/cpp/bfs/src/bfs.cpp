@@ -1,20 +1,23 @@
 #include "bfs.h"
 #include <climits>
+#include <limits>
 #include <queue>
 #include <unordered_map>
 
+// Breadth-First Search with early termination
 template <class T>
 int bfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
-
   if (!graph.contains(source) || !graph.contains(destination))
     return INT_MAX;
 
-  std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
+  if (source == destination)
+    return 0;
 
+  std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
   std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
-  for (const auto vertex : graph.vertices()) {
-    distances[vertex] = INT_MAX;
+  for (const auto &vertex : graph.vertices()) {
+    distances[vertex] = std::numeric_limits<int>::max();
     visited[vertex] = false;
   }
 
@@ -25,23 +28,24 @@ int bfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
   queue.push(source);
 
   while (!queue.empty()) {
-    auto u = queue.front();
+    Vertex<T> u = queue.front();
     queue.pop();
 
-    for (auto &edge : graph.edgesFromVertex(u)) {
-
-      auto v = edge.destination;
+    for (const auto &edge : graph.edgesFromVertex(u)) {
+      const auto &v = edge.destination;
 
       if (!visited[v]) {
         visited[v] = true;
         distances[v] = distances[u] + edge.distance;
+
+        // Early termination when destination is found
+        if (v == destination)
+          return distances[v];
+
         queue.push(v);
       }
     }
   }
-
-  if (distances[destination] < 0)
-    return INT_MAX;
 
   return distances[destination];
 }
