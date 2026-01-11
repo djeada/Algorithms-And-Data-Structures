@@ -14,7 +14,8 @@ class Heap(abc.ABC):
         self.comp = comp
 
     def __copy__(self) -> Heap:
-        new_heap = self.__class__()
+        new_heap = self.__class__.__new__(self.__class__)
+        new_heap.comp = self.comp
         new_heap.data = self.data[:]
         return new_heap
 
