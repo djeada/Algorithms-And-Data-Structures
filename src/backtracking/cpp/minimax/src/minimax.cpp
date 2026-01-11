@@ -1,6 +1,6 @@
 #include "minimax.h"
 #include <algorithm>
-#include <cfloat>
+#include <climits>
 #include <iostream>
 #include <utility>
 #include <vector>
@@ -80,7 +80,7 @@ int minimax(std::vector<std::vector<int>> &board, int player) {
   }
 
   // initialize the best score
-  int best_score = (player == 1) ? FLT_MIN : FLT_MAX;
+  int best_score = (player == 1) ? INT_MIN : INT_MAX;
 
   // try all possible moves
   for (int row = 0; row < board.size(); ++row) {
@@ -110,7 +110,7 @@ int minimax(std::vector<std::vector<int>> &board, int player) {
 std::pair<int, int> find_best_move(std::vector<std::vector<int>> &board,
                                    int player) {
   // initialize the best score and the best move
-  int best_score = (player == -1) ? FLT_MIN : FLT_MAX;
+  int best_score = (player == -1) ? INT_MIN : INT_MAX;
   std::pair<int, int> best_move = {-1, -1};
 
   // try all possible moves

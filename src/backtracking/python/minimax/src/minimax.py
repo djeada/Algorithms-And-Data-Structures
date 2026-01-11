@@ -1,4 +1,17 @@
-def is_player_winning(board, player):
+from typing import List, Tuple, Optional
+
+
+def is_player_winning(board: List[List[int]], player: int) -> bool:
+    """
+    Check if the specified player has won the game.
+
+    Args:
+        board: The game board (3x3 grid).
+        player: The player to check (-1 or 1).
+
+    Returns:
+        True if the player has won, False otherwise.
+    """
     # check all rows
     for row in range(len(board)):
         if all(board[row][col] == player for col in range(len(board[0]))):
@@ -15,7 +28,16 @@ def is_player_winning(board, player):
     )
 
 
-def final_score(board):
+def final_score(board: List[List[int]]) -> int:
+    """
+    Calculate the final score of the game.
+
+    Args:
+        board: The game board.
+
+    Returns:
+        1 if player -1 wins, -1 if player 1 wins, 0 for a draw.
+    """
     # check for a win by player A
     if is_player_winning(board, -1):
         return 1
@@ -28,7 +50,16 @@ def final_score(board):
     return 0
 
 
-def game_over(board):
+def game_over(board: List[List[int]]) -> bool:
+    """
+    Check if the game has ended.
+
+    Args:
+        board: The game board.
+
+    Returns:
+        True if the game is over (someone won or board is full), False otherwise.
+    """
     if is_player_winning(board, -1) or is_player_winning(board, 1):
         return True
 
@@ -40,7 +71,17 @@ def game_over(board):
     return True
 
 
-def minimax(board, player):
+def minimax(board: List[List[int]], player: int) -> int:
+    """
+    Evaluate the game state using the minimax algorithm.
+
+    Args:
+        board: The current game board.
+        player: The current player (-1 or 1).
+
+    Returns:
+        The best score achievable from this position.
+    """
     # base case: the game has ended, return the score
     if game_over(board):
         return final_score(board)
@@ -66,13 +107,25 @@ def minimax(board, player):
                     best_score = min(best_score, score)
 
     # return the best score
-    return best_score
+    return int(best_score)
 
 
-def find_best_move(board, player):
+def find_best_move(
+    board: List[List[int]], player: int
+) -> Optional[Tuple[int, int]]:
+    """
+    Find the best move for the current player using minimax.
+
+    Args:
+        board: The current game board.
+        player: The current player (-1 or 1).
+
+    Returns:
+        The (row, col) tuple for the best move, or None if no move is available.
+    """
     # initialize the best score and the best move
     best_score = float("-inf") if player == -1 else float("inf")
-    best_move = None
+    best_move: Optional[Tuple[int, int]] = None
 
     # try all possible moves
     for row in range(3):
