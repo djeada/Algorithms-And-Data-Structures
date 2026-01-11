@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 
 def all_construct_basic(target: str, word_bank: List[str]) -> List[List[str]]:
@@ -44,10 +44,7 @@ def all_construct_memo(target: str, word_bank: List[str]) -> List[List[str]]:
         List of all possible combinations of words that construct target.
     """
 
-    def recurse(target: str, memo: Optional[dict]) -> List[List[str]]:
-        if memo is None:
-            memo = {}
-
+    def recurse(target: str, memo: dict) -> List[List[str]]:
         if not target:
             return [[]]
 
