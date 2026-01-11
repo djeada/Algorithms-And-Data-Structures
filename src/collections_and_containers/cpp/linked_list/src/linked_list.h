@@ -17,11 +17,14 @@ public:
   void pop_back();
   void pop_front();
   T &front();
+  const T &front() const;
   T &back();
-  bool empty();
+  const T &back() const;
+  bool empty() const;
   void clear();
-  int size();
+  int size() const;
   void remove(const T &v);
+  bool contains(const T &v) const;
 
 private:
   struct Node {

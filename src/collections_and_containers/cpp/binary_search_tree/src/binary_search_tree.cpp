@@ -1,32 +1,25 @@
 #include "binary_search_tree.h"
+#include <algorithm>
 #include <stdexcept>
 
-template <class T> BinarySearchTree<T>::BinarySearchTree() { n = 0; }
+template <class T>
+BinarySearchTree<T>::BinarySearchTree() : root(nullptr), n(0) {}
 
 template <class T>
-BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T> &t) {
-
-  // use in order traversal to copy the tree
-  root = nullptr;
-  n = 0;
-  std::vector<T> v = t.in_order_traversal();
-  for (int i = 0; i < v.size(); i++) {
-    insert(v[i]);
+BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T> &t)
+    : root(nullptr), n(0) {
+  for (const auto &v : t.in_order_traversal()) {
+    insert(v);
   }
 }
 
 template <class T>
 BinarySearchTree<T> &
 BinarySearchTree<T>::operator=(const BinarySearchTree<T> &t) {
-
-  // use in order traversal to copy the tree
   if (this != &t) {
     clear();
-    root = nullptr;
-    n = 0;
-    std::vector<T> v = t.in_order_traversal();
-    for (int i = 0; i < v.size(); i++) {
-      insert(v[i]);
+    for (const auto &v : t.in_order_traversal()) {
+      insert(v);
     }
   }
   return *this;
@@ -42,17 +35,44 @@ template <class T> void BinarySearchTree<T>::remove(const T &v) {
   remove(v, root);
 }
 
-template <class T> bool BinarySearchTree<T>::contains(const T &v) {
+template <class T> bool BinarySearchTree<T>::contains(const T &v) const {
   return contains(v, root);
 }
 
-template <class T> void BinarySearchTree<T>::clear() { clear(root); }
+template <class T> T BinarySearchTree<T>::find_min() const {
+  if (root == nullptr) {
+    throw std::out_of_range("Tree is empty");
+  }
+  const Node *p = root.get();
+  while (p->left != nullptr) {
+    p = p->left.get();
+  }
+  return p->data;
+}
 
-template <class T> int BinarySearchTree<T>::height() { return height(root); }
+template <class T> T BinarySearchTree<T>::find_max() const {
+  if (root == nullptr) {
+    throw std::out_of_range("Tree is empty");
+  }
+  const Node *p = root.get();
+  while (p->right != nullptr) {
+    p = p->right.get();
+  }
+  return p->data;
+}
 
-template <class T> int BinarySearchTree<T>::size() { return n; }
+template <class T> void BinarySearchTree<T>::clear() {
+  clear(root);
+  n = 0;
+}
 
-template <class T> bool BinarySearchTree<T>::empty() { return n == 0; }
+template <class T> int BinarySearchTree<T>::height() const {
+  return height(root);
+}
+
+template <class T> int BinarySearchTree<T>::size() const { return n; }
+
+template <class T> bool BinarySearchTree<T>::empty() const { return n == 0; }
 
 template <class T>
 std::vector<T> BinarySearchTree<T>::in_order_traversal() const {
@@ -101,24 +121,28 @@ void BinarySearchTree<T>::remove(const T &v, std::unique_ptr<Node> &p) {
   } else {
     if (p->left == nullptr && p->right == nullptr) {
       p = nullptr;
+      n--;
     } else if (p->left == nullptr) {
       p = std::move(p->right);
+      n--;
     } else if (p->right == nullptr) {
       p = std::move(p->left);
+      n--;
     } else {
-      Node *min = p->right.get();
-      while (min->left != nullptr) {
-        min = min->left.get();
+      // Find in-order successor
+      Node *successor = p->right.get();
+      while (successor->left != nullptr) {
+        successor = successor->left.get();
       }
-      p->data = min->data;
-      remove(min->data, p->right);
+      p->data = successor->data;
+      remove(successor->data, p->right);
     }
-    n--;
   }
 }
 
 template <class T>
-bool BinarySearchTree<T>::contains(const T &v, std::unique_ptr<Node> &p) {
+bool BinarySearchTree<T>::contains(const T &v,
+                                   const std::unique_ptr<Node> &p) const {
   if (p == nullptr) {
     return false;
   } else if (v < p->data) {
@@ -136,10 +160,10 @@ template <class T> void BinarySearchTree<T>::clear(std::unique_ptr<Node> &p) {
     clear(p->right);
     p = nullptr;
   }
-  n = 0;
 }
 
-template <class T> int BinarySearchTree<T>::height(std::unique_ptr<Node> &p) {
+template <class T>
+int BinarySearchTree<T>::height(const std::unique_ptr<Node> &p) const {
   if (p == nullptr) {
     return 0;
   } else {

@@ -14,11 +14,13 @@ public:
 
   void insert(const T &v);
   void remove(const T &v);
-  bool contains(const T &v);
+  bool contains(const T &v) const;
+  T find_min() const;
+  T find_max() const;
   void clear();
-  int height();
-  int size();
-  bool empty();
+  int height() const;
+  int size() const;
+  bool empty() const;
   std::vector<T> in_order_traversal() const;
   std::vector<T> pre_order_traversal() const;
   std::vector<T> post_order_traversal() const;
@@ -36,9 +38,9 @@ private:
 
   void insert(const T &v, std::unique_ptr<Node> &p);
   void remove(const T &v, std::unique_ptr<Node> &p);
-  bool contains(const T &v, std::unique_ptr<Node> &p);
+  bool contains(const T &v, const std::unique_ptr<Node> &p) const;
   void clear(std::unique_ptr<Node> &p);
-  int height(std::unique_ptr<Node> &p);
+  int height(const std::unique_ptr<Node> &p) const;
   void in_order_traversal(const std::unique_ptr<Node> &p,
                           std::vector<T> &v) const;
   void pre_order_traversal(const std::unique_ptr<Node> &p,

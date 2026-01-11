@@ -1,11 +1,12 @@
 #include "red_black_tree.h"
+#include <algorithm>
 #include <stdexcept>
 
 template <class T> RedBlackTree<T>::RedBlackTree() : root(nullptr), n(0) {}
 
 template <class T>
 RedBlackTree<T>::RedBlackTree(const RedBlackTree<T> &t) : root(nullptr), n(0) {
-  for (auto v : t.in_order_traversal()) {
+  for (const auto &v : t.in_order_traversal()) {
     insert(v);
   }
 }
@@ -14,9 +15,8 @@ template <class T>
 RedBlackTree<T> &RedBlackTree<T>::operator=(const RedBlackTree<T> &t) {
   if (this != &t) {
     clear();
-    std::vector<T> v = t.in_order_traversal();
-    for (auto i : v) {
-      insert(i);
+    for (const auto &v : t.in_order_traversal()) {
+      insert(v);
     }
   }
   return *this;
@@ -26,7 +26,9 @@ template <class T> RedBlackTree<T>::~RedBlackTree() { clear(); }
 
 template <class T> void RedBlackTree<T>::insert(const T &v) {
   insert(v, root);
-  root->is_red = false;
+  if (root != nullptr) {
+    root->is_red = false;
+  }
 }
 
 template <class T> void RedBlackTree<T>::remove(const T &v) {
@@ -36,17 +38,42 @@ template <class T> void RedBlackTree<T>::remove(const T &v) {
   }
 }
 
-template <class T> bool RedBlackTree<T>::contains(const T &v) {
+template <class T> bool RedBlackTree<T>::contains(const T &v) const {
   return contains(v, root);
 }
 
-template <class T> void RedBlackTree<T>::clear() { clear(root); }
+template <class T> T RedBlackTree<T>::find_min() const {
+  if (root == nullptr) {
+    throw std::out_of_range("Tree is empty");
+  }
+  const Node *p = root.get();
+  while (p->left != nullptr) {
+    p = p->left.get();
+  }
+  return p->data;
+}
 
-template <class T> int RedBlackTree<T>::height() { return height(root); }
+template <class T> T RedBlackTree<T>::find_max() const {
+  if (root == nullptr) {
+    throw std::out_of_range("Tree is empty");
+  }
+  const Node *p = root.get();
+  while (p->right != nullptr) {
+    p = p->right.get();
+  }
+  return p->data;
+}
 
-template <class T> int RedBlackTree<T>::size() { return n; }
+template <class T> void RedBlackTree<T>::clear() {
+  clear(root);
+  n = 0;
+}
 
-template <class T> bool RedBlackTree<T>::empty() { return n == 0; }
+template <class T> int RedBlackTree<T>::height() const { return height(root); }
+
+template <class T> int RedBlackTree<T>::size() const { return n; }
+
+template <class T> bool RedBlackTree<T>::empty() const { return n == 0; }
 
 template <class T> std::vector<T> RedBlackTree<T>::in_order_traversal() const {
   std::vector<T> v;
@@ -86,15 +113,11 @@ void RedBlackTree<T>::insert(const T &v, std::unique_ptr<Node> &p) {
 
 template <class T>
 void RedBlackTree<T>::remove(const T &v, std::unique_ptr<Node> &p) {
-  auto find_min = [](std::unique_ptr<Node> &p) {
-    while (p->left != nullptr) {
-      p = std::move(p->left);
-    }
-    return p->data;
-  };
   if (p == nullptr) {
     return;
-  } else if (v < p->data) {
+  }
+  
+  if (v < p->data) {
     remove(v, p->left);
   } else if (v > p->data) {
     remove(v, p->right);
@@ -109,16 +132,24 @@ void RedBlackTree<T>::remove(const T &v, std::unique_ptr<Node> &p) {
       p = std::move(p->left);
       n--;
     } else {
-
-      p->data = find_min(p->right);
-      remove(p->data, p->right);
+      // Find in-order successor
+      Node *successor = p->right.get();
+      while (successor->left != nullptr) {
+        successor = successor->left.get();
+      }
+      p->data = successor->data;
+      remove(successor->data, p->right);
     }
   }
-  balance(p);
+  
+  if (p != nullptr) {
+    balance(p);
+  }
 }
 
 template <class T>
-bool RedBlackTree<T>::contains(const T &v, std::unique_ptr<Node> &p) {
+bool RedBlackTree<T>::contains(const T &v,
+                               const std::unique_ptr<Node> &p) const {
   if (p == nullptr) {
     return false;
   } else if (v < p->data) {
@@ -135,11 +166,11 @@ template <class T> void RedBlackTree<T>::clear(std::unique_ptr<Node> &p) {
     clear(p->left);
     clear(p->right);
     p = nullptr;
-    n--;
   }
 }
 
-template <class T> int RedBlackTree<T>::height(std::unique_ptr<Node> &p) {
+template <class T>
+int RedBlackTree<T>::height(const std::unique_ptr<Node> &p) const {
   if (p == nullptr) {
     return 0;
   } else {
@@ -178,36 +209,56 @@ void RedBlackTree<T>::post_order_traversal(const std::unique_ptr<Node> &p,
 }
 
 template <class T> void RedBlackTree<T>::balance(std::unique_ptr<Node> &p) {
-
   if (p == nullptr) {
     return;
   }
 
+  // Color flip
+  if (p->left != nullptr && p->left->is_red && p->right != nullptr &&
+      p->right->is_red) {
+    p->is_red = true;
+    p->left->is_red = false;
+    p->right->is_red = false;
+    return;
+  }
+
+  // Left subtree cases
   if (p->left != nullptr && p->left->is_red) {
-    if (p->right != nullptr && p->right->is_red) {
-      p->is_red = true;
-      p->left->is_red = false;
-      p->right->is_red = false;
-    } else if (p->left->left != nullptr && p->left->left->is_red) {
+    if (p->left->left != nullptr && p->left->left->is_red) {
+      // Left-Left case
       rotate_right(p);
       p->is_red = false;
-      p->right->is_red = true;
+      if (p->right != nullptr) {
+        p->right->is_red = true;
+      }
     } else if (p->left->right != nullptr && p->left->right->is_red) {
+      // Left-Right case
       rotate_left(p->left);
       rotate_right(p);
       p->is_red = false;
-      p->right->is_red = true;
+      if (p->right != nullptr) {
+        p->right->is_red = true;
+      }
     }
-  } else if (p->right != nullptr && p->right->is_red) {
-    if (p->right->left != nullptr && p->right->left->is_red) {
+  }
+
+  // Right subtree cases
+  if (p->right != nullptr && p->right->is_red) {
+    if (p->right->right != nullptr && p->right->right->is_red) {
+      // Right-Right case
+      rotate_left(p);
+      p->is_red = false;
+      if (p->left != nullptr) {
+        p->left->is_red = true;
+      }
+    } else if (p->right->left != nullptr && p->right->left->is_red) {
+      // Right-Left case
       rotate_right(p->right);
       rotate_left(p);
       p->is_red = false;
-      p->left->is_red = true;
-    } else if (p->right->right != nullptr && p->right->right->is_red) {
-      rotate_left(p);
-      p->is_red = false;
-      p->left->is_red = true;
+      if (p->left != nullptr) {
+        p->left->is_red = true;
+      }
     }
   }
 }
