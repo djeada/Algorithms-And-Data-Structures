@@ -47,7 +47,7 @@ class TestAvlTree(TestCase):
         self.assertTrue(tree.empty())
 
     def test_in_order_traversal(self):
-        """
+        r"""
         Tree structure:
                 5
               /   \
@@ -70,7 +70,7 @@ class TestAvlTree(TestCase):
         self.assertEqual(expected, actual)
 
     def test_pre_order_traversal(self):
-        """
+        r"""
         Tree structure:
                 5
               /   \
@@ -93,7 +93,7 @@ class TestAvlTree(TestCase):
         self.assertEqual(expected, actual)
 
     def test_post_order_traversal(self):
-        """
+        r"""
         Tree structure:
                 5
               /   \
