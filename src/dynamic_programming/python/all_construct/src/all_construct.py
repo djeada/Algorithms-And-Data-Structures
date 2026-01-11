@@ -1,9 +1,25 @@
-def all_construct_basic(target, word_bank):
-    def recurse(target):
+from typing import List, Optional
+
+
+def all_construct_basic(target: str, word_bank: List[str]) -> List[List[str]]:
+    """
+    Find all ways to construct target from words in word_bank.
+
+    Uses basic recursion without memoization.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        List of all possible combinations of words that construct target.
+    """
+
+    def recurse(target: str) -> List[List[str]]:
         if not target:
             return [[]]
 
-        result = []
+        result: List[List[str]] = []
         for word in word_bank:
             if target.startswith(word):
                 suffix_ways = recurse(target[len(word) :])
@@ -14,15 +30,31 @@ def all_construct_basic(target, word_bank):
     return recurse(target)
 
 
-def all_construct_memo(target, word_bank):
-    def recurse(target, memo):
+def all_construct_memo(target: str, word_bank: List[str]) -> List[List[str]]:
+    """
+    Find all ways to construct target from words in word_bank.
+
+    Uses memoization for efficient computation.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        List of all possible combinations of words that construct target.
+    """
+
+    def recurse(target: str, memo: Optional[dict]) -> List[List[str]]:
+        if memo is None:
+            memo = {}
+
         if not target:
             return [[]]
 
         if target in memo:
             return memo[target]
 
-        result = []
+        result: List[List[str]] = []
         for word in word_bank:
             if target.startswith(word):
                 suffix_ways = recurse(target[len(word) :], memo)
@@ -34,8 +66,20 @@ def all_construct_memo(target, word_bank):
     return recurse(target, {})
 
 
-def all_construct_table(target, word_bank):
-    table = [[] for _ in range(len(target) + 1)]
+def all_construct_table(target: str, word_bank: List[str]) -> List[List[str]]:
+    """
+    Find all ways to construct target from words in word_bank.
+
+    Uses tabulation (bottom-up DP) for efficient computation.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        List of all possible combinations of words that construct target.
+    """
+    table: List[List[List[str]]] = [[] for _ in range(len(target) + 1)]
     table[0] = [[]]
 
     for i in range(len(target)):

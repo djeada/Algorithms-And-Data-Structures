@@ -1,5 +1,23 @@
-def search(text, pattern):
-    def find_longest_prefix_suffix(word):
+from typing import List
+
+
+def search(text: str, pattern: str) -> List[int]:
+    """
+    Search for all occurrences of pattern in text using KMP algorithm.
+
+    The Knuth-Morris-Pratt algorithm uses a failure function to avoid
+    redundant comparisons when searching for a pattern in text.
+
+    Args:
+        text: The text to search in.
+        pattern: The pattern to search for.
+
+    Returns:
+        List of starting indices where pattern is found in text.
+    """
+
+    def find_longest_prefix_suffix(word: str) -> List[int]:
+        """Compute the longest proper prefix which is also a suffix."""
         result = [0] * len(word)
         i = 1
         j = 0
@@ -17,7 +35,7 @@ def search(text, pattern):
         return result
 
     longest_prefix_suffix = find_longest_prefix_suffix(pattern)
-    result = []
+    result: List[int] = []
     j = 0
     for i, c in enumerate(text):
         if c == pattern[j]:

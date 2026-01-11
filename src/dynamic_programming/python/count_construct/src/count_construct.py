@@ -1,4 +1,19 @@
-def count_construct_basic(target, word_bank):
+from typing import List, Optional
+
+
+def count_construct_basic(target: str, word_bank: List[str]) -> int:
+    """
+    Count the number of ways to construct target from words in word_bank.
+
+    Uses basic recursion without memoization.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        Number of ways to construct target.
+    """
     if not target:
         return 1
 
@@ -9,7 +24,22 @@ def count_construct_basic(target, word_bank):
     return count
 
 
-def count_construct_memo(target, word_bank, memo=None):
+def count_construct_memo(
+    target: str, word_bank: List[str], memo: Optional[dict] = None
+) -> int:
+    """
+    Count the number of ways to construct target from words in word_bank.
+
+    Uses memoization for efficient computation.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+        memo: Optional dictionary for memoization cache.
+
+    Returns:
+        Number of ways to construct target.
+    """
     if memo is None:
         memo = {}
     if not target:
@@ -26,7 +56,19 @@ def count_construct_memo(target, word_bank, memo=None):
     return count
 
 
-def count_construct_table(target, word_bank):
+def count_construct_table(target: str, word_bank: List[str]) -> int:
+    """
+    Count the number of ways to construct target from words in word_bank.
+
+    Uses tabulation (bottom-up DP) for efficient computation.
+
+    Args:
+        target: The target string to construct.
+        word_bank: List of words that can be used (can be reused).
+
+    Returns:
+        Number of ways to construct target.
+    """
     if not target:
         return 1
 

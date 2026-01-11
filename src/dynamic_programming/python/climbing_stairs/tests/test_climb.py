@@ -69,7 +69,7 @@ class TestClimbTable(unittest.TestCase):
 
     def test_with_1(self):
         num = 1
-        result = 2
+        result = 1
         self.assertEqual(count_ways_to_climb_table(num), result)
 
     def test_with_2(self):

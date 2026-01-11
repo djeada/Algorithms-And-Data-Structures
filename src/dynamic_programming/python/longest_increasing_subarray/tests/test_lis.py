@@ -31,13 +31,11 @@ class TestLisMemo(unittest.TestCase):
         result = 4
         self.assertEqual(lis_memo(a), result)
 
-    @unittest.skip("Not implemented yet")
     def test_2(self):
         a = [0, 9, 7, 14, 6, 8]
         result = 3
         self.assertEqual(lis_memo(a), result)
 
-    @unittest.skip("Not implemented yet")
     def test_3(self):
         a = [3, 10, 2, 1, 20]
         result = 3

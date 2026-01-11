@@ -1,5 +1,16 @@
-def lcs_basic(a, b):
-    def recursion(a, b, m, n):
+def lcs_basic(a: str, b: str) -> int:
+    """
+    Find the length of the longest common subsequence using basic recursion.
+
+    Args:
+        a: First string.
+        b: Second string.
+
+    Returns:
+        Length of the longest common subsequence.
+    """
+
+    def recursion(a: str, b: str, m: int, n: int) -> int:
         if not m or not n:
             return 0
 
@@ -11,8 +22,19 @@ def lcs_basic(a, b):
     return recursion(a, b, len(a), len(b))
 
 
-def lcs_memo(a, b):
-    def recursion(a, b, m, n, memo):
+def lcs_memo(a: str, b: str) -> int:
+    """
+    Find the length of the longest common subsequence using memoization.
+
+    Args:
+        a: First string.
+        b: Second string.
+
+    Returns:
+        Length of the longest common subsequence.
+    """
+
+    def recursion(a: str, b: str, m: int, n: int, memo: dict) -> int:
         if m == 0 or n == 0:
             return 0
 
@@ -30,14 +52,24 @@ def lcs_memo(a, b):
 
         return memo[key]
 
-    return recursion(a, b, len(a), len(b), dict())
+    return recursion(a, b, len(a), len(b), {})
 
 
-def lcs_tab(a, b):
+def lcs_tab(a: str, b: str) -> int:
+    """
+    Find the length of the longest common subsequence using tabulation.
+
+    Args:
+        a: First string.
+        b: Second string.
+
+    Returns:
+        Length of the longest common subsequence.
+    """
     m = len(a)
     n = len(b)
 
-    table = [[0 for x in range(n + 1)] for y in range(m + 1)]
+    table = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
 
     for i in range(1, m + 1):
         for j in range(1, n + 1):
