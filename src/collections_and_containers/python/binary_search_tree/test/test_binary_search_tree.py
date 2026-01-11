@@ -117,7 +117,7 @@ class TestBinarySearchTree(TestCase):
         self.assertFalse(bst.empty())
 
     def test_in_order_traversal(self):
-        """
+        r"""
         Tree structure:
                 5
               /   \
@@ -141,7 +141,7 @@ class TestBinarySearchTree(TestCase):
         self.assertEqual(actual, expected)
 
     def test_pre_order_traversal(self):
-        """
+        r"""
         Tree structure:
                 5
               /   \
@@ -165,7 +165,7 @@ class TestBinarySearchTree(TestCase):
         self.assertEqual(actual, expected)
 
     def test_post_order_traversal(self):
-        """
+        r"""
         Tree structure:
                 5
               /   \

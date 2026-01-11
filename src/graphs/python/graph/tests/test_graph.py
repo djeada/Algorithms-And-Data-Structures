@@ -93,7 +93,7 @@ class TestGraph(unittest.TestCase):
     def test_add_edge(self):
         graph = Graph()
 
-        self.assertDictEqual(graph._adj_dict, dict())
+        self.assertDictEqual(graph._adj_dict, {})
 
         edge_a = Edge(Vertex(1), Vertex(9), 8)
         edge_b = Edge(Vertex(5), Vertex(4), 5)
@@ -107,8 +107,8 @@ class TestGraph(unittest.TestCase):
             edge_a.source: [edge_a],
             edge_b.source: [edge_b],
             edge_c.source: [edge_c],
-            edge_a.destination: list(),
-            edge_b.destination: list(),
+            edge_a.destination: [],
+            edge_b.destination: [],
         }
 
         self.assertDictEqual(graph._adj_dict, expected_result)
@@ -116,7 +116,7 @@ class TestGraph(unittest.TestCase):
     def test_add_vertex(self):
         graph = Graph()
 
-        self.assertDictEqual(graph._adj_dict, dict())
+        self.assertDictEqual(graph._adj_dict, {})
 
         vertex_a = Vertex("A")
         vertex_b = Vertex("B")
@@ -126,7 +126,7 @@ class TestGraph(unittest.TestCase):
         graph.add_vertex(vertex_b)
         graph.add_vertex(vertex_c)
 
-        expected_result = {vertex_a: list(), vertex_b: list(), vertex_c: list()}
+        expected_result = {vertex_a: [], vertex_b: [], vertex_c: []}
 
         self.assertDictEqual(graph._adj_dict, expected_result)
 
@@ -148,7 +148,7 @@ class TestGraph(unittest.TestCase):
     def test_edges(self):
         graph = Graph()
 
-        self.assertDictEqual(graph._adj_dict, dict())
+        self.assertDictEqual(graph._adj_dict, {})
 
         edge_a = Edge(Vertex(1), Vertex(9), 8)
         edge_b = Edge(Vertex(5), Vertex(4), 5)
@@ -233,6 +233,17 @@ class TestGraph(unittest.TestCase):
         graph.add_edge(edge_c)
 
         self.assertTrue(graph.size() == 5)
+
+    def test_repr(self):
+        graph = Graph()
+
+        edge = Edge(Vertex(1), Vertex(2), 5)
+        graph.add_edge(edge)
+
+        # Test that repr doesn't raise an error and contains expected format
+        repr_str = repr(graph)
+        self.assertIn("—>", repr_str)
+        self.assertIn("(1, 2, 5)", repr_str)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,21 @@
-from typing import List
+"""Calculate the sum of a subarray."""
+
+from __future__ import annotations
 
 
-def subarray_sum(array: List[int], start: int, end: int) -> int:
-    # Initialize the sum to 0
-    subarray_sum = 0
-    # Iterate through the subarray and add the elements to the sum
+def subarray_sum(array: list[int], start: int, end: int) -> int:
+    """
+    Calculate the sum of elements in a subarray.
+
+    Args:
+        array: The input array of integers.
+        start: The starting index (inclusive).
+        end: The ending index (exclusive).
+
+    Returns:
+        The sum of elements from index start to end-1.
+    """
+    total = 0
     for i in range(start, end):
-        subarray_sum += array[i]
-    # Return the sum
-    return subarray_sum
+        total += array[i]
+    return total

@@ -10,9 +10,8 @@ from graph import Vertex, Edge, Graph
 from kruskal import kruskal
 
 
-class Testkruskal(unittest.TestCase):
+class TestKruskal(unittest.TestCase):
     def test_kruskal_str_vertices(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex("A"), Vertex("D"), 2))
@@ -27,7 +26,6 @@ class Testkruskal(unittest.TestCase):
         self.assertEqual(kruskal(graph), 31)
 
     def test_kruskal_int_vertices(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex(0), Vertex(1), 1))

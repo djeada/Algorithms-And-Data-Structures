@@ -1,15 +1,32 @@
-def kruskal(graph):
+"""Kruskal's algorithm for Minimum Spanning Tree (MST)."""
 
-    rank = dict()
-    parent = dict()
+from __future__ import annotations
 
-    def find(vertex):
+from graph import Graph, Vertex
+
+
+def kruskal(graph: Graph) -> float:
+    """
+    Find the minimum spanning tree weight using Kruskal's algorithm.
+
+    Uses Union-Find data structure with path compression and union by rank
+    for efficient O(E log E) performance.
+
+    Args:
+        graph: The graph to find the MST for.
+
+    Returns:
+        The total weight of the minimum spanning tree.
+    """
+    rank: dict[Vertex, int] = {}
+    parent: dict[Vertex, Vertex] = {}
+
+    def find(vertex: Vertex) -> Vertex:
         if vertex != parent[vertex]:
             parent[vertex] = find(parent[vertex])
-
         return parent[vertex]
 
-    def merge(x, y):
+    def merge(x: Vertex, y: Vertex) -> None:
         x = find(x)
         y = find(y)
 
@@ -25,13 +42,12 @@ def kruskal(graph):
         rank[vertex] = 0
         parent[vertex] = vertex
 
-    result = 0
+    result = 0.0
 
     edges = graph.edges()
     edges.sort()
 
     for edge in edges:
-
         u = edge.source
         v = edge.destination
 

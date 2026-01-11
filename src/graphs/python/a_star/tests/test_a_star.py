@@ -42,10 +42,10 @@ class TestAStar(unittest.TestCase):
         self.assertEqual(a_star(graph, Vertex(a), Vertex(c), Point.distance), 18)
         self.assertEqual(a_star(graph, Vertex(a), Vertex(b), Point.distance), 6)
         self.assertEqual(
-            a_star(graph, Vertex(d), Vertex(b), Point.distance), float("inf")
+            a_star(graph, Vertex(d), Vertex(b), Point.distance), math.inf
         )
         self.assertEqual(
-            a_star(graph, Vertex(b), Vertex(e), Point.distance), float("inf")
+            a_star(graph, Vertex(b), Vertex(e), Point.distance), math.inf
         )
 
 

@@ -1,3 +1,4 @@
+import math
 import unittest
 
 import os
@@ -26,11 +27,10 @@ class TestBFS(unittest.TestCase):
         self.assertEqual(bfs(graph, Vertex("A"), Vertex("C")), 20)
         self.assertEqual(bfs(graph, Vertex("A"), Vertex("F")), 8)
         self.assertEqual(bfs(graph, Vertex("B"), Vertex("G")), 15)
-        self.assertEqual(bfs(graph, Vertex("E"), Vertex("A")), float("inf"))
-        self.assertEqual(bfs(graph, Vertex("C"), Vertex("D")), float("inf"))
+        self.assertEqual(bfs(graph, Vertex("E"), Vertex("A")), math.inf)
+        self.assertEqual(bfs(graph, Vertex("C"), Vertex("D")), math.inf)
 
     def test_bfs_int_vertices_positive(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex(0), Vertex(1), 1))
@@ -51,8 +51,7 @@ class TestBFS(unittest.TestCase):
         self.assertEqual(bfs(graph, Vertex(2), Vertex(3)), 1)
         self.assertEqual(bfs(graph, Vertex(2), Vertex(4)), 2)
 
-    def test_bfs_int_vertices_negaitve(self):
-
+    def test_bfs_int_vertices_negative(self):
         graph = Graph()
 
         graph.add_edge(Edge(Vertex(1), Vertex(2), 1))
@@ -60,8 +59,8 @@ class TestBFS(unittest.TestCase):
         graph.add_edge(Edge(Vertex(3), Vertex(4), 1))
         graph.add_edge(Edge(Vertex(4), Vertex(2), 1))
 
-        self.assertEqual(bfs(graph, Vertex(5), Vertex(0)), float("inf"))
-        self.assertEqual(bfs(graph, Vertex(1), Vertex(5)), float("inf"))
+        self.assertEqual(bfs(graph, Vertex(5), Vertex(0)), math.inf)
+        self.assertEqual(bfs(graph, Vertex(1), Vertex(5)), math.inf)
 
 
 if __name__ == "__main__":

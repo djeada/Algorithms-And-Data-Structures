@@ -1,15 +1,27 @@
+"""Singly linked list implementation."""
+
+from __future__ import annotations
+
+from typing import Any, Iterator, Optional
+
+
 class Node:
-    def __init__(self, data):
+    """A node in a singly linked list."""
+
+    def __init__(self, data: Any) -> None:
         self.data = data
-        self.next = None
+        self.next: Optional[Node] = None
 
 
 class LinkedList:
-    def __init__(self):
-        self.head = None
+    """A singly linked list data structure."""
+
+    def __init__(self) -> None:
+        self.head: Optional[Node] = None
         self.n = 0
 
-    def push_back(self, v):
+    def push_back(self, v: Any) -> None:
+        """Add an element to the end of the list."""
         if self.head is None:
             self.head = Node(v)
         else:
@@ -19,17 +31,20 @@ class LinkedList:
             node.next = Node(v)
         self.n += 1
 
-    def push_front(self, v):
+    def push_front(self, v: Any) -> None:
+        """Add an element to the front of the list."""
         node = Node(v)
         node.next = self.head
         self.head = node
         self.n += 1
 
-    def pop_back(self):
+    def pop_back(self) -> Optional[Any]:
+        """Remove and return the last element."""
         if self.head is None:
             return None
 
         last = self.head
+        prev = None
         while last.next is not None:
             prev = last
             last = last.next
@@ -42,7 +57,8 @@ class LinkedList:
         self.n -= 1
         return last.data
 
-    def pop_front(self):
+    def pop_front(self) -> Optional[Any]:
+        """Remove and return the first element."""
         if self.head is None:
             return None
 
@@ -51,12 +67,14 @@ class LinkedList:
         self.n -= 1
         return node.data
 
-    def front(self):
+    def front(self) -> Optional[Any]:
+        """Return the first element without removing it."""
         if self.head is None:
             return None
         return self.head.data
 
-    def back(self):
+    def back(self) -> Optional[Any]:
+        """Return the last element without removing it."""
         if self.head is None:
             return None
 
@@ -65,17 +83,21 @@ class LinkedList:
             node = node.next
         return node.data
 
-    def empty(self):
+    def empty(self) -> bool:
+        """Check if the list is empty."""
         return self.head is None
 
-    def clear(self):
+    def clear(self) -> None:
+        """Remove all elements from the list."""
         self.head = None
         self.n = 0
 
-    def size(self):
+    def size(self) -> int:
+        """Return the number of elements in the list."""
         return self.n
 
-    def remove(self, v):
+    def remove(self, v: Any) -> None:
+        """Remove the first occurrence of an element."""
         if self.head is None:
             return
 
@@ -92,14 +114,14 @@ class LinkedList:
                 return
             node = node.next
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         node = self.head
         while node is not None:
             yield node.data
             node = node.next
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(list(self))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)

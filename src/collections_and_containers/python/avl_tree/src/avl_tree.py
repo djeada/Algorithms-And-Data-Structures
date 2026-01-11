@@ -1,36 +1,49 @@
+"""AVL Tree (self-balancing binary search tree) implementation."""
+
+from __future__ import annotations
+
+from typing import Any, Optional
+
+
 class Node:
-    def __init__(self, value):
+    """A node in an AVL tree."""
+
+    def __init__(self, value: Any) -> None:
         self.value = value
-        self.left = None
-        self.right = None
+        self.left: Optional[Node] = None
+        self.right: Optional[Node] = None
         self.balance_factor = 0
 
-class AvlTree:
 
-    def __init__(self):
-        self.root = None
+class AvlTree:
+    """A self-balancing AVL tree data structure."""
+
+    def __init__(self) -> None:
+        self.root: Optional[Node] = None
         self.n = 0
 
-    def insert(self, value):
-        def insert(p):
+    def insert(self, value: Any) -> None:
+        """Insert a value into the tree."""
+        def insert_helper(p: Optional[Node]) -> Node:
             if not p:
                 return Node(value)
 
             if value < p.value:
-                p.left = insert(p.left)
+                p.left = insert_helper(p.left)
             else:
-                p.right = insert(p.right)
+                p.right = insert_helper(p.right)
 
             right_height = self._height(p.right) if p.right else 0
             left_height = self._height(p.left) if p.left else 0
             p.balance_factor = right_height - left_height
             return self.balance(p)
 
-        self.root = insert(self.root)
+        self.root = insert_helper(self.root)
         self.n += 1
 
-    def remove(self, value):
-        def remove(p):
+    def remove(self, value: Any) -> None:
+        """Remove a value from the tree."""
+        def remove_helper(p: Optional[Node]) -> Optional[Node]:
             if not p:
                 return None
 
@@ -42,85 +55,94 @@ class AvlTree:
 
                 min_value = self.find_min(p.right)
                 p.value = min_value
-                p.right = remove(p.right)
+                p.right = remove_helper(p.right)
             elif value < p.value:
-                p.left = remove(p.left)
+                p.left = remove_helper(p.left)
             else:
-                p.right = remove(p.right)
+                p.right = remove_helper(p.right)
 
             right_height = self._height(p.right) if p.right else 0
             left_height = self._height(p.left) if p.left else 0
             p.balance_factor = right_height - left_height
             return self.balance(p)
 
-        self.root = remove(self.root)
+        self.root = remove_helper(self.root)
         self.n -= 1
 
-    def contains(self, value):
-        def contains(p):
+    def contains(self, value: Any) -> bool:
+        """Check if the tree contains a value."""
+        def contains_helper(p: Optional[Node]) -> bool:
             if not p:
                 return False
             if value == p.value:
                 return True
             elif value < p.value:
-                return contains(p.left)
+                return contains_helper(p.left)
             else:
-                return contains(p.right)
+                return contains_helper(p.right)
 
-        return contains(self.root)
+        return contains_helper(self.root)
 
-    def clear(self):
+    def clear(self) -> None:
+        """Remove all elements from the tree."""
         self.root = None
         self.n = 0
 
-    def height(self):
+    def height(self) -> int:
+        """Return the height of the tree."""
         return self._height(self.root)
 
-    def _height(self, p):
+    def _height(self, p: Optional[Node]) -> int:
         if not p:
             return 0
         return 1 + max(self._height(p.left), self._height(p.right))
 
-    def size(self):
+    def size(self) -> int:
+        """Return the number of elements in the tree."""
         return self.n
 
-    def empty(self):
+    def empty(self) -> bool:
+        """Check if the tree is empty."""
         return self.n == 0
 
-    def in_order_traversal(self):
-        def in_order_traversal(p, v):
+    def in_order_traversal(self) -> list[Any]:
+        """Return elements in in-order traversal (left, root, right)."""
+        def in_order_helper(p: Optional[Node], v: list[Any]) -> None:
             if p:
-                in_order_traversal(p.left, v)
+                in_order_helper(p.left, v)
                 v.append(p.value)
-                in_order_traversal(p.right, v)
+                in_order_helper(p.right, v)
 
-        v = []
-        in_order_traversal(self.root, v)
+        v: list[Any] = []
+        in_order_helper(self.root, v)
         return v
 
-    def pre_order_traversal(self):
-        def pre_order_traversal(p, v):
+    def pre_order_traversal(self) -> list[Any]:
+        """Return elements in pre-order traversal (root, left, right)."""
+        def pre_order_helper(p: Optional[Node], v: list[Any]) -> None:
             if p:
                 v.append(p.value)
-                pre_order_traversal(p.left, v)
-                pre_order_traversal(p.right, v)
+                pre_order_helper(p.left, v)
+                pre_order_helper(p.right, v)
 
-        v = []
-        pre_order_traversal(self.root, v)
+        v: list[Any] = []
+        pre_order_helper(self.root, v)
         return v
 
-    def post_order_traversal(self):
-        def post_order_traversal(p, v):
+    def post_order_traversal(self) -> list[Any]:
+        """Return elements in post-order traversal (left, right, root)."""
+        def post_order_helper(p: Optional[Node], v: list[Any]) -> None:
             if p:
-                post_order_traversal(p.left, v)
-                post_order_traversal(p.right, v)
+                post_order_helper(p.left, v)
+                post_order_helper(p.right, v)
                 v.append(p.value)
 
-        v = []
-        post_order_traversal(self.root, v)
+        v: list[Any] = []
+        post_order_helper(self.root, v)
         return v
 
-    def balance(self, p):
+    def balance(self, p: Optional[Node]) -> Optional[Node]:
+        """Balance the tree at node p."""
         if not p:
             return None
 
@@ -138,19 +160,22 @@ class AvlTree:
             return self.rotate_right(p)
         return p
 
-    def rotate_left(self, p):
+    def rotate_left(self, p: Node) -> Node:
+        """Perform a left rotation."""
         q = p.right
         p.right = q.left
         q.left = p
         return q
 
-    def rotate_right(self, p):
+    def rotate_right(self, p: Node) -> Node:
+        """Perform a right rotation."""
         q = p.left
         p.left = q.right
         q.right = p
         return q
 
-    def find_min(self, p):
+    def find_min(self, p: Node) -> Any:
+        """Find the minimum value in the subtree rooted at p."""
         while p.left:
             p = p.left
         return p.value
