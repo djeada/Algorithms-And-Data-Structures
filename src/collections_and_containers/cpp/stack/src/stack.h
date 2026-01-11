@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 
 template <class T> class Stack {
@@ -8,9 +10,10 @@ public:
   ~Stack();
   T pop();              // removes an element from the top of the stack
   void push(T element); // adds an element to the top of the stack
-  T top();              // returns the element at the top of the stack
-  int size();
-  bool isEmpty();
+  T top() const;        // returns the element at the top of the stack
+  int size() const;
+  bool isEmpty() const;
+  void clear();
   Stack &operator=(const Stack &other);
 
 private:

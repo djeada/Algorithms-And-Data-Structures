@@ -1,41 +1,52 @@
 #include "dfs.h"
-#include <bits/stdc++.h>
+#include <functional>
+#include <limits>
+#include <unordered_map>
 
+// Depth-First Search using recursive approach
 template <class T>
 int dfs(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination) {
+  constexpr int INF = std::numeric_limits<int>::max();
 
   if (!graph.contains(source) || !graph.contains(destination))
-    return INT_MAX;
+    return INF;
+
+  if (source == destination)
+    return 0;
 
   std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
   std::unordered_map<Vertex<T>, bool, HashFunction<T>> visited;
 
-  for (const auto vertex : graph.vertices()) {
-    distances[vertex] = INT_MAX;
+  for (const auto &vertex : graph.vertices()) {
+    distances[vertex] = INF;
     visited[vertex] = false;
   }
 
   distances[source] = 0;
-  visited[source] = true;
 
-  std::function<void(Vertex<T>)> search;
-  search = [&](Vertex<T> u) -> void {
+  // Recursive DFS helper with early termination support
+  std::function<bool(Vertex<T>)> search;
+  search = [&](Vertex<T> u) -> bool {
     visited[u] = true;
 
-    for (auto &edge : graph.edgesFromVertex(u)) {
+    // Early termination when destination is found
+    if (u == destination)
+      return true;
 
-      auto v = edge.destination;
+    for (const auto &edge : graph.edgesFromVertex(u)) {
+      const auto &v = edge.destination;
+
       if (!visited[v]) {
         distances[v] = distances[u] + edge.distance;
-        search(v);
+        if (search(v))
+          return true;
       }
     }
+
+    return false;
   };
 
   search(source);
-
-  if (distances[destination] < 0)
-    return INT_MAX;
 
   return distances[destination];
 }

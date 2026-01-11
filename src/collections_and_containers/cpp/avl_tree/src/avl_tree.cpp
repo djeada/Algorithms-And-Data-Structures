@@ -1,11 +1,12 @@
 #include "avl_tree.h"
+#include <algorithm>
 #include <stdexcept>
 
 template <class T> AvlTree<T>::AvlTree() : root(nullptr), n(0) {}
 
 template <class T>
 AvlTree<T>::AvlTree(const AvlTree<T> &t) : root(nullptr), n(0) {
-  for (auto v : t.in_order_traversal()) {
+  for (const auto &v : t.in_order_traversal()) {
     insert(v);
   }
 }
@@ -13,7 +14,7 @@ AvlTree<T>::AvlTree(const AvlTree<T> &t) : root(nullptr), n(0) {
 template <class T> AvlTree<T> &AvlTree<T>::operator=(const AvlTree<T> &t) {
   if (this != &t) {
     clear();
-    for (auto v : t.in_order_traversal()) {
+    for (const auto &v : t.in_order_traversal()) {
       insert(v);
     }
   }
@@ -26,17 +27,39 @@ template <class T> void AvlTree<T>::insert(const T &v) { insert(v, root); }
 
 template <class T> void AvlTree<T>::remove(const T &v) { remove(v, root); }
 
-template <class T> bool AvlTree<T>::contains(const T &v) {
+template <class T> bool AvlTree<T>::contains(const T &v) const {
   return contains(v, root);
+}
+
+template <class T> T AvlTree<T>::find_min() const {
+  if (root == nullptr) {
+    throw std::out_of_range("Tree is empty");
+  }
+  const Node *p = root.get();
+  while (p->left != nullptr) {
+    p = p->left.get();
+  }
+  return p->data;
+}
+
+template <class T> T AvlTree<T>::find_max() const {
+  if (root == nullptr) {
+    throw std::out_of_range("Tree is empty");
+  }
+  const Node *p = root.get();
+  while (p->right != nullptr) {
+    p = p->right.get();
+  }
+  return p->data;
 }
 
 template <class T> void AvlTree<T>::clear() { clear(root); }
 
-template <class T> int AvlTree<T>::height() { return height(root); }
+template <class T> int AvlTree<T>::height() const { return height(root); }
 
-template <class T> int AvlTree<T>::size() { return n; }
+template <class T> int AvlTree<T>::size() const { return n; }
 
-template <class T> bool AvlTree<T>::empty() { return n == 0; }
+template <class T> bool AvlTree<T>::empty() const { return n == 0; }
 
 template <class T> std::vector<T> AvlTree<T>::in_order_traversal() const {
   std::vector<T> v;
@@ -83,25 +106,30 @@ void AvlTree<T>::remove(const T &v, std::unique_ptr<Node> &p) {
   } else {
     if (p->left == nullptr && p->right == nullptr) {
       p = nullptr;
+      n--;
     } else if (p->left == nullptr) {
       p = std::move(p->right);
+      n--;
     } else if (p->right == nullptr) {
       p = std::move(p->left);
+      n--;
     } else {
-      std::unique_ptr<Node> &c = p->left;
-      while (c->right != nullptr) {
-        c = std::move(c->right);
+      // Find in-order predecessor
+      Node *pred = p->left.get();
+      while (pred->right != nullptr) {
+        pred = pred->right.get();
       }
-      p->data = c->data;
-      c = std::move(c->left);
+      p->data = pred->data;
+      remove(pred->data, p->left);
     }
-    n--;
   }
-  balance(p);
+  if (p != nullptr) {
+    balance(p);
+  }
 }
 
 template <class T>
-bool AvlTree<T>::contains(const T &v, std::unique_ptr<Node> &p) {
+bool AvlTree<T>::contains(const T &v, const std::unique_ptr<Node> &p) const {
   if (p == nullptr) {
     return false;
   } else if (v < p->data) {
@@ -122,7 +150,7 @@ template <class T> void AvlTree<T>::clear(std::unique_ptr<Node> &p) {
   }
 }
 
-template <class T> int AvlTree<T>::height(std::unique_ptr<Node> &p) {
+template <class T> int AvlTree<T>::height(const std::unique_ptr<Node> &p) const {
   if (p == nullptr) {
     return 0;
   } else {
@@ -161,21 +189,32 @@ void AvlTree<T>::post_order_traversal(const std::unique_ptr<Node> &p,
 }
 
 template <class T> void AvlTree<T>::balance(std::unique_ptr<Node> &p) {
-  if (p != nullptr) {
-    if (height(p->left) - height(p->right) > 1) {
-      if (height(p->left->left) >= height(p->left->right)) {
-        rotate_right(p);
-      } else {
-        rotate_left(p->left);
-        rotate_right(p);
-      }
-    } else if (height(p->right) - height(p->left) > 1) {
-      if (height(p->right->right) >= height(p->right->left)) {
-        rotate_left(p);
-      } else {
-        rotate_right(p->right);
-        rotate_left(p);
-      }
+  if (p == nullptr) {
+    return;
+  }
+  
+  int leftHeight = height(p->left);
+  int rightHeight = height(p->right);
+  
+  if (leftHeight - rightHeight > 1) {
+    // Left-heavy
+    if (height(p->left->left) >= height(p->left->right)) {
+      // Left-Left case
+      rotate_right(p);
+    } else {
+      // Left-Right case
+      rotate_left(p->left);
+      rotate_right(p);
+    }
+  } else if (rightHeight - leftHeight > 1) {
+    // Right-heavy
+    if (height(p->right->right) >= height(p->right->left)) {
+      // Right-Right case
+      rotate_left(p);
+    } else {
+      // Right-Left case
+      rotate_right(p->right);
+      rotate_left(p);
     }
   }
 }

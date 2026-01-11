@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(subarray_sum "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  subarray_sum
+  PRIVATE subarray_sum.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/subarray_sum.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(subarray_sum PUBLIC ${CMAKE_CURRENT_LIST_DIR})

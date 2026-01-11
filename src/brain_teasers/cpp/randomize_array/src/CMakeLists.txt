@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(randomize_array "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  randomize_array
+  PRIVATE randomize_array.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/randomize_array.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(randomize_array PUBLIC ${CMAKE_CURRENT_LIST_DIR})

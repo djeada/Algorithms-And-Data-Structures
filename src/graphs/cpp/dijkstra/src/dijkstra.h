@@ -1,3 +1,5 @@
+#pragma once
+
 #include "graph.h"
 
 template <class T>

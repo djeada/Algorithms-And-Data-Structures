@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(matrix_score "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  matrix_score
+  PRIVATE matrix_score.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/matrix_score.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(matrix_score PUBLIC ${CMAKE_CURRENT_LIST_DIR})

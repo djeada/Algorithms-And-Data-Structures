@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(valid_parentheses "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  valid_parentheses
+  PRIVATE valid_parentheses.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/valid_parentheses.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(valid_parentheses PUBLIC ${CMAKE_CURRENT_LIST_DIR})
