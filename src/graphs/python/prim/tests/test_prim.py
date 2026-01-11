@@ -12,7 +12,6 @@ from prim import prim
 
 class TestPrim(unittest.TestCase):
     def test_prim_str_vertices(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex("A"), Vertex("D"), 2))
@@ -27,7 +26,6 @@ class TestPrim(unittest.TestCase):
         self.assertEqual(prim(graph), 31)
 
     def test_prim_int_vertices(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex(0), Vertex(1), 1))

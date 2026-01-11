@@ -1,3 +1,4 @@
+import math
 import unittest
 
 import os
@@ -12,7 +13,6 @@ from dfs import dfs
 
 class TestDFS(unittest.TestCase):
     def test_dfs_str_vertices_negative(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex("A"), Vertex("D"), 2))
@@ -27,11 +27,10 @@ class TestDFS(unittest.TestCase):
         self.assertEqual(dfs(graph, Vertex("A"), Vertex("C")), 20)
         self.assertEqual(dfs(graph, Vertex("A"), Vertex("F")), 8)
         self.assertEqual(dfs(graph, Vertex("B"), Vertex("G")), 15)
-        self.assertEqual(dfs(graph, Vertex("E"), Vertex("A")), float("inf"))
-        self.assertEqual(dfs(graph, Vertex("C"), Vertex("D")), float("inf"))
+        self.assertEqual(dfs(graph, Vertex("E"), Vertex("A")), math.inf)
+        self.assertEqual(dfs(graph, Vertex("C"), Vertex("D")), math.inf)
 
     def test_dfs_int_vertices_positive(self):
-
         graph = Graph()
 
         graph.add_edge(Edge(Vertex(0), Vertex(1), 1))
@@ -52,8 +51,7 @@ class TestDFS(unittest.TestCase):
         self.assertEqual(dfs(graph, Vertex(2), Vertex(3)), 1)
         self.assertEqual(dfs(graph, Vertex(2), Vertex(4)), 4)
 
-    def test_dfs_int_vertices_negaitve(self):
-
+    def test_dfs_int_vertices_negative(self):
         graph = Graph()
 
         graph.add_edge(Edge(Vertex(1), Vertex(2), 1))
@@ -61,8 +59,8 @@ class TestDFS(unittest.TestCase):
         graph.add_edge(Edge(Vertex(3), Vertex(4), 1))
         graph.add_edge(Edge(Vertex(4), Vertex(2), 1))
 
-        self.assertEqual(dfs(graph, Vertex(5), Vertex(0)), float("inf"))
-        self.assertEqual(dfs(graph, Vertex(1), Vertex(5)), float("inf"))
+        self.assertEqual(dfs(graph, Vertex(5), Vertex(0)), math.inf)
+        self.assertEqual(dfs(graph, Vertex(1), Vertex(5)), math.inf)
 
 
 if __name__ == "__main__":
