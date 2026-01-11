@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(browser_history "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  browser_history
+  PRIVATE browser_history.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/browser_history.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(browser_history PUBLIC ${CMAKE_CURRENT_LIST_DIR})

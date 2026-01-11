@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(sparse_vector "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  sparse_vector
+  PRIVATE sparse_vector.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/sparse_vector.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(sparse_vector PUBLIC ${CMAKE_CURRENT_LIST_DIR})

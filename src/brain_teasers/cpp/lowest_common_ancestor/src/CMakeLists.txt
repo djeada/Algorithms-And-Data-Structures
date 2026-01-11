@@ -1,8 +1,8 @@
-add_library(stack "")
+add_library(lca "")
 
 target_sources(
-  stack
-  PRIVATE stack.cpp
-  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/stack.h)
+  lca
+  PRIVATE lca.cpp
+  PUBLIC ${CMAKE_CURRENT_LIST_DIR}/lca.h)
 
-target_include_directories(stack PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(lca PUBLIC ${CMAKE_CURRENT_LIST_DIR})
