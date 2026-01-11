@@ -44,7 +44,7 @@ bool canSumMemo(const unsigned int target,
 
       auto remainder = target - num;
 
-      if (canSumBasic(remainder, numbers)) {
+      if (_canSumMemo(remainder, numbers, memo)) {
         memo[target] = true;
         return true;
       }
@@ -59,27 +59,16 @@ bool canSumMemo(const unsigned int target,
   return _canSumMemo(target, numbers, memo);
 }
 
-bool canSumTable(const unsigned int target, std::vector<unsigned int> numbers) {
+bool canSumTable(const unsigned int target,
+                 const std::vector<unsigned int> &numbers) {
 
   std::vector<bool> table(target + 1, false);
   table[0] = true;
 
-  for (int i = 0; i < target; i++) {
-
+  for (unsigned int i = 0; i < target; i++) {
     if (table[i]) {
-
-      auto it = numbers.begin();
-      while (it != numbers.end()) {
-
-        if (i + *it <= target)
-          it++;
-
-        else
-          it = numbers.erase(it);
-      }
-
       for (const auto &number : numbers) {
-        if (i + number > 0 && i + number <= target)
+        if (i + number <= target)
           table[i + number] = true;
       }
     }
