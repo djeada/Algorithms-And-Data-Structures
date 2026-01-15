@@ -1,53 +1,76 @@
+#include "merge_sort.h"
+
+#include <cstddef>
 #include <vector>
 
-template <typename T> void merge(std::vector<T> &arr, int start, int end) {
-  int z, x, y, mid;
-  std::vector<T> temp(end - start + 1);
-  mid = (start + end) / 2;
-  z = 0;
-  x = start;
-  y = mid + 1;
+namespace {
 
-  while (x <= mid && y <= end) {
-    if (arr[x] < arr[y]) {
-      temp[z] = arr[x];
-      ++x, ++z;
+/**
+ * @brief Merge two sorted subarrays into one sorted subarray.
+ *
+ * @tparam T The type of elements in the vector.
+ * @param arr The vector containing the subarrays.
+ * @param start Start index of the first subarray.
+ * @param end End index of the second subarray (inclusive).
+ */
+template <typename T>
+void merge(std::vector<T> &arr, std::size_t start, std::size_t end) {
+  std::size_t mid = (start + end) / 2;
+  std::vector<T> temp(end - start + 1);
+
+  std::size_t i = 0;
+  std::size_t left = start;
+  std::size_t right = mid + 1;
+
+  while (left <= mid && right <= end) {
+    if (arr[left] < arr[right]) {
+      temp[i++] = arr[left++];
     } else {
-      temp[z] = arr[y];
-      ++y, ++z;
+      temp[i++] = arr[right++];
     }
   }
 
-  while (x <= mid) {
-    temp[z] = arr[x];
-    ++x, ++z;
+  while (left <= mid) {
+    temp[i++] = arr[left++];
   }
 
-  while (y <= end) {
-    temp[z] = arr[y];
-    ++y, ++z;
+  while (right <= end) {
+    temp[i++] = arr[right++];
   }
 
-  for (int i = start; i <= end; ++i)
-    arr[i] = temp[i - start];
+  for (std::size_t j = start; j <= end; ++j) {
+    arr[j] = temp[j - start];
+  }
 }
 
+/**
+ * @brief Recursive helper for merge sort.
+ *
+ * @tparam T The type of elements in the vector.
+ * @param arr The vector to sort.
+ * @param start Start index of the subarray.
+ * @param end End index of the subarray (inclusive).
+ */
 template <typename T>
-void _merge_sort(std::vector<T> &arr, int start, int end) {
-
+void merge_sort_impl(std::vector<T> &arr, std::size_t start, std::size_t end) {
   if (start < end) {
-    int mid = (start + end) / 2;
-    _merge_sort(arr, start, mid);
-    _merge_sort(arr, mid + 1, end);
+    std::size_t mid = (start + end) / 2;
+    merge_sort_impl(arr, start, mid);
+    merge_sort_impl(arr, mid + 1, end);
     merge(arr, start, end);
   }
 }
 
-template <typename T> void merge_sort(std::vector<T> &arr) {
+} // namespace
 
-  _merge_sort(arr, 0, arr.size() - 1);
+template <typename T>
+void merge_sort(std::vector<T> &arr) {
+  if (!arr.empty()) {
+    merge_sort_impl(arr, 0, arr.size() - 1);
+  }
 }
 
+// Explicit template instantiations
 template void merge_sort<int>(std::vector<int> &arr);
 template void merge_sort<float>(std::vector<float> &arr);
 template void merge_sort<double>(std::vector<double> &arr);

@@ -1,44 +1,56 @@
+"""Tests for heap sort algorithm."""
+
 import unittest
-
-import os
 import sys
+from pathlib import Path
 
-file_dir = os.path.dirname(os.path.dirname(__file__))
-sys.path.append(file_dir + "/src")
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from heap_sort import heapsort_v1
+from heap_sort import heap_sort
 
 
-class TestHeapSortV1(unittest.TestCase):
+class TestHeapSort(unittest.TestCase):
+    """Test cases for the heap_sort function."""
+
     def test_empty_array(self):
-        array = list()
-        result = list()
-
-        self.assertEqual(heapsort_v1(array), result)
+        """Sorting an empty array returns an empty array."""
+        self.assertEqual(heap_sort([]), [])
 
     def test_single_element(self):
-        array = [1]
-        result = [1]
+        """Sorting a single element array returns the same array."""
+        self.assertEqual(heap_sort([1]), [1])
 
-        self.assertEqual(heapsort_v1(array), result)
+    def test_two_elements_sorted(self):
+        """Sorting two already sorted elements."""
+        self.assertEqual(heap_sort([1, 2]), [1, 2])
+
+    def test_two_elements_reversed(self):
+        """Sorting two elements in reverse order."""
+        self.assertEqual(heap_sort([2, 1]), [1, 2])
 
     def test_increasing_order(self):
-        array = [1, 2, 3, 4, 5]
-        result = [1, 2, 3, 4, 5]
-
-        self.assertEqual(heapsort_v1(array), result)
+        """Sorting an already sorted array."""
+        self.assertEqual(heap_sort([1, 2, 3, 4, 5]), [1, 2, 3, 4, 5])
 
     def test_decreasing_order(self):
-        array = [5, 4, 3, 2, 1]
-        result = [1, 2, 3, 4, 5]
-
-        self.assertEqual(heapsort_v1(array), result)
+        """Sorting a reverse-sorted array."""
+        self.assertEqual(heap_sort([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
 
     def test_random_order(self):
-        array = [2, 5, 1, 4, 3]
-        result = [1, 2, 3, 4, 5]
+        """Sorting an array in random order."""
+        self.assertEqual(heap_sort([2, 5, 1, 4, 3]), [1, 2, 3, 4, 5])
 
-        self.assertEqual(heapsort_v1(array), result)
+    def test_with_duplicates(self):
+        """Sorting an array with duplicate values."""
+        self.assertEqual(heap_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9])
+
+    def test_with_negative_numbers(self):
+        """Sorting an array containing negative numbers."""
+        self.assertEqual(heap_sort([-3, 1, -4, 1, 5]), [-4, -3, 1, 1, 5])
+
+    def test_all_same_elements(self):
+        """Sorting an array where all elements are the same."""
+        self.assertEqual(heap_sort([5, 5, 5, 5]), [5, 5, 5, 5])
 
 
 if __name__ == "__main__":
