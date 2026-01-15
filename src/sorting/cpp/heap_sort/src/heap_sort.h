@@ -6,8 +6,8 @@
 /**
  * @brief Sort an array using the heap sort algorithm.
  *
- * This implementation builds a min-heap and repeatedly extracts the minimum
- * element to produce a sorted array in-place.
+ * This implementation repeatedly heapifies portions of the array, moving
+ * smaller elements toward the front during each pass through the array.
  *
  * @tparam T The type of elements in the vector (must be comparable).
  * @param arr The vector to sort in ascending order.

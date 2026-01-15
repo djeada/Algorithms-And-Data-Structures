@@ -35,7 +35,7 @@ void quick_sort_impl(std::vector<T> &arr, std::size_t start, std::size_t end) {
     std::swap(arr[start], arr[j]);
 
     // Tail-call optimization: recurse on smaller partition
-    if (j > start && j - start > end - (j + 1)) {
+    if (j - start > end - (j + 1)) {
       quick_sort_impl(arr, start, j);
       start = j + 1;
     } else {

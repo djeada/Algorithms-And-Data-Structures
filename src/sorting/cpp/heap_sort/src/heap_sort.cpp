@@ -12,7 +12,8 @@ namespace {
  * @tparam T The type of elements in the vector.
  * @param arr The vector to heapify.
  * @param curr Current node index (1-based).
- * @param offset Offset into the array for partial heap.
+ * @param offset Starting position in the array; elements before this
+ *               index are already in their final sorted position.
  */
 template <typename T>
 void heapify(std::vector<T> &arr, std::size_t curr, std::size_t offset) {
