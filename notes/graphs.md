@@ -2,7 +2,7 @@
 
 In many areas of life, we come across systems where elements are deeply interconnected, whether through physical routes, digital networks, or abstract relationships. Graphs offer a flexible way to represent and make sense of these connections.
 
-The reason graphs matter isn’t just that they *describe* connections, it’s that they let you **reason** about them. Once you turn a messy “web of relationships” into a graph, you can start asking precise questions: *What’s the fastest route? What’s the weakest link? Who or what is most connected? What happens if this node fails?* That’s the moment graphs stop being a picture and become a tool.
+The reason graphs matter isn’t that they *describe* connections, it’s that they let you **reason** about them. Once you turn a messy “web of relationships” into a graph, you can start asking precise questions: *What’s the fastest route? What’s the weakest link? Who or what is most connected? What happens if this node fails?* That’s why we say that graphs are a useful tool.
 
 Some real-world examples include:
 
