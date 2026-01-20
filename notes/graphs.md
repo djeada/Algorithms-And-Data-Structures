@@ -305,18 +305,58 @@ D───C
 
 The edge bound $10>9$ (above) certifies non-planarity.
 
-**IV. Complete bipartite $K_{3,3}$ (non-planar)**
+**IV. Complete bipartite graph $K_{3,3}$ (non-planar)**
 
-Two sets ${u_1,u_2,u_3}$ and ${v_1,v_2,v_3}$, all cross-set pairs connected:
+The complete bipartite graph $K_{3,3}$ consists of two disjoint vertex sets
+${u_1, u_2, u_3}$ and ${v_1, v_2, v_3}$.
+Every vertex $u_i$ is connected to every vertex $v_j$, and there are **no edges within a set**.
+
+Structure of (K_{3,3})
 
 ```
-u1   u2   u3
-│ \  │ \  │ \
-│  \ │  \ │  \
-v1───v2───v3  (many edges must cross in the plane)
+u1      u2      u3
+|  \  /  |  \  / |
+|   \    |   \   |
+| /   \  | /   \ |
+v1      v2      v3
 ```
 
-The bipartite bound $9>8$ proves non-planarity.
+This diagram represents all 9 edges:
+
+* (u_1)–(v_1, v_2, v_3)
+* (u_2)–(v_1, v_2, v_3)
+* (u_3)–(v_1, v_2, v_3)
+
+(Edge crossings are unavoidable in any planar drawing.)
+
+Proof of non-planarity
+
+Number of vertices:
+
+$$
+v = 6
+$$
+
+Number of edges:
+
+$$
+e = 9
+$$
+
+Because $K_{3,3}$ is **bipartite**, it has no odd cycles.
+For any **planar bipartite graph** with $v \ge 3$, the edge bound is:
+
+$$
+e \le 2v - 4
+$$
+
+Substituting $v = 6$:
+
+$$e \le 2(6) - 4 = 8$$
+
+But $K_{3,3}$ has $e = 9$, so:
+
+$$9 > 8$$
 
 These examples also build intuition: some graphs “want” to live on a plane (cycles, $K_4$), while others contain too much cross-connection pressure ($K_5$, $K_{3,3}$). When you feel that pressure, you start recognizing non-planarity before doing any formal proof.
 
