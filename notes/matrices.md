@@ -1,12 +1,14 @@
-## Matrices and 2D Grids
+# Matrices and 2D Grids
 
 Matrices represent images, game boards, and maps. Many classic problems reduce to transforming matrices, traversing them, or treating grids as graphs for search.
 
-### Conventions
+## Conventions
 
-**Rows indexed $0..R-1$, columns $0..C-1$; cell $(r,c)$.**
+Rows indexed $0..R-1$, columns $0..C-1$; cell $(r,c)$.
 
-Rows increase **down**, columns increase **right**. Think “top-left is $(0,0)$”, not a Cartesian origin.
+Assume a rectangular matrix: every row has the same number of columns. Handle empty inputs before reading the first row. In pseudocode, `a..b` includes both endpoints and is empty if its bounds oppose the stated step direction. Variables initialized to example dimensions should be replaced with the actual dimensions in a general implementation.
+
+Rows increase down, columns increase right. Think “top-left is $(0,0)$”, not a Cartesian origin.
 
 Visual index map (example $R=6$, $C=8$; each cell labeled $rc$):
 
@@ -14,41 +16,39 @@ Visual index map (example $R=6$, $C=8$; each cell labeled $rc$):
   c →    0    1    2    3    4    5    6    7
 r ↓   +----+----+----+----+----+----+----+----+
 0     | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 |
-	  +----+----+----+----+----+----+----+----+
+      +----+----+----+----+----+----+----+----+
 1     | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 |
-	  +----+----+----+----+----+----+----+----+
+      +----+----+----+----+----+----+----+----+
 2     | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 |
-	  +----+----+----+----+----+----+----+----+
+      +----+----+----+----+----+----+----+----+
 3     | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 |
-	  +----+----+----+----+----+----+----+----+
+      +----+----+----+----+----+----+----+----+
 4     | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 |
-	  +----+----+----+----+----+----+----+----+
+      +----+----+----+----+----+----+----+----+
 5     | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 |
-	  +----+----+----+----+----+----+----+----+
+      +----+----+----+----+----+----+----+----+
 ```
 
-Handy conversions (for linearization / array-of-arrays):
+For $C>0$, the following conversions describe a row-major flattened representation. An array of row objects need not itself occupy one contiguous block of memory:
 
-* Linear index: $\text{id}=r\cdot C+c$.
-* From id: $r=\lfloor \text{id}/C \rfloor$, $c=\text{id}\bmod C$.
-* Row-major scan order (common in problems): for $r$ in $0..R-1$, for $c$ in $0..C-1$.
+- Linear index: $\text{id}=r\cdot C+c$.
+- From id: $r=\lfloor \text{id}/C \rfloor$, $c=\text{id}\bmod C$.
+- Row-major scan order (common in problems): for $r$ in $0..R-1$, for $c$ in $0..C-1$.
 
-**Row-major vs column-major arrows (same $3\times 6$ grid):**
+Row-major and column-major visit order (same $3\times 6$ grid):
 
 ```
-Row-major (r, then c):                  Column-major (c, then r):
-→ → → → → →                              ↓ ↓ ↓
-          ↓                              ↓ ↓ ↓
-← ← ← ← ← ←                              ↓ ↓ ↓
-↓                                        ↓ ↓ ↓
-→ → → → → →                              ↓ ↓ ↓
+Row-major visit numbers:          Column-major visit numbers:
+ 0  1  2  3  4  5                 0  3  6  9 12 15
+ 6  7  8  9 10 11                 1  4  7 10 13 16
+12 13 14 15 16 17                 2  5  8 11 14 17
 ```
 
-**Neighborhoods: $\mathbf{4}$-dir $\Delta={(-1,0),(1,0),(0,-1),(0,1)}$; $\mathbf{8}$-dir adds diagonals.**
+Neighborhoods: $\mathbf{4}$-dir $\Delta={(-1,0),(1,0),(0,-1),(0,1)}$; $\mathbf{8}$-dir adds diagonals.
 
 The offsets $(\Delta r,\Delta c)$ are applied as $(r+\Delta r,\ c+\Delta c)$.
 
-**4-neighborhood (“+”):**
+4-neighborhood (“+”):
 
 ```
 #
@@ -59,7 +59,7 @@ The offsets $(\Delta r,\Delta c)$ are applied as $(r+\Delta r,\ c+\Delta c)$.
 		   (r+1,c)
 ```
 
-**8-neighborhood (“×” adds diagonals):**
+8-neighborhood (“×” adds diagonals):
 
 ```
 (r-1,c-1)   (r-1,c)   (r-1,c+1)
@@ -83,13 +83,13 @@ dr8 = [-1,-1,-1, 0, 0, 1, 1, 1]
 dc8 = [-1, 0, 1,-1, 1,-1, 0, 1]
 ```
 
-**Boundary checks** (always guard neighbors):
+Boundary checks (always guard neighbors):
 
 ```
 0 ≤ nr < R  and  0 ≤ nc < C
 ```
 
-**Edge/inside intuition:**
+Edge/inside intuition:
 
 ```
 	   out of bounds
@@ -104,15 +104,15 @@ dc8 = [-1, 0, 1,-1, 1,-1, 0, 1]
 	└─────────────────┘
 ```
 
-### Basic Operations (Building Blocks)
+## Basic Operations (Building Blocks)
 
-#### Transpose
+### Transpose
 
 Swap across the main diagonal: $A_{r,c} \leftrightarrow A_{c,r}$ (square). For non-square, result shape is $C\times R$.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example 1 (square)*
+Example 1 (square)
 
 $$
 A = \begin{bmatrix}
@@ -129,13 +129,13 @@ A^{\mathsf{T}} =
 \end{bmatrix}
 $$
 
-**Mathematical formula (3×3)**
+Mathematical formula (3×3)
 
 $$
 (A^T)_{r,c}=A_{c,r},\quad 0\le r,c<3
 $$
 
-**Pseudocode (square, in-place)**
+Pseudocode (square, in-place)
 
 ```
 n = 3  # for this example; generalize to n = size
@@ -144,10 +144,10 @@ for r in 0..n-1:
     swap A[r][c], A[c][r]
 ```
 
-*Example 2 (rectangular)*
+Example 2 (rectangular)
 
 $$
-\text{Input: } \quad 
+\text{Input: } \quad
 A = \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6
@@ -156,7 +156,7 @@ A = \begin{bmatrix}
 $$
 
 $$
-\text{Output: } \quad 
+\text{Output: } \quad
 A^{\mathsf{T}} = \begin{bmatrix}
 1 & 4 \\
 2 & 5 \\
@@ -165,13 +165,13 @@ A^{\mathsf{T}} = \begin{bmatrix}
 \ (3 \times 2)
 $$
 
-**Mathematical formula (2×3 → 3×2)**
+Mathematical formula (2×3 → 3×2)
 
 $$
 (A^{\mathsf T})_{r,c}=A_{c,r},\quad 0\le r<3,\ 0\le c<2
 $$
 
-**Pseudocode (rectangular, new matrix)**
+Pseudocode (rectangular, new matrix)
 
 ```
 R, C = 2, 3
@@ -181,20 +181,20 @@ for r in 0..R-1:
     B[c][r] = A[r][c]
 ```
 
-**How it works**
+How it works:
 
 Iterate pairs once and swap. For square matrices, can be in-place by visiting only $c>r$.
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$ in-place (square), else $O(R\cdot C)$ to allocate
+- Time: $O(R\cdot C)$
+- Space: $O(1)$ in-place (square), else $O(R\cdot C)$ to allocate
 
-#### Reverse Rows (Horizontal Flip)
+### Reverse Rows (Horizontal Flip)
 
 Reverse each row left $\leftrightarrow$ right.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Input: }
@@ -210,13 +210,13 @@ $$
 \end{bmatrix}
 $$
 
-**Mathematical formula (2×3)**
+Mathematical formula (2×3)
 
 $$
 B_{r,c}=A_{r,\ C-1-c},\quad 0\le r<2,\ 0\le c<3
 $$
 
-**Pseudocode (in-place)**
+Pseudocode (in-place)
 
 ```
 R, C = 2, 3
@@ -225,16 +225,16 @@ for r in 0..R-1:
     swap A[r][c], A[r][C-1-c]
 ```
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$
+- Time: $O(R\cdot C)$
+- Space: $O(1)$
 
-#### Reverse Columns (Vertical Flip)
+### Reverse Columns (Vertical Flip)
 
 Reverse each column top $\leftrightarrow$ bottom.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Input: }
@@ -252,13 +252,13 @@ $$
 \end{bmatrix}
 $$
 
-**Mathematical formula (3×3)**
+Mathematical formula (3×3)
 
 $$
 B_{r,c}=A_{R-1-r,\ c},\quad 0\le r,c<3
 $$
 
-**Pseudocode (in-place)**
+Pseudocode (in-place)
 
 ```
 R, C = 3, 3
@@ -267,30 +267,30 @@ for r in 0..(R//2 - 1):
     swap A[r][c], A[R-1-r][c]
 ```
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$
+- Time: $O(R\cdot C)$
+- Space: $O(1)$
 
-### Rotations (Composed from Basics)
+## Rotations (Composed from Basics)
 
-Use transpose + reversals for square in-place rotations; rectangular rotations produce new shape $(R\times C)\to(C\times R)$.
+Use transpose and reversal for square in-place quarter turns. A 90° or 270° turn changes an $R\times C$ matrix into a $C\times R$ matrix; the straightforward rectangular algorithm allocates a new result. A 180° rotation preserves the shape and can be done in place for any rectangle.
 
-#### 90° Clockwise (CW)
+### 90° Clockwise (CW)
 
 Transpose, then reverse each row.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example 1 (3×3)*
+Example 1 (3×3)
 
 $$
-\text{Input: } 
+\text{Input: }
 \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
 7 & 8 & 9
 \end{bmatrix}
 \quad\Rightarrow\quad
-\text{Output: } 
+\text{Output: }
 \begin{bmatrix}
 7 & 4 & 1 \\
 8 & 5 & 2 \\
@@ -298,13 +298,13 @@ $$
 \end{bmatrix}
 $$
 
-**Mathematical formula (n×n)**
+Mathematical formula (n×n)
 
 $$
 B_{r,c}=A_{n-1-c,\ r},\quad 0\le r,c<n
 $$
 
-**Pseudocode (square, in-place via basics)**
+Pseudocode (square, in-place via basics)
 
 ```
 n = 3
@@ -318,7 +318,7 @@ for r in 0..n-1:
     swap A[r][c], A[r][n-1-c]
 ```
 
-*Example 2 (2×3 → 3×2)*
+Example 2 (2×3 → 3×2)
 
 $$
 \text{Input: }
@@ -335,13 +335,13 @@ $$
 \end{bmatrix}
 $$
 
-**Mathematical formula (R×C → C×R)**
+Mathematical formula (R×C → C×R)
 
 $$
 B_{r,c}=A_{R-1-c,\ r},\quad 0\le r<C,\ 0\le c<R\ \ (R{=}2,\ C{=}3)
 $$
 
-**Pseudocode (rectangular, direct mapping)**
+Pseudocode (rectangular, direct mapping)
 
 ```
 R, C = 2, 3
@@ -351,20 +351,20 @@ for r in 0..C-1:      # rows of B
     B[r][c] = A[R-1-c][r]
 ```
 
-**How it works**
+How it works:
 
 Transpose swaps axes; reversing each row aligns columns to rows of the rotated image.
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$ in-place for square, else $O(R\cdot C)$ new
+- Time: $O(R\cdot C)$
+- Space: $O(1)$ in-place for square, else $O(R\cdot C)$ new
 
-#### 90° Counterclockwise (CCW)
+### 90° Counterclockwise (CCW)
 
 Transpose, then reverse each column (or reverse rows, then transpose).
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Input: }
@@ -382,13 +382,13 @@ $$
 \end{bmatrix}
 $$
 
-**Mathematical formula (n×n)**
+Mathematical formula (n×n)
 
 $$
 B_{r,c}=A_{c,\ n-1-r},\quad 0\le r,c<n
 $$
 
-**Pseudocode (square, via basics)**
+Pseudocode (square, via basics)
 
 ```
 n = 3
@@ -402,7 +402,7 @@ for r in 0..(n//2 - 1):
     swap A[r][c], A[n-1-r][c]
 ```
 
-**Pseudocode (general, direct mapping)**
+Pseudocode (general, direct mapping)
 
 ```
 # A is R x C, B is C x R
@@ -412,20 +412,20 @@ for r in 0..C-1:
     B[r][c] = A[c][C-1-r]
 ```
 
-**How it works**
+How it works:
 
 Transpose, then flip vertically to complete the counterclockwise rotation.
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$ (square) or $O(R\cdot C)$
+- Time: $O(R\cdot C)$
+- Space: $O(1)$ (square) or $O(R\cdot C)$
 
-#### 180° Rotation
+### 180° Rotation
 
 Equivalent to reversing rows, then reversing columns (or two 90° rotations).
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Input: }
@@ -443,13 +443,13 @@ $$
 \end{bmatrix}
 $$
 
-**Mathematical formula (R×C → R×C)**
+Mathematical formula (R×C → R×C)
 
 $$
 B_{r,c}=A_{R-1-r,\ C-1-c},\quad 0\le r<R,\ 0\le c<C
 $$
 
-**Pseudocode (in-place via two flips)**
+Pseudocode (in-place via two flips)
 
 ```
 R, C = 3, 3  # generalize as needed
@@ -463,7 +463,7 @@ for r in 0..(R//2 - 1):
     swap A[r][c], A[R-1-r][c]
 ```
 
-**Pseudocode (direct mapping to new matrix)**
+Pseudocode (direct mapping to new matrix)
 
 ```
 B = zeros(R, C)
@@ -472,18 +472,18 @@ for r in 0..R-1:
     B[r][c] = A[R-1-r][C-1-c]
 ```
 
-**How it works**
+How it works:
 
-Horizontal + vertical flips relocate each element to $(R-1-r,\ C-1-c)$.
+Horizontal and vertical flips relocate each element to $(R-1-r,\ C-1-c)$.
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$ (square) or $O(R\cdot C)$
+- Time: $O(R\cdot C)$.
+- Auxiliary space: $O(1)$ for the two-flip implementation, for both square and rectangular matrices; $O(R\cdot C)$ for the separately allocated result.
 
-#### 270° Rotation
+### 270° Rotation
 
 270° CW = 90° CCW; 270° CCW = 90° CW. Reuse the 90° procedures.
 
-**Mathematical formulas (general)**
+Mathematical formulas (general)
 
 270° CW (i.e., 90° CCW):
 
@@ -497,7 +497,9 @@ $$
 B_{r,c}=A_{R-1-c,\ r},\quad B\in\mathbb{R}^{C\times R}.
 $$
 
-**Pseudocode (via composition, square in-place)**
+The two alternatives below each start from the original matrix; running both in sequence would undo the rotation.
+
+Pseudocode (via composition, square in-place)
 
 ```
 # 270° CW == 90° CCW
@@ -509,11 +511,11 @@ transpose(A)
 reverse_rows_in_place(A)
 ```
 
-#### Layer-by-Layer (Square) 90° CW
+### Layer-by-Layer (Square) 90° CW
 
 Rotate each ring by cycling 4 positions.
 
-**How it works**
+How it works:
 
 For layer $\ell$ with bounds $ [\ell..n-1-\ell]$, for each offset move:
 
@@ -521,7 +523,7 @@ For layer $\ell$ with bounds $ [\ell..n-1-\ell]$, for each offset move:
 top ← left, left ← bottom, bottom ← right, right ← top
 ```
 
-**Mathematical mapping (per moved element)**
+Mathematical mapping (per moved element)
 
 For an $n\times n$ matrix and a position $(r,c)$ on layer $\ell$, a 90° CW rotation sends
 
@@ -529,7 +531,7 @@ $$
 (r,c)\ \mapsto\ (c,\ n-1-r)\ \mapsto\ (n-1-r,\ n-1-c)\ \mapsto\ (n-1-c,\ r)
 $$
 
-**Pseudocode (explicit loops, in-place)**
+Pseudocode (explicit loops, in-place)
 
 ```
 n = size(A)
@@ -555,18 +557,18 @@ for layer in 0..(n//2 - 1):
     A[i][last] = tmp
 ```
 
-* Time: $O(n^{2})$
-* Space: $O(1)$
+- Time: $O(n^{2})$
+- Space: $O(1)$
 
-### Traversal Patterns
+## Traversal Patterns
 
-#### Spiral Order
+### Spiral Order
 
 Read outer layer, then shrink bounds.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Input: }
@@ -581,7 +583,7 @@ $$
 \text{Output sequence: } 1,2,3,4,8,12,11,10,9,5,6,7
 $$
 
-**Mathematical formulation (general $R\times C$)**
+Mathematical formulation (general $R\times C$)
 
 Let the matrix indices be $(r,c)$ with $0\le r<R,\ 0\le c<C$. For layer $\ell=0,1,\dots,L-1$ where $L=\left\lceil \tfrac{\min(R,C)}{2}\right\rceil$, set
 
@@ -591,14 +593,14 @@ $$
 
 Visit, in order:
 
-* Top edge: $(t,c)$ for $c=left,\ldots,rgt$.
-* Right edge: $(r,rgt)$ for $r=t+1,\ldots,b$.
-* Bottom edge (if $b>t$): $(b,c)$ for $c=rgt-1,\ldots,left$ (decreasing).
-* Left edge (if $rgt>left$): $(r,left)$ for $r=b-1,\ldots,t+1$ (decreasing).
+- Top edge: $(t,c)$ for $c=left,\ldots,rgt$.
+- Right edge: $(r,rgt)$ for $r=t+1,\ldots,b$.
+- Bottom edge (if $b>t$): $(b,c)$ for $c=rgt-1,\ldots,left$ (decreasing).
+- Left edge (if $rgt>left$): $(r,left)$ for $r=b-1,\ldots,t+1$ (decreasing).
 
 Concatenate these per layer until all elements are visited.
 
-**Pseudocode (loops)**
+Pseudocode (loops)
 
 ```
 R, C = dims(A)
@@ -630,20 +632,20 @@ while top <= bottom and left <= right:
     left += 1
 ```
 
-**How it works**
+How it works:
 
 Maintain top, bottom, left, right. Walk edges in order; after each edge, move the corresponding bound inward.
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$ beyond output.
+- Time: $O(R\cdot C)$
+- Space: $O(1)$ beyond output.
 
-#### Diagonal Order (r+c layers)
+### Diagonal Order (r+c layers)
 
 Visit cells grouped by $s=r+c$; alternate direction per diagonal to keep locality if desired.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Input: }
@@ -655,7 +657,7 @@ d & e & f
 \text{One order: } a, b, d, e, c, f
 $$
 
-**Mathematical formulation (general $R\times C$)**
+Mathematical formulation (general $R\times C$)
 
 Let $s=r+c$. For $s=0,1,\dots,R+C-2$, define
 
@@ -680,7 +682,7 @@ $$
 
 (This parity choice reproduces the example order $a,b,d,e,c,f$ for $R=2,C=3$.)
 
-**Pseudocode (loops, alternating direction)**
+Pseudocode (loops, alternating direction)
 
 ```
 R, C = dims(A)
@@ -691,29 +693,29 @@ for s in 0..(R + C - 2):
   r_hi = min(R - 1, s)
 
   if s % 2 == 0:
-    # even s: go downward-left (decreasing r)
+    # even s: go upward-right (decreasing r)
     for r in r_hi..r_lo step -1:
       c = s - r
       out.append(A[r][c])
   else:
-    # odd s: go upward-right (increasing r)
+    # odd s: go downward-left (increasing r)
     for r in r_lo..r_hi:
       c = s - r
       out.append(A[r][c])
 ```
 
-* Time: $O(R\cdot C)$
-* Space: $O(1)$
+- Time: $O(R\cdot C)$
+- Space: $O(1)$ beyond the $O(RC)$ output list.
 
-### Grids as Graphs
+## Grids as Graphs
 
 Each cell is a node; edges connect neighboring walkable cells.
 
-**Grid-as-graph view (4-dir edges).** Each cell is a node; edges connect neighbors that are “passable”. Great for BFS shortest paths on unweighted grids.
+Grid-as-graph view (4-dir edges). Each cell is a node; edges connect neighbors that are “passable”. Great for BFS shortest paths on unweighted grids.
 
-**Example map (walls `#`, free `.`, start `S`, target `T`).**
+Example map (walls `#`, free `.`, start `S`, target `T`).
 
-Left: the map. Right: BFS distances (4-dir) from `S` until `T` is reached.
+First the map, then BFS distances from `S` after traversing all reachable cells. Digits show distance modulo 10; `X` marks the target.
 
 ```
 Original Map:
@@ -735,15 +737,15 @@ BFS layers (distance mod 10):
 Legend: walls (#), goal reached (X)
 ```
 
-BFS explores in **expanding “rings”**; with 4-dir edges, each step increases Manhattan distance by 1 (unless blocked). Time $O(RC)$, space $O(RC)$ with a visited matrix/queue.
+BFS layers increase shortest-path distance from the source by one. A particular grid move can increase or decrease Manhattan distance, and walls can force detours. For this map the target distance is 28. Time and auxiliary space are $O(RC)$ with a visited matrix and queue.
 
-**Obstacles / costs / diagonals.**
+Obstacles / costs / diagonals.
 
-* Obstacles: skip neighbors that are `#` (or where cost is $\infty$).
-* Weighted grids: Dijkstra / 0-1 BFS on the same neighbor structure.
-* 8-dir with Euclidean costs: use $1$ for orthogonal moves and $\sqrt{2}$ for diagonals (A\* often pairs well here with an admissible heuristic).
+- Obstacles: skip neighbors that are `#` (or where cost is $\infty$).
+- Weighted grids: use Dijkstra for non-negative costs, or 0–1 BFS with a deque when every edge costs either zero or one.
+- 8-dir with Euclidean costs: use $1$ for orthogonal moves and $\sqrt{2}$ for diagonals (A\* often pairs well here with an admissible heuristic).
 
-**Common symbols:**
+Common symbols:
 
 ```
 . = free cell      # = wall/obstacle
@@ -751,13 +753,13 @@ S = start          T = target/goal
 V = visited        * = on current path / frontier
 ```
 
-#### BFS Shortest Path (Unweighted)
+### BFS Shortest Path (Unweighted)
 
 Find the minimum steps from S to T.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
-*Example*
+Example
 
 $$
 \text{Grid (0 = open, 1 = wall), } S = (0,0), T = (2,3)
@@ -773,18 +775,18 @@ S & 0 & 1 & 0 \\
 \text{Output: distance } = 5
 $$
 
-**How it works**
+How it works:
 
 Push S to a queue, expand in 4-dir layers, track distance/visited; stop when T is dequeued.
 
-* Time: $O(R\cdot C)$
-* Space: $O(R\cdot C)$
+- Time: $O(R\cdot C)$
+- Space: $O(R\cdot C)$
 
-#### Connected Components (Islands)
+### Connected Components (Islands)
 
-Count regions of ‘1’s via DFS/BFS.
+Count regions of ‘1’s via DFS/BFS using four-directional adjacency. Here `1` means land, unlike the preceding shortest-path example where `1` means wall. With eight-directional adjacency, the diagonal cells in this example form one island instead of two.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
 $$
 \text{Input: }
@@ -797,20 +799,20 @@ $$
 \text{Output: } 2 \ \text{islands}
 $$
 
-**How it works**
+How it works:
 
 Scan cells; when an unvisited ‘1’ is found, flood it (DFS/BFS) to mark the whole island.
 
-* Time: $O(R\cdot C)$
-* Space: $O(R\cdot C)$ worst-case
+- Time: $O(R\cdot C)$
+- Space: $O(R\cdot C)$ worst-case
 
-### Backtracking on Grids
+## Backtracking on Grids
 
-#### Word Search (Single Word)
+### Word Search (Single Word)
 
 Find a word by moving to adjacent cells (4-dir), using each cell once per path.
 
-**Example inputs and outputs**
+Example inputs and outputs:
 
 $$
 \text{Board: }
@@ -825,7 +827,7 @@ A & D & E & E
 \text{Output: true}
 $$
 
-**Mathematical formulation (general)**
+Mathematical formulation (general)
 
 Let the word be $W=W_0W_1\cdots W_{L-1}$ and the grid be $G\in\Sigma^{R\times C}$.
 We seek a path $P=\big((r_0,c_0),\ldots,(r_{L-1},c_{L-1})\big)$ such that
@@ -838,7 +840,7 @@ $$
 \end{aligned}
 $$
 
-**Instantiation for the example (one valid path)**
+Instantiation for the example (one valid path)
 
 $$
 P=\big((0,0),(0,1),(0,2),(1,2),(2,2),(2,1)\big)
@@ -846,17 +848,21 @@ $$
 
 gives $A\to B\to C\to C\to E\to D = \text{"ABCCED"}$.
 
-**Pseudocode (DFS with loops over starts and 4-neighbors)**
+Pseudocode (DFS with loops over starts and 4-neighbors)
 
 ```
 R, C = dims(board)
 L = len(word)
+if L == 0:
+  return true
+if R == 0 or C == 0 or L > R * C:
+  return false
 visited = array(R, C, fill=false)
 dr = [1, -1, 0, 0]
 dc = [0, 0, 1, -1]
 
 def dfs(r, c, i):
-  if r < 0 or r >= R or c < 0 or c >= C: 
+  if r < 0 or r >= R or c < 0 or c >= C:
     return false
   if visited[r][c] or board[r][c] != word[i]:
     return false
@@ -868,6 +874,7 @@ def dfs(r, c, i):
     nr = r + dr[k]
     nc = c + dc[k]
     if dfs(nr, nc, i + 1):
+      visited[r][c] = false
       return true
   visited[r][c] = false
   return false
@@ -880,20 +887,20 @@ for r in 0..R-1:
 return false
 ```
 
-**How it works**
+How it works:
 
-From each starting match, DFS to next char; mark visited (temporarily), backtrack on failure.
+Start from each cell matching the first character and search for the next character among adjacent cells. Mark cells only for the current path and restore those marks when returning. A failed attempt from one starting cell must not block another attempt.
 
-* Time: up to $O(R\cdot C\cdot b^{L})$ (branching $b\in [3,4]$, word length $L$)
-* Space: $O(L)$
+- Time: $O(RC\,4^L)$ is a simple upper bound. After the first move there are at most three forward choices because the previous cell cannot be reused, giving the tighter conventional bound $O(RC\,3^L)$.
+- Auxiliary space: $O(RC+L)$ for the shown visited matrix and recursion stack. Marking cells temporarily in place can reduce this to $O(L)$, provided all original values are restored.
 
 Pruning: early letter mismatch; frequency precheck; prefix trie when searching many words.
 
-#### Crossword-style Fill (Multiple Words)
+### Crossword-style Fill (Multiple Words)
 
 Place words to slots with crossings; verify consistency at intersections.
 
-**Mathematical formulation**
+Mathematical formulation
 
 Let $S$ be the set of slots (across/down). Each slot $s\in S$ has a length $\ell(s)$ and ordered cell coordinates
 $\mathrm{cells}(s) = \big((r_0,c_0),\ldots,(r_{\ell(s)-1},c_{\ell(s)-1})\big)$.
@@ -904,7 +911,7 @@ Find an assignment $f:S\to D$ such that, for all $s\in S$,
 
 $$
 f(s)\in D_{\ell(s)}\quad\text{and}\quad
-\forall i\ (P_s[i]\neq _ \Rightarrow f(s)[i]=P_s[i]),
+\forall i\ (P_s[i]\neq \text{\_} \Rightarrow f(s)[i]=P_s[i]),
 $$
 
 and for every intersection between slots $s$ at index $i$ and $t$ at index $j$,
@@ -915,20 +922,18 @@ $$
 
 (Optionally enforce all-different: $s\neq t \Rightarrow f(s)\neq f(t)$.)
 
-**Pseudocode (backtracking with loops, MRV + trie filtering)**
+Domains hold words of the correct length that match fixed letters. Forward checking removes words incompatible with a newly assigned crossing; every removal is recorded so it can be undone. Minimum remaining values (MRV) chooses the unassigned slot with the fewest currently available words, breaking ties by the largest number of unassigned neighbors.
+
+Pseudocode (backtracking with dynamic MRV and forward checking)
 
 ```
 # Preprocess
 slots = extract_slots(grid)                  # with cells(s) and pattern P_s
-trie = build_trie(dictionary)                # for prefix/length checks
 
 # Build initial domains from patterns and lengths
 domains = dict()
 for s in slots:
   domains[s] = { w in dictionary | len(w) == len(s) and matches_pattern(w, P_s) }
-
-# Order slots: Most-Restricted-Variable (smallest domain first)
-slots.sort_by(|domains[s]| ascending, tiebreak by number_of_intersections)
 
 used = set()          # if words must be unique
 assignment = dict()
@@ -941,8 +946,9 @@ def consistent(s, w):
   return true
 
 def forward_check_update_domains(s, w, removed):
-  # reduce neighbor domains by letter constraints from placing w at s
   for each intersection (s,i) with (t,j):
+    if t in assignment:
+      continue
     for each v in copy(domains[t]):
       if v[j] != w[i]:
         domains[t].remove(v); removed.append((t, v))
@@ -955,11 +961,12 @@ def backtrack(idx):
   if idx == len(slots):
     return true
 
-  s = slots[idx]
+  remaining = [slot for slot in slots if slot not in assignment]
+  s = min(remaining, key=(size(domains[slot] - used), -unassigned_neighbors(slot)))
 
   # iterate candidates; optionally skip ones already used
   for w in iterate(domains[s]):
-    if w in used: 
+    if w in used:
       continue
     if not consistent(s, w):
       continue
@@ -969,7 +976,7 @@ def backtrack(idx):
     removed = []
     forward_check_update_domains(s, w, removed)
 
-    if backtrack(idx + 1):
+    if all(domains[slot] - used for slot in slots if slot not in assignment) and backtrack(idx + 1):
       return true
 
     undo_forward_check(removed)
@@ -985,10 +992,9 @@ else:
   return failure
 ```
 
-**How it works**
+How it works:
 
-Backtrack over slot assignments; use a trie for prefix feasibility; order by most constrained slot first.
+Backtrack over slot assignments, recomputing the most constrained slot after each placement. The shown version enforces distinct words through `used`; remove that restriction consistently if reuse is allowed. A trie is an optional way to generate candidates matching a pattern; it is not needed by this explicit-domain version.
 
-* Time: exponential in slots; strong pruning and good heuristics are important.
-
-
+- Time: exponential in the number of slots in the worst case. With $S$ slots and at most $D$ candidates per slot, there can be $D^S$ assignments before accounting for constraint-checking costs.
+- Space: the initial domains, the current assignment, and the reversible domain-removal log, plus an $O(S)$ recursion stack.

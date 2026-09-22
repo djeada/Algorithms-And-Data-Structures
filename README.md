@@ -125,13 +125,19 @@ This command formats all Python files in the current directory and its subdirect
 
 ## Notes
 
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/basic_concepts.md">Basic concepts.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/data_structures.md">Data structures.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/graphs.md">Graph algorithms.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/backtracking.md">Backtracking.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/dynamic_programming.md">Dynamic programming.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/sorting.md">Sorting.</a>
-* <a href="https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/brain_teasers.md">Brain teasers.</a>
+The notes build from fundamentals to algorithmic techniques. A suggested reading order is:
+
+1. [Basic concepts](notes/basic_concepts.md)
+2. [Sets, combinations, and permutations](notes/math_set_relationship.md)
+3. [Data structures](notes/data_structures.md)
+4. [Searching](notes/searching.md)
+5. [Sorting](notes/sorting.md)
+6. [Graph algorithms](notes/graphs.md)
+7. [Backtracking](notes/backtracking.md)
+8. [Dynamic programming](notes/dynamic_programming.md)
+9. [Greedy algorithms](notes/greedy_algorithms.md)
+10. [Matrices and grids](notes/matrices.md)
+11. [Programming brain teasers](notes/brain_teasers.md)
 
 ## List of projects
 
@@ -646,4 +652,3 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=djeada/Algorithms-And-Data-Structures&type=Date)](https://star-history.com/#djeada/Algorithms-And-Data-Structures&Date)
-
