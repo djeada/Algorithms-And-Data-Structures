@@ -1,4 +1,5 @@
 import math
+import random
 import unittest
 
 import os
@@ -9,6 +10,19 @@ sys.path.append(file_dir + "/src")
 
 from graph import Vertex, Edge, Graph
 from bellman_ford import bellman_ford
+
+
+def floyd_warshall(vertices, edges):
+    """Brute-force all-pairs shortest paths over plain (u, v, w) tuples."""
+    dist = {(u, v): (0 if u == v else math.inf) for u in vertices for v in vertices}
+    for u, v, w in edges:
+        dist[(u, v)] = min(dist[(u, v)], w)
+    for k in vertices:
+        for i in vertices:
+            for j in vertices:
+                if dist[(i, k)] + dist[(k, j)] < dist[(i, j)]:
+                    dist[(i, j)] = dist[(i, k)] + dist[(k, j)]
+    return dist
 
 
 class TestBellmanFord(unittest.TestCase):
@@ -61,6 +75,58 @@ class TestBellmanFord(unittest.TestCase):
 
         self.assertEqual(bellman_ford(graph, Vertex(5), Vertex(0)), math.inf)
         self.assertEqual(bellman_ford(graph, Vertex(1), Vertex(5)), math.inf)
+
+    def test_negative_edges_without_cycle(self):
+        graph = Graph()
+        graph.add_edge(Edge(Vertex(0), Vertex(1), 4))
+        graph.add_edge(Edge(Vertex(0), Vertex(2), 5))
+        graph.add_edge(Edge(Vertex(2), Vertex(1), -3))
+        self.assertEqual(bellman_ford(graph, Vertex(0), Vertex(1)), 2)
+
+    def test_negative_cycle_reachable_returns_inf(self):
+        graph = Graph()
+        graph.add_edge(Edge(Vertex(0), Vertex(1), 1))
+        graph.add_edge(Edge(Vertex(1), Vertex(2), -2))
+        graph.add_edge(Edge(Vertex(2), Vertex(1), 1))
+        self.assertEqual(bellman_ford(graph, Vertex(0), Vertex(2)), math.inf)
+
+    def test_negative_cycle_through_source_is_detected(self):
+        graph = Graph()
+        graph.add_edge(Edge(Vertex(0), Vertex(1), -2))
+        graph.add_edge(Edge(Vertex(1), Vertex(0), 1))
+        self.assertEqual(bellman_ford(graph, Vertex(0), Vertex(0)), math.inf)
+
+    def test_unreachable_negative_cycle_is_ignored(self):
+        graph = Graph()
+        graph.add_edge(Edge(Vertex(0), Vertex(1), 3))
+        graph.add_edge(Edge(Vertex(5), Vertex(6), -4))
+        graph.add_edge(Edge(Vertex(6), Vertex(5), 1))
+        self.assertEqual(bellman_ford(graph, Vertex(0), Vertex(1)), 3)
+        self.assertEqual(bellman_ford(graph, Vertex(0), Vertex(0)), 0)
+        self.assertEqual(bellman_ford(graph, Vertex(0), Vertex(6)), math.inf)
+
+    def test_random_graphs_match_floyd_warshall(self):
+        rng = random.Random(5)
+        for _ in range(150):
+            n = rng.randint(1, 6)
+            edges = [
+                (rng.randrange(n), rng.randrange(n), rng.randint(-3, 9))
+                for _ in range(rng.randint(0, 12))
+            ]
+            graph = Graph()
+            for v in range(n):
+                graph.add_vertex(Vertex(v))
+            for u, v, w in edges:
+                graph.add_edge(Edge(Vertex(u), Vertex(v), w))
+            dist = floyd_warshall(range(n), edges)
+            for s in range(n):
+                reachable = [v for v in range(n) if dist[(s, v)] < math.inf]
+                has_neg_cycle = any(dist[(v, v)] < 0 for v in reachable)
+                for t in range(n):
+                    expected = math.inf if has_neg_cycle else dist[(s, t)]
+                    self.assertEqual(
+                        bellman_ford(graph, Vertex(s), Vertex(t)), expected
+                    )
 
 
 if __name__ == "__main__":

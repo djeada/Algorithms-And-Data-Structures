@@ -9,6 +9,8 @@ template <class Key, class Value> class HashTable {
 
 public:
   HashTable(std::function<int(Key)> hash_function, int size = 10);
+  HashTable(const HashTable &other);
+  HashTable &operator=(const HashTable &other);
   ~HashTable();
   void add(Key key, Value value);
   Value get(Key key) const;

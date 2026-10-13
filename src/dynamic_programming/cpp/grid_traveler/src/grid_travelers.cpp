@@ -16,7 +16,7 @@ struct hash {
 
 int gridTravelersBasic(int n, int m) {
 
-  if (n == 0 || m == 0)
+  if (n <= 0 || m <= 0)
     return 0;
 
   if (n < 2 && m < 2)
@@ -33,7 +33,7 @@ int gridTravelersMemo(int n, int m) {
   _gridTravelersMemo =
       [&](int n, int m,
           std::unordered_map<std::pair<int, int>, int, hash> &memo) -> int {
-    if (n == 0 || m == 0)
+    if (n <= 0 || m <= 0)
       return 0;
 
     if (n < 2 && m < 2)
@@ -55,6 +55,8 @@ int gridTravelersMemo(int n, int m) {
 }
 
 int gridTravelersTable(int n, int m) {
+  if (n <= 0 || m <= 0)
+    return 0;
 
   std::vector<std::vector<int>> table(m + 1, std::vector<int>(n + 1));
   table[1][1] = 1;

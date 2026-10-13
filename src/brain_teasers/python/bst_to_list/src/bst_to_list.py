@@ -118,7 +118,7 @@ def bst_to_double_linked_list(root: Optional[TreeNode]) -> DoubleLinkedList:
             node = node.left
         else:
             node = stack.pop()
-            double_linked_list.insert_before(double_linked_list.head, node.value)
+            double_linked_list.insert_after(double_linked_list.tail, node.value)
             node = node.right
 
     return double_linked_list

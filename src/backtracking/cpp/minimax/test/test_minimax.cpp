@@ -42,3 +42,15 @@ TEST(TestMinimax, TestPlayerAWins) {
 
   EXPECT_EQ(expected, actual);
 }
+
+TEST(TestMinimax, TestBlocksOpponentWin) {
+  std::vector<std::vector<int>> board = {{0, 0, 0}, {0, -1, 0}, {1, 1, 0}};
+  std::pair<int, int> expected = {2, 2};
+  EXPECT_EQ(expected, find_best_move(board, -1));
+}
+
+TEST(TestMinimax, TestScoresEachSideByItsOwnGoal) {
+  std::vector<std::vector<int>> board = {{1, 1, 0}, {-1, -1, 0}, {0, 0, 0}};
+  EXPECT_EQ(-1, minimax(board, 1));
+  EXPECT_EQ(1, minimax(board, -1));
+}

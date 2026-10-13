@@ -1,6 +1,9 @@
 #include "dfs.h"
 #include "gtest/gtest.h"
+#include <algorithm>
 #include <climits>
+#include <random>
+#include <vector>
 
 TEST(TestDfs, charVertices) {
   Graph<char> graph;
@@ -49,4 +52,49 @@ TEST(TestDfs, nonExistentVertices) {
   EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(3)), INT_MAX);
   EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(4)), INT_MAX);
   EXPECT_EQ(dfs(graph, Vertex<int>(1), Vertex<int>(5)), INT_MAX);
+}
+
+TEST(TestDFS, DeepPathDoesNotOverflowStack) {
+  Graph<int> graph;
+  const int n = 200000;
+  for (int i = 0; i < n; ++i)
+    graph.addEdge(Vertex<int>(i), Vertex<int>(i + 1), 1);
+  EXPECT_EQ(dfs(graph, Vertex<int>(0), Vertex<int>(n)), n);
+}
+
+TEST(TestDFS, CycleAndSourceEqualsDestination) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(1), 1);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(0), 1);
+  EXPECT_EQ(dfs(graph, Vertex<int>(0), Vertex<int>(0)), 0);
+  EXPECT_EQ(dfs(graph, Vertex<int>(0), Vertex<int>(1)), 1);
+  EXPECT_EQ(dfs(graph, Vertex<int>(0), Vertex<int>(5)), INT_MAX);
+}
+
+TEST(TestDFS, ReachabilityMatchesBruteForce) {
+  std::mt19937 rng(3);
+  for (int iter = 0; iter < 100; ++iter) {
+    int n = 1 + rng() % 7;
+    int m = rng() % 13;
+    Graph<int> graph;
+    std::vector<std::vector<bool>> reach(n, std::vector<bool>(n, false));
+    for (int v = 0; v < n; ++v) {
+      graph.addVertex(Vertex<int>(v));
+      reach[v][v] = true;
+    }
+    for (int i = 0; i < m; ++i) {
+      int u = rng() % n, v = rng() % n;
+      graph.addEdge(Vertex<int>(u), Vertex<int>(v), 1 + rng() % 5);
+      reach[u][v] = true;
+    }
+    for (int k = 0; k < n; ++k)
+      for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n; ++j)
+          if (reach[i][k] && reach[k][j])
+            reach[i][j] = true;
+    for (int s = 0; s < n; ++s)
+      for (int t = 0; t < n; ++t)
+        EXPECT_EQ(dfs(graph, Vertex<int>(s), Vertex<int>(t)) != INT_MAX,
+                  bool(reach[s][t]));
+  }
 }

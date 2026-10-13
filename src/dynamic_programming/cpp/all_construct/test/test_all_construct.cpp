@@ -132,3 +132,38 @@ TEST(AllConstructTest, TestPositiveTable2) {
 
   ASSERT_TRUE(equal(result, expectedResult));
 }
+
+static std::string join(const std::vector<std::string> &words) {
+  std::string s;
+  for (const auto &w : words)
+    s += w;
+  return s;
+}
+
+TEST(AllConstructEdgeCases, WordsAreInTargetOrder) {
+  std::string target = "abcdef";
+  std::vector<std::string> bank = {"a",  "b",  "c",  "d",   "e",  "f",
+                                   "ab", "cd", "ef", "abc", "def"};
+  for (auto f : {allConstructBasic, allConstructMemo, allConstructTable}) {
+    auto result = f(target, bank);
+    ASSERT_EQ(result.size(), 13u);
+    for (const auto &combination : result)
+      ASSERT_EQ(join(combination), target);
+  }
+}
+
+TEST(AllConstructEdgeCases, EmptyWordIsIgnored) {
+  std::vector<std::string> bank = {"", "a", "b"};
+  std::vector<std::vector<std::string>> expected = {{"a", "b"}};
+  ASSERT_EQ(allConstructBasic("ab", bank), expected);
+  ASSERT_EQ(allConstructMemo("ab", bank), expected);
+  ASSERT_EQ(allConstructTable("ab", bank), expected);
+}
+
+TEST(AllConstructEdgeCases, EmptyTarget) {
+  std::vector<std::string> bank = {"a"};
+  std::vector<std::vector<std::string>> expected = {{}};
+  ASSERT_EQ(allConstructBasic("", bank), expected);
+  ASSERT_EQ(allConstructMemo("", bank), expected);
+  ASSERT_EQ(allConstructTable("", bank), expected);
+}

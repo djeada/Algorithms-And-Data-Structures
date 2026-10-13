@@ -32,7 +32,7 @@ template <class T> LinkedList<T>::~LinkedList() { clear(); }
 template <class T> void LinkedList<T>::push_back(const T &v) {
   auto newNode = std::make_unique<Node>();
   newNode->data = v;
-  
+
   if (empty()) {
     tail = newNode.get();
     head = std::move(newNode);
@@ -46,7 +46,7 @@ template <class T> void LinkedList<T>::push_back(const T &v) {
 template <class T> void LinkedList<T>::push_front(const T &v) {
   auto newNode = std::make_unique<Node>();
   newNode->data = v;
-  
+
   if (empty()) {
     tail = newNode.get();
     head = std::move(newNode);
@@ -119,7 +119,11 @@ template <class T> const T &LinkedList<T>::back() const {
 template <class T> bool LinkedList<T>::empty() const { return n == 0; }
 
 template <class T> void LinkedList<T>::clear() {
-  head = nullptr;
+  // Unlink iteratively: destroying a long unique_ptr chain recursively
+  // would overflow the stack.
+  while (head != nullptr) {
+    head = std::move(head->next);
+  }
   tail = nullptr;
   n = 0;
 }
@@ -134,16 +138,16 @@ template <class T> void LinkedList<T>::remove(const T &v) {
     pop_front();
     return;
   }
-  
+
   Node *p = head.get();
   while (p->next != nullptr && p->next->data != v) {
     p = p->next.get();
   }
-  
+
   if (p->next == nullptr) {
     throw std::out_of_range("remove() called on non-existent value");
   }
-  
+
   if (p->next.get() == tail) {
     tail = p;
     p->next = nullptr;

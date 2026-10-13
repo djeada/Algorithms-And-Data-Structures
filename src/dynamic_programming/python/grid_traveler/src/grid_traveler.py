@@ -14,7 +14,7 @@ def grid_traveller_basic(num_rows: int, num_columns: int) -> int:
     Returns:
         Number of unique paths from top-left to bottom-right.
     """
-    if not num_rows or not num_columns:
+    if num_rows <= 0 or num_columns <= 0:
         return 0
 
     if num_rows < 2 and num_columns < 2:
@@ -44,7 +44,7 @@ def grid_traveller_memo(
     if memo is None:
         memo = {}
 
-    if not num_rows or not num_columns:
+    if num_rows <= 0 or num_columns <= 0:
         return 0
 
     if num_rows < 2 and num_columns < 2:
@@ -82,8 +82,8 @@ def grid_traveller_table(n: int, m: int) -> int:
     table = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
     table[1][1] = 1
 
-    for i in range(n + 1):
-        for j in range(m + 1):
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
             if i == 1 and j == 1:
                 continue
             table[i][j] = table[i - 1][j] + table[i][j - 1]

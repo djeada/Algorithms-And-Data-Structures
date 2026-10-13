@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List, Dict
+from typing import Dict, List
 
 
 class Graph:
@@ -8,6 +8,9 @@ class Graph:
     def __init__(self, num_vertices: int = 0) -> None:
         """
         Initialize a graph with the specified number of vertices.
+
+        Vertices are labelled 0..num_vertices-1; adding an edge that
+        mentions a larger label grows the graph accordingly.
 
         Args:
             num_vertices: Initial number of vertices (default 0).
@@ -22,7 +25,12 @@ class Graph:
         Args:
             u: Source vertex.
             v: Destination vertex.
+
+        Raises:
+            ValueError: If u or v is negative.
         """
+        if u < 0 or v < 0:
+            raise ValueError("vertices must be non-negative")
         self.adjacency_dict[u].append(v)
         self.num_vertices = max(self.num_vertices, u + 1, v + 1)
 
@@ -31,56 +39,43 @@ def topological_sort(G: Graph) -> List[int]:
     """
     Perform topological sort on a directed acyclic graph (DAG).
 
+    Every vertex 0..G.num_vertices-1 appears in the result, including
+    isolated ones.
+
     Args:
         G: The directed graph to sort.
 
     Returns:
-        A list of vertices in topological order.
+        A list of vertices in which u precedes v for every edge (u, v).
+
+    Raises:
+        ValueError: If the graph contains a cycle.
     """
+    unvisited, in_progress, done = 0, 1, 2
+    state = [unvisited] * G.num_vertices
+    post_order: List[int] = []
 
-    def dfs(
-        G: Graph,
-        v: int,
-        discovered: List[bool],
-        departure: List[int],
-        time: int,
-    ) -> int:
-        # mark the current node as discovered
-        discovered[v] = True
+    for start in range(G.num_vertices):
+        if state[start] != unvisited:
+            continue
 
-        # set the arrival time of vertex `v`
-        time = time + 1
+        # Iterative DFS holding (vertex, iterator over its neighbours).
+        state[start] = in_progress
+        stack = [(start, iter(G.adjacency_dict.get(start, ())))]
+        while stack:
+            v, neighbours = stack[-1]
+            for u in neighbours:
+                if state[u] == in_progress:
+                    raise ValueError("graph contains a cycle")
+                if state[u] == unvisited:
+                    state[u] = in_progress
+                    stack.append((u, iter(G.adjacency_dict.get(u, ()))))
+                    break
+            else:
+                state[v] = done
+                post_order.append(v)
+                stack.pop()
 
-        # do for every edge (v, u)
-        for u in G.adjacency_dict[v]:
-            # if `u` is not yet discovered
-            if not discovered[u]:
-                time = dfs(G, u, discovered, departure, time)
-
-        # ready to backtrack
-        # set departure time of vertex `v`
-        departure[time] = v
-        time = time + 1
-
-        return time
-
-    # departure[] stores the vertex number using departure time as an index
-    departure: List[int] = [-1] * 2 * G.num_vertices
-
-    # to keep track of whether a vertex is discovered or not
-    discovered: List[bool] = [False] * G.num_vertices
-    time = 0
-
-    # perform dfs on all undiscovered vertices
-    for v in G.adjacency_dict.copy():
-        if not discovered[v]:
-            time = dfs(G, v, discovered, departure, time)
-
-    # Iterate over the vertices in order of their decreasing
-    # departure time in dfs, i.e., in topological order
-    topological_order: List[int] = []
-    for i in reversed(range(2 * G.num_vertices)):
-        if departure[i] != -1:
-            topological_order.append(departure[i])
-
-    return topological_order
+    # Reverse post-order is a topological order.
+    post_order.reverse()
+    return post_order

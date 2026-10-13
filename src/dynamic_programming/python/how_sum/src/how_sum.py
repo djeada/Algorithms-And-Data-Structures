@@ -20,7 +20,7 @@ def how_sum_basic(target: int, numbers: List[int]) -> Optional[List[int]]:
     for number in numbers:
         remainder = target - number
 
-        if remainder >= 0:
+        if number > 0 and remainder >= 0:
             combination = how_sum_basic(remainder, numbers)
 
             if combination is not None:
@@ -57,7 +57,7 @@ def how_sum_memo(
     for number in numbers:
         remainder = target - number
 
-        if remainder >= 0:
+        if number > 0 and remainder >= 0:
             combination = how_sum_memo(remainder, numbers, memo)
 
             if combination is not None:
@@ -81,13 +81,16 @@ def how_sum_table(target: int, numbers: List[int]) -> Optional[List[int]]:
     Returns:
         A list of numbers that sum to target, or None if impossible.
     """
+    if target < 0:
+        return None
+
     table: List[Optional[List[int]]] = [None] * (target + 1)
     table[0] = []
 
     for i in range(target):
         if table[i] is not None:
             for number in numbers:
-                if i + number <= target:
+                if 0 < number <= target - i:
                     table[i + number] = table[i] + [number]
 
     return table[-1]

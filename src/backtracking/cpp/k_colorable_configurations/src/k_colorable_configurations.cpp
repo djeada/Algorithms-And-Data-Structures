@@ -25,7 +25,7 @@ std::vector<std::vector<int>> find_k_colorable_configurations(Graph &G, int k) {
   std::function<bool(Graph &, int, int, std::vector<int> &)> is_colorable;
   is_colorable = [&](Graph &G, int v, int color, std::vector<int> &colors) {
     for (int u : G.adjacency_dict[v]) {
-      if (colors[u] == color) {
+      if (u == v || colors[u] == color) {
         return false;
       }
     }

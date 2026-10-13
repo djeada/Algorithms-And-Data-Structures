@@ -35,16 +35,25 @@ def dfs(graph: Graph, source: Vertex, destination: Vertex) -> float:
     distances[source] = 0
     visited[source] = True
 
-    def search(u: Vertex) -> None:
-        visited[u] = True
+    # Iterative DFS (same visiting order as the recursive version) so that
+    # long paths cannot hit Python's recursion limit.
+    stack = [iter(graph.edges_from_vertex(source))]
+    sources = [source]
 
-        for edge in graph.edges_from_vertex(u):
+    while stack:
+        u = sources[-1]
+
+        for edge in stack[-1]:
             v = edge.destination
 
             if not visited[v]:
+                visited[v] = True
                 distances[v] = distances[u] + edge.distance
-                search(v)
-
-    search(source)
+                stack.append(iter(graph.edges_from_vertex(v)))
+                sources.append(v)
+                break
+        else:
+            stack.pop()
+            sources.pop()
 
     return distances[destination]

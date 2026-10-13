@@ -19,7 +19,7 @@ class TestBstToList(unittest.TestCase):
         root.left.right = TreeNode(5)
         root.right.right = TreeNode(11)
 
-        expected = [11, 10, 8, 5, 4, 3]
+        expected = [3, 4, 5, 8, 10, 11]
         actual = bst_to_double_linked_list(root)
         self.assertEqual(list(actual), expected)
 
@@ -34,6 +34,17 @@ class TestBstToList(unittest.TestCase):
         expected = [1]
         actual = bst_to_double_linked_list(root)
         self.assertEqual(list(actual), expected)
+
+    def test_result_is_ascending_and_doubly_linked(self):
+        root = TreeNode(2)
+        root.left = TreeNode(1)
+        root.right = TreeNode(3)
+        result = bst_to_double_linked_list(root)
+        self.assertEqual(result.to_list(), [1, 2, 3])
+        self.assertEqual(result.head.value, 1)
+        self.assertEqual(result.tail.value, 3)
+        self.assertEqual(result.tail.prev.value, 2)
+        self.assertEqual(result.head.next.prev.value, 1)
 
 
 if __name__ == "__main__":

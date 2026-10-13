@@ -1,3 +1,4 @@
+import random
 from src.avl_tree import AvlTree
 from unittest import TestCase
 import unittest
@@ -123,6 +124,61 @@ class TestAvlTree(TestCase):
         self.assertEqual(tree.size(), 100)
         self.assertEqual(tree.height(), 7)
         self.assertFalse(tree.empty())
+
+
+class TestAvlTreeInvariants(TestCase):
+    def _check(self, node):
+        """Return the height of node, asserting AVL and cached balance factors."""
+        if node is None:
+            return 0
+        left = self._check(node.left)
+        right = self._check(node.right)
+        self.assertLessEqual(abs(left - right), 1)
+        return 1 + max(left, right)
+
+    def test_remove_two_children_removes_exactly_one_value(self):
+        tree = AvlTree()
+        for v in [5, 3, 8, 1, 4, 7, 9]:
+            tree.insert(v)
+        tree.remove(5)
+        self.assertEqual(tree.in_order_traversal(), [1, 3, 4, 7, 8, 9])
+        self.assertEqual(tree.size(), 6)
+        self.assertFalse(tree.contains(5))
+
+    def test_remove_missing_value_is_noop(self):
+        tree = AvlTree()
+        tree.insert(1)
+        tree.remove(2)
+        self.assertEqual(tree.size(), 1)
+        self.assertEqual(tree.in_order_traversal(), [1])
+
+    def test_balanced_after_sequential_operations(self):
+        tree = AvlTree()
+        for i in range(200):
+            tree.insert(i)
+            self._check(tree.root)
+        for i in range(0, 200, 3):
+            tree.remove(i)
+            self._check(tree.root)
+        self.assertEqual(tree.in_order_traversal(), [i for i in range(200) if i % 3])
+
+    def test_random_operations_stay_balanced(self):
+        rng = random.Random(7)
+        for _ in range(20):
+            tree = AvlTree()
+            ref = set()
+            for _ in range(200):
+                v = rng.randrange(60)
+                if rng.random() < 0.5:
+                    if v not in ref:
+                        tree.insert(v)
+                        ref.add(v)
+                else:
+                    tree.remove(v)
+                    ref.discard(v)
+                self._check(tree.root)
+                self.assertEqual(tree.size(), len(ref))
+                self.assertEqual(tree.in_order_traversal(), sorted(ref))
 
 
 if __name__ == "__main__":

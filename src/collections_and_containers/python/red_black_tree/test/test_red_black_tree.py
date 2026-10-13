@@ -1,3 +1,4 @@
+import random
 from src.red_black_tree import RedBlackTree
 from unittest import TestCase
 import unittest
@@ -123,6 +124,76 @@ class TestRedBlackTree(TestCase):
         self.assertEqual(tree.size(), 100)
         self.assertEqual(tree.height(), 7)
         self.assertFalse(tree.empty())
+
+
+class TestRedBlackTreeInvariants(TestCase):
+    def _black_height(self, node, parent_red=False):
+        if node is None:
+            return 1
+        if node.is_red and parent_red:
+            self.fail("two consecutive red nodes")
+        left = self._black_height(node.left, node.is_red)
+        right = self._black_height(node.right, node.is_red)
+        self.assertEqual(left, right, "black heights differ")
+        return left + (0 if node.is_red else 1)
+
+    def _check(self, tree):
+        if tree.root is not None:
+            self.assertFalse(tree.root.is_red)
+        self._black_height(tree.root)
+
+    def test_remove_two_children_removes_exactly_one_value(self):
+        tree = RedBlackTree()
+        for v in [5, 3, 8, 1, 4, 7, 9]:
+            tree.insert(v)
+        tree.remove(5)
+        self.assertEqual(tree.in_order_traversal(), [1, 3, 4, 7, 8, 9])
+        self.assertEqual(tree.size(), 6)
+        self._check(tree)
+
+    def test_duplicate_insert_does_not_change_size(self):
+        tree = RedBlackTree()
+        tree.insert(1)
+        tree.insert(1)
+        self.assertEqual(tree.size(), 1)
+        self.assertEqual(tree.in_order_traversal(), [1])
+
+    def test_remove_missing_value_is_noop(self):
+        tree = RedBlackTree()
+        tree.remove(1)
+        tree.insert(1)
+        tree.remove(2)
+        self.assertEqual(tree.size(), 1)
+
+    def test_sequential_insert_then_remove_all(self):
+        tree = RedBlackTree()
+        for i in range(100):
+            tree.insert(i)
+            self._check(tree)
+        for i in range(0, 100, 2):
+            tree.remove(i)
+            self._check(tree)
+        for i in range(99, 0, -2):
+            tree.remove(i)
+            self._check(tree)
+        self.assertTrue(tree.empty())
+
+    def test_random_operations_keep_red_black_properties(self):
+        rng = random.Random(3)
+        for _ in range(20):
+            tree = RedBlackTree()
+            ref = set()
+            for _ in range(200):
+                v = rng.randrange(60)
+                if rng.random() < 0.5:
+                    tree.insert(v)
+                    ref.add(v)
+                else:
+                    tree.remove(v)
+                    ref.discard(v)
+                self._check(tree)
+                self.assertEqual(tree.size(), len(ref))
+                self.assertEqual(tree.in_order_traversal(), sorted(ref))
 
 
 if __name__ == "__main__":

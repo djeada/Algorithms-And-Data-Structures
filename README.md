@@ -21,7 +21,7 @@ My code is written in two programming languages I really enjoy, C++ and Python. 
 The following requirements are necessary to build and run the code in this repository:
 
 * For C++ projects:
-  - A C++ compiler supporting C++14
+  - A C++ compiler supporting C++17
   - CMake 3.15 or later
 * For Python projects:
   - Python 3.10 or later

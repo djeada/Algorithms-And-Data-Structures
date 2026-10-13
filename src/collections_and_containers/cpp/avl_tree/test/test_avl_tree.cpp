@@ -1,4 +1,13 @@
+#include <algorithm>
+#include <cstdlib>
+#include <functional>
+#include <memory>
+#include <random>
+#include <set>
+#include <vector>
+#define private public
 #include "avl_tree.h"
+#undef private
 #include "gtest/gtest.h"
 
 TEST(AvlTreeTest, DefaultConstructor) {
@@ -199,4 +208,51 @@ TEST(AvlTreeTest, IsTreeAlwaysBalanced) {
   EXPECT_EQ(tree.size(), 100);
   EXPECT_EQ(tree.height(), 7);
   EXPECT_FALSE(tree.empty());
+}
+
+namespace {
+// Returns the height of p, or -1 when some node is unbalanced.
+template <class NodePtr> int checkedHeight(const NodePtr &p) {
+  if (p == nullptr) {
+    return 0;
+  }
+  int l = checkedHeight(p->left);
+  int r = checkedHeight(p->right);
+  if (l < 0 || r < 0 || std::abs(l - r) > 1) {
+    return -1;
+  }
+  return 1 + std::max(l, r);
+}
+} // namespace
+
+TEST(AvlTreeTest, StaysBalancedAfterRandomInsertsAndRemoves) {
+  std::mt19937 gen(4242);
+  for (int round = 0; round < 30; round++) {
+    AvlTree<int> tree;
+    std::set<int> reference;
+    for (int step = 0; step < 300; step++) {
+      int v = static_cast<int>(gen() % 100);
+      if (gen() % 2 == 0) {
+        if (reference.insert(v).second) {
+          tree.insert(v);
+        }
+      } else if (reference.erase(v) > 0) {
+        tree.remove(v);
+      }
+      ASSERT_GE(checkedHeight(tree.root), 0);
+      ASSERT_EQ(tree.size(), static_cast<int>(reference.size()));
+    }
+    EXPECT_EQ(tree.in_order_traversal(),
+              std::vector<int>(reference.begin(), reference.end()));
+    tree.clear();
+    EXPECT_EQ(tree.size(), 0);
+    EXPECT_TRUE(tree.empty());
+  }
+}
+
+TEST(AvlTreeTest, RemoveMissingValueThrowsAndKeepsSize) {
+  AvlTree<int> tree;
+  tree.insert(1);
+  EXPECT_THROW(tree.remove(2), std::invalid_argument);
+  EXPECT_EQ(tree.size(), 1);
 }

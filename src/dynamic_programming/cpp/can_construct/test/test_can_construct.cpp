@@ -88,3 +88,21 @@ TEST(CanConstructTest, TestPositiveTable2) {
 
   ASSERT_TRUE(canConstructBasic(target, wordBank));
 }
+
+TEST(CanConstructEdgeCases, EmptyTarget) {
+  std::vector<std::string> bank = {"a"};
+  ASSERT_TRUE(canConstructBasic("", bank));
+  ASSERT_TRUE(canConstructMemo("", bank));
+  ASSERT_TRUE(canConstructTable("", bank));
+}
+
+TEST(CanConstructEdgeCases, EmptyWordIsIgnored) {
+  std::vector<std::string> bank = {"", "ab"};
+  ASSERT_FALSE(canConstructBasic("abc", bank));
+  ASSERT_FALSE(canConstructMemo("abc", bank));
+  ASSERT_FALSE(canConstructTable("abc", bank));
+  bank.push_back("c");
+  ASSERT_TRUE(canConstructBasic("abc", bank));
+  ASSERT_TRUE(canConstructMemo("abc", bank));
+  ASSERT_TRUE(canConstructTable("abc", bank));
+}

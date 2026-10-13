@@ -37,7 +37,10 @@ private:
   int n;
 
   void insert(const T &v, std::unique_ptr<Node> &p);
-  void remove(const T &v, std::unique_ptr<Node> &p);
+  // Returns true when the black height of the subtree rooted at p shrank.
+  bool remove(const T &v, std::unique_ptr<Node> &p);
+  bool fix_left_deficit(std::unique_ptr<Node> &p);
+  bool fix_right_deficit(std::unique_ptr<Node> &p);
   bool contains(const T &v, const std::unique_ptr<Node> &p) const;
   void clear(std::unique_ptr<Node> &p);
   int height(const std::unique_ptr<Node> &p) const;

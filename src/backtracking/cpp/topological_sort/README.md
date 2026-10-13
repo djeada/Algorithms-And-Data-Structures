@@ -1,6 +1,6 @@
 ## Topological Sort
 
-Given a Directed Acyclic Graph (DAG), find it in topological order using topological sort algorithm. If the graph has more than one topological ordering, output any of them. Assume valid Directed Acyclic Graph (DAG).
+Given a Directed Acyclic Graph (DAG), find it in topological order using topological sort algorithm. If the graph has more than one topological ordering, output any of them. The implementation raises an error if the graph contains a cycle, since no ordering exists in that case.
 
 A Topological sort or Topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering. A topological ordering is possible if and only if the graph has no directed cycles, i.e. if the graph is DAG.
 
@@ -8,16 +8,17 @@ A Topological sort or Topological ordering of a directed graph is a linear order
 
 ```
 3 --> 0 --> 6
-|    |
-v    v
-4 --> 1 --> 2
+|           ^
+v           |
+4 --> 1 --> +
       |
       v
-      4 --> 6
+      2
 ```
 
-The topological ordering of the above graph is $3, 4, 1, 2, 0, 6$.
+Edges: `3→0`, `3→4`, `0→6`, `4→1`, `1→2`, `1→6`.
 
+One valid topological ordering of the above graph is $3, 0, 4, 1, 2, 6$ (vertices with no edges, such as an unused label, can appear anywhere). Orderings are generally not unique.
 
 ## Approach
 

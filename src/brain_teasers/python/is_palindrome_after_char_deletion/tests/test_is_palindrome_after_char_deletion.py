@@ -46,6 +46,16 @@ class TestIsPalindromeAfterCharDeletion(unittest.TestCase):
         actual = is_palindrome_after_char_deletion(input_string)
         self.assertEqual(actual, expected)
 
+    def test_delete_right_character_when_left_also_matches(self):
+        self.assertTrue(is_palindrome_after_char_deletion("cuucu"))
+        self.assertTrue(is_palindrome_after_char_deletion("ucuuc"))
+
+    def test_empty_and_short(self):
+        self.assertTrue(is_palindrome_after_char_deletion(""))
+        self.assertTrue(is_palindrome_after_char_deletion("a"))
+        self.assertTrue(is_palindrome_after_char_deletion("ab"))
+        self.assertFalse(is_palindrome_after_char_deletion("abc"))
+
 
 if __name__ == "__main__":
     unittest.main()

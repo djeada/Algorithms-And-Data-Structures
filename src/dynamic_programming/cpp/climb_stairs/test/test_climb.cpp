@@ -90,3 +90,17 @@ TEST(TestClimbTable, TestWith20) {
   int result = 121415;
   EXPECT_EQ(countWaysToClimbTable(num), result);
 }
+
+TEST(ClimbEdgeCases, NegativeSteps) {
+  ASSERT_EQ(countWaysToClimbBasic(-1), 0);
+  ASSERT_EQ(countWaysToClimbMemo(-1), 0);
+  ASSERT_EQ(countWaysToClimbTable(-1), 0);
+  ASSERT_EQ(countWaysToClimbTable(-5), 0);
+}
+
+TEST(ClimbEdgeCases, SmallValuesAgree) {
+  for (int n = 0; n <= 20; ++n) {
+    ASSERT_EQ(countWaysToClimbBasic(n), countWaysToClimbMemo(n));
+    ASSERT_EQ(countWaysToClimbBasic(n), countWaysToClimbTable(n));
+  }
+}

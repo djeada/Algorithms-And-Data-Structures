@@ -20,12 +20,10 @@ def can_sum_basic(target: int, numbers: List[int]) -> bool:
     if target < 0:
         return False
 
-    return any(can_sum_basic(target - i, numbers) for i in numbers)
+    return any(can_sum_basic(target - i, numbers) for i in numbers if i > 0)
 
 
-def can_sum_memo(
-    target: int, numbers: List[int], memo: Optional[dict] = None
-) -> bool:
+def can_sum_memo(target: int, numbers: List[int], memo: Optional[dict] = None) -> bool:
     """
     Determine if it's possible to generate target sum using numbers from the list.
 
@@ -51,7 +49,7 @@ def can_sum_memo(
     if target in memo:
         return memo[target]
 
-    can_sum = any(can_sum_memo(target - i, numbers, memo) for i in numbers)
+    can_sum = any(can_sum_memo(target - i, numbers, memo) for i in numbers if i > 0)
     memo[target] = can_sum
 
     return can_sum
@@ -70,13 +68,16 @@ def can_sum_table(target: int, numbers: List[int]) -> bool:
     Returns:
         True if target sum is achievable, False otherwise.
     """
+    if target < 0:
+        return False
+
     table = [False] * (target + 1)
     table[0] = True
 
     for i in range(target):
         if table[i]:
             for number in numbers:
-                if i + number <= target:
+                if 0 < number <= target - i:
                     table[i + number] = True
 
     return table[-1]

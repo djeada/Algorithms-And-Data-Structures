@@ -38,16 +38,17 @@ class RedBlackTree:
 
     def insert(self, value: Any) -> None:
         """Insert a value into the tree."""
+        if self.contains(value):
+            return
+
         def insert_helper(p: Optional[Node]) -> Node:
             if not p:
                 return Node(value, is_red=True)
 
             if value < p.value:
                 p.left = insert_helper(p.left)
-            elif value > p.value:
-                p.right = insert_helper(p.right)
             else:
-                p.value = value
+                p.right = insert_helper(p.right)
 
             if p.is_right_red() and not p.is_left_red():
                 p = self.rotate_left(p)
@@ -63,27 +64,42 @@ class RedBlackTree:
         self.n += 1
 
     def remove(self, value: Any) -> None:
-        """Remove a value from the tree."""
-        def remove_helper(p: Optional[Node]) -> Optional[Node]:
-            if not p:
+        """Remove a value from the tree (no-op if it is absent)."""
+        if not self.contains(value):
+            return
+
+        def is_red(p: Optional[Node]) -> bool:
+            return p is not None and p.is_red
+
+        def remove_min(p: Node) -> Optional[Node]:
+            if p.left is None:
                 return None
-
-            if value < p.value:
-                p.left = remove_helper(p.left)
-            elif value > p.value:
-                p.right = remove_helper(p.right)
-            else:
-                if not p.left:
-                    return p.right
-                if not p.right:
-                    return p.left
-
-                min_value = self.find_min(p.right)
-                p.value = min_value
-                p.right = remove_helper(p.right)
-
+            if not is_red(p.left) and not is_red(p.left.left):
+                p = self.move_red_left(p)
+            p.left = remove_min(p.left)
             return self.balance(p)
 
+        def remove_helper(p: Node) -> Optional[Node]:
+            if value < p.value:
+                if not is_red(p.left) and not is_red(p.left.left):
+                    p = self.move_red_left(p)
+                p.left = remove_helper(p.left)
+            else:
+                if is_red(p.left):
+                    p = self.rotate_right(p)
+                if value == p.value and p.right is None:
+                    return None
+                if not is_red(p.right) and not is_red(p.right.left):
+                    p = self.move_red_right(p)
+                if value == p.value:
+                    p.value = self.find_min(p.right)
+                    p.right = remove_min(p.right)
+                else:
+                    p.right = remove_helper(p.right)
+            return self.balance(p)
+
+        if not is_red(self.root.left) and not is_red(self.root.right):
+            self.root.is_red = True
         self.root = remove_helper(self.root)
         if self.root:
             self.root.is_red = False
@@ -91,6 +107,7 @@ class RedBlackTree:
 
     def contains(self, value: Any) -> bool:
         """Check if the tree contains a value."""
+
         def contains_helper(p: Optional[Node]) -> bool:
             if not p:
                 return False
@@ -110,6 +127,7 @@ class RedBlackTree:
 
     def height(self) -> int:
         """Return the height of the tree."""
+
         def height_helper(p: Optional[Node]) -> int:
             if not p:
                 return 0
@@ -127,6 +145,7 @@ class RedBlackTree:
 
     def in_order_traversal(self) -> list[Any]:
         """Return elements in in-order traversal (left, root, right)."""
+
         def in_order_helper(p: Optional[Node], v: list[Any]) -> None:
             if not p:
                 return
@@ -140,6 +159,7 @@ class RedBlackTree:
 
     def pre_order_traversal(self) -> list[Any]:
         """Return elements in pre-order traversal (root, left, right)."""
+
         def pre_order_helper(p: Optional[Node], v: list[Any]) -> None:
             if not p:
                 return
@@ -153,6 +173,7 @@ class RedBlackTree:
 
     def post_order_traversal(self) -> list[Any]:
         """Return elements in post-order traversal (left, right, root)."""
+
         def post_order_helper(p: Optional[Node], v: list[Any]) -> None:
             if not p:
                 return
@@ -191,7 +212,8 @@ class RedBlackTree:
     def move_red_left(self, p: Node) -> Node:
         """Move red to the left child."""
         self.flip_colors(p)
-        if p.right and p.right.right and p.right.right.is_red:
+        if p.right and p.right.left and p.right.left.is_red:
+            p.right = self.rotate_right(p.right)
             p = self.rotate_left(p)
             self.flip_colors(p)
         return p

@@ -62,26 +62,18 @@ def score_after_flipping_matrix(matrix: list[list[int]]) -> int:
     Returns:
         The maximum possible score after any number of flips.
     """
+    if not matrix or not matrix[0]:
+        return 0
+
     rows = len(matrix)
     columns = len(matrix[0])
-    max_score = matrix_score(matrix)
+    score = 0
 
-    for i in range(rows - 1, -1, -1):
-        for j in range(columns):
-            # Try toggling the current row
-            toggle_row(matrix, i)
-            score = matrix_score(matrix)
-            if score > max_score:
-                max_score = score
-            else:
-                toggle_row(matrix, i)
+    # Greedy: flip every row so its leading bit is 1, then flip each column
+    # independently if that gives more ones. Works on a virtual view so the
+    # input matrix is not mutated.
+    for j in range(columns):
+        ones = sum(1 for i in range(rows) if matrix[i][j] == matrix[i][0])
+        score += max(ones, rows - ones) * (1 << (columns - j - 1))
 
-            # Try toggling the current column
-            toggle_column(matrix, j)
-            score = matrix_score(matrix)
-            if score > max_score:
-                max_score = score
-            else:
-                toggle_column(matrix, j)
-
-    return max_score
+    return score

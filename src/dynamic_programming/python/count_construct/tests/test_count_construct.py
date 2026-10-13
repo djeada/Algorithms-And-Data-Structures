@@ -86,5 +86,21 @@ class TestCountConstructTab(unittest.TestCase):
         self.assertEqual(count_construct_table(target, word_bank), result)
 
 
+class TestCountConstructEdgeCases(unittest.TestCase):
+    FUNCS = (count_construct_basic, count_construct_memo, count_construct_table)
+
+    def test_empty_target(self):
+        for f in self.FUNCS:
+            self.assertEqual(f("", ["a"]), 1, f.__name__)
+
+    def test_empty_word_is_ignored(self):
+        for f in self.FUNCS:
+            self.assertEqual(f("ab", ["", "a", "b"]), 1, f.__name__)
+
+    def test_overlapping_words(self):
+        for f in self.FUNCS:
+            self.assertEqual(f("aaaa", ["a", "aa"]), 5, f.__name__)
+
+
 if __name__ == "__main__":
     unittest.main()

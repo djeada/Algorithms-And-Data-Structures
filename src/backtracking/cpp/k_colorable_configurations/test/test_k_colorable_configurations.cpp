@@ -42,3 +42,10 @@ TEST(TestKColorableConfigurations, TestNegative1) {
   std::vector<std::vector<int>> actual = find_k_colorable_configurations(G, k);
   EXPECT_EQ(expected, actual);
 }
+
+TEST(TestKColorableConfigurations, TestSelfLoopIsNotColorable) {
+  Graph G;
+  G.add_edge(0, 0);
+  std::vector<std::vector<int>> actual = find_k_colorable_configurations(G, 3);
+  EXPECT_TRUE(actual.empty());
+}

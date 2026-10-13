@@ -17,24 +17,23 @@ def is_palindrome_after_char_deletion(s: str) -> bool:
         True if the string is already a palindrome or can become one
         by deleting at most one character.
     """
-    left = 0
-    right = len(s) - 1
-    deleted = False
 
-    while left < right:
-        if s[left] == s[right]:
+    def is_palindrome(left: int, right: int) -> bool:
+        while left < right:
+            if s[left] != s[right]:
+                return False
             left += 1
             right -= 1
-        else:
-            if deleted:
-                return False
-            deleted = True
-            # Try deleting one of the characters
-            if s[left + 1] == s[right]:
-                left += 1
-            elif s[left] == s[right - 1]:
-                right -= 1
-            else:
-                return False
+        return True
+
+    left = 0
+    right = len(s) - 1
+
+    while left < right:
+        if s[left] != s[right]:
+            # Try deleting either mismatching character
+            return is_palindrome(left + 1, right) or is_palindrome(left, right - 1)
+        left += 1
+        right -= 1
 
     return True

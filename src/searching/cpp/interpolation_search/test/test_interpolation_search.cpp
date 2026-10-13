@@ -5,6 +5,7 @@
 
 #include "interpolation_search.h"
 #include "gtest/gtest.h"
+#include <climits>
 
 /// @brief Test searching an empty array.
 TEST(InterpolationSearchTest, EmptyArray) {
@@ -70,4 +71,13 @@ TEST(InterpolationSearchTest, AllSameElementsFound) {
 TEST(InterpolationSearchTest, AllSameElementsNotFound) {
   std::vector<int> arr{5, 5, 5, 5};
   EXPECT_EQ(interpolation_search(arr, 3), std::nullopt);
+}
+
+/// @brief Test extreme int values that would overflow naive int subtraction.
+TEST(InterpolationSearchTest, ExtremeValuesNoOverflow) {
+  std::vector<int> arr{INT_MIN, -1, 0, 1, INT_MAX};
+  EXPECT_EQ(interpolation_search(arr, INT_MIN), 0);
+  EXPECT_EQ(interpolation_search(arr, 0), 2);
+  EXPECT_EQ(interpolation_search(arr, INT_MAX), 4);
+  EXPECT_EQ(interpolation_search(arr, 2), std::nullopt);
 }

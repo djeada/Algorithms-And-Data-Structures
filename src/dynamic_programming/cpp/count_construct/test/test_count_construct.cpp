@@ -100,3 +100,24 @@ TEST(CountConstructTest, TestPositiveTable2) {
 
   EXPECT_EQ(result, countConstructTable(target, wordBank));
 }
+
+TEST(CountConstructEdgeCases, EmptyWordIsIgnored) {
+  std::vector<std::string> bank = {"", "a", "b"};
+  ASSERT_EQ(countConstructBasic("ab", bank), 1);
+  ASSERT_EQ(countConstructMemo("ab", bank), 1);
+  ASSERT_EQ(countConstructTable("ab", bank), 1);
+}
+
+TEST(CountConstructEdgeCases, OverlappingWords) {
+  std::vector<std::string> bank = {"a", "aa"};
+  ASSERT_EQ(countConstructBasic("aaaa", bank), 5);
+  ASSERT_EQ(countConstructMemo("aaaa", bank), 5);
+  ASSERT_EQ(countConstructTable("aaaa", bank), 5);
+}
+
+TEST(CountConstructEdgeCases, EmptyTarget) {
+  std::vector<std::string> bank = {"a"};
+  ASSERT_EQ(countConstructBasic("", bank), 1);
+  ASSERT_EQ(countConstructMemo("", bank), 1);
+  ASSERT_EQ(countConstructTable("", bank), 1);
+}

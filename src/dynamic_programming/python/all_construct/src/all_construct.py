@@ -21,9 +21,9 @@ def all_construct_basic(target: str, word_bank: List[str]) -> List[List[str]]:
 
         result: List[List[str]] = []
         for word in word_bank:
-            if target.startswith(word):
+            if word and target.startswith(word):
                 suffix_ways = recurse(target[len(word) :])
-                result.extend([way + [word] for way in suffix_ways])
+                result.extend([[word] + way for way in suffix_ways])
 
         return result
 
@@ -53,9 +53,9 @@ def all_construct_memo(target: str, word_bank: List[str]) -> List[List[str]]:
 
         result: List[List[str]] = []
         for word in word_bank:
-            if target.startswith(word):
+            if word and target.startswith(word):
                 suffix_ways = recurse(target[len(word) :], memo)
-                result.extend([way + [word] for way in suffix_ways])
+                result.extend([[word] + way for way in suffix_ways])
 
         memo[target] = result
         return result
@@ -81,7 +81,7 @@ def all_construct_table(target: str, word_bank: List[str]) -> List[List[str]]:
 
     for i in range(len(target)):
         for word in word_bank:
-            if target[i : i + len(word)] == word:
+            if word and target[i : i + len(word)] == word:
                 new_combinations = [combination + [word] for combination in table[i]]
                 table[i + len(word)].extend(new_combinations)
 

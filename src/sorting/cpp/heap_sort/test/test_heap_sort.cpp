@@ -6,6 +6,9 @@
 #include "heap_sort.h"
 #include "gtest/gtest.h"
 
+#include <algorithm>
+#include <random>
+
 /// @brief Test sorting an empty array.
 TEST(HeapSortTest, EmptyArray) {
   std::vector<int> arr;
@@ -84,4 +87,32 @@ TEST(HeapSortTest, AllSameElements) {
   std::vector<int> expected{5, 5, 5, 5};
   heap_sort(arr);
   EXPECT_EQ(expected, arr);
+}
+
+TEST(HeapSortTest, MatchesStdSortOnRandomInputs) {
+  std::mt19937 rng(1234);
+  std::uniform_int_distribution<int> value(-20, 20);
+  std::uniform_int_distribution<int> length(0, 40);
+  for (int round = 0; round < 300; ++round) {
+    std::vector<int> data(length(rng));
+    for (auto &x : data) {
+      x = value(rng);
+    }
+    std::vector<int> expected = data;
+    std::sort(expected.begin(), expected.end());
+    heap_sort(data);
+    ASSERT_EQ(expected, data);
+  }
+}
+
+TEST(HeapSortTest, LargeInput) {
+  std::mt19937 rng(7);
+  std::vector<int> data(200000);
+  for (auto &x : data) {
+    x = static_cast<int>(rng());
+  }
+  std::vector<int> expected = data;
+  std::sort(expected.begin(), expected.end());
+  heap_sort(data);
+  EXPECT_EQ(expected, data);
 }

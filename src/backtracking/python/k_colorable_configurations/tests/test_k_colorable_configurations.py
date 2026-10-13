@@ -53,6 +53,11 @@ class TestKColorableConfigurations(unittest.TestCase):
         actual = find_k_colorable_configurations(G, k)
         self.assertEqual(expected, actual)
 
+    def test_self_loop_is_not_colorable(self):
+        G = Graph()
+        G.add_edge(0, 0)
+        self.assertEqual(find_k_colorable_configurations(G, 3), [])
+
 
 if __name__ == "__main__":
     unittest.main()

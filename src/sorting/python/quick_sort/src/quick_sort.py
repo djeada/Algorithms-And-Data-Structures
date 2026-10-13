@@ -42,14 +42,18 @@ def quick_sort(array: List[T]) -> List[T]:
         return i
 
     def _quick_sort(arr: List[T], start: int, stop: int) -> None:
-        if stop - start < 2:
-            return
-
-        pivot_idx = random.randint(start, stop - 1)
-        arr[pivot_idx], arr[stop - 1] = arr[stop - 1], arr[pivot_idx]
-        pivot_pos = partition(arr, start, stop)
-        _quick_sort(arr, start, pivot_pos)
-        _quick_sort(arr, pivot_pos + 1, stop)
+        # Recurse into the smaller side and loop on the larger one so the
+        # recursion depth stays O(log n) even with many duplicate values.
+        while stop - start >= 2:
+            pivot_idx = random.randint(start, stop - 1)
+            arr[pivot_idx], arr[stop - 1] = arr[stop - 1], arr[pivot_idx]
+            pivot_pos = partition(arr, start, stop)
+            if pivot_pos - start < stop - (pivot_pos + 1):
+                _quick_sort(arr, start, pivot_pos)
+                start = pivot_pos + 1
+            else:
+                _quick_sort(arr, pivot_pos + 1, stop)
+                stop = pivot_pos
 
     _quick_sort(array, 0, len(array))
     return array

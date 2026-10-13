@@ -1,225 +1,143 @@
 #!/bin/bash
-set -e
+# Runs the Python (unittest) and C++ (CMake + CTest) test suites.
+#
+# By default only projects touched since the base branch are tested; when
+# nothing differs from the base branch (e.g. a push to master) every project
+# is tested. Exits non-zero if any project fails to build or any test fails.
+set -u -o pipefail
 
-# Determine base branch by looking at the upstream. If no upstream is set, fall back to "master".
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT"
+
+BUILD_ROOT="$(mktemp -d)"
+trap 'rm -rf "$BUILD_ROOT"' EXIT
+
+FAILED_PROJECTS=()
+
+usage() {
+    cat <<'EOF'
+Usage: run_tests.sh [OPTION]
+Run tests for projects modified since the base branch.
+
+Options:
+  -h, --help    Show this help message and exit
+  -p, --python  Run Python tests only
+  -c, --cpp     Run C++ tests only
+  -a, --all     Test every project, not just modified ones
+EOF
+}
+
+# Base ref to diff against: the upstream if one is set, otherwise master.
 detect_base_branch() {
-    # If there’s an upstream (e.g. origin/master or origin/main), use that.
-    if base="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"; then
-        echo "$base"
-    else
-        echo "master"
-    fi
+    git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo "master"
 }
 
-# Find all directories (under start_dir) that contain a CMakeLists.txt
-find_cmake_subdirs() {
-    local start_dir="$1"
-    find "$start_dir" -type f -name 'CMakeLists.txt' -printf '%h\n' | sort -u
-}
-
-# Find only those Python-package roots that actually have a tests/ subdirectory.
-# In other words, look for “*/tests” and return the parent directory.
-find_python_subdirs() {
-    local start_dir="$1"
-    find "$start_dir" -type d -name 'tests' -printf '%h\n' | sort -u
-}
-
-# Get the list of files changed since the last commit on base branch
+# Files changed relative to the base branch, including uncommitted work.
 get_modified_files() {
-    local base_branch
-    base_branch="$(detect_base_branch)"
-    git diff --name-only "$base_branch"...HEAD
+    local base
+    base="$(detect_base_branch)"
+    {
+        git diff --name-only "$base"...HEAD 2>/dev/null
+        git diff --name-only HEAD 2>/dev/null
+    } | sort -u
 }
 
-test_cpp_projects() {
-    local current_dir
-    current_dir=$(pwd)
-
-    # All C++ project directories (where CMakeLists.txt lives)
-    local all_subdirs
-    all_subdirs=$(find_cmake_subdirs .)
-
-    # Files modified in this PR relative to base
-    local modified_files
-    modified_files=$(get_modified_files)
-
-    # Filter to only those C++ subdirs in which at least one file was modified
-    local modified_subdirs=""
-    for subdir in $all_subdirs; do
-        # strip leading "./" for comparison against git output
-        local sub="${subdir#./}"
-        if echo "$modified_files" | grep -q "^$sub/"; then
-            modified_subdirs="$modified_subdirs $subdir"
+# Print the subset of the given directories that contain a modified file.
+filter_modified() {
+    local modified="$1"
+    shift
+    local dir
+    for dir in "$@"; do
+        if grep -q "^${dir#./}/" <<<"$modified"; then
+            echo "$dir"
         fi
     done
+}
 
-    if [ -z "$modified_subdirs" ]; then
-        echo "No modified C++ projects to test."
+select_projects() {
+    local all="$1" modified selected
+    if [ "$RUN_ALL" = 1 ]; then
+        echo "$all"
         return
     fi
-
-    local total_passed_tests=0
-    local total_failed_tests=0
-    local cpp_test_log
-
-    cleanup() {
-        cd "$current_dir"
-        rm -rf build
-    }
-
-    echo "Running tests for modified C++ projects:"
-    for subdir in $modified_subdirs; do
-        echo -e "\nRunning tests for C++ project at: $subdir"
-        cd "$subdir"
-
-        mkdir -p build && cd build
-        trap cleanup EXIT
-
-        # Hide cmake/make output
-        cmake .. 1>/dev/null 2>&1 && make 1>/dev/null 2>&1
-
-        cpp_test_log="$current_dir/cpp_test_$(echo "$subdir" | tr '/' '_').log"
-        : > "$cpp_test_log"
-        ctest --verbose 2>&1 | tee -a "$cpp_test_log"
-
-        trap - EXIT
-        cleanup
-        cd "$current_dir"
-
-        # Safely extract “<number> tests from” (if any) or default to 0
-        local cpp_total_tests
-        cpp_total_tests=$(grep -oP '\d+(?= tests from)' "$cpp_test_log" | tail -1 || echo 0)
-        cpp_total_tests="${cpp_total_tests:-0}"
-
-        # Safely extract passed count (if any) or default to 0
-        local cpp_passed_tests
-        cpp_passed_tests=$(grep -oP '(?<=\[ *PASSED *\] )\d+' "$cpp_test_log" | tail -1 || echo 0)
-        cpp_passed_tests="${cpp_passed_tests:-0}"
-
-        local cpp_failed_tests=$(( cpp_total_tests - cpp_passed_tests ))
-
-        total_passed_tests=$(( total_passed_tests + cpp_passed_tests ))
-        total_failed_tests=$(( total_failed_tests + cpp_failed_tests ))
-
-        echo "C++ Tests summary for $subdir:"
-        echo -e "  Passed: \e[32m$cpp_passed_tests\e[0m, Failed: \e[31m$cpp_failed_tests\e[0m"
-    done
-
-    echo -e "\nTotal C++ Tests summary for modified projects:"
-    echo -e "  Total Passed: \e[32m$total_passed_tests\e[0m, Total Failed: \e[31m$total_failed_tests\e[0m"
+    modified="$(get_modified_files)"
+    if [ -z "$modified" ]; then
+        echo "$all"
+        return
+    fi
+    # shellcheck disable=SC2086
+    filter_modified "$modified" $all
 }
 
 test_python_projects() {
-    local current_dir
-    current_dir=$(pwd)
-
-    # Only pick up directories that actually have a “tests/” folder
-    local all_subdirs
-    all_subdirs=$(find_python_subdirs .)
-
-    # Which files changed in this PR (relative to base)
-    local modified_files
-    modified_files=$(get_modified_files)
-
-    # Filter to only those Python-root dirs where at least one file was modified
-    local modified_subdirs=""
-    for subdir in $all_subdirs; do
-        local sub="${subdir#./}"
-        if echo "$modified_files" | grep -q "^$sub/"; then
-            modified_subdirs="$modified_subdirs $subdir"
-        fi
-    done
-
-    if [ -z "$modified_subdirs" ]; then
-        echo "No modified Python projects to test."
+    local all projects dir
+    # Python projects keep their tests in either tests/ or test/ (C++ projects
+    # also use test/, hence the /python/ filter).
+    all="$(find . -type d -path '*/python/*' \( -name tests -o -name test \) \
+        -not -path '*/build/*' -printf '%h\n' | sort -u)"
+    projects="$(select_projects "$all")"
+    if [ -z "$projects" ]; then
+        echo "No Python projects to test."
         return
     fi
 
-    local total_passed_tests=0
-    local total_failed_tests=0
-    local python_test_log
-
-    echo "Running tests for modified Python projects:"
-    for subdir in $modified_subdirs; do
-        echo -e "\nRunning tests for Python project at: $subdir"
-        cd "$subdir"
-
-        python_test_log="$current_dir/python_test_$(echo "$subdir" | tr '/' '_').log"
-        : > "$python_test_log"
-
-        # Run unittest discovery; any output goes into the log
-        python3 -m unittest discover -v 2>&1 | tee -a "$python_test_log"
-        cd "$current_dir"
-
-        # Safely grab “Ran X tests” (default to 0 if none found)
-        local python_total_tests
-        python_total_tests=$(grep -oP '(?<=Ran )\d+' "$python_test_log" | head -1 || echo 0)
-        python_total_tests="${python_total_tests:-0}"
-
-        # Count how many “... ok” lines (default to 0)
-        local python_passed_tests
-        python_passed_tests=$(grep -c '\.\.\. ok' "$python_test_log" || echo 0)
-        python_passed_tests="${python_passed_tests:-0}"
-
-        # Compute failures
-        local python_failed_tests=$(( python_total_tests - python_passed_tests ))
-
-        total_passed_tests=$(( total_passed_tests + python_passed_tests ))
-        total_failed_tests=$(( total_failed_tests + python_failed_tests ))
-
-        echo "Python Tests summary for $subdir:"
-        echo -e "  Passed: \e[32m$python_passed_tests\e[0m, Failed: \e[31m$python_failed_tests\e[0m"
+    echo "Running tests for Python projects:"
+    for dir in $projects; do
+        echo -e "\n== Python project: $dir"
+        if ! (cd "$dir" && python3 -m unittest discover -v); then
+            FAILED_PROJECTS+=("python:$dir")
+        fi
     done
-
-    echo -e "\nTotal Python Tests summary for modified projects:"
-    echo -e "  Total Passed: \e[32m$total_passed_tests\e[0m, Total Failed: \e[31m$total_failed_tests\e[0m"
 }
 
-main() {
-    if [ "$#" -eq 0 ]; then
-        echo "Running tests only for projects modified since last commit on base branch."
-        echo "---- Python Projects ----"
-        test_python_projects
-        echo "---- C++ Projects ----"
-        test_cpp_projects
-        exit 0
+test_cpp_projects() {
+    local all projects dir build
+    # A project root is a CMakeLists.txt whose parent directory has none
+    # (src/ and test/ are added via add_subdirectory).
+    all="$(find . -name CMakeLists.txt -not -path '*/build/*' -printf '%h\n' | sort -u |
+        while read -r d; do [ -f "$d/../CMakeLists.txt" ] || echo "$d"; done)"
+    projects="$(select_projects "$all")"
+    if [ -z "$projects" ]; then
+        echo "No C++ projects to test."
+        return
     fi
 
-    if [ "$#" -eq 1 ]; then
-        case "$1" in
-            -h|--help)
-                echo "Usage: run_tests.sh [OPTION]"
-                echo "Run tests for projects modified since base branch."
-                echo ""
-                echo "Options:"
-                echo "  -h, --help    Show this help message and exit"
-                echo "  -p, --python  Run tests for modified Python projects only"
-                echo "  -c, --cpp     Run tests for modified C++ projects only"
-                exit 0
-                ;;
-            -p|--python)
-                echo "Running tests for modified Python projects:"
-                test_python_projects
-                exit 0
-                ;;
-            -c|--cpp)
-                echo "Running tests for modified C++ projects:"
-                test_cpp_projects
-                exit 0
-                ;;
-            *)
-                echo "Unknown option: $1"
-                echo "Usage: run_tests.sh [OPTION]"
-                exit 1
-                ;;
-        esac
-    fi
-
-    if [ "$#" -gt 1 ]; then
-        echo "Too many arguments"
-        echo "Usage: run_tests.sh [OPTION]"
-        exit 1
-    fi
+    echo "Running tests for C++ projects:"
+    for dir in $projects; do
+        echo -e "\n== C++ project: $dir"
+        build="$BUILD_ROOT/$(echo "${dir#./}" | tr '/' '_')"
+        if cmake -S "$dir" -B "$build" >"$build.log" 2>&1 &&
+            cmake --build "$build" -j"$(nproc)" >>"$build.log" 2>&1; then
+            (cd "$build" && ctest --output-on-failure) ||
+                FAILED_PROJECTS+=("cpp:$dir")
+        else
+            cat "$build.log"
+            echo "Build failed"
+            FAILED_PROJECTS+=("cpp:$dir")
+        fi
+    done
 }
 
-main "$@"
+RUN_ALL=0
+RUN_PYTHON=1
+RUN_CPP=1
+for arg in "$@"; do
+    case "$arg" in
+    -h | --help) usage; exit 0 ;;
+    -p | --python) RUN_CPP=0 ;;
+    -c | --cpp) RUN_PYTHON=0 ;;
+    -a | --all) RUN_ALL=1 ;;
+    *) echo "Unknown option: $arg" >&2; usage >&2; exit 1 ;;
+    esac
+done
+
+[ "$RUN_PYTHON" = 1 ] && test_python_projects
+[ "$RUN_CPP" = 1 ] && test_cpp_projects
+
+echo
+if [ "${#FAILED_PROJECTS[@]}" -gt 0 ]; then
+    echo "FAILED projects:"
+    printf '  %s\n' "${FAILED_PROJECTS[@]}"
+    exit 1
+fi
+echo "All tests passed."

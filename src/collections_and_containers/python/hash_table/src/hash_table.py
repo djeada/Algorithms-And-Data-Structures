@@ -11,9 +11,10 @@ class HashTable:
     def __init__(self, hash_function: Callable[[Any], int], size: int = 10) -> None:
         self.hash_function = hash_function
         self._num_elements = 0
-        self._size = size
+        self._size = max(1, size)
         self.load_factor = 0.7
-        self.table: list[list[tuple[Any, Any]] | None] = [None] * size
+        self._min_size = max(1, size)
+        self.table: list[list[tuple[Any, Any]] | None] = [None] * self._size
 
     def add(self, key: Any, value: Any) -> None:
         """Add or update a key-value pair."""
@@ -38,7 +39,7 @@ class HashTable:
         for k, v in self.table[index]:
             if k == key:
                 return v
-        return None
+        raise KeyError("Key not found")
 
     def remove(self, key: Any) -> None:
         """Remove a key-value pair."""
@@ -50,7 +51,12 @@ class HashTable:
                 del self.table[index][i]
                 self._num_elements -= 1
                 break
-        if self._num_elements / self._size < (1 - self.load_factor) / 2:
+        else:
+            raise KeyError("Key not found")
+        if (
+            self._size > self._min_size
+            and self._num_elements / self._size < (1 - self.load_factor) / 2
+        ):
             self.shrink()
 
     def size(self) -> int:
@@ -92,7 +98,7 @@ class HashTable:
 
     def shrink(self) -> None:
         """Halve the capacity of the hash table."""
-        self._size = (self._size - 1) // 2
+        self._size = max((self._size - 1) // 2, self._min_size)
         new_table: list[list[tuple[Any, Any]] | None] = [None] * self._size
         for bucket in self.table:
             if bucket is None:

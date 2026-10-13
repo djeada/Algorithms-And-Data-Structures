@@ -68,5 +68,23 @@ class TestCanConstructTab(unittest.TestCase):
         self.assertTrue(can_construct_table(target, word_bank))
 
 
+class TestCanConstructEdgeCases(unittest.TestCase):
+    FUNCS = (can_construct_basic, can_construct_memo, can_construct_table)
+
+    def test_empty_target(self):
+        for f in self.FUNCS:
+            self.assertTrue(f("", []), f.__name__)
+            self.assertTrue(f("", ["a"]), f.__name__)
+
+    def test_empty_word_is_ignored(self):
+        for f in self.FUNCS:
+            self.assertFalse(f("abc", ["", "ab"]), f.__name__)
+            self.assertTrue(f("abc", ["", "ab", "c"]), f.__name__)
+
+    def test_empty_word_bank(self):
+        for f in self.FUNCS:
+            self.assertFalse(f("a", []), f.__name__)
+
+
 if __name__ == "__main__":
     unittest.main()

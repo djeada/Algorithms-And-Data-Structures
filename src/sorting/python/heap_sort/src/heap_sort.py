@@ -7,13 +7,13 @@ T = TypeVar("T")
 
 def heap_sort(array: List[T]) -> List[T]:
     """
-    Sort an array using the heap sort algorithm.
+    Sort a list in place in ascending order using heap sort.
 
-    This implementation builds a min-heap and repeatedly extracts the minimum
-    element to produce a sorted array in-place.
+    Builds a max-heap in place, then repeatedly swaps the maximum to the end
+    of the shrinking heap and sifts the new root down.
 
     Time complexity: O(n log n)
-    Space complexity: O(log n) due to recursion stack
+    Space complexity: O(1)
 
     Args:
         array: The list of comparable elements to sort.
@@ -22,29 +22,30 @@ def heap_sort(array: List[T]) -> List[T]:
         The same list, sorted in ascending order.
     """
 
-    def parent(i: int) -> int:
-        return i >> 1
+    def sift_down(root: int, size: int) -> None:
+        while True:
+            largest = root
+            left = 2 * root + 1
+            right = left + 1
 
-    def left_child(i: int) -> int:
-        return i << 1
+            if left < size and array[largest] < array[left]:
+                largest = left
+            if right < size and array[largest] < array[right]:
+                largest = right
+            if largest == root:
+                return
+            array[root], array[largest] = array[largest], array[root]
+            root = largest
 
-    def right_child(i: int) -> int:
-        return (i << 1) + 1
+    n = len(array)
 
-    def heapify(arr: List[T], curr: int, offset: int) -> None:
-        if curr + offset > len(arr):
-            return
+    # Build a max-heap in O(n).
+    for i in range(n // 2 - 1, -1, -1):
+        sift_down(i, n)
 
-        heapify(arr, left_child(curr), offset)
-        heapify(arr, right_child(curr), offset)
-
-        if curr > 1 and arr[curr + offset - 1] < arr[parent(curr) + offset - 1]:
-            arr[curr + offset - 1], arr[parent(curr) + offset - 1] = (
-                arr[parent(curr) + offset - 1],
-                arr[curr + offset - 1],
-            )
-
-    for i in range(len(array)):
-        heapify(array, 1, i)
+    # Move the maximum to the end and restore the heap on the remainder.
+    for end in range(n - 1, 0, -1):
+        array[0], array[end] = array[end], array[0]
+        sift_down(0, end)
 
     return array

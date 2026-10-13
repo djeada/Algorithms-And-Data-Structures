@@ -41,6 +41,6 @@ def merge_sort(array: List[T]) -> List[T]:
     n = len(array)
 
     if n < 2:
-        return array
+        return list(array)
 
     return merge(merge_sort(array[: n // 2]), merge_sort(array[n // 2 :]))

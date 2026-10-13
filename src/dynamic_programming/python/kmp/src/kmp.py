@@ -34,15 +34,18 @@ def search(text: str, pattern: str) -> List[int]:
                     i += 1
         return result
 
+    if not pattern:
+        # The empty pattern matches at every position (like str.find).
+        return list(range(len(text) + 1))
+
     longest_prefix_suffix = find_longest_prefix_suffix(pattern)
     result: List[int] = []
     j = 0
     for i, c in enumerate(text):
+        while j != 0 and c != pattern[j]:
+            j = longest_prefix_suffix[j - 1]
         if c == pattern[j]:
             j += 1
-        else:
-            if j != 0:
-                j = longest_prefix_suffix[j - 1]
         if j == len(pattern):
             result.append(i - j + 1)
             j = longest_prefix_suffix[j - 1]

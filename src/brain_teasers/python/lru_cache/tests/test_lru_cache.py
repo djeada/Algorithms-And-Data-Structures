@@ -23,6 +23,20 @@ class TestLRUCache(unittest.TestCase):
         lrucache.put(4, 1)
         self.assertEqual(lrucache.get(2), -1)
 
+    def test_zero_capacity_stores_nothing(self):
+        cache = LRUCache(0)
+        cache.put(1, 1)
+        self.assertEqual(cache.get(1), -1)
+        cache.put(2, 2)
+        self.assertEqual(cache.get(2), -1)
+
+    def test_capacity_one(self):
+        cache = LRUCache(1)
+        cache.put(1, 1)
+        cache.put(2, 2)
+        self.assertEqual(cache.get(1), -1)
+        self.assertEqual(cache.get(2), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

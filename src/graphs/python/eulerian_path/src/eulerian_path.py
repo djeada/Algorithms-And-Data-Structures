@@ -58,6 +58,21 @@ def edges_from_adjacency(graph: AdjacencyGraph) -> list[tuple[int, int]]:
     return [(u, v) for u in graph for v in graph[u]]
 
 
+def _all_edges_reachable_from(graph: AdjacencyGraph, start: int) -> bool:
+    """Check that every remaining edge is reachable from ``start``."""
+    seen = {start}
+    stack = [start]
+
+    while stack:
+        u = stack.pop()
+        for v in graph[u]:
+            if v not in seen:
+                seen.add(v)
+                stack.append(v)
+
+    return all(v in seen for v in graph if graph[v])
+
+
 def fleury(graph: AdjacencyGraph) -> list[tuple[int, int]] | bool:
     """
     Find an Eulerian path using Fleury's algorithm.
@@ -81,18 +96,30 @@ def fleury(graph: AdjacencyGraph) -> list[tuple[int, int]] | bool:
         return False
 
     g = {k: list(v) for k, v in graph.items()}  # Deep copy
+
+    # All edges must lie in one connected component (isolated vertices are fine)
+    first_with_edges = next((k for k in g if g[k]), None)
+    if first_with_edges is not None and not _all_edges_reachable_from(
+        g, first_with_edges
+    ):
+        return False
+
     trail: list[tuple[int, int]] = []
 
     # Start from odd-degree vertex if exists, otherwise from any vertex
-    u = odd_degree_nodes[0] if len(odd_degree_nodes) == 2 else list(g)[0]
+    u = (
+        odd_degree_nodes[0]
+        if len(odd_degree_nodes) == 2
+        else (first_with_edges if first_with_edges is not None else list(g)[0])
+    )
 
     while edges_from_adjacency(g):
         current_vertex = u
 
-        for u in g[current_vertex]:
+        for u in list(g[current_vertex]):
             g[current_vertex].remove(u)
             g[u].remove(current_vertex)
-            bridge = not is_connected(g)
+            bridge = not _all_edges_reachable_from(g, u)
 
             if bridge:
                 g[current_vertex].append(u)
@@ -103,7 +130,6 @@ def fleury(graph: AdjacencyGraph) -> list[tuple[int, int]] | bool:
         if bridge:
             g[current_vertex].remove(u)
             g[u].remove(current_vertex)
-            g.pop(current_vertex)
 
         trail.append((current_vertex, u))
 

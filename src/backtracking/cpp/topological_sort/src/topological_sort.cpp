@@ -1,35 +1,58 @@
 #include "topological_sort.h"
 
+#include <cstddef>
+#include <stdexcept>
+#include <utility>
 
-Graph::Graph(int V) : num_vertices(V) {
-    adjacency_list.resize(V);
+Graph::Graph(int n) : num_vertices(n) {
+  if (n < 0) {
+    throw std::invalid_argument("number of vertices must be non-negative");
+  }
+  adjacency_list.resize(n);
 }
 
 void Graph::add_edge(int u, int v) {
-    adjacency_list[u].push_back(v);
+  if (u < 0 || u >= num_vertices || v < 0 || v >= num_vertices) {
+    throw std::out_of_range("vertex out of range");
+  }
+  adjacency_list[u].push_back(v);
 }
 
-void Graph::topological_sort_util(int v, std::vector<bool>& visited, std::stack<int>& Stack) {
-    visited[v] = true;
-    for (int i : adjacency_list[v])
-        if (!visited[i])
-            topological_sort_util(i, visited, Stack);
-    Stack.push(v);
-}
+std::vector<int> Graph::topological_sort() const {
+  enum class State { Unvisited, InProgress, Done };
+  std::vector<State> state(num_vertices, State::Unvisited);
+  std::vector<int> order;
+  order.reserve(num_vertices);
 
-std::vector<int> Graph::topological_sort() {
-    std::stack<int> Stack;
-    std::vector<bool> visited(num_vertices, false);
-
-    for (int i = 0; i < num_vertices; i++)
-        if (!visited[i])
-            topological_sort_util(i, visited, Stack);
-
-    std::vector<int> result;
-    while (!Stack.empty()) {
-        result.push_back(Stack.top());
-        Stack.pop();
+  // Iterative DFS: (vertex, index of the next neighbour to explore).
+  std::vector<std::pair<int, std::size_t>> stack;
+  for (int start = 0; start < num_vertices; ++start) {
+    if (state[start] != State::Unvisited) {
+      continue;
     }
-    return result;
-}
+    state[start] = State::InProgress;
+    stack.emplace_back(start, 0);
 
+    while (!stack.empty()) {
+      const int v = stack.back().first;
+      std::size_t &next = stack.back().second;
+      if (next < adjacency_list[v].size()) {
+        const int u = adjacency_list[v][next++];
+        if (state[u] == State::InProgress) {
+          throw std::invalid_argument("graph contains a cycle");
+        }
+        if (state[u] == State::Unvisited) {
+          state[u] = State::InProgress;
+          stack.emplace_back(u, 0);
+        }
+      } else {
+        state[v] = State::Done;
+        order.push_back(v);
+        stack.pop_back();
+      }
+    }
+  }
+
+  // Reverse post-order is a topological order.
+  return {order.rbegin(), order.rend()};
+}

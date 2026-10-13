@@ -32,6 +32,24 @@ class TestKClosestPoints(unittest.TestCase):
         actual = k_closest_points(input_points, input_K)
         self.assertEqual(actual, expected)
 
+    def test_k_zero_and_negative(self):
+        points = [(1, 1), (2, 2)]
+        self.assertEqual(k_closest_points(points, 0), [])
+        self.assertEqual(k_closest_points(points, -1), [])
+
+    def test_k_larger_than_size_and_empty(self):
+        self.assertEqual(k_closest_points([(3, 3), (1, 1)], 5), [(1, 1), (3, 3)])
+        self.assertEqual(k_closest_points([], 3), [])
+
+    def test_large_coordinates_exact_ordering(self):
+        a = (10**9, 1)
+        b = (10**9 - 1, 10**5)
+        # squared distances differ by far less than float precision allows
+        self.assertEqual(
+            k_closest_points([a, b], 1),
+            [min([a, b], key=lambda p: p[0] ** 2 + p[1] ** 2)],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

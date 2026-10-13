@@ -1,13 +1,41 @@
 #include "hash_table.h"
 #include <cstdlib>
 #include <stdexcept>
+#include <string>
+#include <utility>
 
 template <class Key, class Value>
 HashTable<Key, Value>::HashTable(std::function<int(Key)> hash_function,
                                  int size)
-    : hash_function(hash_function), _num_elements(0), _size(size),
-      load_factor(0.75f),
-      table(size) {}
+    : hash_function(hash_function), _num_elements(0),
+      _size(size > 0 ? size : 1), load_factor(0.75f), table(_size) {}
+
+template <class Key, class Value>
+HashTable<Key, Value>::HashTable(const HashTable &other)
+    : hash_function(other.hash_function), _num_elements(other._num_elements),
+      _size(other._size), load_factor(other.load_factor), table(other._size) {
+  // Buckets are shared_ptrs: copy them so the tables do not alias.
+  for (int i = 0; i < _size; i++) {
+    if (other.table[i] != nullptr) {
+      table[i] =
+          std::make_shared<std::vector<std::pair<Key, Value>>>(*other.table[i]);
+    }
+  }
+}
+
+template <class Key, class Value>
+HashTable<Key, Value> &
+HashTable<Key, Value>::operator=(const HashTable &other) {
+  if (this != &other) {
+    HashTable copy(other);
+    std::swap(hash_function, copy.hash_function);
+    std::swap(_num_elements, copy._num_elements);
+    std::swap(_size, copy._size);
+    std::swap(load_factor, copy.load_factor);
+    std::swap(table, copy.table);
+  }
+  return *this;
+}
 
 template <class Key, class Value> HashTable<Key, Value>::~HashTable() {
   table.clear();
@@ -16,8 +44,12 @@ template <class Key, class Value> HashTable<Key, Value>::~HashTable() {
 template <class Key, class Value>
 int HashTable<Key, Value>::hash_index(Key key) const {
   // Handle negative hash values
-  int hash = hash_function(key);
-  return std::abs(hash) % _size;
+  // Widen before abs(): std::abs(INT_MIN) is undefined behaviour.
+  long long hash = hash_function(key);
+  if (hash < 0) {
+    hash = -hash;
+  }
+  return static_cast<int>(hash % _size);
 }
 
 template <class Key, class Value>
@@ -26,7 +58,7 @@ void HashTable<Key, Value>::add(Key key, Value value) {
   if (table[index] == nullptr) {
     table[index] = std::make_shared<std::vector<std::pair<Key, Value>>>();
   }
-  
+
   // Check if key already exists and update it
   for (auto &pair : *table[index]) {
     if (pair.first == key) {
@@ -34,10 +66,10 @@ void HashTable<Key, Value>::add(Key key, Value value) {
       return;
     }
   }
-  
+
   table[index]->push_back(std::make_pair(key, value));
   _num_elements++;
-  
+
   if (static_cast<float>(_num_elements) / _size > load_factor) {
     grow();
   }
@@ -138,10 +170,10 @@ template <class Key, class Value> void HashTable<Key, Value>::grow() {
   int new_size = _size * 2;
   std::vector<std::shared_ptr<std::vector<std::pair<Key, Value>>>> new_table(
       new_size);
-  
+
   int old_size = _size;
   _size = new_size;
-  
+
   for (int i = 0; i < old_size; i++) {
     if (table[i] != nullptr) {
       for (const auto &pair : *table[i]) {
@@ -162,13 +194,13 @@ template <class Key, class Value> void HashTable<Key, Value>::shrink() {
   if (new_size < 10) {
     new_size = 10;
   }
-  
+
   std::vector<std::shared_ptr<std::vector<std::pair<Key, Value>>>> new_table(
       new_size);
-  
+
   int old_size = _size;
   _size = new_size;
-  
+
   for (int i = 0; i < old_size; i++) {
     if (table[i] != nullptr) {
       for (const auto &pair : *table[i]) {

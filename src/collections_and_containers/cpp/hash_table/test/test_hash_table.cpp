@@ -1,5 +1,6 @@
 #include "hash_table.h"
 #include "gtest/gtest.h"
+#include <climits>
 
 TEST(HashTableTest, SimpleConstructor) {
   // int key
@@ -257,4 +258,54 @@ TEST(HashTableTest, Clear) {
   hash_table2.add("c", 9);
   hash_table2.clear();
   EXPECT_EQ(hash_table2.size(), 0);
+}
+
+TEST(HashTableTest, CopyIsDeep) {
+  HashTable<int, int> a([](int key) { return key; });
+  for (int i = 0; i < 30; i++) {
+    a.add(i, i * 2);
+  }
+  HashTable<int, int> b(a);
+  a.add(5, 1000);
+  a.remove(6);
+  a.add(1000, 1);
+  EXPECT_EQ(b.get(5), 10);
+  EXPECT_TRUE(b.contains(6));
+  EXPECT_FALSE(b.contains(1000));
+  EXPECT_EQ(b.size(), 30u);
+
+  HashTable<int, int> c([](int key) { return key; });
+  c.add(1, 1);
+  c = a;
+  a.clear();
+  EXPECT_EQ(c.get(5), 1000);
+  EXPECT_EQ(c.size(), 30u);
+  EXPECT_FALSE(c.contains(6));
+}
+
+TEST(HashTableTest, ManyInsertsAndRemovesAcrossGrowAndShrink) {
+  HashTable<int, int> table([](int key) { return key * 7 - 100; });
+  for (int i = 0; i < 1000; i++) {
+    table.add(i, i);
+  }
+  EXPECT_EQ(table.size(), 1000u);
+  for (int i = 0; i < 1000; i++) {
+    ASSERT_EQ(table.get(i), i);
+  }
+  for (int i = 0; i < 990; i++) {
+    table.remove(i);
+  }
+  EXPECT_EQ(table.size(), 10u);
+  for (int i = 990; i < 1000; i++) {
+    ASSERT_EQ(table[i], i);
+  }
+  for (int i = 0; i < 990; i++) {
+    ASSERT_FALSE(table.contains(i));
+  }
+}
+
+TEST(HashTableTest, ExtremeNegativeHash) {
+  HashTable<int, int> table([](int) { return INT_MIN; });
+  table.add(1, 5);
+  EXPECT_EQ(table.get(1), 5);
 }

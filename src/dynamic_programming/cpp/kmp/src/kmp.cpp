@@ -25,16 +25,23 @@ std::vector<int> search(const std::string &text, const std::string &pattern) {
         return result;
       };
 
-  auto longest_prefix_suffix = find_longest_prefix_suffix(pattern);
   std::vector<int> result;
+  if (pattern.empty()) {
+    // The empty pattern matches at every position (like std::string::find).
+    for (size_t i = 0; i <= text.size(); i++) {
+      result.push_back(static_cast<int>(i));
+    }
+    return result;
+  }
+
+  auto longest_prefix_suffix = find_longest_prefix_suffix(pattern);
   int j = 0;
-  for (int i = 0; i < text.size(); i++) {
+  for (int i = 0; i < static_cast<int>(text.size()); i++) {
+    while (j != 0 && text[i] != pattern[j]) {
+      j = longest_prefix_suffix[j - 1];
+    }
     if (text[i] == pattern[j]) {
       j += 1;
-    } else {
-      if (j != 0) {
-        j = longest_prefix_suffix[j - 1];
-      }
     }
     if (j == pattern.size()) {
       result.push_back(i - j + 1);

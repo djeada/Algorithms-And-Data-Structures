@@ -10,7 +10,8 @@ bool canConstructBasic(const std::string &target,
 
   for (const auto &word : wordBank) {
 
-    if (target.size() >= word.size() && target.substr(0, word.size()) == word) {
+    if (!word.empty() && target.size() >= word.size() &&
+        target.substr(0, word.size()) == word) {
       auto remainder = target.substr(word.size());
 
       if (canConstructBasic(remainder, wordBank))
@@ -38,7 +39,7 @@ bool canConstructMemo(const std::string &target,
 
     for (const auto &word : wordBank) {
 
-      if (target.size() >= word.size() &&
+      if (!word.empty() && target.size() >= word.size() &&
           target.substr(0, word.size()) == word) {
         auto remainder = target.substr(word.size());
 
@@ -64,12 +65,12 @@ bool canConstructTable(const std::string &target,
   std::vector<bool> table(target.size() + 1, false);
   table[0] = true;
 
-  for (int i = 0; i < target.size(); i++) {
+  for (size_t i = 0; i < target.size(); i++) {
 
     if (table[i]) {
       for (const auto &word : wordBank) {
 
-        if (target.substr(i, word.size()) == word) {
+        if (!word.empty() && target.substr(i, word.size()) == word) {
 
           table[i + word.size()] = true;
         }

@@ -4,18 +4,17 @@
 #include <vector>
 
 /**
- * @brief Sort an array using the heap sort algorithm.
+ * @brief Sort a vector in ascending order using heap sort.
  *
- * This implementation repeatedly heapifies portions of the array, moving
- * smaller elements toward the front during each pass through the array.
+ * Builds a max-heap in place, then repeatedly swaps the maximum to the end of
+ * the shrinking heap and sifts the new root down.
  *
- * @tparam T The type of elements in the vector (must be comparable).
+ * @tparam T The type of elements in the vector (must be comparable with <).
  * @param arr The vector to sort in ascending order.
  *
  * @note Time complexity: O(n log n)
- * @note Space complexity: O(log n) due to recursion stack
+ * @note Space complexity: O(1)
  */
-template <typename T>
-void heap_sort(std::vector<T> &arr);
+template <typename T> void heap_sort(std::vector<T> &arr);
 
 #endif // HEAP_SORT_H
