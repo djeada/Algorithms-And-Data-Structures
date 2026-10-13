@@ -1,29 +1,32 @@
 #include "all_permutations.h"
+#include <cstddef>
 #include <functional>
 
 std::vector<std::vector<int>> all_permutations(std::vector<int> input_list) {
   std::vector<std::vector<int>> result;
 
   // Nested function to generate permutations
-  std::function<void(std::vector<int>, std::vector<int>)> _all_permutations;
-  _all_permutations = [&](std::vector<int> input_list,
-                          std::vector<int> output_list) {
+  // Track used positions (not values) so duplicate elements are handled.
+  std::vector<bool> used(input_list.size(), false);
+  std::vector<int> output_list;
+  std::function<void()> _all_permutations;
+  _all_permutations = [&]() {
     if (output_list.size() == input_list.size()) {
       result.push_back(output_list);
       return;
     }
 
-    for (const auto &element : input_list) {
-      if (std::find(output_list.begin(), output_list.end(), element) ==
-          output_list.end()) {
-        output_list.push_back(element);
-        _all_permutations(input_list, output_list);
+    for (std::size_t i = 0; i < input_list.size(); ++i) {
+      if (!used[i]) {
+        used[i] = true;
+        output_list.push_back(input_list[i]);
+        _all_permutations();
         output_list.pop_back();
+        used[i] = false;
       }
     }
   };
 
-  // Initialize result and call nested function
-  _all_permutations(input_list, {});
+  _all_permutations();
   return result;
 }

@@ -80,7 +80,7 @@ int minimax(std::vector<std::vector<int>> &board, int player) {
   }
 
   // initialize the best score
-  int best_score = (player == 1) ? INT_MIN : INT_MAX;
+  int best_score = (player == 1) ? INT_MAX : INT_MIN;
 
   // try all possible moves
   for (int row = 0; row < board.size(); ++row) {
@@ -95,9 +95,9 @@ int minimax(std::vector<std::vector<int>> &board, int player) {
 
         // update the best score
         if (player == 1) {
-          best_score = std::max(best_score, score);
-        } else {
           best_score = std::min(best_score, score);
+        } else {
+          best_score = std::max(best_score, score);
         }
       }
     }

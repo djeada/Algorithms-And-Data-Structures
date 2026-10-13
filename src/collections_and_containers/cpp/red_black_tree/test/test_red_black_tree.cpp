@@ -1,5 +1,39 @@
+#include <algorithm>
+#include <functional>
+#include <memory>
+#include <random>
+#include <set>
+#include <vector>
+// Tests inspect node colours, which are private.
+#define private public
 #include "red_black_tree.h"
+#undef private
 #include "gtest/gtest.h"
+
+namespace {
+// Returns the black height of p, or -1 when a red-black rule is violated.
+template <class NodePtr> int blackHeight(const NodePtr &p, bool parentRed) {
+  if (p == nullptr) {
+    return 1;
+  }
+  if (p->is_red && parentRed) {
+    return -1;
+  }
+  int l = blackHeight(p->left, p->is_red);
+  int r = blackHeight(p->right, p->is_red);
+  if (l < 0 || r < 0 || l != r) {
+    return -1;
+  }
+  return l + (p->is_red ? 0 : 1);
+}
+
+template <class Tree> bool isValidRedBlack(const Tree &t) {
+  if (t.root != nullptr && t.root->is_red) {
+    return false;
+  }
+  return blackHeight(t.root, false) > 0;
+}
+} // namespace
 
 TEST(RedBlackTreeTest, DefaultConstructor) {
   RedBlackTree<int> tree;
@@ -227,4 +261,55 @@ TEST(RedBlackTreeTest, IsTreeAlwaysBalanced) {
   EXPECT_EQ(tree.size(), 100);
   EXPECT_EQ(tree.height(), 9);
   EXPECT_FALSE(tree.empty());
+}
+
+TEST(RedBlackTreeTest, InvariantsAfterSequentialInsertAndRemove) {
+  RedBlackTree<int> tree;
+  for (int i = 0; i < 200; i++) {
+    tree.insert(i);
+    ASSERT_TRUE(isValidRedBlack(tree)) << "after insert " << i;
+  }
+  for (int i = 0; i < 200; i += 2) {
+    tree.remove(i);
+    ASSERT_TRUE(isValidRedBlack(tree)) << "after remove " << i;
+  }
+  EXPECT_EQ(tree.size(), 100);
+  for (int i = 199; i >= 0; i--) {
+    if (i % 2 == 1) {
+      tree.remove(i);
+      ASSERT_TRUE(isValidRedBlack(tree)) << "after remove " << i;
+    }
+  }
+  EXPECT_TRUE(tree.empty());
+}
+
+TEST(RedBlackTreeTest, InvariantsAfterRandomInsertsAndRemoves) {
+  std::mt19937 gen(12345);
+  for (int round = 0; round < 30; round++) {
+    RedBlackTree<int> tree;
+    std::set<int> reference;
+    for (int step = 0; step < 300; step++) {
+      int v = static_cast<int>(gen() % 100);
+      if (gen() % 3 != 0) {
+        if (reference.insert(v).second) {
+          tree.insert(v);
+        }
+      } else if (reference.erase(v) > 0) {
+        tree.remove(v);
+      }
+      ASSERT_TRUE(isValidRedBlack(tree));
+      ASSERT_EQ(tree.size(), static_cast<int>(reference.size()));
+    }
+    EXPECT_EQ(tree.in_order_traversal(),
+              std::vector<int>(reference.begin(), reference.end()));
+  }
+}
+
+TEST(RedBlackTreeTest, RemoveMissingValueLeavesTreeUntouched) {
+  RedBlackTree<int> tree;
+  tree.insert(1);
+  tree.insert(2);
+  tree.remove(42);
+  EXPECT_EQ(tree.size(), 2);
+  EXPECT_TRUE(isValidRedBlack(tree));
 }

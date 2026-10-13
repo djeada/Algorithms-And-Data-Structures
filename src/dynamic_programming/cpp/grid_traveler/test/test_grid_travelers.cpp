@@ -96,3 +96,29 @@ TEST(GridTravelersTest, TestTable4) {
 
   ASSERT_EQ(gridTravelersTable(m, n), result);
 }
+
+TEST(GridTravelersEdgeCases, NonPositiveDimensions) {
+  for (auto f : {gridTravelersBasic, gridTravelersMemo, gridTravelersTable}) {
+    ASSERT_EQ(f(0, 3), 0);
+    ASSERT_EQ(f(3, 0), 0);
+    ASSERT_EQ(f(-1, 3), 0);
+    ASSERT_EQ(f(3, -2), 0);
+    ASSERT_EQ(f(0, 0), 0);
+  }
+}
+
+TEST(GridTravelersEdgeCases, SingleRowOrColumn) {
+  for (auto f : {gridTravelersBasic, gridTravelersMemo, gridTravelersTable}) {
+    ASSERT_EQ(f(1, 1), 1);
+    ASSERT_EQ(f(1, 9), 1);
+    ASSERT_EQ(f(9, 1), 1);
+  }
+}
+
+TEST(GridTravelersEdgeCases, AsymmetricGrid) {
+  for (auto f : {gridTravelersBasic, gridTravelersMemo, gridTravelersTable}) {
+    ASSERT_EQ(f(2, 5), 5);
+    ASSERT_EQ(f(5, 2), 5);
+    ASSERT_EQ(f(3, 7), 28);
+  }
+}

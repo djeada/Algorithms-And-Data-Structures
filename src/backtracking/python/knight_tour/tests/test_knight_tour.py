@@ -46,6 +46,10 @@ class TestKnightTour(unittest.TestCase):
         self.assertTrue(expected_element in actual)
         self.assertEqual(len(actual), excepted_length)
 
+    def test_non_positive_n(self):
+        self.assertEqual(knight_tour(0), [])
+        self.assertEqual(knight_tour(-1), [])
+
 
 if __name__ == "__main__":
     unittest.main()

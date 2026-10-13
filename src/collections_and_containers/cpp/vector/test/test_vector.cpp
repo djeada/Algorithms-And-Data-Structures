@@ -115,3 +115,60 @@ TEST(VectorTest, AcessingIllegalIndex) {
   ASSERT_THROW(vector[3], std::out_of_range);
   ASSERT_THROW(vector[-1], std::out_of_range);
 }
+TEST(VectorTest, ResizeGrowValueInitialisesNewElements) {
+  Vector<int> vector;
+  for (int i = 1; i <= 4; i++) {
+    vector.push_back(i);
+  }
+  vector.resize(1);
+  vector.resize(4);
+  EXPECT_EQ(vector[0], 1);
+  EXPECT_EQ(vector[1], 0);
+  EXPECT_EQ(vector[2], 0);
+  EXPECT_EQ(vector[3], 0);
+
+  Vector<int> fresh;
+  fresh.resize(3);
+  EXPECT_EQ(fresh.size(), 3);
+  EXPECT_EQ(fresh[2], 0);
+}
+
+TEST(VectorTest, PushBackOfOwnElementAcrossReallocation) {
+  Vector<int> vector;
+  vector.push_back(7);
+  for (int i = 0; i < 20; i++) {
+    vector.push_back(vector[0]);
+  }
+  EXPECT_EQ(vector.size(), 21);
+  for (int i = 0; i < vector.size(); i++) {
+    EXPECT_EQ(vector[i], 7);
+  }
+}
+
+TEST(VectorTest, CopyIsDeepAndAssignable) {
+  Vector<int> a;
+  for (int i = 0; i < 5; i++) {
+    a.push_back(i);
+  }
+  Vector<int> b(a);
+  Vector<int> c;
+  c.push_back(99);
+  c = a;
+  a[0] = 100;
+  EXPECT_EQ(b[0], 0);
+  EXPECT_EQ(c[0], 0);
+  EXPECT_EQ(c.size(), 5);
+  a = a;
+  EXPECT_EQ(a.size(), 5);
+}
+
+TEST(VectorTest, ReserveKeepsElementsAndNeverShrinks) {
+  Vector<int> vector;
+  vector.push_back(1);
+  vector.push_back(2);
+  vector.reserve(50);
+  EXPECT_EQ(vector.capacity(), 50);
+  vector.reserve(1);
+  EXPECT_EQ(vector.capacity(), 50);
+  EXPECT_EQ(vector[1], 2);
+}

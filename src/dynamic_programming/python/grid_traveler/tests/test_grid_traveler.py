@@ -85,5 +85,25 @@ class TestTravelerTable(unittest.TestCase):
         self.assertEqual(grid_traveller_table(m, n), result)
 
 
+class TestGridTravelerEdgeCases(unittest.TestCase):
+    FUNCS = (grid_traveller_basic, grid_traveller_memo, grid_traveller_table)
+
+    def test_non_positive_dimensions(self):
+        for f in self.FUNCS:
+            self.assertEqual(f(-1, 3), 0, f.__name__)
+            self.assertEqual(f(3, -2), 0, f.__name__)
+            self.assertEqual(f(0, 3), 0, f.__name__)
+            self.assertEqual(f(-1, -1), 0, f.__name__)
+
+    def test_single_row_or_column(self):
+        for f in self.FUNCS:
+            self.assertEqual(f(1, 9), 1, f.__name__)
+            self.assertEqual(f(9, 1), 1, f.__name__)
+
+    def test_large_grid_does_not_overflow(self):
+        self.assertEqual(grid_traveller_memo(18, 18), 2333606220)
+        self.assertEqual(grid_traveller_table(18, 18), 2333606220)
+
+
 if __name__ == "__main__":
     unittest.main()

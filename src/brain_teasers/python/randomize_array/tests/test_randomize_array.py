@@ -20,6 +20,28 @@ class TestRandomizeArray(unittest.TestCase):
         randomized_array = randomize_array(original_array.copy())
         self.assertEqual(original_array, randomized_array)
 
+    def test_no_element_stays_in_place(self):
+        original = [1, 2, 3, 4, 5]
+        for _ in range(200):
+            result = randomize_array(original)
+            self.assertEqual(sorted(result), original)
+            self.assertTrue(all(a != b for a, b in zip(original, result)))
+
+    def test_duplicates_with_possible_derangement(self):
+        original = [1, 1, 2, 2, 3, 3]
+        for _ in range(200):
+            result = randomize_array(original)
+            self.assertEqual(sorted(result), original)
+            self.assertTrue(all(a != b for a, b in zip(original, result)))
+
+    def test_returns_new_list_and_keeps_input(self):
+        for original in ([], [7], [4, 4, 4]):
+            snapshot = list(original)
+            result = randomize_array(original)
+            self.assertEqual(result, snapshot)
+            self.assertIsNot(result, original)
+            self.assertEqual(original, snapshot)
+
 
 if __name__ == "__main__":
     unittest.main()

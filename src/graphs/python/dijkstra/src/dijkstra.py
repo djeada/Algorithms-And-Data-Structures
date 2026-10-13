@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 from heapq import heappush, heappop
+from itertools import count
 
 from graph import Graph, Vertex
 
@@ -35,10 +36,12 @@ def dijkstra(graph: Graph, source: Vertex, destination: Vertex) -> float:
 
     distances[source] = 0
 
-    priority_queue: list[tuple[float, Vertex]] = [(0, source)]
+    # The counter breaks ties so vertices themselves never need to be comparable.
+    counter = count()
+    priority_queue: list[tuple[float, int, Vertex]] = [(0, next(counter), source)]
 
     while priority_queue:
-        current_distance, u = heappop(priority_queue)
+        _, _, u = heappop(priority_queue)
 
         if visited[u]:
             continue
@@ -54,6 +57,6 @@ def dijkstra(graph: Graph, source: Vertex, destination: Vertex) -> float:
 
             if new_distance < distances[v]:
                 distances[v] = new_distance
-                heappush(priority_queue, (new_distance, v))
+                heappush(priority_queue, (new_distance, next(counter), v))
 
     return distances[destination]

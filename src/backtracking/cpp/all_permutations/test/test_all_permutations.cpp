@@ -1,6 +1,19 @@
 #include "all_permutations.h"
 #include "gtest/gtest.h"
 
+TEST(TestAllPermutations, EmptyInput) {
+  std::vector<std::vector<int>> expected = {{}};
+  EXPECT_EQ(expected, all_permutations({}));
+}
+
+TEST(TestAllPermutations, DuplicateElements) {
+  std::vector<std::vector<int>> actual = all_permutations({1, 1, 2});
+  std::sort(actual.begin(), actual.end());
+  std::vector<std::vector<int>> expected = {{1, 1, 2}, {1, 1, 2}, {1, 2, 1},
+                                            {1, 2, 1}, {2, 1, 1}, {2, 1, 1}};
+  EXPECT_EQ(expected, actual);
+}
+
 TEST(TestAllPermutations, TwoElements) {
   std::vector<int> input_list = {1, 2};
   std::vector<std::vector<int>> excepted = {{1, 2}, {2, 1}};

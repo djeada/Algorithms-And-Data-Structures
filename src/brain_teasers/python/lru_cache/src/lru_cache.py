@@ -8,9 +8,7 @@ from typing import Optional
 class ListNode:
     """A node in a doubly linked list storing key-value pairs."""
 
-    def __init__(
-        self, key: int, value: int, next: Optional[ListNode] = None
-    ) -> None:
+    def __init__(self, key: int, value: int, next: Optional[ListNode] = None) -> None:
         self.key = key
         self.value = value
         self.next = next
@@ -24,9 +22,7 @@ class DoubleLinkedList:
         self.head: Optional[ListNode] = None
         self.tail: Optional[ListNode] = None
 
-    def insert_before(
-        self, node: Optional[ListNode], key: int, value: int
-    ) -> ListNode:
+    def insert_before(self, node: Optional[ListNode], key: int, value: int) -> ListNode:
         """Insert a new node with the given key-value pair before the given node."""
         new_node = ListNode(key, value)
         if not node:
@@ -115,6 +111,8 @@ class LRUCache:
             key: The key to store.
             value: The value to store.
         """
+        if self.capacity <= 0:
+            return
         if key in self.cache:
             node = self.cache[key]
             self.list.delete(node)

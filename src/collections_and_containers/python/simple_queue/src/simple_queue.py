@@ -9,17 +9,18 @@ class Queue:
     """A FIFO (First In, First Out) queue data structure."""
 
     def __init__(self) -> None:
-        self.data: list[Any] = []
+        self.max_size = 10
+        self.data: list[Any] = [None] * self.max_size
         self.head = 0
         self.tail = 0
         self.n = 0
-        self.max_size = 10
 
     def enqueue(self, element: Any) -> None:
         """Add an element to the back of the queue."""
         if self.n == self.max_size:
             self.expand()
-        self.data.append(element)
+        self.data[self.tail] = element
+        self.tail = (self.tail + 1) % self.max_size
         self.n += 1
 
     def dequeue(self) -> Optional[Any]:
@@ -27,6 +28,7 @@ class Queue:
         if self.empty():
             return None
         element = self.data[self.head]
+        self.data[self.head] = None
         self.head = (self.head + 1) % self.max_size
         self.n -= 1
         return element
@@ -41,7 +43,7 @@ class Queue:
         """Return the back element without removing it."""
         if self.empty():
             raise IndexError("Queue is empty")
-        return self.data[self.tail - 1]
+        return self.data[(self.tail - 1) % self.max_size]
 
     def size(self) -> int:
         """Return the number of elements in the queue."""
@@ -53,7 +55,7 @@ class Queue:
 
     def expand(self) -> None:
         """Double the capacity of the queue."""
-        new_data = [0] * (self.max_size * 2)
+        new_data: list[Any] = [None] * (self.max_size * 2)
         for i in range(self.n):
             new_data[i] = self.data[(self.head + i) % self.max_size]
         self.head = 0
@@ -63,5 +65,10 @@ class Queue:
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
-            return self.__dict__ == other.__dict__
+            # Compare logical contents, not the internal ring-buffer layout.
+            return self.n == other.n and all(
+                self.data[(self.head + i) % self.max_size]
+                == other.data[(other.head + i) % other.max_size]
+                for i in range(self.n)
+            )
         return False

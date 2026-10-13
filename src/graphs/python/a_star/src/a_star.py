@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 from heapq import heappush, heappop
+from itertools import count
 from typing import Callable, Any
 
 from graph import Graph, Vertex
@@ -40,13 +41,17 @@ def a_star(
     distance_from_source[source] = 0
     distance_till_destination[source] = heuristic(source.value, destination.value)
 
-    open_set: list[tuple[float, Vertex]] = []
-    heappush(open_set, (distance_till_destination[source], source))
-    in_open_set: set[Vertex] = {source}
+    # The counter breaks ties so vertices themselves never need to be comparable.
+    counter = count()
+    open_set: list[tuple[float, int, Vertex]] = []
+    heappush(open_set, (distance_till_destination[source], next(counter), source))
 
     while open_set:
-        current = heappop(open_set)[1]
-        in_open_set.discard(current)
+        priority, _, current = heappop(open_set)
+
+        # Skip stale entries: a better path to this vertex was found after the push.
+        if priority > distance_till_destination[current]:
+            continue
 
         if current == destination:
             return distance_from_source[destination]
@@ -58,16 +63,18 @@ def a_star(
 
             if tentative_distance_from_source < distance_from_source[edge.destination]:
                 distance_from_source[edge.destination] = tentative_distance_from_source
-                distance_till_destination[edge.destination] = (
-                    distance_from_source[edge.destination]
-                    + heuristic(edge.destination.value, destination.value)
-                )
+                distance_till_destination[edge.destination] = distance_from_source[
+                    edge.destination
+                ] + heuristic(edge.destination.value, destination.value)
 
-                if edge.destination not in in_open_set:
-                    heappush(
-                        open_set,
-                        (distance_till_destination[edge.destination], edge.destination),
-                    )
-                    in_open_set.add(edge.destination)
+                # Always push: the previous entry (if any) is now stale and skipped.
+                heappush(
+                    open_set,
+                    (
+                        distance_till_destination[edge.destination],
+                        next(counter),
+                        edge.destination,
+                    ),
+                )
 
     return math.inf

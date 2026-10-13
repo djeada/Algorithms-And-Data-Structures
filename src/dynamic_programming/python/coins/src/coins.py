@@ -18,6 +18,8 @@ def coin_change_basic(amount: int, coins: List[int]) -> float:
         return 0
     min_coins = float("inf")
     for coin in coins:
+        if coin <= 0:
+            continue
         num_coins = coin_change_basic(amount - coin, coins) + 1
         min_coins = min(min_coins, num_coins)
     return min_coins
@@ -49,6 +51,8 @@ def coin_change_memo(
 
     min_coins = float("inf")
     for coin in coins:
+        if coin <= 0:
+            continue
         num_coins = coin_change_memo(amount - coin, coins, memo) + 1
         min_coins = min(min_coins, num_coins)
 
@@ -67,10 +71,13 @@ def coin_change_tab(amount: int, coins: List[int]) -> float:
     Returns:
         Minimum number of coins needed, or float('inf') if impossible.
     """
+    if amount < 0:
+        return float("inf")
+
     table = [float("inf")] * (amount + 1)
     table[0] = 0
     for i in range(amount + 1):
         for coin in coins:
-            if i >= coin:
+            if 0 < coin <= i:
                 table[i] = min(table[i], table[i - coin] + 1)
     return table[amount]

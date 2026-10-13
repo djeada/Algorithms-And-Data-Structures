@@ -18,7 +18,8 @@ def can_construct_basic(target: str, word_bank: List[str]) -> bool:
         return True
 
     return any(
-        len(target) >= len(word)
+        word
+        and len(target) >= len(word)
         and target[: len(word)] == word
         and can_construct_basic(target[len(word) :], word_bank)
         for word in word_bank
@@ -51,7 +52,8 @@ def can_construct_memo(
         return memo[target]
 
     can_construct = any(
-        len(target) >= len(word)
+        word
+        and len(target) >= len(word)
         and target[: len(word)] == word
         and can_construct_memo(target[len(word) :], word_bank, memo)
         for word in word_bank
@@ -80,7 +82,7 @@ def can_construct_table(target: str, word_bank: List[str]) -> bool:
     for i in range(len(target)):
         if table[i]:
             for word in word_bank:
-                if target[i : i + len(word)] == word:
+                if word and target[i : i + len(word)] == word:
                     table[i + len(word)] = True
 
     return table[-1]

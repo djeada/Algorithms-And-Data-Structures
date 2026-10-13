@@ -42,7 +42,9 @@ class TestMergeSort(unittest.TestCase):
 
     def test_with_duplicates(self):
         """Sorting an array with duplicate values."""
-        self.assertEqual(merge_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9])
+        self.assertEqual(
+            merge_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9]
+        )
 
     def test_with_negative_numbers(self):
         """Sorting an array containing negative numbers."""
@@ -51,6 +53,17 @@ class TestMergeSort(unittest.TestCase):
     def test_all_same_elements(self):
         """Sorting an array where all elements are the same."""
         self.assertEqual(merge_sort([5, 5, 5, 5]), [5, 5, 5, 5])
+
+    def test_does_not_alias_input(self):
+        """The result is a new list, even for 0 or 1 elements."""
+        for data in ([], [1]):
+            self.assertIsNot(merge_sort(data), data)
+
+    def test_does_not_mutate_input(self):
+        """The input list is left unchanged."""
+        data = [3, 1, 2]
+        merge_sort(data)
+        self.assertEqual(data, [3, 1, 2])
 
 
 if __name__ == "__main__":

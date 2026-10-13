@@ -84,6 +84,9 @@ def knight_tour(n: int) -> List[List[List[int]]]:
         List of all valid tours, where each tour is an n x n grid
         showing the order of moves.
     """
+    if n <= 0:
+        return []
+
     # initialize the board and the tours list
     board: List[List[Optional[int]]] = [[None] * n for _ in range(n)]
     board[0][0] = 0

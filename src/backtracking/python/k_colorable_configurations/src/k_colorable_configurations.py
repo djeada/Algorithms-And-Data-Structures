@@ -45,9 +45,7 @@ def find_k_colorable_configurations(G: Graph, k: int) -> List[List[int]]:
         of color assignments for each vertex.
     """
 
-    def dfs(
-        G: Graph, v: int, colors: List[int], configuration: List[int]
-    ) -> None:
+    def dfs(G: Graph, v: int, colors: List[int], configuration: List[int]) -> None:
         if v == G.num_vertices:
             configurations.append(configuration.copy())
             return
@@ -63,7 +61,7 @@ def find_k_colorable_configurations(G: Graph, k: int) -> List[List[int]]:
     def is_colorable(G: Graph, v: int, color: int, colors: List[int]) -> bool:
         """Check if assigning color to vertex v is valid."""
         for u in G.adjacency_dict[v]:
-            if colors[u] == color:
+            if u == v or colors[u] == color:
                 return False
         return True
 

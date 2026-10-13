@@ -1,3 +1,4 @@
+import random
 from src.heap import Heap, MaxHeap, MinHeap
 from unittest import TestCase
 import unittest
@@ -121,6 +122,20 @@ class TestMinHeap(unittest.TestCase):
         heap.push(3)
 
         self.assertTrue(heap.is_min_heap())
+
+
+class TestHeapRandomized(TestCase):
+    def test_pop_order_matches_sorted(self):
+        rng = random.Random(5)
+        values = [rng.randrange(-50, 50) for _ in range(500)]
+        min_heap, max_heap = MinHeap(), MaxHeap()
+        for v in values:
+            min_heap.push(v)
+            max_heap.push(v)
+        self.assertEqual([min_heap.pop() for _ in values], sorted(values))
+        self.assertEqual([max_heap.pop() for _ in values], sorted(values, reverse=True))
+        self.assertRaises(IndexError, min_heap.pop)
+        self.assertRaises(IndexError, max_heap.peek)
 
 
 if __name__ == "__main__":

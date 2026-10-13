@@ -34,6 +34,15 @@ class TestDesignBrowserHistory(unittest.TestCase):
         self.assertEqual(browser_history.back(1), "e.com")
         self.assertEqual(browser_history.back(1), "d.com")
 
+    def test_visit_clears_forward_history(self):
+        b = BrowserHistory("a")
+        b.visit("b")
+        b.visit("c")
+        b.back(1)
+        b.visit("d")
+        self.assertEqual(b.forward(5), "d")
+        self.assertEqual(b.back(1), "b")
+
 
 if __name__ == "__main__":
     unittest.main()

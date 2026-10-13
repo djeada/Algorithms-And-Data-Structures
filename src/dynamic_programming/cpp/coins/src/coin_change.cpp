@@ -1,17 +1,20 @@
 #include "coin_change.h"
+#include <algorithm>
 #include <climits>
 #include <functional>
 #include <unordered_map>
 
 int coinChangeBasic(int amount, const std::vector<int> &coins) {
 
-  if (amount <= 0)
+  if (amount < 0)
+    return INT_MAX;
+  if (amount == 0)
     return 0;
 
   auto minCoins = INT_MAX;
 
   for (const auto &coin : coins) {
-    if (coin <= amount) {
+    if (coin > 0 && coin <= amount) {
 
       auto temp = coinChangeBasic(amount - coin, coins);
       if (temp != INT_MAX)
@@ -29,7 +32,9 @@ int coinChangeMemo(int amount, const std::vector<int> &coins) {
       _coinChangeMemo;
   _coinChangeMemo = [&](int amount, const std::vector<int> &coins,
                         std::unordered_map<int, int> &memo) -> int {
-    if (amount <= 0)
+    if (amount < 0)
+      return INT_MAX;
+    if (amount == 0)
       return 0;
 
     if (memo.count(amount))
@@ -38,7 +43,7 @@ int coinChangeMemo(int amount, const std::vector<int> &coins) {
     auto minCoins = INT_MAX;
 
     for (const auto &coin : coins) {
-      if (coin <= amount) {
+      if (coin > 0 && coin <= amount) {
 
         auto temp = _coinChangeMemo(amount - coin, coins, memo);
         if (temp != INT_MAX)
@@ -55,23 +60,18 @@ int coinChangeMemo(int amount, const std::vector<int> &coins) {
 }
 
 int coinChangeTable(int amount, const std::vector<int> &coins) {
+  if (amount < 0)
+    return INT_MAX;
 
-  std::vector<std::vector<int>> table(coins.size() + 1,
-                                      std::vector<int>(amount + 1));
+  std::vector<int> table(amount + 1, INT_MAX);
+  table[0] = 0;
 
-  for (int i = 0; i <= amount; i++)
-    table[0][i] = i;
-
-  for (int i = 1; i < coins.size(); i++) {
-
-    for (int j = 0; j <= amount; j++) {
-      if (j < coins[i])
-        table[i][j] = table[i - 1][j];
-
-      else
-        table[i][j] = std::min(table[i - 1][j], table[i][j - coins[i]] + 1);
+  for (int i = 1; i <= amount; i++) {
+    for (const auto &coin : coins) {
+      if (coin > 0 && coin <= i && table[i - coin] != INT_MAX)
+        table[i] = std::min(table[i], table[i - coin] + 1);
     }
   }
 
-  return table[coins.size() - 1][amount];
+  return table[amount];
 }

@@ -1,5 +1,6 @@
 #include "prim.h"
 #include "gtest/gtest.h"
+#include <climits>
 
 TEST(TestPrim, nonEmptyGraph) {
   Graph<int> graph;
@@ -30,4 +31,34 @@ TEST(TestPrim, nonEmptyGraph) {
   graph.addEdge(Vertex<int>(8), Vertex<int>(6), 7);
 
   EXPECT_EQ(prim(graph), 27);
+}
+
+TEST(TestPrim, EmptyGraph) {
+  Graph<int> graph;
+  EXPECT_EQ(prim(graph), 0);
+}
+
+TEST(TestPrim, DisconnectedGraphReturnsForestWeight) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(1), 2);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(3), 5);
+  graph.addVertex(Vertex<int>(9));
+  EXPECT_EQ(prim(graph), 7);
+}
+
+TEST(TestPrim, EdgesPointingIntoAVertexAreUsed) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(1), 1);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(1), 2);
+  graph.addEdge(Vertex<int>(3), Vertex<int>(2), 4);
+  EXPECT_EQ(prim(graph), 7);
+}
+
+TEST(TestPrim, SelfLoopsAndNegativeWeights) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(0), 4);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(0), 3);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(2), -1);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(0), 4);
+  EXPECT_EQ(prim(graph), 2);
 }

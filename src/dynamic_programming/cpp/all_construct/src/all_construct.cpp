@@ -15,10 +15,10 @@ allConstructBasic(const std::string &target,
 
     std::vector<std::vector<std::string>> result;
     for (const auto &word : word_bank) {
-      if (target.find(word) == 0) {
+      if (!word.empty() && target.compare(0, word.size(), word) == 0) {
         auto suffix_ways = recurse(target.substr(word.size()));
         for (auto &way : suffix_ways) {
-          way.push_back(word);
+          way.insert(way.begin(), word);
         }
         result.insert(result.end(), suffix_ways.begin(), suffix_ways.end());
       }
@@ -48,10 +48,10 @@ allConstructMemo(const std::string &target,
 
     std::vector<std::vector<std::string>> result;
     for (const auto &word : word_bank) {
-      if (target.find(word) == 0) {
+      if (!word.empty() && target.compare(0, word.size(), word) == 0) {
         auto suffix_ways = recurse(target.substr(word.size()));
         for (auto &way : suffix_ways) {
-          way.push_back(word);
+          way.insert(way.begin(), word);
         }
         result.insert(result.end(), suffix_ways.begin(), suffix_ways.end());
       }
@@ -72,7 +72,7 @@ allConstructTable(const std::string &target,
 
   for (size_t i = 0; i <= target.size(); ++i) {
     for (const auto &word : word_bank) {
-      if (target.substr(i, word.size()) == word) {
+      if (!word.empty() && target.substr(i, word.size()) == word) {
         auto new_combination = table[i];
         for (auto &combination : new_combination) {
           combination.push_back(word);

@@ -43,10 +43,9 @@ class BinarySearchTree:
 
     def remove(self, v: Any) -> None:
         """Remove a value from the tree."""
-        if self.root.data == v and self.root.left is None and self.root.right is None:
-            self.root = None
-        else:
-            self._remove(v, self.root)
+        if not self.contains(v):
+            return
+        self.root = self._remove(v, self.root)
         self.n -= 1
 
     def _remove(self, v: Any, p: Optional[Node]) -> Optional[Node]:

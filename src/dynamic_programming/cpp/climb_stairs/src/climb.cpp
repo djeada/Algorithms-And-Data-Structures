@@ -35,6 +35,8 @@ int countWaysToClimbMemo(int n) {
 }
 
 int countWaysToClimbTable(int n) {
+  if (n < 0)
+    return 0;
   std::vector<int> table(n + 1, 0);
   table[0] = 1;
 

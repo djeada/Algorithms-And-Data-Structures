@@ -42,7 +42,9 @@ class TestHeapSort(unittest.TestCase):
 
     def test_with_duplicates(self):
         """Sorting an array with duplicate values."""
-        self.assertEqual(heap_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9])
+        self.assertEqual(
+            heap_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9]
+        )
 
     def test_with_negative_numbers(self):
         """Sorting an array containing negative numbers."""
@@ -51,6 +53,23 @@ class TestHeapSort(unittest.TestCase):
     def test_all_same_elements(self):
         """Sorting an array where all elements are the same."""
         self.assertEqual(heap_sort([5, 5, 5, 5]), [5, 5, 5, 5])
+
+    def test_matches_sorted_on_random_inputs(self):
+        """Agrees with sorted() on many random lists, including duplicates."""
+        import random
+
+        rng = random.Random(1234)
+        for _ in range(300):
+            data = [rng.randint(-20, 20) for _ in range(rng.randint(0, 40))]
+            self.assertEqual(heap_sort(list(data)), sorted(data))
+
+    def test_large_input(self):
+        """A 50,000-element input finishes quickly (O(n log n))."""
+        import random
+
+        rng = random.Random(7)
+        data = [rng.randint(0, 10**6) for _ in range(50_000)]
+        self.assertEqual(heap_sort(list(data)), sorted(data))
 
 
 if __name__ == "__main__":

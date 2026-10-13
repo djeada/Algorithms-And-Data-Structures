@@ -112,39 +112,112 @@ void RedBlackTree<T>::insert(const T &v, std::unique_ptr<Node> &p) {
 }
 
 template <class T>
-void RedBlackTree<T>::remove(const T &v, std::unique_ptr<Node> &p) {
+bool RedBlackTree<T>::remove(const T &v, std::unique_ptr<Node> &p) {
   if (p == nullptr) {
-    return;
+    return false;
   }
-  
+
   if (v < p->data) {
-    remove(v, p->left);
-  } else if (v > p->data) {
-    remove(v, p->right);
-  } else {
-    if (p->left == nullptr && p->right == nullptr) {
-      p = nullptr;
-      n--;
-    } else if (p->left == nullptr) {
-      p = std::move(p->right);
-      n--;
-    } else if (p->right == nullptr) {
-      p = std::move(p->left);
-      n--;
-    } else {
-      // Find in-order successor
-      Node *successor = p->right.get();
-      while (successor->left != nullptr) {
-        successor = successor->left.get();
-      }
-      p->data = successor->data;
-      remove(successor->data, p->right);
+    if (remove(v, p->left)) {
+      return fix_left_deficit(p);
     }
+    return false;
   }
-  
-  if (p != nullptr) {
-    balance(p);
+  if (v > p->data) {
+    if (remove(v, p->right)) {
+      return fix_right_deficit(p);
+    }
+    return false;
   }
+
+  if (p->left != nullptr && p->right != nullptr) {
+    // Replace by the in-order successor and remove that node instead.
+    Node *successor = p->right.get();
+    while (successor->left != nullptr) {
+      successor = successor->left.get();
+    }
+    p->data = successor->data;
+    if (remove(successor->data, p->right)) {
+      return fix_right_deficit(p);
+    }
+    return false;
+  }
+
+  // At most one child. A red node has none; a black node's only child is red.
+  bool was_black = !p->is_red;
+  if (p->left != nullptr || p->right != nullptr) {
+    std::unique_ptr<Node> child =
+        std::move(p->left != nullptr ? p->left : p->right);
+    child->is_red = false;
+    p = std::move(child);
+    n--;
+    return false;
+  }
+  p = nullptr;
+  n--;
+  return was_black;
+}
+
+// The right subtree of p is one black node shorter than the left one.
+template <class T>
+bool RedBlackTree<T>::fix_right_deficit(std::unique_ptr<Node> &p) {
+  Node *s = p->left.get();
+  if (s->is_red) {
+    rotate_right(p);
+    p->is_red = false;
+    p->right->is_red = true;
+    fix_right_deficit(p->right);
+    return false;
+  }
+  bool parent_red = p->is_red;
+  if (s->left != nullptr && s->left->is_red) {
+    rotate_right(p);
+  } else if (s->right != nullptr && s->right->is_red) {
+    rotate_left(p->left);
+    rotate_right(p);
+  } else {
+    s->is_red = true;
+    if (parent_red) {
+      p->is_red = false;
+      return false;
+    }
+    return true;
+  }
+  p->is_red = parent_red;
+  p->left->is_red = false;
+  p->right->is_red = false;
+  return false;
+}
+
+// The left subtree of p is one black node shorter than the right one.
+template <class T>
+bool RedBlackTree<T>::fix_left_deficit(std::unique_ptr<Node> &p) {
+  Node *s = p->right.get();
+  if (s->is_red) {
+    rotate_left(p);
+    p->is_red = false;
+    p->left->is_red = true;
+    fix_left_deficit(p->left);
+    return false;
+  }
+  bool parent_red = p->is_red;
+  if (s->right != nullptr && s->right->is_red) {
+    rotate_left(p);
+  } else if (s->left != nullptr && s->left->is_red) {
+    rotate_right(p->right);
+    rotate_left(p);
+  } else {
+    s->is_red = true;
+    if (parent_red) {
+      p->is_red = false;
+      return false;
+    }
+    return true;
+  }
+  p->is_red = parent_red;
+  p->left->is_red = false;
+  p->right->is_red = false;
+  return false;
 }
 
 template <class T>

@@ -1,5 +1,9 @@
 #include "binary_search_tree.h"
 #include "gtest/gtest.h"
+#include <algorithm>
+#include <random>
+#include <set>
+#include <vector>
 
 TEST(BinarySearchTreeTest, DefaultConstructor) {
   BinarySearchTree<int> bst;
@@ -173,4 +177,29 @@ TEST(BinarySearchTreeTest, PostOrderTraversal) {
   std::vector<int> actual = bst.post_order_traversal();
 
   EXPECT_EQ(actual, expected);
+}
+
+TEST(BinarySearchTreeTest, RandomInsertsAndRemovesMatchStdSet) {
+  std::mt19937 gen(777);
+  for (int round = 0; round < 30; round++) {
+    BinarySearchTree<int> tree;
+    std::set<int> reference;
+    for (int step = 0; step < 300; step++) {
+      int v = static_cast<int>(gen() % 100);
+      if (gen() % 2 == 0) {
+        if (reference.insert(v).second) {
+          tree.insert(v);
+        } else {
+          EXPECT_THROW(tree.insert(v), std::invalid_argument);
+        }
+      } else if (reference.erase(v) > 0) {
+        tree.remove(v);
+      } else {
+        EXPECT_THROW(tree.remove(v), std::invalid_argument);
+      }
+      ASSERT_EQ(tree.size(), static_cast<int>(reference.size()));
+      ASSERT_EQ(tree.in_order_traversal(),
+                std::vector<int>(reference.begin(), reference.end()));
+    }
+  }
 }

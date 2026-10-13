@@ -95,3 +95,8 @@ TEST(TestKnightTour, TestN5) {
   EXPECT_TRUE(std::find(actual.begin(), actual.end(), expected_element) !=
               actual.end());
 }
+
+TEST(TestKnightTour, TestNonPositiveN) {
+  EXPECT_TRUE(knight_tour(0).empty());
+  EXPECT_TRUE(knight_tour(-1).empty());
+}

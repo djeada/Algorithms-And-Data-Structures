@@ -16,7 +16,7 @@ howSumBasic(const unsigned int target,
       return {{}};
 
     for (const auto &num : numbers) {
-      if (num > target)
+      if (num == 0 || num > target)
         continue;
 
       auto remainder = target - num;
@@ -59,7 +59,7 @@ std::vector<unsigned int> howSumMemo(const unsigned int target,
       return memo[target];
 
     for (const auto &num : numbers) {
-      if (num > target)
+      if (num == 0 || num > target)
         continue;
 
       auto remainder = target - num;
@@ -96,7 +96,7 @@ howSumTable(const unsigned int target,
   for (unsigned int i = 0; i < target; i++) {
     if (!table[i].empty()) {
       for (const auto &number : numbers) {
-        if (i + number <= target) {
+        if (number > 0 && number <= target - i) {
           table[i + number] = table[i];
           table[i + number][0].push_back(number);
         }

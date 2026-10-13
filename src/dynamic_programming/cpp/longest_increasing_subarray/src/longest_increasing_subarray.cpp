@@ -16,10 +16,10 @@ struct hash {
 
 int longestIncreasingSubarrayBasic(const std::vector<int> &array) {
 
-  std::function<int(const std::vector<int> &, unsigned int, int)>
+  std::function<int(const std::vector<int> &, unsigned int, long long)>
       _longestIncreasingSubarrayBasic;
   _longestIncreasingSubarrayBasic = [&](const std::vector<int> &array,
-                                        unsigned int i, int prev) -> int {
+                                        unsigned int i, long long prev) -> int {
     if (i == array.size())
       return 0;
 
@@ -33,21 +33,22 @@ int longestIncreasingSubarrayBasic(const std::vector<int> &array) {
     return std::max(incl, excl);
   };
 
-  return _longestIncreasingSubarrayBasic(array, 0, INT_MIN);
+  return _longestIncreasingSubarrayBasic(array, 0, LLONG_MIN);
 }
 
 int longestIncreasingSubarrayMemo(const std::vector<int> &array) {
 
-  std::function<int(const std::vector<int> &, unsigned int, int,
-                    std::unordered_map<std::pair<int, int>, int, hash> &)>
+  std::function<int(const std::vector<int> &, unsigned int, long long,
+                    std::unordered_map<std::pair<int, long long>, int, hash> &)>
       _longestIncreasingSubarrayMemo;
   _longestIncreasingSubarrayMemo =
-      [&](const std::vector<int> &array, unsigned int i, int prev,
-          std::unordered_map<std::pair<int, int>, int, hash> &memo) -> int {
+      [&](const std::vector<int> &array, unsigned int i, long long prev,
+          std::unordered_map<std::pair<int, long long>, int, hash> &memo)
+      -> int {
     if (i == array.size())
       return 0;
 
-    std::pair<int, int> key(i, prev);
+    std::pair<int, long long> key(i, prev);
 
     if (memo.count(key))
       return memo[key];
@@ -63,12 +64,15 @@ int longestIncreasingSubarrayMemo(const std::vector<int> &array) {
     return memo[key];
   };
 
-  std::unordered_map<std::pair<int, int>, int, hash> memo;
+  std::unordered_map<std::pair<int, long long>, int, hash> memo;
 
-  return _longestIncreasingSubarrayMemo(array, 0, INT_MIN, memo);
+  return _longestIncreasingSubarrayMemo(array, 0, LLONG_MIN, memo);
 }
 
 int longestIncreasingSubarrayTable(const std::vector<int> &array) {
+
+  if (array.empty())
+    return 0;
 
   std::vector<std::vector<int>> table(array.size(), std::vector<int>());
 

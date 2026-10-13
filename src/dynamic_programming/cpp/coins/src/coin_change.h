@@ -20,6 +20,6 @@ int coinChangeMemo(int amount, const std::vector<int> &coins);
  * @brief Finds the minimum number of coins needed using tabulation.
  * @param amount The target amount.
  * @param coins Vector of coin denominations.
- * @return Minimum number of coins needed.
+ * @return Minimum number of coins needed, or INT_MAX if impossible.
  */
 int coinChangeTable(int amount, const std::vector<int> &coins);

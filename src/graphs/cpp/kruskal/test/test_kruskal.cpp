@@ -1,5 +1,6 @@
 #include "kruskal.h"
 #include "gtest/gtest.h"
+#include <climits>
 
 TEST(TestKruskal, nonEmptyGraph) {
   Graph<int> graph;
@@ -30,4 +31,26 @@ TEST(TestKruskal, nonEmptyGraph) {
   graph.addEdge(Vertex<int>(8), Vertex<int>(6), 7);
 
   EXPECT_EQ(kruskal(graph), 27);
+}
+
+TEST(TestKruskal, EmptyGraph) {
+  Graph<int> graph;
+  EXPECT_EQ(kruskal(graph), 0);
+}
+
+TEST(TestKruskal, DisconnectedGraphReturnsForestWeight) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(1), 2);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(3), 5);
+  graph.addVertex(Vertex<int>(9));
+  EXPECT_EQ(kruskal(graph), 7);
+}
+
+TEST(TestKruskal, SelfLoopsDirectionAndNegativeWeights) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(0), Vertex<int>(0), 4);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(0), 3);
+  graph.addEdge(Vertex<int>(1), Vertex<int>(2), -1);
+  graph.addEdge(Vertex<int>(2), Vertex<int>(0), 4);
+  EXPECT_EQ(kruskal(graph), 2);
 }

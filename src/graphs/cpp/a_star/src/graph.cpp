@@ -15,7 +15,7 @@ bool Point::operator!=(const Point &other) const {
 }
 
 bool Point::operator<(const Point &other) const {
-  return x < other.x && y < other.y;
+  return x < other.x || (x == other.x && y < other.y);
 }
 
 template <class T> Vertex<T>::Vertex(T _value) : value(_value) {}
@@ -136,6 +136,12 @@ bool Graph<T>::connected(const Vertex<T> source,
 
   for (auto &edge : adjcDict.at(source)) {
     if (edge.destination == destination)
+      return true;
+  }
+
+  // Edges are stored one-way, but "connected" is symmetric (as in Python).
+  for (auto &edge : adjcDict.at(destination)) {
+    if (edge.destination == source)
       return true;
   }
 

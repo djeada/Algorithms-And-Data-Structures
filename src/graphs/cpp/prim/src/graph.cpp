@@ -118,6 +118,12 @@ bool Graph<T>::connected(const Vertex<T> source,
       return true;
   }
 
+  // Edges are stored one-way, but "connected" is symmetric (as in Python).
+  for (auto &edge : adjcDict.at(destination)) {
+    if (edge.destination == source)
+      return true;
+  }
+
   return false;
 }
 

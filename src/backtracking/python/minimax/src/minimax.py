@@ -87,7 +87,7 @@ def minimax(board: List[List[int]], player: int) -> int:
         return final_score(board)
 
     # initialize the best score
-    best_score = float("-inf") if player == 1 else float("inf")
+    best_score = float("inf") if player == 1 else float("-inf")
 
     # try all possible moves
     for row in range(3):
@@ -102,17 +102,15 @@ def minimax(board: List[List[int]], player: int) -> int:
 
                 # update the best score
                 if player == 1:
-                    best_score = max(best_score, score)
-                else:
                     best_score = min(best_score, score)
+                else:
+                    best_score = max(best_score, score)
 
     # return the best score
     return int(best_score)
 
 
-def find_best_move(
-    board: List[List[int]], player: int
-) -> Optional[Tuple[int, int]]:
+def find_best_move(board: List[List[int]], player: int) -> Optional[Tuple[int, int]]:
     """
     Find the best move for the current player using minimax.
 

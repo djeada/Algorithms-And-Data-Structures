@@ -42,7 +42,9 @@ class TestQuickSort(unittest.TestCase):
 
     def test_with_duplicates(self):
         """Sorting an array with duplicate values."""
-        self.assertEqual(quick_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9])
+        self.assertEqual(
+            quick_sort([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9]
+        )
 
     def test_with_negative_numbers(self):
         """Sorting an array containing negative numbers."""
@@ -51,6 +53,16 @@ class TestQuickSort(unittest.TestCase):
     def test_all_same_elements(self):
         """Sorting an array where all elements are the same."""
         self.assertEqual(quick_sort([5, 5, 5, 5]), [5, 5, 5, 5])
+
+    def test_many_duplicates_no_recursion_error(self):
+        """Many equal elements must not exhaust the recursion limit."""
+        data = [7] * 3000
+        self.assertEqual(quick_sort(data), [7] * 3000)
+
+    def test_mostly_duplicates(self):
+        """Sorting a large array with few distinct values."""
+        data = [i % 3 for i in range(2000)]
+        self.assertEqual(quick_sort(list(data)), sorted(data))
 
 
 class TestQuickSortThreeWay(unittest.TestCase):
@@ -86,7 +98,10 @@ class TestQuickSortThreeWay(unittest.TestCase):
 
     def test_with_duplicates(self):
         """Sorting an array with duplicate values."""
-        self.assertEqual(quick_sort_three_way([3, 1, 4, 1, 5, 9, 2, 6, 5]), [1, 1, 2, 3, 4, 5, 5, 6, 9])
+        self.assertEqual(
+            quick_sort_three_way([3, 1, 4, 1, 5, 9, 2, 6, 5]),
+            [1, 1, 2, 3, 4, 5, 5, 6, 9],
+        )
 
     def test_with_negative_numbers(self):
         """Sorting an array containing negative numbers."""

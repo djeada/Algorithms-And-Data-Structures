@@ -2,7 +2,8 @@
 #include <limits>
 #include <unordered_map>
 
-// Bellman-Ford algorithm: handles negative edge weights and detects negative cycles
+// Bellman-Ford algorithm: handles negative edge weights and detects negative
+// cycles
 template <class T>
 int bellmanFord(const Graph<T> &graph, Vertex<T> source,
                 Vertex<T> destination) {
@@ -10,9 +11,6 @@ int bellmanFord(const Graph<T> &graph, Vertex<T> source,
 
   if (!graph.contains(source) || !graph.contains(destination))
     return INF;
-
-  if (source == destination)
-    return 0;
 
   std::unordered_map<Vertex<T>, int, HashFunction<T>> distances;
 

@@ -5,7 +5,8 @@
 #include <optional>
 #include <vector>
 
-std::optional<std::size_t> interpolation_search(const std::vector<int> &arr, int target) {
+std::optional<std::size_t> interpolation_search(const std::vector<int> &arr,
+                                                int target) {
   if (arr.empty()) {
     return std::nullopt;
   }
@@ -23,9 +24,12 @@ std::optional<std::size_t> interpolation_search(const std::vector<int> &arr, int
     }
 
     // Estimate position using interpolation formula
-    std::size_t pos = low + static_cast<std::size_t>(
-        (static_cast<double>(target - arr[low]) / (arr[high] - arr[low])) * (high - low)
-    );
+    std::size_t pos =
+        low +
+        static_cast<std::size_t>(
+            (static_cast<double>(static_cast<long long>(target) - arr[low]) /
+             (static_cast<long long>(arr[high]) - arr[low])) *
+            static_cast<double>(high - low));
 
     // Ensure pos is within bounds
     pos = std::max(low, std::min(pos, high));

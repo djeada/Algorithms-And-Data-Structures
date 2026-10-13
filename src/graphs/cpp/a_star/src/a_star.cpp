@@ -2,6 +2,7 @@
 #include <limits>
 #include <queue>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 // A* search algorithm with heuristic-guided exploration
@@ -29,22 +30,22 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
   gScore[source] = 0;
   fScore[source] = heuristic(source.value, destination.value);
 
-  // Min-heap ordered by fScore
-  auto cmp = [&](const Vertex<T> &l, const Vertex<T> &r) {
-    return fScore[l] > fScore[r];
-  };
+  // Min-heap of (f, vertex). Entries are never updated in place; when a better
+  // path is found a new entry is pushed and the outdated one is skipped on pop.
+  using Entry = std::pair<double, Vertex<T>>;
+  auto cmp = [](const Entry &l, const Entry &r) { return l.first > r.first; };
 
-  std::priority_queue<Vertex<T>, std::vector<Vertex<T>>, decltype(cmp)> openSet(
-      cmp);
-
-  std::unordered_map<Vertex<T>, bool, HashFunction<T>> inOpenSet;
-  openSet.push(source);
-  inOpenSet[source] = true;
+  std::priority_queue<Entry, std::vector<Entry>, decltype(cmp)> openSet(cmp);
+  openSet.push({fScore[source], source});
 
   while (!openSet.empty()) {
-    Vertex<T> current = openSet.top();
+    Entry top = openSet.top();
     openSet.pop();
-    inOpenSet[current] = false;
+    const Vertex<T> current = top.second;
+
+    // Skip stale entries
+    if (top.first > fScore[current])
+      continue;
 
     // Goal reached
     if (current == destination)
@@ -58,11 +59,7 @@ int aStar(const Graph<T> &graph, Vertex<T> source, Vertex<T> destination,
         gScore[neighbor] = tentativeGScore;
         fScore[neighbor] =
             tentativeGScore + heuristic(neighbor.value, destination.value);
-
-        if (!inOpenSet[neighbor]) {
-          openSet.push(neighbor);
-          inOpenSet[neighbor] = true;
-        }
+        openSet.push({fScore[neighbor], neighbor});
       }
     }
   }

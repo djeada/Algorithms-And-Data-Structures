@@ -2,12 +2,8 @@
 
 from __future__ import annotations
 
-import math
 
-
-def k_closest_points(
-    points: list[tuple[int, int]], k: int
-) -> list[tuple[int, int]]:
+def k_closest_points(points: list[tuple[int, int]], k: int) -> list[tuple[int, int]]:
     """
     Return the K closest points to the origin (0, 0).
 
@@ -20,8 +16,10 @@ def k_closest_points(
     Returns:
         List of the K closest points to the origin.
     """
-    # Create a list of (distance, point) tuples
-    distances = [(math.sqrt(x**2 + y**2), (x, y)) for x, y in points]
+    if k <= 0:
+        return []
+    # Squared integer distance avoids floating-point rounding for large values
+    distances = [(x * x + y * y, (x, y)) for x, y in points]
     # Sort by distance
     distances.sort()
     # Return the K closest points

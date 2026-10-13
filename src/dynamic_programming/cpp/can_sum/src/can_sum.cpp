@@ -10,8 +10,8 @@ bool canSumBasic(const unsigned int target,
 
   for (const auto &num : numbers) {
 
-    if (num > target)
-      return false;
+    if (num == 0 || num > target)
+      continue;
 
     auto remainder = target - num;
 
@@ -39,8 +39,8 @@ bool canSumMemo(const unsigned int target,
 
     for (const auto &num : numbers) {
 
-      if (num > target)
-        return false;
+      if (num == 0 || num > target)
+        continue;
 
       auto remainder = target - num;
 
@@ -68,7 +68,7 @@ bool canSumTable(const unsigned int target,
   for (unsigned int i = 0; i < target; i++) {
     if (table[i]) {
       for (const auto &number : numbers) {
-        if (i + number <= target)
+        if (number > 0 && number <= target - i)
           table[i + number] = true;
       }
     }

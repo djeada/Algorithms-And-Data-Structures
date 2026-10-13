@@ -100,3 +100,48 @@ TEST(BestSumTest, TestPositiveTabulation2) {
   std::vector<unsigned int> expectedResult = {3, 6};
   ASSERT_TRUE(equal(bestSumTabulation(target, numbers), expectedResult));
 }
+
+#include <climits>
+#include <numeric>
+#include <random>
+
+TEST(BestSumEdgeCases, ZeroIsIgnored) {
+  std::vector<unsigned int> numbers = {0, 5, 1};
+  for (auto f : {bestSumBasic, bestSumMemo, bestSumTabulation}) {
+    auto r = f(5, numbers);
+    ASSERT_EQ(r.size(), 1u);
+    ASSERT_EQ(r[0], 5u);
+  }
+}
+
+TEST(BestSumEdgeCases, HugeNumberDoesNotOverflow) {
+  std::vector<unsigned int> numbers = {UINT_MAX, 4};
+  ASSERT_TRUE(bestSumTabulation(10, numbers).empty());
+  ASSERT_EQ(bestSumTabulation(12, numbers).size(), 3u);
+}
+
+TEST(BestSumEdgeCases, AgainstBruteForce) {
+  std::mt19937 rng(7);
+  for (int iter = 0; iter < 200; ++iter) {
+    unsigned int target = rng() % 15 + 1;
+    std::vector<unsigned int> numbers(rng() % 4 + 1);
+    for (auto &n : numbers)
+      n = rng() % 9 + 1;
+    std::vector<int> best(target + 1, -1);
+    best[0] = 0;
+    for (unsigned int t = 1; t <= target; ++t)
+      for (auto n : numbers)
+        if (n <= t && best[t - n] >= 0 &&
+            (best[t] < 0 || best[t - n] + 1 < best[t]))
+          best[t] = best[t - n] + 1;
+    for (auto f : {bestSumBasic, bestSumMemo, bestSumTabulation}) {
+      auto r = f(target, numbers);
+      if (best[target] < 0) {
+        ASSERT_TRUE(r.empty());
+      } else {
+        ASSERT_EQ(static_cast<int>(r.size()), best[target]);
+        ASSERT_EQ(std::accumulate(r.begin(), r.end(), 0u), target);
+      }
+    }
+  }
+}

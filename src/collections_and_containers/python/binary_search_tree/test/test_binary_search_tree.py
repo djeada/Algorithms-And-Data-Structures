@@ -1,3 +1,4 @@
+import random
 from src.binary_search_tree import BinarySearchTree
 from unittest import TestCase
 import unittest
@@ -187,6 +188,53 @@ class TestBinarySearchTree(TestCase):
         actual = bst.post_order_traversal()
 
         self.assertEqual(actual, expected)
+
+
+class TestBinarySearchTreeRemoval(TestCase):
+    def test_remove_root_with_only_right_child(self):
+        bst = BinarySearchTree()
+        bst.insert(1)
+        bst.insert(2)
+        bst.insert(3)
+        bst.remove(1)
+        self.assertEqual(bst.in_order_traversal(), [2, 3])
+        self.assertFalse(bst.contains(1))
+        self.assertEqual(bst.size(), 2)
+
+    def test_remove_root_with_only_left_child(self):
+        bst = BinarySearchTree()
+        bst.insert(3)
+        bst.insert(2)
+        bst.insert(1)
+        bst.remove(3)
+        self.assertEqual(bst.in_order_traversal(), [1, 2])
+        self.assertEqual(bst.size(), 2)
+
+    def test_remove_from_empty_or_missing_value_is_noop(self):
+        bst = BinarySearchTree()
+        bst.remove(1)
+        self.assertEqual(bst.size(), 0)
+        bst.insert(5)
+        bst.remove(7)
+        self.assertEqual(bst.size(), 1)
+        self.assertEqual(bst.in_order_traversal(), [5])
+
+    def test_random_operations_match_set(self):
+        rng = random.Random(1)
+        for _ in range(30):
+            bst = BinarySearchTree()
+            ref = set()
+            for _ in range(200):
+                v = rng.randrange(60)
+                if rng.random() < 0.5:
+                    if v not in ref:
+                        bst.insert(v)
+                        ref.add(v)
+                else:
+                    bst.remove(v)
+                    ref.discard(v)
+                self.assertEqual(bst.in_order_traversal(), sorted(ref))
+                self.assertEqual(bst.size(), len(ref))
 
 
 if __name__ == "__main__":

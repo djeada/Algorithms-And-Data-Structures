@@ -72,3 +72,30 @@ TEST(StackTest, AssignmentOperator) {
   EXPECT_EQ(stack2.pop(), 2);
   EXPECT_EQ(stack2.pop(), 1);
 }
+
+TEST(StackTest, GrowsPastInitialCapacityAndKeepsOrder) {
+  Stack<int> stack;
+  for (int i = 0; i < 1000; i++)
+    stack.push(i);
+  EXPECT_EQ(stack.size(), 1000);
+  EXPECT_EQ(stack.top(), 999);
+  for (int i = 999; i >= 0; i--)
+    EXPECT_EQ(stack.pop(), i);
+  EXPECT_TRUE(stack.isEmpty());
+  EXPECT_THROW(stack.top(), std::out_of_range);
+}
+
+TEST(StackTest, CopyIsIndependentAndSelfAssignmentSafe) {
+  Stack<int> a;
+  for (int i = 0; i < 40; i++)
+    a.push(i);
+  Stack<int> b(a);
+  a.pop();
+  a.clear();
+  a.push(5);
+  EXPECT_EQ(b.size(), 40);
+  EXPECT_EQ(b.top(), 39);
+  b = b;
+  EXPECT_EQ(b.size(), 40);
+  EXPECT_EQ(b.top(), 39);
+}

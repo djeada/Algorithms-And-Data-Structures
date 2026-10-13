@@ -197,3 +197,18 @@ TEST(Graph, size) {
   graph.addEdge(Vertex<int>(3), Vertex<int>(1), 10);
   EXPECT_EQ(graph.size(), 5);
 }
+
+TEST(Graph, ConnectedIsSymmetric) {
+  Graph<int> graph;
+  graph.addEdge(Vertex<int>(1), Vertex<int>(9), 8);
+  graph.addEdge(Vertex<int>(5), Vertex<int>(4), 5);
+  graph.addEdge(Vertex<int>(3), Vertex<int>(1), -5);
+
+  EXPECT_TRUE(graph.connected(Vertex<int>(1), Vertex<int>(9)));
+  EXPECT_TRUE(graph.connected(Vertex<int>(9), Vertex<int>(1)));
+  EXPECT_TRUE(graph.connected(Vertex<int>(1), Vertex<int>(3)));
+  EXPECT_TRUE(graph.connected(Vertex<int>(3), Vertex<int>(1)));
+  EXPECT_FALSE(graph.connected(Vertex<int>(1), Vertex<int>(5)));
+  EXPECT_FALSE(graph.connected(Vertex<int>(9), Vertex<int>(4)));
+  EXPECT_FALSE(graph.connected(Vertex<int>(1), Vertex<int>(100)));
+}

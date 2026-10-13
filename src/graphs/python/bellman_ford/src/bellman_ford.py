@@ -25,9 +25,6 @@ def bellman_ford(graph: Graph, source: Vertex, destination: Vertex) -> float:
     if not (graph.contains(source) and graph.contains(destination)):
         return math.inf
 
-    if source == destination:
-        return 0
-
     distances: dict[Vertex, float] = {}
 
     for vertex in graph.vertices():

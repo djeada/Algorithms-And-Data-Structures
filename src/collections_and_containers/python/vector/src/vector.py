@@ -10,7 +10,7 @@ class Vector:
 
     def __init__(self, capacity: int = 10000) -> None:
         self.n = 0
-        self.capacity = capacity
+        self.capacity = max(0, capacity)
         self.data: list[Any] = [None] * self.capacity
 
     def __iter__(self) -> Iterator[Any]:
@@ -26,6 +26,8 @@ class Vector:
         return self.data[i]
 
     def __setitem__(self, i: int, value: Any) -> None:
+        if i < 0 or i >= self.n:
+            raise IndexError("Index out of range")
         self.data[i] = value
 
     def size(self) -> int:
@@ -51,7 +53,7 @@ class Vector:
     def push_back(self, value: Any) -> None:
         """Add an element to the end of the vector."""
         if self.n == self.capacity:
-            self.reserve(self.capacity * 2)
+            self.reserve(max(1, self.capacity * 2))
         self.data[self.n] = value
         self.n += 1
 
@@ -66,6 +68,9 @@ class Vector:
         """Resize the vector to contain 'size' elements."""
         if size > self.capacity:
             self.reserve(size)
+        # Elements exposed by growing must not be stale values from earlier use.
+        for i in range(self.n, size):
+            self.data[i] = None
         self.n = size
 
     def __eq__(self, other: object) -> bool:
@@ -86,6 +91,8 @@ class Vector:
 
     def reserve(self, size: int) -> None:
         """Reserve capacity for at least 'size' elements."""
+        if size <= self.capacity:
+            return
         self.capacity = size
         new_data: list[Any] = [None] * self.capacity
         for i in range(self.n):

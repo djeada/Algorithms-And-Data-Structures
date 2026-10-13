@@ -100,3 +100,30 @@ TEST(HowSumTest, TestPositiveTable2) {
   std::vector<unsigned int> expectedResult = {3, 3, 3};
   ASSERT_TRUE(equal(howSumTable(target, numbers), expectedResult));
 }
+
+#include <climits>
+#include <numeric>
+
+TEST(HowSumEdgeCases, ZeroIsIgnored) {
+  std::vector<unsigned int> numbers = {0, 5};
+  for (auto f : {howSumBasic, howSumMemo, howSumTable}) {
+    auto r = f(10, numbers);
+    ASSERT_EQ(std::accumulate(r.begin(), r.end(), 0u), 10u);
+    ASSERT_EQ(r.size(), 2u);
+    ASSERT_TRUE(f(7, numbers).empty());
+  }
+}
+
+TEST(HowSumEdgeCases, HugeNumberDoesNotOverflow) {
+  std::vector<unsigned int> numbers = {UINT_MAX, 4};
+  auto r = howSumTable(12, numbers);
+  ASSERT_EQ(r.size(), 3u);
+  ASSERT_TRUE(howSumTable(10, numbers).empty());
+}
+
+TEST(HowSumEdgeCases, ZeroTarget) {
+  std::vector<unsigned int> numbers = {1, 2};
+  ASSERT_TRUE(howSumBasic(0, numbers).empty());
+  ASSERT_TRUE(howSumMemo(0, numbers).empty());
+  ASSERT_TRUE(howSumTable(0, numbers).empty());
+}

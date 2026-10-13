@@ -70,6 +70,9 @@ void find_tours(std::vector<std::vector<int>> &board, int row, int col,
 
 std::vector<std::vector<std::vector<int>>> knight_tour(int n) {
   // initialize the board and the tours list
+  if (n <= 0) {
+    return {};
+  }
   std::vector<std::vector<int>> board(n, std::vector<int>(n, -1));
   board[0][0] = 0;
   std::vector<std::pair<int, int>> tour = {{0, 0}};

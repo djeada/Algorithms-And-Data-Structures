@@ -43,8 +43,7 @@ template <class T> typename Vector<T>::iterator Vector<T>::end() {
   return data + n;
 }
 
-template <class T>
-typename Vector<T>::const_iterator Vector<T>::begin() const {
+template <class T> typename Vector<T>::const_iterator Vector<T>::begin() const {
   return data;
 }
 
@@ -78,8 +77,12 @@ template <class T> const T &Vector<T>::back() const {
 
 template <class T> void Vector<T>::push_back(const T &v) {
   if (n >= _capacity) {
-    // Double capacity (or start with 1 if empty)
+    // v may refer to an element of this vector, which reserve() invalidates,
+    // so copy it first. Double capacity (or start with 1 if empty).
+    const T copy = v;
     reserve(_capacity == 0 ? 1 : _capacity * 2);
+    data[n++] = copy;
+    return;
   }
   data[n++] = v;
 }
@@ -115,6 +118,10 @@ template <class T> void Vector<T>::resize(unsigned int newSize) {
   if (static_cast<int>(newSize) > _capacity) {
     reserve(newSize);
   }
+  // Elements exposed by growing are value-initialised, not stale/garbage.
+  for (int i = n; i < static_cast<int>(newSize); i++) {
+    data[i] = T();
+  }
   n = static_cast<int>(newSize);
 }
 
@@ -142,9 +149,7 @@ template <class T> const T &Vector<T>::at(unsigned int index) const {
   return data[index];
 }
 
-template <class T> void Vector<T>::clear() {
-  n = 0;
-}
+template <class T> void Vector<T>::clear() { n = 0; }
 
 template class Vector<int>;
 template class Vector<float>;

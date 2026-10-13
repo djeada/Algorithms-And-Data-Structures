@@ -18,7 +18,7 @@ bestSumBasic(unsigned int target, const std::vector<unsigned int> &numbers) {
     std::vector<unsigned int> shortestCombination;
 
     for (const auto &num : numbers) {
-      if (num > target) {
+      if (num == 0 || num > target) {
         continue;
       }
 
@@ -71,7 +71,7 @@ bestSumMemo(unsigned int target, const std::vector<unsigned int> &numbers) {
     std::vector<unsigned int> shortestCombination;
 
     for (const auto &num : numbers) {
-      if (num > target) {
+      if (num == 0 || num > target) {
         continue;
       }
 
@@ -114,10 +114,10 @@ bestSumTabulation(unsigned int target,
 
   table[0] = {{}};
 
-  for (auto i = 0; i <= target; ++i) {
+  for (unsigned int i = 0; i <= target; ++i) {
     if (!table[i].empty()) {
       for (const auto &num : numbers) {
-        if (i + num <= target) {
+        if (num > 0 && num <= target - i) {
           auto combination = table[i];
 
           for (auto &comb : combination) {

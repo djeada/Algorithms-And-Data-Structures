@@ -26,6 +26,8 @@ def find_shortest_combination_sum_basic(
 
         min_length = float("inf")
         for number in numbers:
+            if number <= 0:
+                continue
             combination_length = recurse(target - number) + 1
             min_length = min(min_length, combination_length)
 
@@ -38,7 +40,7 @@ def find_shortest_combination_sum_basic(
     combination: List[int] = []
     while target > 0:
         for number in numbers:
-            if recurse(target - number) == min_length - 1:
+            if number > 0 and recurse(target - number) == min_length - 1:
                 combination.append(number)
                 target -= number
                 min_length -= 1
@@ -75,6 +77,8 @@ def find_shortest_combination_sum_memo(
 
         min_length = float("inf")
         for number in numbers:
+            if number <= 0:
+                continue
             combination_length = recurse(target - number, memo) + 1
             min_length = min(min_length, combination_length)
 
@@ -89,7 +93,7 @@ def find_shortest_combination_sum_memo(
     combination: List[int] = []
     while target > 0:
         for number in numbers:
-            if recurse(target - number, memo) == min_length - 1:
+            if number > 0 and recurse(target - number, memo) == min_length - 1:
                 combination.append(number)
                 target -= number
                 min_length -= 1
@@ -122,7 +126,7 @@ def find_shortest_combination_sum_table(
     for i in range(target + 1):
         if table[i] is not None:
             for number in numbers:
-                if i + number <= target:
+                if 0 < number <= target - i:
                     if table[i + number] is None or len(table[i]) < len(
                         table[i + number]
                     ):

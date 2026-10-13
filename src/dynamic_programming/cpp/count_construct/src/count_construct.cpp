@@ -11,7 +11,8 @@ int countConstructBasic(const std::string &target,
 
   for (const auto &word : wordBank) {
 
-    if (target.size() >= word.size() && target.substr(0, word.size()) == word) {
+    if (!word.empty() && target.size() >= word.size() &&
+        target.substr(0, word.size()) == word) {
       auto suffix = target.substr(word.size());
       totalCount += countConstructBasic(suffix, wordBank);
     }
@@ -39,7 +40,7 @@ int countConstructMemo(const std::string &target,
 
     for (const auto &word : wordBank) {
 
-      if (target.size() >= word.size() &&
+      if (!word.empty() && target.size() >= word.size() &&
           target.substr(0, word.size()) == word) {
         auto suffix = target.substr(word.size());
         totalCount += _countConstructMemo(suffix, wordBank, memo);
@@ -65,7 +66,7 @@ int countConstructTable(const std::string &target,
 
     for (const auto &word : wordBank) {
 
-      if (target.substr(i, word.size()) == word) {
+      if (!word.empty() && target.substr(i, word.size()) == word) {
 
         table[i + word.size()] += table[i];
       }

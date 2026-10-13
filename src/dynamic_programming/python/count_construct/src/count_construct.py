@@ -19,7 +19,7 @@ def count_construct_basic(target: str, word_bank: List[str]) -> int:
 
     count = 0
     for word in word_bank:
-        if target.startswith(word):
+        if word and target.startswith(word):
             count += count_construct_basic(target[len(word) :], word_bank)
     return count
 
@@ -50,7 +50,7 @@ def count_construct_memo(
 
     count = 0
     for word in word_bank:
-        if target.startswith(word):
+        if word and target.startswith(word):
             count += count_construct_memo(target[len(word) :], word_bank, memo)
     memo[target] = count
     return count
@@ -80,6 +80,6 @@ def count_construct_table(target: str, word_bank: List[str]) -> int:
         if counts[i] == 0:
             continue
         for word in word_bank:
-            if target[i : i + len(word)] == word:
+            if word and target[i : i + len(word)] == word:
                 counts[i + len(word)] += counts[i]
     return counts[n]

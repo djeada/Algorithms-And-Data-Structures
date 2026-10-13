@@ -51,6 +51,11 @@ class TestLowestCommonAncestor(unittest.TestCase):
         actual = lowest_common_ancestor(root, 10, 11)
         self.assertEqual(actual, expected)
 
+    def test_missing_value_returns_none(self):
+        root = TreeNode(1, TreeNode(2), TreeNode(3))
+        self.assertIsNone(lowest_common_ancestor(root, 2, 99))
+        self.assertIsNone(lowest_common_ancestor(root, 99, 2))
+
 
 if __name__ == "__main__":
     unittest.main()
