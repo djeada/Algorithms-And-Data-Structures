@@ -212,8 +212,8 @@ Complexity:
 
 Implementation:
 
-- [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/bubble_sort/src/bubble_sort.cpp)
-- [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/bubble_sort/src/bubble_sort.py)
+- [C++ (The Algorithms)](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/sorting/bubble_sort.cpp)
+- [Python (The Algorithms)](https://github.com/TheAlgorithms/Python/blob/master/sorts/bubble_sort.py)
 
 ## Selection Sort
 
@@ -922,8 +922,8 @@ The example uses non-negative base-10 integers, treating missing leading digits 
 
 Implementation:
 
-- [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/radix_sort/src/radix_sort.cpp)
-- [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/radix_sort/src/radix_sort.py)
+- [C++ (The Algorithms)](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/sorting/radix_sort.cpp)
+- [Python (The Algorithms)](https://github.com/TheAlgorithms/Python/blob/master/sorts/radix_sort.py)
 
 ## Counting Sort
 
@@ -1015,8 +1015,8 @@ Complexity:
 
 Implementation:
 
-- [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/counting_sort/src/counting_sort.cpp)
-- [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/counting_sort/src/counting_sort.py)
+- [C++ (The Algorithms)](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/sorting/counting_sort.cpp)
+- [Python (The Algorithms)](https://github.com/TheAlgorithms/Python/blob/master/sorts/counting_sort.py)
 
 ## Comparison Table
 
