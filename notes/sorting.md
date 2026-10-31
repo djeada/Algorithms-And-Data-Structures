@@ -504,8 +504,8 @@ A subarray of length zero or one is already sorted. For larger inputs, the recur
 
 Implementations:
 
-- [C++](../src/sorting/cpp/merge_sort/)
-- [Python](../src/sorting/python/merge_sort/)
+- [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge_sort)
+- [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/merge_sort)
 
 ## Quick Sort
 
