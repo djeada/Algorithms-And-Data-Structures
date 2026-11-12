@@ -91,6 +91,8 @@ Text search is its own world because matching strings has structure you can expl
 
 Linear search is the baseline: it requires no assumptions and no preprocessing, which is exactly why it still matters. If your data is tiny, frequently changing, or you only search once, linear search is often “good enough” and the simplest correct solution.
 
+> **First step:** Check whether the data is unsorted, tiny, or searched only once. If it is, a single left-to-right scan is the right answer, and the only decision left is whether you need the first match, the last match, or all of them.
+
 ### Linear Search
 
 Scan the list from left to right, comparing the target with each element until you either find a match (return its index) or finish the list (report “not found”).
@@ -292,6 +294,8 @@ Scan:
 
 Divide-and-conquer search algorithms assume structure, almost always sorted order, and then exploit it to throw away most of the search space quickly. The “why you should care” is simple: when $n$ gets big, cutting the problem in half repeatedly is the difference between instant and unbearable.
 
+> **First step:** Confirm that the data is sorted, or that some yes or no question about it flips exactly once across the range, and that you can jump to any index in constant time. Then default to binary search and switch to a variant only when one of the specific conditions below applies.
+
 ### Binary Search
 
 On a sorted array, repeatedly halve the search interval by comparing the target to the middle element until found or the interval is empty.
@@ -384,7 +388,7 @@ Active range: indices 4..4
 FOUND at index 4
 
 - Requires a sorted array (assume ascending here).
-- Time: $O(log n)$; Space: $O(1)$ iterative.
+- Time: $O(\log n)$; Space: $O(1)$ iterative.
 - Returns any one matching index by default; “first/last occurrence” is a small, common refinement.
 - Robust, cache-friendly, and a building block for many higher-level searches.
 - Beware of off-by-one errors when shrinking bounds.
@@ -392,6 +396,8 @@ FOUND at index 4
 For inclusive bounds, compute `mid = low + (high - low) // 2` to avoid adding two large indices in fixed-width arithmetic. Every unsuccessful comparison must exclude `mid` from the next interval. An empty input starts with `high = -1` and returns “not found” without accessing the array.
 
 A common refinement in real work is “find the first/last occurrence.” The trick is not to stop when you see the target, keep going left (or right) while preserving correctness. Same structure, slightly different termination condition.
+
+The section Binary Search Patterns for Interview Problems, after Interpolation Search, gives code for this and for the other boundary searches that most interview problems need.
 
 ### Ternary Search
 
@@ -457,7 +463,7 @@ Since `4 < 9 < 12`, continue in indices `2..3`. The next midpoints are 2 and 3; 
 - Also assumes a sorted array.
 - For discrete sorted arrays, it does not beat binary search asymptotically; it performs more comparisons per step.
 - Most valuable for searching the extremum of a unimodal function on a continuous domain; for arrays, prefer binary search.
-- Complexity: $O(log n)$ steps but with larger constant factors than binary search.
+- Complexity: $O(\log n)$ steps but with larger constant factors than binary search.
 
 ### Jump Search
 
@@ -525,7 +531,7 @@ Block [16 ][25 ]
 The element $25$ is found at index 4.
 
 - Works on sorted arrays; pick jump ≈ √n for good balance.
-- Time: $O(√n)$ comparisons on average; Space: $O(1)$.
+- Time: $O(\sqrt{n})$ comparisons on average; Space: $O(1)$.
 - Useful when binary search isn’t desirable: binary search has poor locality (random jumps); jump search scans a block sequentially, which is more cache-friendly and has better branch prediction.
 - Degrades gracefully to “scan block then stop.”
 
@@ -707,15 +713,317 @@ A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
 
 At this point, an early-stop check already tells us `target (45) < A[low] (50)` → cannot exist in `A[4..6]` → not found.
 
-- Best on uniformly distributed sorted data; expected time $O(log log n)$.
+- Best on uniformly distributed sorted data; expected time $O(\log \log n)$.
 - Worst case can degrade to $O(n)$, especially on skewed or clustered values.
 - Space: $O(1)$.
 - Very fast when value-to-index mapping is close to linear (e.g., near-uniform numeric keys).
 - Requires careful handling when A[high] = A[low] (avoid division by zero); also sensitive to integer rounding in discrete arrays.
 
+## Binary Search Patterns for Interview Problems
+
+Most binary search problems on LeetCode are not "find this value in a sorted array". They ask for the first index where something becomes true, the smallest capacity that still works, or the minimum of an array that was rotated. All of them reduce to one move: find a yes or no question whose answers across the range look like no, no, no, yes, yes, and locate the point where they flip.
+
+The subsections below give one template and then the problem families that plug into it. Problem numbers refer to LeetCode.
+
+> **First step:** Write the predicate that is false for a prefix of the range and true for the rest, and say in words which index or value you want. Choose whether lo and hi are inclusive or half-open, and decide what to return when the predicate is never true.
+
+### One Template and Its Loop Invariant
+
+The template searches the half-open range [lo, hi) for the first index where pred is true. Its invariant is that every index below lo is known to be false and every index at or above hi is known to be true, or is the out-of-range end. Each step keeps that true, so when the loop stops with lo equal to hi, that index is the boundary.
+
+```python
+def first_true(lo, hi, pred):
+    # pred must be False...False True...True on [lo, hi)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if pred(mid):
+            hi = mid          # mid may be the answer, keep it
+        else:
+            lo = mid + 1      # mid is not the answer, drop it
+    return lo                 # equals the original hi if pred is never true
+```
+
+Two details make it terminate. With floor rounding, mid is always strictly less than hi, so `hi = mid` shrinks the range, and `lo = mid + 1` always shrinks it too. A version that sets `lo = mid` on success, used to find the last true value, must round mid up with `lo + (hi - lo + 1) // 2`. With floor rounding, a two-element range would pick mid equal to lo forever.
+
+The closed form `while lo <= hi` with `lo = mid + 1` and `hi = mid - 1` is fine for exact-match search, as in the Binary Search section above, because it returns the moment it sees the target. For boundary questions the half-open form is easier to get right, because the answer is wherever lo ends up and no separate "best so far" variable is needed.
+
+In C++, Java, or Go, `(lo + hi) / 2` can overflow when both indices are near $2^{31}$, so write `lo + (hi - lo) / 2`. That form also floors correctly when the range contains negative numbers, while `(lo + hi) / 2` truncates toward zero there and can hang the loop. Python integers do not overflow, and `//` always floors.
+
+Several classic problems are this template with a one-line predicate. In 278 First Bad Version, call it with lo = 1, hi = n and pred = isBadVersion, since version n is known to be bad. In 69 Sqrt(x), search [0, x + 1) for the first m with m * m > x and subtract one; 367 Valid Perfect Square finds the same root and checks whether its square equals the input. Use 64-bit products or compare m > x / m in fixed-width languages. In 658 Find K Closest Elements, search window starts with lo = 0, hi = n - k and pred(i) = x - a[i] <= a[i + k] - x, then return a[lo : lo + k].
+
+Each search costs $O(\log(hi - lo))$ predicate calls, times the cost of one call. The most common mistake is a predicate that is not monotone, such as `a[mid] == target`, which is true in the middle and false on both sides.
+
+### Lower Bound and Upper Bound
+
+Two boundary searches answer almost every question about a target in a sorted array with duplicates. lower_bound(a, t) is the first index whose value is at least t, and upper_bound(a, t) is the first index whose value is greater than t. Both return len(a) when no such index exists, which is also where t would be inserted.
+
+Everything else is read off those two numbers. The first occurrence of t is lower_bound, provided that index is in range and holds t. The last occurrence is upper_bound minus one, and the count of t is upper_bound minus lower_bound. The largest value below t sits at lower_bound minus one, and the largest value at most t sits at upper_bound minus one.
+
+```python
+def lower_bound(a, t):            # first i with a[i] >= t
+    lo, hi = 0, len(a)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if a[mid] >= t: hi = mid
+        else:           lo = mid + 1
+    return lo
+
+def upper_bound(a, t):            # first i with a[i] > t
+    lo, hi = 0, len(a)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if a[mid] > t: hi = mid
+        else:          lo = mid + 1
+    return lo
+
+def search_range(a, t):           # 34
+    first = lower_bound(a, t)
+    if first == len(a) or a[first] != t:
+        return [-1, -1]
+    return [first, upper_bound(a, t) - 1]
+```
+
+704 Binary Search is lower_bound plus the same in-range check. 35 Search Insert Position is lower_bound returned as is. 34 Find First and Last Position of Element in Sorted Array is search_range above. 744 Find Smallest Letter Greater Than Target is upper_bound on the letters, wrapping around to index 0 when the result equals the length.
+
+Each bound costs $O(\log n)$, so 34 stays logarithmic even when every element equals the target. The most common mistake is reading a[first] before checking that first is less than len(a).
+
+### Library Binary Search: bisect and lower_bound
+
+In Python, `bisect.bisect_left(a, t)` is lower_bound and `bisect.bisect_right(a, t)` is upper_bound. Both take optional lo and hi arguments to search part of a list without slicing it, and since Python 3.10 they also take a key function. In C++, `std::lower_bound` and `std::upper_bound` return iterators (subtract `v.begin()` for an index), `std::equal_range` returns both at once, and `std::binary_search` only reports whether the value exists. Java's `Arrays.binarySearch` returns an arbitrary index among duplicates and `-(insertion point) - 1` when the value is absent, so write lower_bound by hand in Java when duplicates matter.
+
+Two common problems take a few lines with bisect. In 981 Time Based Key-Value Store, timestamps for each key arrive strictly increasing, so appending keeps each list sorted, and a get at time t reads the entry just before bisect_right(times, t). In 300 Longest Increasing Subsequence, tails[L] holds the smallest possible last value of an increasing subsequence of length L + 1. Each new value replaces the first tail that is not smaller than it, or extends the list, and the final length is the answer.
+
+```python
+from bisect import bisect_left, bisect_right
+
+def time_map_get(times, values, t):     # 981, lists for one key
+    i = bisect_right(times, t) - 1      # last timestamp <= t
+    return values[i] if i >= 0 else ""
+
+def length_of_lis(nums):                # 300
+    tails = []
+    for x in nums:
+        i = bisect_left(tails, x)       # first tail >= x
+        if i == len(tails):
+            tails.append(x)
+        else:
+            tails[i] = x
+    return len(tails)
+```
+
+Each library call is $O(\log n)$, so 981 answers a get in $O(\log n)$ and the LIS method runs in $O(n \log n)$. The most common mistake in LIS is using bisect_right, which lets equal values extend a run and solves the non-decreasing version instead.
+
+### Binary Search on the Answer
+
+Some problems never hand you a sorted array. They ask for the smallest speed, capacity, or largest part sum that still makes a plan work. If a value works, every larger value also works, so a feasibility check is false and then true across the candidate answers. Binary search that range with the template and run the check at each mid.
+
+The real work is choosing the range and the check. In 875 Koko Eating Bananas the speed runs from 1 to max(piles), and speed k is feasible when the sum of (p + k - 1) // k over all piles is at most h. In 1011 Capacity to Ship Packages Within D Days the capacity runs from max(weights) to sum(weights), and the check packs greedily from left to right, starting a new day whenever the next package would overflow. 410 Split Array Largest Sum is the same problem with days renamed to subarrays. In 1482 Minimum Number of Days to Make m Bouquets the candidate is a day, the check counts runs of k adjacent bloomed flowers, and the answer is -1 when m times k exceeds the number of flowers.
+
+```python
+def ship_within_days(weights, days):    # 1011, and 410 with days = k
+    def feasible(cap):
+        used, load = 1, 0
+        for w in weights:
+            if load + w > cap:          # start a new day
+                used += 1
+                load = 0
+            load += w
+        return used <= days
+
+    lo, hi = max(weights), sum(weights) # hi always works
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if feasible(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+```
+
+When the question asks to maximize a minimum, the check runs the other way: true for small values and false for large ones. In 1552 Magnetic Force Between Two Balls, sort the positions, and call a gap d feasible if greedy placement from the left fits m balls with neighbors at least d apart. Search for the last true value with `lo = mid` on success, `hi = mid - 1` on failure, and mid rounded up as `(lo + hi + 1) // 2`.
+
+The total cost is $O(n \log R)$, where $R$ is the width of the answer range, so even answers up to $10^9$ need only about 30 checks. The most common mistake is a lower end that is too small, for example starting 1011 at 1, where this greedy check would accept a capacity smaller than the heaviest package.
+
+### Rotated Sorted Arrays
+
+A rotated sorted array such as [4, 5, 6, 7, 0, 1, 2] is two sorted runs, and every value in the first run is larger than every value in the second. Compare a[mid] with the last element of the range. If a[mid] is larger, mid sits in the first run and the minimum lies strictly to its right; otherwise mid sits in the second run and the minimum is at mid or to its left. That is 153 Find Minimum in Rotated Sorted Array.
+
+For 33 Search in Rotated Sorted Array, one clean approach finds the rotation point and then runs an ordinary lower_bound on whichever run can hold the target. The one-pass version you will also see relies on the fact that at least one of the halves a[lo..mid] and a[mid..hi] is sorted. If a[lo] <= a[mid] the left half is sorted, so check whether the target lies inside its range and move accordingly; otherwise apply the same test to the right half.
+
+```python
+from bisect import bisect_left
+
+def find_min_index(a):                  # 153, distinct values
+    lo, hi = 0, len(a) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if a[mid] > a[hi]:
+            lo = mid + 1                # the drop is right of mid
+        else:
+            hi = mid                    # mid may be the minimum
+    return lo
+
+def search_rotated(a, t):               # 33
+    k = find_min_index(a)               # a[k:] and a[:k] are each sorted
+    lo, hi = (k, len(a)) if t <= a[-1] else (0, k)
+    i = bisect_left(a, t, lo, hi)
+    return i if i < hi and a[i] == t else -1
+```
+
+Duplicates break this reasoning. In 81 Search in Rotated Sorted Array II and 154 Find Minimum in Rotated Sorted Array II, a[mid] equal to a[hi] does not say which run mid is in, as [1, 1, 1, 0, 1] and [1, 0, 1, 1, 1] show. The safe move is to shrink by one, hi -= 1 for the minimum, or lo += 1 and hi -= 1 in 81 once a[mid] is known not to be the target.
+
+With distinct values both problems run in $O(\log n)$, and with duplicates the worst case becomes $O(n)$. The most common mistake is comparing a[mid] with a[lo] when looking for the minimum, which sends the search right on an array that was never rotated.
+
+### Peak Finding and Mountain Arrays
+
+162 Find Peak Element asks for any index whose value beats both neighbors, with the ends treated as negative infinity and no two neighbors equal. Compare a[mid] with a[mid + 1]. If the slope goes up, either the values come down again later or the right edge is a peak, so a peak exists right of mid. If the slope goes down, mid or something left of it is a peak. The invariant is "a peak exists in [lo, hi]", not sortedness, which is why this works on an unsorted array.
+
+852 Peak Index in a Mountain Array uses the same code, and there the predicate a[mid] > a[mid + 1] really is false then true. 1095 Find in Mountain Array builds on it: find the peak, binary search the increasing part [0, peak], and only if that fails, binary search the decreasing part [peak + 1, n - 1] with the comparisons reversed. Searching the left part first returns the smaller index and stays within the limit of 100 calls to get.
+
+```python
+def find_peak(a):                       # 162 and 852
+    lo, hi = 0, len(a) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2            # mid < hi, so a[mid + 1] exists
+        if a[mid] < a[mid + 1]:
+            lo = mid + 1                # uphill, a peak lies to the right
+        else:
+            hi = mid                    # downhill, mid or a left index is a peak
+    return lo
+```
+
+Peak finding takes $O(\log n)$ comparisons. The most common mistake is writing `while lo <= hi` around this body, which reads a[mid + 1] past the end once lo and hi both reach n - 1.
+
+### Hidden Monotone Predicates
+
+Some problems hide the false-then-true pattern in a less obvious place. In 540 Single Element in a Sorted Array, every value appears twice except one. Before the single element each pair starts at an even index, so a[i] == a[i + 1] for even i. From the single element onward the pairs start at odd indices and that test fails. Search only even positions for the first even i where a[i] != a[i + 1].
+
+In 287 Find the Duplicate Number the array holds n + 1 values from 1 to n and may not be modified. Count how many values are at most mid. If no repeated value is at most mid, that count is at most mid, and once mid reaches the duplicate the count exceeds mid by the pigeonhole principle. Search the value range [1, n] for the first mid whose count is above mid. Floyd's cycle detection on the index graph also solves it, in $O(n)$.
+
+```python
+def single_non_duplicate(a):            # 540
+    lo, hi = 0, len(a) - 1              # both stay even
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if mid % 2 == 1:
+            mid -= 1                    # align to the start of a pair
+        if a[mid] == a[mid + 1]:
+            lo = mid + 2                # pairs intact up to here
+        else:
+            hi = mid                    # the break is at mid or earlier
+    return a[lo]
+
+def find_duplicate(nums):               # 287
+    lo, hi = 1, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(x <= mid for x in nums) > mid:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+```
+
+540 runs in $O(\log n)$, and the counting version of 287 runs in $O(n \log n)$ with $O(1)$ extra space. The most common mistake in 540 is skipping the even alignment of mid, which compares elements across a pair boundary.
+
+### Searching a Sorted 2D Matrix
+
+74 Search a 2D Matrix promises that each row is sorted and each row starts above the previous row's last value. Read row by row, the matrix is one sorted list of length rows times cols, and flat index i lives at row i // cols, column i % cols. Run ordinary binary search on the flat index.
+
+240 Search a 2D Matrix II only promises that rows and columns are each sorted, so rows can overlap and flattening fails. Start at the top-right corner instead. If that value is larger than the target, the whole column below it is larger too, so step left; if it is smaller, the whole row to its left is smaller, so step down. Every comparison discards a row or a column.
+
+```python
+def search_flat(M, t):                  # 74
+    rows, cols = len(M), len(M[0])
+    lo, hi = 0, rows * cols - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        v = M[mid // cols][mid % cols]
+        if v == t: return True
+        if v < t: lo = mid + 1
+        else:     hi = mid - 1
+    return False
+
+def search_staircase(M, t):             # 240, also correct for 74
+    r, c = 0, len(M[0]) - 1
+    while r < len(M) and c >= 0:
+        if M[r][c] == t: return True
+        if M[r][c] > t: c -= 1          # column below is all bigger
+        else:           r += 1          # row to the left is all smaller
+    return False
+```
+
+The flat search costs $O(\log(mn))$ and the staircase costs $O(m + n)$ for an m by n matrix. The most common mistake is dividing the flat index by the number of rows instead of columns, which only works on square matrices.
+
+### K-th Smallest by Counting
+
+When the k-th smallest item of a large implicit set is needed, binary search over values instead of positions. For a candidate x, count the items that are at most x. That count never decreases as x grows, so the answer is the first x whose count reaches k. That first x is always a real item, because the count only rises at values that are present.
+
+In 378 Kth Smallest Element in a Sorted Matrix the count comes from a staircase walk from the bottom-left corner in $O(n)$. In 719 Find K-th Smallest Pair Distance, sort the numbers, search distances from 0 to max minus min, and count pairs at distance at most d with a sliding window. For each right index, advance left while nums[right] - nums[left] > d, then add right - left.
+
+```python
+def kth_smallest(M, k):                 # 378, n by n matrix
+    n = len(M)
+    def count_le(x):
+        r, c, cnt = n - 1, 0, 0         # start bottom-left
+        while r >= 0 and c < n:
+            if M[r][c] <= x:
+                cnt += r + 1            # M[0..r][c] are all <= x
+                c += 1
+            else:
+                r -= 1
+        return cnt
+
+    lo, hi = M[0][0], M[n - 1][n - 1]
+    while lo < hi:
+        mid = (lo + hi) // 2            # Python floors negatives too
+        if count_le(mid) >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+```
+
+378 costs $O(n \log R)$ and 719 costs $O(n \log n + n \log R)$, where $R$ is the value range. The most common mistake is returning mid as soon as the count equals k, which can produce a value that is not in the matrix.
+
+### Median of Two Sorted Arrays
+
+4 Median of Two Sorted Arrays asks for $O(\log(m + n))$ time, so merging is out. Instead, choose how many items i the shorter array A contributes to the left half of the combined order. The longer array B then contributes j = half - i, with half = (m + n + 1) // 2. The cut is correct when every left item is at most every right item, which comes down to A[i - 1] <= B[j] and B[j - 1] <= A[i].
+
+If A[i - 1] > B[j], A gave too many items, so move i left. If B[j - 1] > A[i], A gave too few, so move i right. Missing neighbors at the edges count as minus or plus infinity. Once the cut is right, the median is the largest left value for an odd total, or the mean of the largest left and smallest right values for an even total.
+
+```python
+def find_median(A, B):                  # 4
+    if len(A) > len(B):
+        A, B = B, A                     # search the shorter array
+    m, n = len(A), len(B)
+    half = (m + n + 1) // 2
+    lo, hi = 0, m                       # i ranges over 0..m inclusive
+    while True:
+        i = (lo + hi) // 2
+        j = half - i
+        a_left  = A[i - 1] if i > 0 else float("-inf")
+        a_right = A[i]     if i < m else float("inf")
+        b_left  = B[j - 1] if j > 0 else float("-inf")
+        b_right = B[j]     if j < n else float("inf")
+        if a_left > b_right:
+            hi = i - 1
+        elif b_left > a_right:
+            lo = i + 1
+        else:
+            left_max = max(a_left, b_left)
+            if (m + n) % 2 == 1:
+                return left_max
+            return (left_max + min(a_right, b_right)) / 2
+```
+
+The search takes $O(\log \min(m, n))$ steps. The most common mistake is searching the longer array, which can push j below zero or past the end of the other array.
+
 ## Hash-based Search
 
 Hash-based search is for when you want direct access by key. Instead of narrowing down ranges, you compute a location in (roughly) constant time. The cost is setup complexity: you need a hash function, a collision strategy, and resizing rules to keep performance stable.
+
+> **First step:** Decide what the key is and what you need back for it. A plain yes or no needs a set, while an index, count, or stored value needs a map; in interview code you use the built-in dict, HashMap, or unordered_map, and the collision schemes below explain why those stay fast.
 
 - Separate chaining: Easiest deletions, steady $O(1)$ with α≈1; good when memory fragmentation isn’t a concern.
 - Open addressing (double hashing): key-dependent probe steps reduce clustering, but scattered probes usually have poorer locality than linear probing. Choose a load threshold appropriate to the implementation.
@@ -733,7 +1041,7 @@ Example 1
 
 $$
 \text{Table size: } m = 7,
-\quad \text{Keys stored: } {10, 24, 31},
+\quad \text{Keys stored: } \{10, 24, 31\},
 \quad \text{Target: } 24
 $$
 
@@ -745,7 +1053,7 @@ Example 2
 
 $$
 \text{Table size: } m = 7,
-\quad \text{Keys stored: } {10, 24, 31},
+\quad \text{Keys stored: } \{10, 24, 31\},
 \quad \text{Target: } 18
 $$
 
@@ -843,7 +1151,7 @@ Example 1
 
 $$
 m = 10,
-\quad \text{Stored keys: } {12, 22, 32},
+\quad \text{Stored keys: } \{12, 22, 32\},
 \quad \text{Target: } 22
 $$
 
@@ -855,7 +1163,7 @@ Example 2
 
 $$
 m = 10,
-\quad \text{Stored keys: } {12, 22, 32},
+\quad \text{Stored keys: } \{12, 22, 32\},
 \quad \text{Target: } 42
 $$
 
@@ -926,7 +1234,7 @@ Example 1
 
 $$
 m = 11  (\text{prime}),
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 33
 $$
 
@@ -942,7 +1250,7 @@ Example 2
 
 $$
 m = 11  (\text{prime}),
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 55
 $$
 
@@ -1040,7 +1348,7 @@ Example 1
 
 $$
 m = 11,
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 33
 $$
 
@@ -1069,7 +1377,7 @@ Example 2
 
 $$
 m = 11,
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 55
 $$
 
@@ -1179,7 +1487,7 @@ $$
 Keys stored:
 
 $$
-{12, 22, 7, 3, 14}
+\{12, 22, 7, 3, 14\}
 $$
 
 Bucket contents after hashing:
@@ -1393,9 +1701,38 @@ FOUND in T₂ at index 4
 - Deletions are easy (remove key); no tombstones, but ensure invariants remain.
 - Sensitive to hash quality; poor hashes increase cycle risk.
 
+### Pair Lookup: Hash Complements and Two Pointers
+
+The most common hash-table move in interviews is the complement lookup in 1 Two Sum. Walk the array once, and for each value x ask whether target - x has already been seen. If it has, the stored index and the current index are the answer; if not, record x with its index. Checking before inserting keeps an element from pairing with itself while still handling [3, 3] with target 6.
+
+When the array is already sorted, as in 167 Two Sum II - Input Array Is Sorted, two pointers do the same job in constant space. Start at both ends. If the sum is too small, the left value cannot pair with anything, because it already faces the largest remaining value, so move left inward. If the sum is too large, the right value is useless for the same reason, so move right inward. The same scan, run once per fixed first element, drives 15 3Sum after sorting.
+
+```python
+def two_sum(nums, target):              # 1
+    seen = {}                           # value -> index
+    for i, x in enumerate(nums):
+        if target - x in seen:
+            return [seen[target - x], i]
+        seen[x] = i
+    return []
+
+def two_sum_sorted(a, target):          # 167, answer is 1-indexed
+    l, r = 0, len(a) - 1
+    while l < r:
+        s = a[l] + a[r]
+        if s == target: return [l + 1, r + 1]
+        if s < target:  l += 1
+        else:           r -= 1
+    return []
+```
+
+Both run in $O(n)$ time; the hash version uses $O(n)$ extra space and the two-pointer version $O(1)$. The most common mistake is storing x before looking up its complement, which returns the same index twice when the target equals 2x.
+
 ## Probabilistic Membership Filters
 
 Probabilistic membership filters answer a very specific question: “Is this item in the set?” but with a twist, they allow uncertainty in one direction. They can say “definitely not” with full confidence, or “maybe” when the filter thinks the item could be present. This trade lets them be extremely space-efficient and extremely fast.
+
+> **First step:** Ask whether a wrong "maybe" is acceptable and whether items must ever be removed. If a false positive can be confirmed against a slower exact store, use a Bloom filter for insert-only sets and a counting Bloom or cuckoo filter when deletions are needed.
 
 The main rule to remember is:
 
@@ -1493,7 +1830,7 @@ $$
 Inserted set:
 
 $$
-{"cat", "dog"}
+\{\text{"cat"}, \text{"dog"}\}
 $$
 
 Example 1
@@ -1891,6 +2228,8 @@ A good mental model: cuckoo filters are like a coat check where every coat has e
 
 Searching in strings is about finding a pattern of length `m` inside a text of length `n`. The naive method works by checking every alignment, but smarter algorithms exploit structure, especially the fact that mismatches can tell you how far you can skip ahead.
 
+> **First step:** Write down the text length $n$, the pattern length $m$, and whether there is one pattern or many. For a single pattern the built-in find or a KMP prefix function is enough, and Rabin–Karp pays off when many windows or patterns are compared by hash.
+
 ### Naive String Search
 
 Slide the pattern across the text one position at a time; at each position, compare characters until mismatch or full match.
@@ -1925,3 +2264,30 @@ Rabin–Karp uses a rolling hash. Hash the pattern and each length-`m` window of
 - Great for multiple patterns (hash them all) or streaming windows.
 
 Why it matters: the rolling hash lets you update the window hash in constant time, which is powerful when you’re scanning huge text or many patterns.
+
+## Reading the Problem Statement
+
+Search problems usually announce their technique in a few telltale phrases. The table maps the common ones to what they mean for the code you write.
+
+| If the problem says | What it means for your code |
+| --- | --- |
+| "sorted array" or "sorted in non-decreasing order" | Binary search for lookups, or two pointers for pairs; aim for $O(\log n)$ per query. |
+| "rotated sorted array" | Binary search that first decides which half is sorted, or finds the minimum and then searches one run. |
+| "may contain duplicates" together with rotation | When a[mid] equals the ends you cannot pick a side; shrink by one and accept an $O(n)$ worst case. |
+| "first occurrence" or "last occurrence" or "starting and ending position" | lower_bound for the first, upper_bound minus one for the last, and check that the target is really there. |
+| "insert position" or "where it would be inserted" | lower_bound, and the answer may equal n. |
+| "smallest element greater than target" | upper_bound; handle the case where it returns n, or wrap to index 0 if the problem says so. |
+| "must run in O(log n)" | A strong hint for binary search, even when the input does not look sorted at first. |
+| "minimum possible maximum" or "smallest value such that" | Binary search on the answer with a greedy feasibility check; lo is the smallest plausible value, hi one that surely works. |
+| "maximize the minimum distance" | Binary search on the answer for the last feasible value; set lo = mid on success and round mid up. |
+| n up to $10^5$ and values up to $10^9$ | About 30 iterations of an $O(n)$ check over the value range fit easily. |
+| "find any peak" or "return any of them" | Compare a[mid] with a[mid + 1] and walk uphill; you do not need the global maximum. |
+| "mountain array" | Find the peak first, then binary search each side with the comparison direction matching that side. |
+| "k-th smallest" in a sorted matrix or among pair distances | Binary search over values with a count of items at most mid; return the first value whose count reaches k. |
+| "rows and columns are sorted" | Staircase from the top-right corner in $O(m + n)$; if each row starts above the previous one, flatten the index instead. |
+| "median of two sorted arrays" | Binary search the cut position in the shorter array. |
+| "timestamps are strictly increasing" and "value at or before time t" | Append per key and use bisect_right minus one. |
+| unsorted input and "does it exist" or "find a pair" | Hash set or hash map with expected $O(1)$ lookups. |
+| sorted input and "pair that sums to target" | Two pointers from both ends in $O(1)$ extra space. |
+| "n + 1 integers in the range 1 to n" and "do not modify the array" | Binary search on the value range with counting, or Floyd's cycle detection. |
+| "longest increasing subsequence" with large n | Keep a tails array and place each value with bisect_left for $O(n \log n)$. |
