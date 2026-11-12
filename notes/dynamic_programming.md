@@ -64,6 +64,8 @@ You can think of these as two different writing styles for the same story. Memoi
 
 ### 1. Memoization (Top-Down Approach)
 
+> **First step:** Write the function signature with exactly the parameters that define a subproblem, and say in one sentence what it returns. Write the base cases before the recursive case, and make sure every argument that changes between calls is part of the cache key.
+
 Memoization is a technique used to optimize recursive problem-solving by storing the results of solved subproblems in a data structure, such as a hash table or an array. When the algorithm encounters a subproblem, it first checks if the result is already stored. If it is, the algorithm simply retrieves the cached result instead of recomputing it. This approach reduces redundant calculations, making the solution process faster and more efficient.
 
 A “do” for memoization: keep the recursion because it matches the problem’s natural definition, but make every subproblem cheap after the first time. A “don’t”: let your memo structure accidentally depend on hidden state (like mutable defaults or changing globals) in a way that makes results inconsistent.
@@ -103,6 +105,8 @@ These Fibonacci examples assume integer $n$ and count arithmetic operations as c
 One practical note when learning: top-down DP is often easier to write correctly first, because you start from the real question (“solve $n$”) and naturally reach for smaller questions. If you can write the recurrence cleanly, memoization is usually your fastest path to a working solution.
 
 ### 2. Tabulation (Bottom-Up Approach)
+
+> **First step:** Decide the table's dimensions and what one cell means, then find which cells each cell reads from. Choose loop directions so those cells are always filled first, and note which cell holds the final answer.
 
 Tabulation is a technique that solves a problem by working from the smallest subproblems up to the larger ones in a step-by-step, iterative way. It stores the solutions to these subproblems in a table, often an array, and uses these stored values to solve bigger subproblems until the final solution is reached. Unlike memoization, which works recursively and checks if a solution is already computed, tabulation systematically builds the solution from the ground up. This method is efficient and avoids the overhead of recursive calls.
 
@@ -156,6 +160,8 @@ A recurrence specifies how the answer for a state depends on other states. Defin
 
 ### Formulating Recurrence Relations
 
+> **First step:** Look at the last decision made in an optimal solution, such as whether the last characters match or whether the last item is taken. Each possible last decision becomes one term of the recurrence, and the empty or smallest input becomes the base case.
+
 Example: Longest Common Subsequence (LCS)
 
 Given two sequences $X = x_1, x_2, ..., x_m$ and $Y = y_1, y_2, ..., y_n$, let $LCS(i,j)$ be the LCS length of their first $i$ and $j$ elements. The recurrence uses one-based character indices and a zero row and column for empty prefixes:
@@ -176,6 +182,8 @@ We can implement the LCS problem using either memoization or tabulation. With ta
 The reason LCS is such a beloved DP example is that the “choices” are easy to explain: if characters match, you take the diagonal; if they don’t, you take the best of left/top. That clear decision structure is exactly what good DP feels like: simple local rules that reliably build a global answer.
 
 ### State Representation
+
+> **First step:** Write the state in words, for example "dp[i][w] is the best value using the first i items with capacity w", and check that two situations with the same state really have the same best future. If they do not, the state is missing information and needs another dimension.
 
 Properly defining the state is crucial for dynamic programming.
 
@@ -211,6 +219,8 @@ A key “do” here is to interpret your state in plain language. If you can’t
 
 ### Memory Optimization
 
+> **First step:** Get the full-table version working first, then mark exactly which earlier cells each cell reads. If it reads only the previous row, two rows are enough, and a single array often works when the loop direction guarantees that old values are read before they are overwritten.
+
 In some cases, we can optimize space complexity by noticing dependencies between states.
 
 This is where DP graduates from “works” to “works well.” Once the recurrence is correct, you can ask: “Do I truly need all previous states, or only a slice of them?” Many DP solutions only depend on the previous row, previous column, or a small window, so storing everything is optional.
@@ -239,6 +249,325 @@ If a problem has optimal substructure but does not have overlapping subproblems,
 This distinction matters because DP isn’t “better recursion”, it’s “recursion plus reuse.” If there’s nothing to reuse, DP is extra work for no gain. Picking the right paradigm is part of writing efficient algorithms, not just correct ones.
 
 Example: Merge Sort algorithm divides the list into halves, sorts each half, and then merges the sorted halves.
+
+## Common DP Patterns
+
+Most interview DP problems are variations on a small number of shapes. Once you recognize the shape, the state, the transition, and the loop order follow almost mechanically. The sections below cover the shapes behind the most common LeetCode DP questions.
+
+### Linear DP over a Sequence
+
+> **First step:** Write down in words what `dp[i]` means for the prefix ending at position `i`, then list the few earlier indices it can come from. Decide the values for the first one or two positions and whether the answer is `dp[n]` or the best over all `i`.
+
+The simplest DP shape walks along an array or string once, and each position depends on a constant number of earlier positions. Climbing Stairs (LeetCode 70) uses $dp[i] = dp[i-1] + dp[i-2]$ because the last move was either one step or two; the version in the problem list below also allows jumps of three and adds $dp[i-3]$. House Robber (LeetCode 198) either skips house $i$ or robs it on top of the best answer two houses back, so $dp[i] = \max(dp[i-1], dp[i-2] + a_i)$.
+
+Recognize this pattern when the input is processed left to right and each decision only interacts with a short window behind it. House Robber II (LeetCode 213) puts the houses in a circle, which you break by running the linear version twice, once without the first house and once without the last. Decode Ways (LeetCode 91) adds $dp[i-1]$ when the single digit is 1 to 9 and $dp[i-2]$ when the two-digit number is 10 to 26. Word Break (LeetCode 139) sets $dp[i]$ to true when some dictionary word ends at position $i$ and $dp$ is true where that word starts.
+
+Longest Valid Parentheses (LeetCode 32) stores the length of the longest valid substring ending at $i$. When s[i] is ')' and the character at $j = i - dp[i-1] - 1$ is '(', then $dp[i] = dp[i-1] + 2 + dp[j-1]$, taking $dp[j-1]$ as 0 when $j = 0$, and the answer is the maximum over all $i$.
+
+```python
+def rob_line(houses):
+    prev2, prev1 = 0, 0                  # best up to i-2 and up to i-1
+    for amount in houses:
+        prev2, prev1 = prev1, max(prev1, prev2 + amount)
+    return prev1
+
+def rob_circle(houses):                  # LeetCode 213
+    if len(houses) == 1:
+        return houses[0]
+    return max(rob_line(houses[1:]), rob_line(houses[:-1]))
+```
+
+These run in $O(n)$ time and $O(1)$ extra space when each state looks back a constant number of steps, while Word Break looks back up to the longest word length $L$ and costs about $O(n L^2)$ when each candidate word is sliced and looked up in a hash set. The most common mistake is in Decode Ways, where a '0' cannot be decoded on its own and a pair starting with '0', such as "06", is not a valid two-digit code.
+
+### Kadane's Algorithm and Running Best
+
+> **First step:** Define the local state as the best subarray that ends exactly at index `i`, because that is what makes a one-step recurrence possible. Keep a separate global best, since the answer can end anywhere.
+
+Maximum Subarray (LeetCode 53) asks for the largest sum of a contiguous subarray. Let $cur_i$ be the best sum of a subarray that ends exactly at index $i$. That subarray either extends the best one ending at $i-1$ or starts fresh at $i$, so $cur_i = \max(a_i, cur_{i-1} + a_i)$, and the answer is the largest $cur_i$ seen, not the last one.
+
+Maximum Product Subarray (LeetCode 152) needs two running values, because multiplying by a negative number turns the smallest product into the largest. Track both the maximum and the minimum product ending at $i$, and swap them when $a_i$ is negative. Recognize this family by the word "contiguous" next to "maximum" or "minimum".
+
+```python
+def max_subarray(nums):                  # LeetCode 53
+    cur = best = nums[0]
+    for x in nums[1:]:
+        cur = max(x, cur + x)
+        best = max(best, cur)
+    return best
+
+def max_product(nums):                   # LeetCode 152
+    hi = lo = best = nums[0]
+    for x in nums[1:]:
+        if x < 0:
+            hi, lo = lo, hi
+        hi = max(x, hi * x)
+        lo = min(x, lo * x)
+        best = max(best, hi)
+    return best
+```
+
+Both run in $O(n)$ time and $O(1)$ space. The most common mistake is starting `best` at 0, which returns 0 for an array whose elements are all negative.
+
+### 0/1 and Unbounded Knapsack
+
+> **First step:** Decide whether each item may be used once or any number of times, because that fixes the direction of the capacity loop. Then decide whether a cell holds a Boolean, a count, or a minimum or maximum, and initialize `dp[0]` and the other cells to match.
+
+The one-dimensional knapsack in Memory Optimization iterates capacity from high to low, and that direction is what makes it 0/1. When `best[c]` reads `best[c - w]`, that cell still holds the value from before the current item was considered. Iterating capacity from low to high means `best[c - w]` may already include the current item, so the item can be taken again, which is exactly the unbounded knapsack.
+
+Partition Equal Subset Sum (LeetCode 416) is 0/1 subset sum: an odd total is impossible, otherwise ask whether some subset reaches half the total. Target Sum (LeetCode 494) becomes 0/1 counting after a little algebra. If $P$ is the sum of the numbers given a plus sign and $S$ is the total, then $P - (S - P) = t$, so $P = (S + t)/2$ and you count subsets with that sum. Coin Change (LeetCode 322) and Perfect Squares (LeetCode 279) are unbounded minimization with $dp[c] = \min(dp[c], dp[c - x] + 1)$, where every cell except $dp[0] = 0$ starts at infinity.
+
+```python
+def can_partition(nums):                 # LeetCode 416, 0/1, Boolean
+    total = sum(nums)
+    if total % 2:
+        return False
+    target = total // 2
+    reach = [True] + [False] * target
+    for x in nums:
+        for c in range(target, x - 1, -1):    # downward: each number once
+            reach[c] = reach[c] or reach[c - x]
+    return reach[target]
+
+def coin_change(coins, amount):          # LeetCode 322, unbounded, minimum
+    INF = float("inf")
+    dp = [0] + [INF] * amount
+    for coin in coins:
+        for c in range(coin, amount + 1):     # upward: coin can be reused
+            dp[c] = min(dp[c], dp[c - coin] + 1)
+    return dp[amount] if dp[amount] != INF else -1
+```
+
+Both run in $O(n T)$ time and $O(T)$ space, where $n$ is the number of items and $T$ the target sum or amount. The most common mistake in Target Sum is forgetting to return 0 when $S + t$ is odd or $|t| > S$, since the subset target is then not a valid non-negative integer.
+
+### Counting Combinations Versus Permutations
+
+> **First step:** Decide whether [1, 2] and [2, 1] are the same way or two different ways. If they are the same, put the item loop outside; if they are different, put the target loop outside.
+
+Coin Change II (LeetCode 518) and Combination Sum IV (LeetCode 377) look identical: count the ways to reach a target using numbers that can be reused. The only difference is whether order matters, and that is controlled entirely by which loop is on the outside.
+
+With coins in the outer loop, each way is built by first deciding how many of the first coin to use, then how many of the second, and so on, so each multiset of coins is counted exactly once. With the amount in the outer loop, $dp[t]$ sums over every possible last element, so 1 + 2 and 2 + 1 are counted as different sequences. Climbing Stairs is the permutation version with steps of 1 and 2.
+
+```python
+def count_combinations(coins, amount):   # LeetCode 518, order ignored
+    dp = [1] + [0] * amount
+    for coin in coins:
+        for t in range(coin, amount + 1):
+            dp[t] += dp[t - coin]
+    return dp[amount]
+
+def count_permutations(nums, target):    # LeetCode 377, order matters
+    dp = [1] + [0] * target
+    for t in range(1, target + 1):
+        for x in nums:
+            if x <= t:
+                dp[t] += dp[t - x]
+    return dp[target]
+```
+
+Both take $O(k T)$ time for $k$ choices and target $T$, with $O(T)$ space. The most common mistake is setting $dp[0] = 0$, but the empty selection is the one way to make 0 and every other count is built from it.
+
+### Grid DP
+
+> **First step:** Decide which neighbors can move into a cell, usually the one above and the one to the left, and fill the grid in an order where they are already done, such as row by row. Set the first row, the first column, and any blocked cells explicitly before the main loop.
+
+In grid problems the state is a cell $(i, j)$ and the value is the number of ways, or the best cost, to reach it from the start. Unique Paths (LeetCode 62) sums the top and left neighbors, and Unique Paths II (LeetCode 63) forces blocked cells to 0. Minimum Path Sum (LeetCode 64) takes the smaller of the two neighbors plus the cell's own cost. Triangle (LeetCode 120) is easiest bottom-up: each entry becomes its value plus the smaller of the two entries below it, and the apex ends up holding the answer.
+
+Maximal Square (LeetCode 221) uses a different state: $dp[i][j]$ is the side of the largest all-ones square whose bottom-right corner is $(i, j)$. If the cell is 1, $dp[i][j] = 1 + \min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])$, and the answer is the square of the largest side seen anywhere.
+
+Each row depends only on the row above and on cells already filled in the current row, so a single array of width $n$ is enough. Before the update, `dp[j]` still holds the value from the row above.
+
+```python
+def unique_paths_with_obstacles(grid):   # LeetCode 63
+    cols = len(grid[0])
+    dp = [0] * cols
+    dp[0] = 1
+    for row in grid:
+        for j in range(cols):
+            if row[j] == 1:
+                dp[j] = 0
+            elif j > 0:
+                dp[j] += dp[j - 1]       # from above plus from the left
+    return dp[-1]
+```
+
+This takes $O(mn)$ time and $O(n)$ space. The most common mistake is filling the whole first row and first column with 1, which ignores obstacles, since every cell after a blocked cell in the first row or column must be 0.
+
+### Longest Increasing Subsequence
+
+> **First step:** Decide whether you need only the length or the subsequence itself, and whether "increasing" is strict. Strict uses `bisect_left` and non-decreasing uses `bisect_right`, and recovering the subsequence needs parent indices.
+
+Longest Increasing Subsequence (LeetCode 300) has a direct $O(n^2)$ DP. Let $dp[i]$ be the length of the longest increasing subsequence that ends at index $i$; then $dp[i] = 1 + \max dp[j]$ over all $j < i$ with $a_j < a_i$, or 1 if there is no such $j$, and the answer is the largest $dp[i]$.
+
+The faster patience method keeps an array `tails`, where `tails[k]` is the smallest possible last value of an increasing subsequence of length $k + 1$ seen so far. This array is always sorted, so each new value is placed with binary search. It either extends the longest subsequence or replaces the first tail that is greater than or equal to it, which makes that length easier to extend later. Russian Doll Envelopes (LeetCode 354) reduces to this after sorting by width ascending and, for equal widths, height descending.
+
+```python
+from bisect import bisect_left
+
+def length_of_lis(nums):                 # LeetCode 300
+    tails = []
+    for x in nums:
+        k = bisect_left(tails, x)        # first tail >= x
+        if k == len(tails):
+            tails.append(x)
+        else:
+            tails[k] = x
+    return len(tails)
+```
+
+The patience method runs in $O(n \log n)$ time and $O(n)$ space. The most common mistake is returning `tails` as the answer subsequence, which it generally is not; to rebuild a real one, record for each element the index that sat at position $k - 1$ when it was placed.
+
+### Two-String DP
+
+> **First step:** Define `dp[i][j]` on prefixes, the first `i` characters of one string and the first `j` of the other, in an (m+1) by (n+1) table whose row 0 and column 0 stand for the empty prefix. Fill those borders first, because most bugs in this family live there.
+
+LCS above is the template for a large family. The cell $dp[i][j]$ looks at the last characters of the two prefixes and at three neighbors: the diagonal (both characters used), the cell above (drop a character of the first string), and the cell to the left (drop a character of the second). Problems differ only in what those moves cost and what the borders hold. Delete Operation for Two Strings (LeetCode 583) is just $m + n$ minus twice the LCS length (LeetCode 1143).
+
+Edit Distance (LeetCode 72) takes the diagonal for free when the characters match, and otherwise 1 plus the minimum of replace (diagonal), delete (above), and insert (left), with borders $dp[i][0] = i$ and $dp[0][j] = j$. Distinct Subsequences (LeetCode 115) counts how many times $t$ appears as a subsequence of $s$: $dp[i][j] = dp[i-1][j]$, plus $dp[i-1][j-1]$ when the characters match, with $dp[i][0] = 1$. Interleaving String (LeetCode 97) stores whether the first $i$ characters of s1 and the first $j$ of s2 can form the first $i + j$ characters of s3.
+
+Wildcard Matching (LeetCode 44) and Regular Expression Matching (LeetCode 10) put the text on one axis and the pattern on the other. In 44, a cell whose pattern character is '*' is true if $dp[i][j-1]$ (the star matches nothing) or $dp[i-1][j]$ (the star absorbs one more character). In 10, a pair such as 'x*' is handled together: $dp[i][j] = dp[i][j-2]$ for zero copies, or $dp[i-1][j]$ when the text character matches x. Row 0 must be computed too, because patterns like "a*b*" match the empty string.
+
+```python
+def edit_distance(a, b):                 # LeetCode 72
+    m, n = len(a), len(b)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = i                     # delete all of a[:i]
+    for j in range(n + 1):
+        dp[0][j] = j                     # insert all of b[:j]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if a[i - 1] == b[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j - 1],   # replace
+                                   dp[i - 1][j],       # delete
+                                   dp[i][j - 1])       # insert
+    return dp[m][n]
+```
+
+This takes $O(mn)$ time and $O(mn)$ space, which drops to $O(n)$ by keeping two rows or one row plus the saved diagonal value. The most common mistake is mixing table indices with string indices, since $dp[i][j]$ compares a[i - 1] with b[j - 1].
+
+### Interval DP and Palindromes
+
+> **First step:** Define `dp[i][j]` on the range from `i` to `j` and decide what the last action inside that range is, such as matching the two ends or picking a split point. Fill ranges in order of increasing length, starting from ranges of length one or zero as the base case.
+
+Some problems are about a contiguous range whose answer depends on smaller ranges inside it. The table is indexed by both ends, and every range must be computed after the ranges it contains, which is easiest by looping over the length, or by running $i$ downward and $j$ upward from $i$.
+
+Longest Palindromic Subsequence (LeetCode 516) compares the two ends: if $s_i = s_j$ then $dp[i][j] = dp[i+1][j-1] + 2$, otherwise $dp[i][j] = \max(dp[i+1][j], dp[i][j-1])$. Minimum Insertion Steps to Make a String Palindrome (LeetCode 1312, listed below) is $n$ minus that length. Longest Palindromic Substring (LeetCode 5) can use a Boolean table where $pal[i][j]$ is true when the ends match and $pal[i+1][j-1]$ is true, but expanding around each of the $2n - 1$ centers gives the same $O(n^2)$ time with $O(1)$ space.
+
+Burst Balloons (LeetCode 312) is the split-point version. Pad the array with a 1 on each side and let $dp[i][j]$ be the most coins from bursting every balloon strictly between $i$ and $j$. The trick is to choose the balloon $k$ that bursts last in that range, because then its neighbors are exactly $i$ and $j$, and the two sides become independent subproblems.
+
+```python
+def max_coins(nums):                     # LeetCode 312
+    a = [1] + nums + [1]
+    n = len(a)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):           # length = j - i
+        for i in range(n - length):
+            j = i + length
+            for k in range(i + 1, j):    # k is the last balloon burst
+                dp[i][j] = max(dp[i][j],
+                               dp[i][k] + a[i] * a[k] * a[j] + dp[k][j])
+    return dp[0][n - 1]
+```
+
+With $O(n^2)$ ranges and $O(n)$ split points this takes $O(n^3)$ time and $O(n^2)$ space, which is fine for $n$ up to a few hundred. The most common mistake is choosing the balloon that bursts first, which leaves the neighbors of the remaining balloons unknown.
+
+### State Machine DP for Stock Problems
+
+> **First step:** List the states you can be in at the end of a day, such as holding a share, not holding, or cooling down, and draw the allowed moves between them with their gain or cost. Each move becomes one term of the transition, and every state is updated from yesterday's values.
+
+The Best Time to Buy and Sell Stock family looks like several problems but is one pattern. Each day you are in one of a few states, and buying or selling moves you between them. Keep the best profit for each state, update all of them from the previous day, and the answer is the best not-holding state on the last day.
+
+With unlimited transactions (LeetCode 122) the states are hold and free, with $hold = \max(hold, free - p)$ and $free = \max(free, hold + p)$. A transaction fee (LeetCode 714) subtracts the fee on the selling move. A cooldown (LeetCode 309) adds a third state for the day right after a sale, from which you may not buy. At most $k$ transactions (LeetCode 188, and LeetCode 123 with $k = 2$) gives a hold and a free state for each transaction count.
+
+```python
+def max_profit_cooldown(prices):         # LeetCode 309
+    hold, sold, rest = float("-inf"), 0, 0
+    for p in prices:
+        hold, sold, rest = (max(hold, rest - p),   # keep, or buy after a rest day
+                            hold + p,              # sell today
+                            max(rest, sold))       # idle, cooldown ends
+    return max(sold, rest)
+
+def max_profit_k(k, prices):             # LeetCode 188
+    buy = [float("-inf")] * (k + 1)
+    sell = [0] * (k + 1)
+    for p in prices:
+        for t in range(1, k + 1):
+            buy[t] = max(buy[t], sell[t - 1] - p)
+            sell[t] = max(sell[t], buy[t] + p)
+    return sell[k]
+```
+
+This is $O(n)$ time and $O(1)$ space for a fixed number of states, and $O(nk)$ time with $O(k)$ space for $k$ transactions. The most common mistake is updating one state in place and then reading its new value for another state of the same day, which in the cooldown problem lets you buy the day after selling; assign all states together or use temporaries.
+
+### DP on Trees
+
+> **First step:** Decide what each subtree should return to its parent, often a pair such as "best if this node is used" and "best if it is not". Use a post-order traversal so children are finished first, and keep any answer that cannot be passed upward in a separate variable.
+
+On a tree the subproblems are subtrees, and a post-order DFS already visits them in dependency order, so no explicit table is needed. Each call returns a small tuple of values for its subtree and the parent combines its children's tuples.
+
+House Robber III (LeetCode 337) returns two numbers per node: the best total if this node is robbed, in which case both children must be skipped, and the best total if it is not, in which case each child takes its better option. Binary Tree Maximum Path Sum (LeetCode 124) returns the best path that starts at the node and goes down, which may use at most one child, while a separate global value records paths that bend through the node and use both children. Diameter of Binary Tree (LeetCode 543) has the same shape.
+
+```python
+def rob_tree(root):                      # LeetCode 337
+    def dfs(node):                       # returns (robbed, skipped)
+        if node is None:
+            return 0, 0
+        l_rob, l_skip = dfs(node.left)
+        r_rob, r_skip = dfs(node.right)
+        robbed = node.val + l_skip + r_skip
+        skipped = max(l_rob, l_skip) + max(r_rob, r_skip)
+        return robbed, skipped
+    return max(dfs(root))
+
+def max_path_sum(root):                  # LeetCode 124
+    best = float("-inf")
+    def down(node):                      # best path from node going down
+        nonlocal best
+        if node is None:
+            return 0
+        left = max(down(node.left), 0)   # drop negative branches
+        right = max(down(node.right), 0)
+        best = max(best, node.val + left + right)
+        return node.val + max(left, right)
+    down(root)
+    return best
+```
+
+Both visit each node once, so they take $O(n)$ time and $O(h)$ stack space for tree height $h$. The most common mistake in LeetCode 124 is returning the bent path through both children to the parent, which stops being a valid path once it continues upward.
+
+### Bitmask DP
+
+> **First step:** Check that the number of items is small, about 20 or fewer, and decide what one bit means, usually "this item is already used". Then decide what the state needs besides the mask, such as the last item visited or how full the current group is.
+
+When the state must remember exactly which items have been used and $n$ is small, encode that set as an integer whose bit $i$ is 1 when item $i$ is used. There are $2^n$ masks, about a million for $n = 20$, and each transition adds one item whose bit is still 0, so a larger mask always comes after a smaller one.
+
+Partition to K Equal Sum Subsets (LeetCode 698) fills groups one at a time. The total of the used numbers modulo the group size tells you how full the current group is, so a mask only needs a reachable flag. Minimum Number of Work Sessions to Finish the Tasks (LeetCode 1986) stores a pair per mask, the fewest sessions and the smallest load of the last session, compared in that order. Find the Shortest Superstring (LeetCode 943) uses $dp[mask][last]$, the classic travelling salesman state.
+
+```python
+def can_partition_k(nums, k):            # LeetCode 698
+    total = sum(nums)
+    if total % k:
+        return False
+    side, n = total // k, len(nums)
+    reachable = [False] * (1 << n)
+    filled = [0] * (1 << n)              # load of the current group
+    reachable[0] = True
+    for mask in range(1 << n):
+        if not reachable[mask]:
+            continue
+        for i in range(n):
+            if mask & (1 << i) or filled[mask] + nums[i] > side:
+                continue                 # already used, or group overflows
+            nxt = mask | (1 << i)
+            reachable[nxt] = True
+            filled[nxt] = (filled[mask] + nums[i]) % side
+    return reachable[(1 << n) - 1]
+```
+
+This takes $O(2^n n)$ time and $O(2^n)$ space. The most common mistake is operator precedence in C++ and Java, where `mask & (1 << i) == 0` performs the comparison before the AND, so always write `(mask & (1 << i)) == 0`.
 
 ## Common Terms
 
@@ -540,3 +869,31 @@ This problem involves finding the minimum number of insertions needed to transfo
 
 - [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/cpp/minimum_insertions_for_palindrome)
 - [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/dynamic_programming/python/minimum_insertions_for_palindrome)
+
+## Reading the Problem Statement
+
+The wording and the constraints of a problem usually tell you which DP shape is intended before you write any code. Use this table to translate the statement into the decisions described above.
+
+| If the problem says | What it means for your code |
+| --- | --- |
+| "number of ways" or "how many" | Transitions add counts, the base case is one way to do nothing, and counts usually need modulo $10^9 + 7$ after every addition. |
+| "minimum cost" or "maximum profit" | Transitions take a min or a max, unreachable states start at positive or negative infinity, and an infinite final value means impossible, often returned as -1. |
+| "is it possible" or "can you" | A Boolean table combined with or, often a simpler version of the counting DP. |
+| "each item can be used at most once" | 0/1 knapsack, with the item loop outside and the capacity loop running downward. |
+| "unlimited supply" or "can be reused" | Unbounded knapsack, with the capacity loop running upward so the current item can feed itself. |
+| "combinations" or "order does not matter" | Items in the outer loop and the target in the inner loop, as in Coin Change II. |
+| "different orders count as different" | Target in the outer loop and items in the inner loop, as in Combination Sum IV. |
+| two strings or two arrays | An (m+1) by (n+1) table indexed by prefix lengths, with row 0 and column 0 for the empty prefix. |
+| "subsequence" | Elements may be skipped, so a mismatch falls back to dropping one side and taking the better or summed neighbor. |
+| "substring" or "subarray" | Elements must be contiguous, so a mismatch resets the state to 0 and the answer is the best over all end positions. |
+| "contiguous" with "maximum sum" or "maximum product" | Kadane, with a best-ending-here value and a separate global best, plus a running minimum for products. |
+| "palindrome" | Interval states on the range from i to j filled by increasing length, or expansion around centers for substrings. |
+| "adjacent elements cannot both be chosen" | The House Robber shape, take or skip with a look back of two positions. |
+| "cooldown", "fee", or "at most k transactions" | A state machine with one variable per state, each updated from the previous day's values. |
+| "burst", "merge", or neighbors join after a removal | Interval DP that picks the last operation inside each range. |
+| a binary tree with "maximum" or "rob" | Post-order DFS that returns a small tuple of states per subtree. |
+| n up to $10^5$ or more | Only $O(n)$ or $O(n \log n)$ total work, so one-dimensional states with constant or logarithmic transitions. |
+| n up to a few thousand | $O(n^2)$ is fine, such as the simple LIS or a two-string table. |
+| n up to about 500 | $O(n^3)$ fits, which usually signals interval DP with a split point. |
+| n up to about 20 | Bitmask DP over the $2^n$ subsets is intended. |
+| "return the path" or "list the actual items" | Store the choice made at each state as a parent pointer, or walk the filled table backward from the answer cell. |

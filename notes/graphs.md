@@ -400,6 +400,8 @@ A useful “do” before you choose BFS vs DFS: decide what “close” means in
 
 Breadth-First Search (BFS) is a graph traversal algorithm that explores a graph level by level from a specified start vertex. It first visits all vertices at distance 1 from the start, then all vertices at distance 2, and so on. This makes BFS the natural choice whenever “closest in number of edges” matters.
 
+> **First step:** Build an adjacency list from the edge list, adding both directions if the graph is undirected. Decide whether you need only reachability, the distance in edges (keep a `dist` map), or the actual path (keep a `parent` map), and mark the start as visited before the loop begins.
+
 To efficiently keep track of the traversal, BFS employs two primary data structures:
 
 - A queue (often named `queue` or `unexplored`) that stores vertices pending exploration in first-in, first-out (FIFO) order.
@@ -520,6 +522,8 @@ A practical “do” for BFS code: use a real queue (like `collections.deque` in
 ### Depth-First Search (DFS)
 
 Depth-First Search (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. Starting from a source vertex, it dives down one neighbor, then that neighbor’s neighbor, and so on, only backing up when it runs out of new vertices to visit.
+
+> **First step:** Build the adjacency list and decide what the DFS has to report: reachability, a component label, a cycle, or a post-order. If the graph can be a long chain (around $10^4$ vertices or more), plan for the iterative form or a raised recursion limit before you start.
 
 To track the traversal efficiently, DFS typically uses:
 
@@ -715,7 +719,204 @@ Implementation tips:
 - If neighbor order matters (e.g., lexicographic traversal), control push order (push in reverse for stacks) or sort adjacency lists.
 - For sparse graphs, adjacency lists are preferred over adjacency matrices for time/space efficiency.
 
+### Common BFS and DFS Patterns
+
+Most interview graph problems are a plain BFS or DFS with one twist. The twist is usually in what counts as a node, where the search starts, or what extra information travels with each node. The patterns below are the twists that come up again and again.
+
+> **First step:** Before writing the loop, write down in one line what a node is (a vertex, a grid cell, a word, a `(vertex, mask)` pair), how its neighbors are produced, and which nodes go into the queue or stack at the start.
+
+Grids are the most common disguise. Each cell is a node with 4 or 8 neighbors, and the only extra work is the bounds check. Number of islands, flood fill, and shortest paths on a maze are worked through in the "Grids as Graphs" part of the [matrices notes](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/matrices.md), and every pattern below applies to grids unchanged.
+
+Multi-source BFS by levels. When the question asks how many minutes something takes to spread, or how far each cell is from the nearest source, put every source in the queue before the loop starts. Then process one level at a time by reading `len(queue)` at the start of each round. In 994 Rotting Oranges every rotten orange is a source and each round is one minute. In 542 01 Matrix every zero cell is a source and the BFS distance is the answer for every cell.
+
+```
+queue = deque(rotten_cells)              # all sources start together
+minutes = 0
+while queue and fresh > 0:
+    for _ in range(len(queue)):          # exactly one level per round
+        r, c = queue.popleft()
+        for nr, nc in four_neighbors(r, c):
+            if in_bounds(nr, nc) and grid[nr][nc] == FRESH:
+                grid[nr][nc] = ROTTEN
+                fresh -= 1
+                queue.append((nr, nc))
+    minutes += 1
+return minutes if fresh == 0 else -1
+```
+
+Search backwards from the targets. If many starting points share a small set of goals, reverse the question and start from the goals. In 417 Pacific Atlantic Water Flow, searching from every cell is quadratic, so instead run one search from all Pacific border cells and one from all Atlantic border cells, moving only to neighbors of equal or greater height, and return the cells reached by both. In 130 Surrounded Regions, search from every `O` on the border and mark what you reach; every unmarked `O` is surrounded and gets flipped.
+
+BFS on an implicit graph. Sometimes the graph is never given and you generate neighbors on the fly. In 127 Word Ladder a node is a word and its neighbors are words in the dictionary that differ in one letter; try all 26 letters at each position and look them up in a set. The answer counts words, so the start word has distance 1. In 752 Open the Lock a node is a 4-digit string with 8 neighbors (each wheel up or down). Add the dead ends to `visited` before starting, and return -1 at once if `"0000"` is itself a dead end.
+
+BFS over states. When the same node can be visited again with different progress, the node alone is not enough. In 847 Shortest Path Visiting All Nodes the state is `(node, mask)`, where the mask records visited nodes. Start from every `(i, 1 << i)` at once and stop when the mask is full. There are $n \cdot 2^n$ states, which is fine for $n \le 12$. The same idea with a different state appears in 1293 Shortest Path in a Grid with Obstacles Elimination, where the state is `(row, col, removals left)`.
+
+Copying a graph. In 133 Clone Graph keep a map from each original node to its copy. Create the copy and store it in the map before visiting the neighbors, so a cycle finds the existing copy instead of recursing forever.
+
+```
+def clone(node, copies):
+    if node in copies:
+        return copies[node]
+    copy = Node(node.val)
+    copies[node] = copy                  # register before recursing
+    for nb in node.neighbors:
+        copy.neighbors.append(clone(nb, copies))
+    return copy
+```
+
+Peeling leaves. In 310 Minimum Height Trees the best roots are the centers of the tree. Put every leaf (degree 1) in a queue, remove one layer of leaves at a time while lowering their neighbors' degrees, and stop when at most two vertices remain. Handle $n = 1$ separately, where the answer is `[0]`.
+
+Three-color DFS. Give each vertex a state: 0 unvisited, 1 on the current DFS path, 2 finished. Reaching a state-1 vertex means a directed cycle, which is how 207 Course Schedule can be solved with DFS. In 802 Find Eventual Safe States a node is safe exactly when every path from it avoids cycles, so a node is safe when all of its neighbors are safe; nodes left in state 1 are unsafe for good.
+
+```
+def is_safe(u):                          # state: 0 new, 1 on path, 2 safe
+    if state[u] != 0:
+        return state[u] == 2
+    state[u] = 1
+    for v in G[u]:
+        if not is_safe(v):
+            return False                 # u stays 1, so it stays unsafe
+    state[u] = 2
+    return True
+```
+
+0-1 BFS. When every edge costs 0 or 1, a deque replaces Dijkstra's heap. Relax edges as in Dijkstra, push the neighbor to the front for a 0-cost edge and to the back for a 1-cost edge. This runs in $O(V+E)$ and fits problems such as 1368 Minimum Cost to Make at Least One Valid Path in a Grid and 2290 Minimum Obstacle Removal to Reach Corner.
+
+```
+dist = {s: 0}
+dq = deque([s])
+while dq:
+    u = dq.popleft()
+    for v, w in G[u]:                    # w is 0 or 1
+        if dist[u] + w < dist.get(v, INF):
+            dist[v] = dist[u] + w
+            if w == 0:
+                dq.appendleft(v)
+            else:
+                dq.append(v)
+```
+
+Validating a tree. An undirected graph on $n$ vertices is a tree exactly when it has $n-1$ edges and is connected. For 261 Graph Valid Tree, check the edge count first, then run one BFS, DFS, or union-find pass and confirm that all $n$ vertices were reached.
+
+Building the edges yourself. In 269 Alien Dictionary the graph is hidden in the word order. Compare each pair of adjacent words, and the first position where they differ gives one edge from the earlier letter to the later one; ignore the rest of the pair. If there is no differing position and the first word is longer (as in `"abc"` before `"ab"`), the input is invalid. Every letter that appears anywhere must be a vertex, even with no edges, and a topological order shorter than the number of letters means a cycle.
+
+Weighted relations. In 399 Evaluate Division, the equation $a / b = k$ becomes an edge $a \to b$ with weight $k$ and an edge $b \to a$ with weight $1/k$. A query $x / y$ is the product of the weights along any path from $x$ to $y$, found with BFS or DFS. If either variable never appeared the answer is -1.0, and $x / x$ is 1.0 only if $x$ appeared.
+
+All of these keep the $O(V+E)$ cost of the underlying search, measured on whatever graph the nodes and edges really are (for example $n \cdot 2^n$ states in 847). The most common mistake in the plain BFS patterns is marking a node visited when it is popped instead of when it is pushed, which lets the same node enter the queue many times and can blow up both time and memory (0-1 BFS is the exception, since it relaxes distances like Dijkstra).
+
 Once you can represent a problem as a graph and you’re fluent in storing it (matrix/list) and traversing it (BFS/DFS), you’ve unlocked the foundation for almost every other graph technique, shortest paths, minimum spanning trees, flows, matchings, connectivity analysis, and more. Graphs are the doorway; traversal is the first step through it.
+
+## Graph Coloring
+
+Coloring gives each vertex a color so that the two ends of every edge differ. In programming problems it rarely says "color". It says "split the people into two groups so that no two who dislike each other are together" or "give each garden a flower type different from its neighbors".
+
+> **First step:** Build an undirected adjacency list (a dislike or conflict goes in both directions) and a color array filled with -1 for uncolored. Plan an outer loop over every vertex, because nothing promises the graph is connected.
+
+Two colors is the bipartite check. A graph can be 2-colored exactly when it has no odd cycle. Start a BFS or DFS at an uncolored vertex with color 0, give each newly discovered neighbor the opposite color, and fail as soon as an edge joins two vertices of the same color. The trap is that the graph may be disconnected, so one search from vertex 0 can miss a whole component with an odd cycle. 785 Is Graph Bipartite gives the adjacency list directly, and 886 Possible Bipartition gives dislike pairs on labels 1 to n.
+
+```
+def is_bipartite(n, G):
+    color = [-1] * n
+    for s in range(n):                   # start from every uncolored vertex
+        if color[s] != -1:
+            continue
+        color[s] = 0
+        queue = deque([s])
+        while queue:
+            u = queue.popleft()
+            for v in G[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    return False         # odd cycle
+    return True
+```
+
+With more colors, a simple greedy rule often suffices. Visit the vertices in any order and give each the smallest color not used by its already-colored neighbors. A vertex has at most $\Delta$ neighbors, where $\Delta$ is the maximum degree, so among $\Delta + 1$ colors one is always free. That is why 1042 Flower Planting With No Adjacent needs no search at all: every garden has at most 3 paths, so 4 flower types always work and greedy never gets stuck.
+
+Greedy does not find the minimum number of colors in general, and deciding whether a graph can be colored with 3 colors is NP-complete. So interview coloring problems always come with special structure: exactly two colors, a degree bound like in 1042, or a graph small enough for backtracking. The backtracking version is the "K-Colorable Configurations" exercise in the [backtracking notes](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/backtracking.md).
+
+Both the bipartite check and greedy coloring run in $O(V+E)$ time with $O(V)$ extra space. The most common mistake is searching only from vertex 0 and reporting "bipartite" while another component still contains an odd cycle.
+
+## Bridges, Articulation Points, and Strongly Connected Components
+
+A bridge is an edge whose removal disconnects the graph, and an articulation point is a vertex whose removal does the same. Problems phrase this as "critical connections" or "which link, if cut, splits the network". Removing each edge and running a fresh BFS costs $O(E(V+E))$, which is far too slow for 1192 Critical Connections in a Network with $n$ up to $10^5$. One DFS with low-link values finds all of them.
+
+During the DFS, `tin[u]` is the time $u$ was discovered. `low[u]` is the smallest `tin` reachable from $u$'s DFS subtree using tree edges downward and at most one back edge. If a child $v$ has `low[v] > tin[u]`, nothing below $v$ can climb back to $u$ or above, so the edge $u - v$ is a bridge. For articulation points the test is `low[v] >= tin[u]` for some child $v$, except that the DFS root is an articulation point only when it has two or more DFS children.
+
+> **First step:** Build an undirected adjacency list, set up `tin` and `low` arrays plus a timer, and decide how to skip the edge back to the parent: by parent vertex for simple graphs, by edge id when parallel edges may exist.
+
+```
+def bridges(n, G):
+    tin = [-1] * n
+    low = [0] * n
+    timer = 0
+    result = []
+
+    def dfs(u, parent):
+        nonlocal timer
+        tin[u] = low[u] = timer
+        timer += 1
+        for v in G[u]:
+            if v == parent:
+                continue                 # skip the edge we arrived by
+            if tin[v] == -1:             # tree edge
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > tin[u]:
+                    result.append((u, v))
+            else:                        # back edge
+                low[u] = min(low[u], tin[v])
+
+    for s in range(n):
+        if tin[s] == -1:
+            dfs(s, -1)
+    return result
+```
+
+This runs in $O(V+E)$ time and $O(V)$ space, but the recursion can be $V$ deep, so in Python an input with $10^5$ vertices needs an iterative version or a raised recursion limit. The most common mistake is mixing up the two tests: bridges use the strict `low[v] > tin[u]`, articulation points use `low[v] >= tin[u]`.
+
+In a directed graph the matching idea is the strongly connected component (SCC): a maximal set of vertices where each one can reach every other. Kosaraju's algorithm runs one DFS to record finishing order, reverses every edge, and then runs DFS on the reversed graph in decreasing finishing time; each tree of that second pass is one SCC. Tarjan's algorithm does it in a single DFS with the same `low` values plus a stack, closing a component when `low[u] == tin[u]`, and it only lowers `low[u]` through vertices still on the stack. Both are $O(V+E)$. Collapsing each SCC to a single vertex always gives a DAG, so a problem with cycles can often be reduced to topological sort or DP on that smaller graph.
+
+## Union-Find (Disjoint Set Union)
+
+Union-Find keeps elements split into groups and answers two questions quickly: which group is $x$ in (`find`), and merge the groups of $x$ and $y$ (`union`). Each group is a tree of parent pointers, and the root is the group's representative. Recognize it when edges or "these two belong together" facts arrive one at a time, and you only need to know whether two things are connected or how many groups exist, never the actual path. It cannot remove edges.
+
+Two tricks keep the trees flat. Path compression points nodes closer to the root while `find` walks up, and union by size (or rank) always hangs the smaller tree under the larger root. Kruskal's algorithm below uses this same structure.
+
+> **First step:** Map every element to an integer id from 0 to n-1, using a dictionary when the elements are strings such as emails. Then create `parent[i] = i`, `size[i] = 1`, and a component counter equal to n.
+
+```
+parent = list(range(n))
+size = [1] * n
+components = n
+
+def find(x):
+    while parent[x] != x:
+        parent[x] = parent[parent[x]]    # path halving, a form of compression
+        x = parent[x]
+    return x
+
+def union(a, b):
+    ra, rb = find(a), find(b)
+    if ra == rb:
+        return False                     # already connected: edge closes a cycle
+    if size[ra] < size[rb]:
+        ra, rb = rb, ra
+    parent[rb] = ra                      # smaller tree under larger root
+    size[ra] += size[rb]
+    components -= 1                      # needs nonlocal or global in real code
+    return True
+```
+
+The typical uses follow directly from `union` returning `False` and from the counter:
+
+- Counting components, as in 323 Number of Connected Components in an Undirected Graph and 547 Number of Provinces: union every edge and read `components`.
+- Finding the redundant edge in 684 Redundant Connection: process edges in input order, and the first one whose `union` returns `False` closes the only cycle, which makes it the last cycle edge in the input as the problem requires.
+- 1319 Number of Operations to Make Network Connected: if there are fewer than $n-1$ cables the answer is -1; otherwise every extra cable can be moved, so the answer is `components - 1`.
+- 721 Accounts Merge: give each email an id the first time you see it, union every email of an account with that account's first email, then group emails by `find(id)`, sort each group, and put the owner's name in front.
+
+With both path compression and union by size, a sequence of operations costs $O(\alpha(n))$ amortized each, where $\alpha$ is the inverse Ackermann function and is at most 4 for any practical $n$; space is $O(n)$. The most common mistake is comparing `parent[a] == parent[b]` instead of `find(a) == find(b)`, or linking `a` under `b` directly instead of linking their roots.
 
 ## Shortest paths
 
@@ -724,6 +925,8 @@ A common task when dealing with weighted graphs is to find the shortest route be
 ### Dijkstra’s Algorithm
 
 Dijkstra’s algorithm computes shortest paths from a specified start vertex in a graph with non-negative edge weights. It grows a “settled” region outward from the start, always choosing the unsettled vertex with the smallest known distance and relaxing its outgoing edges to improve neighbors’ distances.
+
+> **First step:** Confirm that every edge weight is non-negative, build a weighted adjacency list of `(neighbor, weight)` pairs, and fill `dist` with infinity except `dist[source] = 0`. Decide up front whether you can stop as soon as the target is popped.
 
 To efficiently keep track of the traversal, Dijkstra’s algorithm employs two primary data structures:
 
@@ -868,9 +1071,43 @@ Implementation:
 
 Implementation tip: If your PQ has no decrease-key, push duplicates on improvement and, when popping a vertex, skip it if it’s already finalized or if the popped key doesn’t match `dist[u]`. This “lazy” approach is simple and fast in practice.
 
+### Dijkstra Variants: Minimax Paths and Maximum Probability
+
+Dijkstra is not tied to adding weights. It works whenever extending a path can never make its cost better, because then the first time a node is popped its cost is final. Two common variants use this. The first minimizes the largest edge on the path instead of the sum. The second maximizes a product of probabilities, each between 0 and 1.
+
+> **First step:** Write down how the path cost changes when you add one edge, for example `max(cost, w)` or `cost * p`, and check that adding an edge can never improve it. Then reuse Dijkstra with that combine step and the right heap direction.
+
+In 1631 Path With Minimum Effort the effort of a path is the largest height difference between neighboring cells on it. In 778 Swim in Rising Water the time needed is the largest elevation on the path, including the starting cell. Both are minimax problems: the relaxation becomes `max(d, w)` instead of `d + w`.
+
+```
+def minimax_path(G, s, t, start_cost=0):     # 778: start_cost = grid[0][0]
+    best = {s: start_cost}
+    heap = [(start_cost, s)]
+    while heap:
+        d, u = heappop(heap)
+        if u == t:
+            return d
+        if d > best[u]:
+            continue                         # stale entry
+        for v, w in G[u]:
+            nd = max(d, w)                   # bottleneck instead of sum
+            if nd < best.get(v, INF):
+                best[v] = nd
+                heappush(heap, (nd, v))
+    return INF
+```
+
+There is a second way to solve minimax problems. "Can I reach the target using only edges of weight at most $L$?" gets easier as $L$ grows, so binary search on $L$ and answer each question with a BFS or DFS that ignores heavier edges. Adding edges in increasing weight order with union-find until source and target join also works, which is Kruskal's idea.
+
+For 1514 Path with Maximum Probability, multiplying by a probability $p \le 1$ never increases the product, so Dijkstra works with a max-heap (push the negated probability with Python's `heapq`). Start with probability 1 at the source and 0 everywhere else, and relax with `prob[u] * p > prob[v]`. This is the same as ordinary Dijkstra on weights $-\log p$, which are non-negative.
+
+Both variants keep Dijkstra's $O((V+E)\log V)$ time and $O(V+E)$ space, and the binary-search version costs $O((V+E)\log W)$ for a weight range $W$. The most common mistake in 1514 is using a min-heap, which pops the worst probability first, and in 1631 it is summing the differences instead of taking their maximum.
+
 ### Bellman–Ford Algorithm
 
 Bellman–Ford computes shortest paths from a start vertex in graphs that may have negative edge weights (but no negative cycles reachable from the start). It works by repeatedly relaxing every edge; each full pass can reduce some distances until they stabilize. A final check detects negative cycles: if an edge can still be relaxed after $(V-1)$ passes, a reachable negative cycle exists.
+
+> **First step:** Put all edges in one flat list of `(u, v, w)` triples, adding both directions for undirected edges (an undirected negative edge is already a negative cycle). Initialize `dist` with infinity except the source, and decide whether you need negative-cycle detection or a limit on the number of edges.
 
 To efficiently keep track of the computation, Bellman–Ford employs two primary data structures:
 
@@ -1002,6 +1239,28 @@ Implementation:
 
 Implementation tip: For all-pairs on sparse graphs with possible negative edges, use Johnson’s algorithm: run Bellman–Ford once from a super-source to reweight edges (no negatives), then run Dijkstra from each vertex.
 
+### Shortest Paths With at Most k Edges
+
+The passes of Bellman–Ford have an exact meaning if every pass reads only the distances left by the previous pass. After pass $i$, `dist[v]` is then the cheapest cost of reaching $v$ with at most $i$ edges. The in-place version above can chain several edges inside a single pass, because it reads values written earlier in the same pass. That is harmless when you only want the final shortest paths, but it breaks any limit on the number of edges.
+
+787 Cheapest Flights Within K Stops is this situation. $k$ stops means $k+1$ flights, so run exactly $k+1$ passes, and in each pass relax from a copy of `dist` taken at the start of the pass.
+
+> **First step:** Translate the limit into edges (k stops means k + 1 edges), then make sure each pass reads from a frozen copy of `dist` and writes into the live array.
+
+```
+def cheapest_within_k_stops(n, flights, src, dst, k):
+    dist = [INF] * n
+    dist[src] = 0
+    for _ in range(k + 1):                   # k stops = k + 1 edges
+        prev = dist[:]                       # freeze the last pass
+        for u, v, w in flights:
+            if prev[u] != INF and prev[u] + w < dist[v]:
+                dist[v] = prev[u] + w
+    return dist[dst] if dist[dst] != INF else -1
+```
+
+This takes $O(k(V+E))$ time, counting the copy in each pass, and $O(V)$ space. The most common mistake is relaxing in place without the copy, which lets one pass use several flights and silently exceeds the stop limit. Plain Dijkstra on the node alone is also wrong here, because a cheap route with too many stops can finalize a node before a pricier route with fewer stops arrives; Dijkstra over `(node, stops used)` states does work.
+
 ### A* (A-Star) Algorithm
 
 A* is a best-first search that finds a least-cost path from a start to a goal by minimizing
@@ -1014,6 +1273,8 @@ where:
 
 - $g(n)$ = cost from start to $n$ (so far),
 - $h(n)$ = heuristic estimate of the remaining cost from $n$ to the goal.
+
+> **First step:** Check that edge costs are non-negative and pick a heuristic that never overestimates the remaining cost, such as Manhattan distance on a 4-direction grid with unit steps. If no such heuristic is available, plain Dijkstra is the safer choice.
 
 Assume a finite graph, non-negative edge costs, and $h(goal)=0$. With a consistent heuristic, A* is optimal without reopening expanded nodes. With an admissible but inconsistent heuristic, reopen a node whenever a better path reaches it. These guarantees apply when the goal is removed from the queue with a current entry, not when it is first discovered. [Berkeley CS 188 notes](https://inst.eecs.berkeley.edu/~cs188/fa22/assets/notes/cs188-fa22-note02.pdf).
 
@@ -1197,6 +1458,39 @@ Implementation:
 
 Implementation tip: If your PQ lacks decrease-key, push duplicates with improved keys and ignore stale entries when popped (check if popped `g` matches current `g[u]`). This is simple and fast in practice.
 
+### Floyd–Warshall Algorithm
+
+Floyd–Warshall computes the shortest distance between every pair of vertices at once. It keeps an $n \times n$ matrix and, for each vertex $k$ in turn, asks whether going through $k$ shortens the path from $i$ to $j$:
+
+$$
+dist[i][j] = \min(dist[i][j],\ dist[i][k] + dist[k][j])
+$$
+
+After the outer loop has handled $k$, `dist[i][j]` is the shortest path whose intermediate vertices all come from the first $k+1$ vertices. That invariant only holds if $k$ is the outermost loop. Negative edges are fine, and a negative cycle shows up as `dist[i][i] < 0` at the end.
+
+Reach for it when the problem asks about many pairs and $n$ is small. With $n = 400$ the triple loop does $6.4 \times 10^7$ steps, which is fine in compiled languages and about the practical limit in Python. In 1334 Find the City With the Smallest Number of Neighbors at a Threshold Distance, $n \le 100$: run Floyd–Warshall, count for each city how many others are within the threshold, and return the city with the smallest count, breaking ties by the larger index. The boolean version, with `or` and `and` in place of `min` and `+`, answers reachability queries such as 1462 Course Schedule IV.
+
+> **First step:** Build an $n \times n$ matrix with 0 on the diagonal, the edge weight for each edge (both directions if undirected, keeping the smaller weight for parallel edges), and infinity elsewhere. Check that $n^3$ fits the time limit before going further.
+
+```
+def floyd_warshall(n, edges):
+    dist = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = min(dist[u][v], w)
+    for k in range(n):                       # intermediate vertex, outermost
+        for i in range(n):
+            if dist[i][k] == INF:
+                continue
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    return dist
+```
+
+Time is $O(V^3)$ and space is $O(V^2)$. The most common mistake is putting `k` in an inner loop, which still runs without errors but returns wrong distances.
+
 ## Minimum Spanning Trees
 
 Suppose we have a graph that represents a network of houses. Weights represent the distances between vertices, which each represent a single house. All houses must have water, electricity, and internet, but we want the cost of installation to be as low as possible. We need to identify a subgraph of our graph with the following properties:
@@ -1210,6 +1504,8 @@ Such a subgraph is called a minimum spanning tree (MST). It minimizes total edge
 ### Prim’s Algorithm
 
 Prim’s algorithm builds a minimum spanning tree (MST) of a weighted, undirected graph by growing a tree from a start vertex. At each step it adds the cheapest edge that connects a vertex inside the tree to a vertex outside the tree.
+
+> **First step:** Confirm the graph is undirected, build a weighted adjacency list with both directions, and decide what a disconnected input should return. For a complete graph given as points, as in 1584 Min Cost to Connect All Points, skip the adjacency list and use the $O(V^2)$ array version that computes distances on the fly.
 
 To efficiently keep track of the construction, Prim’s algorithm employs two primary data structures:
 
@@ -1353,6 +1649,8 @@ For dense graphs ($E \approx V^2$), skip heaps: store `key` in an array and, at 
 
 Kruskal’s algorithm builds a minimum spanning tree (MST) for a weighted, undirected graph by sorting all edges by weight (lightest first) and repeatedly adding the next lightest edge that does not create a cycle. It grows the MST as a forest of trees that gradually merges until all vertices are connected.
 
+> **First step:** Collect the edges as `(weight, u, v)` triples and sort them, then set up the structure from the Union-Find (Disjoint Set Union) section above; the helpers below are the same idea. Count accepted edges so you can stop at $V-1$ and notice when the graph is disconnected.
+
 To efficiently keep track of the construction, Kruskal’s algorithm employs two primary data structures:
 
 - A sorted edge list arranged in ascending order of weights ensures that Kruskal’s algorithm always considers the lightest available edge next; without this ordering, the method cannot guarantee that the resulting spanning tree has minimum total weight.
@@ -1402,7 +1700,8 @@ Kruskal(V, E):
 
     return mst_edges, total
 
-# Union-Find helpers (path compression + union by rank):
+# Union-Find helpers (path compression + union by rank),
+# see the Union-Find (Disjoint Set Union) section for details:
 find(x):
     if parent[x] != x:
         parent[x] = find(parent[x])
@@ -1498,6 +1797,8 @@ On huge graphs that stream from disk, you can external-sort edges by weight, the
 
 Topological sort orders the vertices of a directed acyclic graph (DAG) so that every directed edge $u \rightarrow v$ goes from left to right in the order (i.e., $u$ appears before $v$). It’s the canonical tool for scheduling tasks with dependencies.
 
+> **First step:** Decide the edge direction from the wording (in 207 Course Schedule, the pair `[a, b]` means take `b` before `a`, so the edge is `b → a`). Build the adjacency list and the indegree array in the same pass, and include every vertex, even ones with no edges.
+
 To efficiently keep track of the process (Kahn’s algorithm), we use:
 
 - A queue (or min-heap if you want lexicographically smallest order) holding all vertices with indegree = 0 (no unmet prerequisites).
@@ -1508,7 +1809,7 @@ Useful additions in practice:
 
 - Maintaining a visited count or tracking the length of the output order lets you detect cycles, since producing fewer than $V$ vertices indicates that some could not be placed due to a cycle; without this check, algorithms like Kahn’s may silently return incomplete results on cyclic task graphs.
 - Using a min-heap instead of a simple FIFO queue ensures that, among available candidates, the smallest-indexed vertex is always chosen, yielding the lexicographically smallest valid topological order; without this modification, the output order depends on arbitrary queueing, which may vary between runs.
-- A DFS-based alternative computes a valid topological order by recording vertices in reverse postorder, also in $O(V+E)$ time, while detecting cycles via a three-color marking or recursion stack; without DFS, cycle detection must be handled separately in Kahn’s algorithm.
+- A DFS-based alternative computes a valid topological order by recording vertices in reverse postorder, also in $O(V+E)$ time, while detecting cycles via a three-color marking or recursion stack. Kahn’s algorithm detects cycles differently, through the output count described above.
 
 Algorithm Steps (Kahn’s algorithm)
 
@@ -1628,3 +1929,63 @@ Implementation tips:
 - Use a deque for FIFO behavior; use a min-heap to get the lexicographically smallest topological order.
 - When the graph is large and sparse, store adjacency as lists and compute indegrees in one pass for $O(V+E)$.
 - DFS variant (brief): color states `0=unseen,1=visiting,2=done`; on exploring `u`, mark `1`; DFS to neighbors; if you see `1` again, there’s a cycle; on finish, push `u` to a stack. Reverse the stack for the order.
+
+## Eulerian Paths with Hierholzer’s Algorithm
+
+An Eulerian path uses every edge exactly once. Problems hide it behind words like "use all the tickets", "each domino once", or "a string containing every code". The existence conditions are in the terminology list at the top: all edges must lie in one connected piece, and an undirected graph needs zero or two odd-degree vertices. In a directed graph every vertex must have equal indegree and outdegree, except that one vertex may have one extra outgoing edge (the start) and one may have one extra incoming edge (the end).
+
+Hierholzer’s algorithm builds the path in linear time. Walk from the start along unused edges, deleting each edge as you use it. When you reach a vertex with no unused edges left, append it to the result and step back. The result comes out in reverse, so reverse it at the end. When the conditions hold, the first vertex where the walk gets stuck must be the end of the whole path, which is why the post-order append is correct. Any cycle the walk skipped is spliced in automatically when the recursion steps back to a vertex that still has unused edges.
+
+> **First step:** Check the degree conditions and choose the start: the vertex with one extra outgoing edge if there is one, otherwise any vertex that has edges. Store each adjacency list so used edges can be removed cheaply, for example sorted in reverse so `pop()` returns the smallest neighbor.
+
+332 Reconstruct Itinerary asks for the lexicographically smallest itinerary from `"JFK"` that uses every ticket. Always taking the smallest airport first is not enough on its own, because it can walk into a dead end too early. The post-order append fixes this, since the dead end is appended first and therefore ends up last in the reversed route.
+
+```
+def find_itinerary(tickets):
+    G = defaultdict(list)
+    for a, b in sorted(tickets, reverse=True):
+        G[a].append(b)                       # reverse order: pop() gives smallest
+    route = []
+
+    def visit(u):
+        while G[u]:
+            visit(G[u].pop())                # each edge is used once
+        route.append(u)                      # post-order: append when stuck
+
+    visit("JFK")
+    return route[::-1]
+```
+
+In an undirected graph each edge sits in two adjacency lists, so give edges ids and keep a `used` array instead of popping from one side only. The same algorithm solves 753 Cracking the Safe (a de Bruijn sequence) and 2097 Valid Arrangement of Pairs. The repository’s [Python implementation](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/graphs/python/eulerian_path) uses Fleury’s algorithm instead, which avoids bridges at every step and is easier to follow but costs about $O(E \cdot (V+E))$ with simple bridge checks.
+
+Hierholzer runs in $O(V+E)$ time, plus $O(E \log E)$ when neighbors must be sorted, and $O(V+E)$ space; the recursion can be $E$ deep, so large inputs need an explicit stack. The most common mistake is appending a vertex when it is first visited instead of when it gets stuck, which gives a wrong route whenever the walk hits a dead end early.
+
+## Reading the Problem Statement
+
+Graph problems are usually decided by a few words in the statement and by the constraints. This table maps the common phrases to what they mean for your code.
+
+| If the problem says | What it means for your code |
+| --- | --- |
+| "undirected", "bidirectional", "two-way", or "friends" | Add every edge in both directions when building the adjacency list. |
+| Nothing promises the graph is connected | Loop over all vertices and start a search from each unvisited one; the number of starts is the number of components. |
+| "tree", or n nodes with n - 1 edges | Connected and acyclic, so every path is unique; to validate a tree, check for exactly n - 1 edges and one component. |
+| "prerequisites", "order", "depends on", "must come before" | A directed acyclic graph; use Kahn's algorithm, and fewer than n vertices in the output means a cycle. |
+| "group", "merge", "same set", "redundant edge" | Union-Find; the first union whose two ends are already joined is the redundant edge. |
+| "no two adjacent the same", or "split into two groups" | Bipartite 2-coloring with BFS or DFS, started from every uncolored vertex. |
+| "minimum steps", "moves", or "minutes" on an unweighted graph | BFS; with several starting points, put all of them in the queue together at distance 0. |
+| Every move costs 0 or 1 | 0-1 BFS with a deque, pushing 0-cost moves to the front. |
+| Non-negative weights, "cheapest", "fastest" | Dijkstra with a min-heap and a check that skips stale entries. |
+| Negative weights, or "at most k stops" | Bellman–Ford; for k stops run k + 1 passes, each reading from a copy of dist. |
+| "minimize the maximum", "the largest step on the path" | Minimax Dijkstra with max instead of plus, or binary search on the answer plus BFS. |
+| "maximum probability", or a product of factors at most 1 | Dijkstra with a max-heap on the product. |
+| All pairs, or many pair queries, with n up to a few hundred | Floyd–Warshall with k as the outermost loop. |
+| "minimum cost to connect all" | Minimum spanning tree with Kruskal or Prim. |
+| "use every edge (or ticket) exactly once" | Eulerian path; check degrees, then Hierholzer with post-order append and a final reverse. |
+| "critical connection", or removing it disconnects the network | Bridges (articulation points for vertices) with low-link values from one DFS. |
+| "eventually safe", "every path ends at a terminal" | Three-color DFS, or Kahn's algorithm on the reversed graph. |
+| A grid of cells | Each cell is a node with 4 or 8 neighbors; check bounds before indexing. |
+| Nodes labeled 1 to n | Shift every label by one or allocate n + 1 slots. |
+| Edges given as a list of pairs | Build the adjacency list (and indegree array if directed) before anything else. |
+| Nodes are strings such as words, emails, or airports | Map each string to an integer id, or key a dictionary by the string. |
+| n up to $10^5$ or more | You need $O(V+E)$ or $O(E \log V)$, and deep recursion in Python needs an iterative version. |
+| n up to a few hundred | $O(V^3)$ algorithms such as Floyd–Warshall are acceptable. |

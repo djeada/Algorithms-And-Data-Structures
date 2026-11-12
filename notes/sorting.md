@@ -13,6 +13,8 @@ What makes sorting worth caring about is that it quietly powers “everyday” f
 
 ## Stability in Sorting
 
+> **First step:** Ask whether equal keys carry other data whose original order matters. If they do, use a stable sort or add the original index as the last tie-breaker.
+
 Stability, in the context of sorting, refers to preserving the relative order of equal items in the sorted output. In simple terms, when two items have equal keys:
 
 - In an unstable sorting algorithm, their order might be reversed in the sorted output.
@@ -81,7 +83,49 @@ A quick rule of thumb:
 
 And because many real systems sort records, stability is one of those “small” choices that saves you from weird bugs later.
 
+## Sort Keys, Tie-Breakers, and Comparators
+
+> **First step:** Write the full ordering in words before writing code, including what happens on ties. Then decide whether it fits in a key tuple or truly needs a pairwise comparator.
+
+Many sorting problems are not about the sorting algorithm at all. They are about the order. 1636 Sort Array by Increasing Frequency, 451 Sort Characters By Frequency, 791 Custom Sort String and 1122 Relative Sort Array all come down to one library sort with the right key.
+
+In Python, a key function maps each item to something that compares naturally, usually a tuple. Tuples compare entry by entry, so the first entry is the primary key and later entries break ties. To reverse one numeric component, negate it. For 451 the key is `(-count[c], c)`, and for 791 it is the character's position in the order string.
+
+Some orders depend on both items at once. In 179 Largest Number, `a` belongs before `b` when the string `a + b` is larger than `b + a`, which no single-item key expresses directly. Write a comparator that returns a negative, zero or positive number and wrap it with `functools.cmp_to_key`.
+
+406 Queue Reconstruction by Height is a sort followed by inserts. Sort by height descending and then by `k` ascending, and insert each person at index `k`. Everyone already placed is at least as tall, so index `k` leaves exactly `k` such people in front, and later shorter people never change that count.
+
+```python
+# 1636: frequency ascending, then value descending
+cnt = Counter(nums)
+nums.sort(key=lambda x: (cnt[x], -x))
+
+# 1122: values from arr2 in arr2's order, the rest ascending at the end
+rank = {v: i for i, v in enumerate(arr2)}
+arr1.sort(key=lambda x: (0, rank[x]) if x in rank else (1, x))
+
+# 179: a goes first when a + b is the larger string
+def cmp(a, b):
+    return -1 if a + b > b + a else (1 if a + b < b + a else 0)
+s = "".join(sorted(map(str, nums), key=cmp_to_key(cmp)))
+answer = "0" if s[0] == "0" else s
+
+# 406: tallest first, then by k, insert at index k
+people.sort(key=lambda p: (-p[0], p[1]))
+queue = []
+for p in people:
+    queue.insert(p[1], p)
+```
+
+In C++, `std::sort` requires a comparator that is a strict weak ordering. Above all, `comp(a, a)` must be false. Writing `return a <= b;` breaks this, because for equal items both `comp(a, b)` and `comp(b, a)` are true. That is undefined behavior: the output can be wrong, and some implementations read past the end of the range and crash when there are many duplicates. Use `<`, and for several keys compare `std::tie(a.k1, a.k2) < std::tie(b.k1, b.k2)`.
+
+Stability also differs by language. Python's `sorted` and `list.sort` are stable, so the multi-pass trick from the previous section works. C++ `std::sort` is not stable; use `std::stable_sort` or add the original index as the last key.
+
+Complexity is $O(n\log n)$ comparisons times the cost of one comparison, which is $O(L)$ for the string concatenations in 179. The most common mistake is a missing tie-breaker, such as forgetting that 1636 wants larger values first among equal frequencies.
+
 ## Bubble Sort
+
+> **First step:** In practice, call the library sort instead. Bubble sort is worth knowing because every swap it makes fixes exactly one inversion, so its swap count equals the number of inversions in the input.
 
 Bubble sort is one of the simplest sorting algorithms. It is often used as an introductory algorithm because it is easy to understand, even though it is not efficient for large datasets.
 
@@ -216,6 +260,8 @@ Implementation:
 - [Python (The Algorithms)](https://github.com/TheAlgorithms/Python/blob/master/sorts/bubble_sort.py)
 
 ## Selection Sort
+
+> **First step:** Check whether writes are the expensive operation or whether you only need the smallest few items. Selection sort does at most $n-1$ swaps, and stopping after $k$ passes gives the $k$ smallest items in $O(nk)$ time.
 
 Selection sort is another simple sorting algorithm, often introduced right after bubble sort because it is equally easy to understand.
 
@@ -356,6 +402,8 @@ Implementation:
 
 ## Insertion Sort
 
+> **First step:** Check how close to sorted the input already is. Insertion sort runs in $O(n + I)$ time, where $I$ is the number of inversions, so it is excellent on nearly sorted or tiny inputs and poor otherwise.
+
 Insertion sort is a simple, intuitive sorting algorithm that works the way people often sort playing cards in their hands.
 
 It builds the sorted portion one element at a time, by repeatedly taking the next element from the unsorted portion and inserting it into its correct position among the already sorted elements.
@@ -477,6 +525,8 @@ Implementation:
 
 ## Merge Sort
 
+> **First step:** Decide whether you need what merge sort uniquely gives: a stable order, a guaranteed $O(n\log n)$, a sort of a linked list, or a chance to count something across the two halves during the merge.
+
 Merge sort divides the input into two halves, sorts each half recursively, and merges the two sorted results. Unlike quicksort, its split does not depend on the values, so the recursion stays balanced.
 
 To merge, compare the first unconsumed item from each half and copy the smaller one to the output. When one half is exhausted, append the remainder of the other half. Each item is processed once during a merge.
@@ -507,7 +557,64 @@ Implementations:
 - [C++](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/cpp/merge_sort)
 - [Python](https://github.com/djeada/Algorithms-And-Data-Structures/tree/master/src/sorting/python/merge_sort)
 
+## Merging from the Back and Sorting Linked Lists
+
+> **First step:** Look at where the output has to live. If it shares memory with an input, merge in the direction where the free space is; if the input is a linked list, split with slow and fast pointers instead of indexing.
+
+88 Merge Sorted Array gives `nums1` with `m` real values followed by `n` empty slots. Merging from the front would overwrite values that have not been read yet. Merge from the back instead: compare the last unread values of both arrays and write the larger into the last free slot. When `nums2` runs out, the rest of `nums1` is already in place; when `nums1` runs out, copy what is left of `nums2`.
+
+148 Sort List asks for $O(n\log n)$ on a singly linked list, which rules out quicksort's random access and makes merge sort the natural fit. Merging two lists needs no extra buffer, because nodes are relinked rather than copied.
+
+```python
+def sort_list(head):
+    if head is None or head.next is None:
+        return head
+    slow, fast = head, head.next
+    while fast and fast.next:
+        slow, fast = slow.next, fast.next.next
+    mid, slow.next = slow.next, None          # cut the list in two
+    left, right = sort_list(head), sort_list(mid)
+    dummy = tail = ListNode()
+    while left and right:
+        if left.val <= right.val:             # <= keeps it stable
+            tail.next, left = left, left.next
+        else:
+            tail.next, right = right, right.next
+        tail = tail.next
+    tail.next = left or right
+    return dummy.next
+```
+
+Both run in linear time per merge, so 88 is $O(m+n)$ and 148 is $O(n\log n)$ with $O(\log n)$ recursion stack (a bottom-up version gets $O(1)$ extra space). The most common mistake in 148 is starting `fast` at `head`, which on a two-node list leaves the right half empty and recurses forever.
+
+## Counting Pairs with Merge Sort
+
+> **First step:** Check whether the question counts pairs $i < j$ that satisfy a comparison between `nums[i]` and `nums[j]`. If it does, every such pair is split by exactly one merge step, so you can count it there.
+
+When merge sort combines two sorted halves, every element of the left half came before every element of the right half in the original array. So any pair with $i$ on the left and $j$ on the right can be counted using only the two sorted halves, and pairs inside one half were already counted deeper in the recursion. Because both halves are sorted, a single pointer that only moves forward does the counting in linear time.
+
+The classic case is inversion counting, pairs with $i < j$ and `nums[i] > nums[j]`. 493 Reverse Pairs counts `nums[i] > 2 * nums[j]`, which is a different test from the merge comparison, so count in a separate pass before merging. 315 Count of Smaller Numbers After Self needs a count per element: sort `(value, index)` pairs, and whenever a left element is taken during the merge, add the number of right elements already taken to `counts[index]`. Taking the left element on ties keeps equal values out of the count.
+
+```python
+def sort_and_count(a):
+    if len(a) <= 1:
+        return a, 0
+    mid = len(a) // 2
+    left, x = sort_and_count(a[:mid])
+    right, y = sort_and_count(a[mid:])
+    count, j = x + y, 0
+    for v in left:                     # left is sorted, so j never moves back
+        while j < len(right) and v > 2 * right[j]:    # 493; use v > right[j] for inversions
+            j += 1
+        count += j
+    return merge(left, right), count   # the usual linear merge
+```
+
+This is $O(n\log n)$ time and $O(n)$ extra space. A Fenwick tree over coordinate-compressed values, scanned from right to left, solves the same problems in the same time. The most common mistake is in C++, where `2 * nums[j]` overflows a 32-bit int; compute it in 64 bits.
+
 ## Quick Sort
+
+> **First step:** Choose the pivot at random (or shuffle once) and decide how keys equal to the pivot are handled. A fixed first or last pivot is quadratic on sorted input, and the tests for 912 Sort an Array are known to punish that.
 
 Quick Sort is a divide-and-conquer algorithm. Unlike bubble sort or selection sort, which work by repeatedly scanning the whole array, Quick Sort works by partitioning the array into smaller sections around a "pivot" element and then sorting those sections independently.
 
@@ -651,7 +758,66 @@ Implementation:
 - [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/quick_sort/src/quick_sort.cpp)
 - [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/quick_sort/src/quick_sort.py)
 
+## Three-Way Partition (Dutch National Flag)
+
+> **First step:** Count how many distinct groups the output needs. Two groups is a plain partition with one write pointer; three groups (less than, equal to, greater than) is the Dutch national flag with three pointers.
+
+75 Sort Colors asks to sort an array of 0s, 1s and 2s in place in one pass. Keep three regions: `a[:lo]` holds 0s, `a[lo:mid]` holds 1s, `a[hi+1:]` holds 2s, and `a[mid:hi+1]` is still unknown. Each step looks at `a[mid]` and grows one region.
+
+The same routine with "less than pivot, equal, greater than pivot" is the fix for quicksort and quickselect on inputs with many duplicates, since the whole equal block is excluded from further recursion. 905 Sort Array By Parity is the two-group version: one pointer marks where the next even number goes. 324 Wiggle Sort II builds on the same idea. The simple $O(n\log n)$ answer sorts a copy, fills the even indices with the smaller half reversed and the odd indices with the larger half reversed, and the reversal keeps copies of the median apart.
+
+```python
+def sort_colors(a):
+    lo, mid, hi = 0, 0, len(a) - 1
+    while mid <= hi:
+        if a[mid] == 0:
+            a[lo], a[mid] = a[mid], a[lo]
+            lo += 1
+            mid += 1
+        elif a[mid] == 1:
+            mid += 1
+        else:
+            a[mid], a[hi] = a[hi], a[mid]
+            hi -= 1                  # do not move mid: the new a[mid] is unread
+```
+
+This is $O(n)$ time and $O(1)$ space. The most common mistake is advancing `mid` after swapping with `hi`, which skips the value that just arrived from the right end.
+
+## Quickselect for the k-th Element
+
+> **First step:** Convert the request into a 0-based index in ascending order. The k-th largest of $n$ items sits at index $n-k$, and the k closest points are the first $k$ after selecting by distance.
+
+Quickselect is quicksort that recurses into one side only. After a partition the pivot is at its final index `p`. If `p` equals the target index you are done; otherwise continue only in the side that contains the target. With a random pivot each round discards a constant fraction of the range on average, so the total work is a geometric series.
+
+It fits 215 Kth Largest Element in an Array and 973 K Closest Points to Origin (select on squared distance; the first $k$ items are the answer in any order). It also finds the median that the linear-time version of 324 Wiggle Sort II needs. In C++, `std::nth_element` does the same job.
+
+```python
+def select(a, k):                    # value that would be at index k after sorting
+    lo, hi = 0, len(a) - 1
+    while True:
+        r = random.randint(lo, hi)
+        a[r], a[hi] = a[hi], a[r]
+        store = lo
+        for i in range(lo, hi):
+            if a[i] < a[hi]:
+                a[i], a[store] = a[store], a[i]
+                store += 1
+        a[store], a[hi] = a[hi], a[store]
+        if store == k:
+            return a[store]
+        if store < k:
+            lo = store + 1
+        else:
+            hi = store - 1
+
+kth_largest = select(nums, len(nums) - k)
+```
+
+Expected time is $O(n)$ with $O(1)$ extra space, but the worst case is $O(n^2)$. The most common mistake is a partition like this one on input with many equal values: every equal item lands on one side and each round shrinks the range by one, so switch to a three-way partition when duplicates are likely.
+
 ## Heap Sort
+
+> **First step:** Ask whether you need the full order or only the top $k$ items. A full heap sort costs $O(n\log n)$, while a heap kept at size $k$ answers top $k$ questions in $O(n\log k)$.
 
 Heap Sort is a comparison-based sorting algorithm that uses a special data structure called a binary heap.
 It is efficient, with guaranteed $O(n \log n)$ performance, and sorts in-place (no extra array needed).
@@ -816,7 +982,29 @@ Implementation:
 - [C++](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/cpp/heap_sort/src/heap_sort.cpp)
 - [Python](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/src/sorting/python/heap_sort/src/heap_sort.py)
 
+## Partial Sorting with a Heap (Top k)
+
+> **First step:** Decide which end you are keeping and pick the opposite kind of heap. To keep the $k$ largest, use a min-heap of size $k$ so the weakest kept item sits on top and is the one evicted.
+
+Many problems ask for a few items from the top of an order: 215 Kth Largest Element, 347 Top K Frequent Elements, 973 K Closest Points to Origin, and 692 Top K Frequent Words. Sorting everything costs $O(n\log n)$ and does more work than needed. A heap that never grows past $k$ costs $O(n\log k)$ and also works on a stream.
+
+Python's `heapq` is a min-heap. To keep the $k$ smallest items instead, push negated keys, for example `(-dist, x, y)` in 973. For counts, push `(count, value)` pairs so the heap orders by count. For one-off queries `heapq.nlargest(k, items, key=...)` does this for you, and C++ has `std::partial_sort` and `std::priority_queue`.
+
+```python
+def k_largest(nums, k):
+    heap = []
+    for x in nums:
+        heapq.heappush(heap, x)
+        if len(heap) > k:
+            heapq.heappop(heap)      # drop the smallest of the k + 1
+    return heap                      # heap[0] is the k-th largest
+```
+
+This runs in $O(n\log k)$ time and $O(k)$ space. The most common mistake is using the heap in the wrong direction, a max-heap of size $k$ for the $k$ largest, which evicts exactly the items you wanted to keep.
+
 ## Radix Sort
+
+> **First step:** Count the digits $d$ in the largest key and pick the base $b$. Radix sort pays off when $d(n+b)$ is clearly smaller than $n\log n$, and negative numbers need a shift or separate handling.
 
 Radix Sort is a non-comparison-based sorting algorithm.
 Instead of comparing elements directly, it processes numbers digit by digit, from either the least significant digit (LSD) or the most significant digit (MSD), using digit-based distribution. LSD radix sort requires a stable intermediate sort, commonly counting sort; MSD radix sort recursively sorts digit buckets and may use an unstable in-place partition.
@@ -927,6 +1115,8 @@ Implementation:
 
 ## Counting Sort
 
+> **First step:** Find the value range $k$ and compare it with $n$. If $k$ is small (letters, scores up to 1000, frequencies up to $n$), a count array replaces sorting entirely.
+
 Counting Sort is a non-comparison-based sorting algorithm that works by counting occurrences of each distinct element and then calculating their positions in the output array.
 
 It is especially efficient when:
@@ -1018,6 +1208,33 @@ Implementation:
 - [C++ (The Algorithms)](https://github.com/TheAlgorithms/C-Plus-Plus/blob/master/sorting/counting_sort.cpp)
 - [Python (The Algorithms)](https://github.com/TheAlgorithms/Python/blob/master/sorts/counting_sort.py)
 
+## Bucket Sort for Frequencies and Gaps
+
+> **First step:** Look for a natural bound on the keys. Frequencies never exceed $n$, letters fit in 26 slots, and $n$ values spread over a range force at least one large gap; any of these lets buckets replace comparisons.
+
+A frequency is an integer between 1 and $n$, so items can be bucketed by how often they occur instead of sorted by it. That gives 347 Top K Frequent Elements and 451 Sort Characters By Frequency in linear time: count, put each value into `buckets[count]`, and read the buckets from high to low.
+
+274 H-Index uses the same bound. Any citation count above $n$ can be capped at $n$, so count papers per capped value, then walk $h$ from $n$ down while keeping a running total of papers with at least $h$ citations; the first $h$ where that total reaches $h$ is the answer. 242 Valid Anagram and 49 Group Anagrams also fit here: a tuple of 26 letter counts is an $O(L)$ key, where sorting each word costs $O(L\log L)$.
+
+164 Maximum Gap asks for linear time. With $n$ values from `lo` to `hi`, the largest gap is at least the average $(hi - lo)/(n-1)$. Use buckets of width $b = \max(1, \lfloor (hi-lo)/(n-1) \rfloor)$. Two values in one bucket differ by less than $b$, so the answer always spans two buckets. Keep only each bucket's minimum and maximum and compare each nonempty bucket's minimum with the previous nonempty bucket's maximum. LSD radix sort followed by a scan also works.
+
+```python
+def top_k_frequent(nums, k):
+    cnt = Counter(nums)
+    buckets = [[] for _ in range(len(nums) + 1)]
+    for value, c in cnt.items():
+        buckets[c].append(value)
+    out = []
+    for c in range(len(nums), 0, -1):
+        for value in buckets[c]:
+            out.append(value)
+            if len(out) == k:
+                return out
+    return out
+```
+
+These run in $O(n)$ time plus the size of the bucket array. The most common mistake is sizing the bucket array by the values instead of by the bound, for example allocating up to the largest citation count in 274 instead of capping at $n$.
+
 ## Comparison Table
 
 Space means auxiliary storage, including the recursion stack. Average-case bounds require input or randomization assumptions; the table does not predict elapsed time.
@@ -1038,3 +1255,97 @@ Use complexity bounds together with stability, memory requirements, and input ch
 | LSD Radix Sort | $O(d(n+b))$ | $O(d(n+b))$ | $O(d(n+b))$ | $O(n+b)$ | Yes | $d$ digits, radix $b$ |
 
 Use insertion sort for tiny or nearly-sorted arrays, quick sort for general high speed (with good pivot strategy), heap sort for worst-case guarantees, and counting/radix when your keys make it possible.
+
+## Interval Problems
+
+> **First step:** Decide whether you are combining intervals or choosing among them. Combining (merge, insert, count overlaps) sorts by start; choosing the most compatible intervals or the fewest points that hit them sorts by end. Also settle whether touching endpoints overlap.
+
+56 Merge Intervals sorts by start and walks once. Each interval either overlaps the last merged one, which then extends to the larger of the two ends, or starts a new merged interval. 57 Insert Interval gets input that is already sorted, so it needs no sort: copy the intervals that end before the new one starts, absorb every interval that starts at or before its end, then copy the rest. 252 Meeting Rooms sorts by start and checks each neighbor pair for overlap.
+
+253 Meeting Rooms II asks for the maximum number of meetings running at once. Sort the start times and the end times separately and walk both, opening a room when a meeting starts before the earliest unfinished one ends. A min-heap of end times gives the same answer and is easier to extend when you also need to know which room is used.
+
+435 Non-overlapping Intervals and 452 Minimum Number of Arrows to Burst Balloons sort by end. Keeping the interval that finishes first leaves the most room for the rest, and the exchange argument behind this is in the [greedy algorithms notes](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/greedy_algorithms.md). In 435 the answer is $n$ minus the number kept. In 452 shoot each arrow at the current end and fire a new one only when a balloon starts strictly after it, since touching balloons share an arrow. 1288 Remove Covered Intervals sorts by start ascending and end descending, so an interval is covered exactly when its end does not exceed the largest end seen so far.
+
+```python
+def merge_intervals(intervals):      # 56
+    intervals.sort(key=lambda iv: iv[0])
+    out = []
+    for s, e in intervals:
+        if out and s <= out[-1][1]:
+            out[-1][1] = max(out[-1][1], e)
+        else:
+            out.append([s, e])
+    return out
+
+def min_rooms(intervals):            # 253
+    starts = sorted(s for s, e in intervals)
+    ends = sorted(e for s, e in intervals)
+    rooms, j = 0, 0
+    for s in starts:
+        if s < ends[j]:
+            rooms += 1               # no meeting has ended yet: open a room
+        else:
+            j += 1                   # reuse the room freed at ends[j]
+    return rooms
+```
+
+All of these are $O(n\log n)$ for the sort and $O(n)$ for the scan, except 57, which is $O(n)$. The most common mistake in 56 is setting the merged end to the new end instead of the maximum, which breaks when one interval contains the next, as in `[1, 10]` followed by `[2, 3]`.
+
+## Sorting as Preprocessing
+
+> **First step:** Ask whether the answer depends on the original positions. If it does not, sorting first costs only $O(n\log n)$ and turns a pair or triple search into two pointers or binary search.
+
+Once an array is sorted, a pair sum that is too small can only grow by moving the left pointer right, and one that is too large can only shrink by moving the right pointer left. This turns the $O(n^2)$ pair search into $O(n)$. 15 3Sum fixes each first element and runs that two-pointer scan on the rest, for $O(n^2)$ overall; 16 3Sum Closest and 18 4Sum follow the same shape. Sorting also puts duplicates next to each other, which is how 3Sum avoids repeated triplets.
+
+Sorted data also supports binary search, for example counting how many values are at most a target with `bisect_right`; the [searching notes](https://github.com/djeada/Algorithms-And-Data-Structures/blob/master/notes/searching.md) cover the variants. 945 Minimum Increment to Make Array Unique sorts and then keeps `need`, the smallest value the next item may take: each item `x` costs `max(0, need - x)` moves and sets `need = max(need, x) + 1`. 49 Group Anagrams uses the sorted string of each word as a dictionary key.
+
+```python
+def three_sum(nums):
+    nums.sort()
+    res = []
+    for i in range(len(nums) - 2):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue                 # same first value, same triplets
+        lo, hi = i + 1, len(nums) - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            if total < 0:
+                lo += 1
+            elif total > 0:
+                hi -= 1
+            else:
+                res.append([nums[i], nums[lo], nums[hi]])
+                lo, hi = lo + 1, hi - 1
+                while lo < hi and nums[lo] == nums[lo - 1]:
+                    lo += 1
+    return res
+```
+
+The cost is $O(n\log n)$ for the sort plus the scan, $O(n^2)$ in total for 3Sum. The most common mistake is sorting when the problem asks for original indices, as in 1 Two Sum; sort `(value, index)` pairs or use a hash map instead.
+
+## Reading the Problem Statement
+
+Certain phrases in a problem statement point straight at a sorting technique. The table maps the common ones to what they usually mean for your code.
+
+| If the problem says | What it means for your code |
+| --- | --- |
+| Merge overlapping intervals | Sort by start, extend the last merged interval with the larger end |
+| Keep the most non-overlapping intervals, or remove the fewest | Sort by end and greedily keep the earliest finish |
+| Minimum rooms, or the most events at the same time | Sort starts and ends separately, or sweep with a min-heap of end times |
+| k-th largest or k-th smallest | Quickselect with a random pivot or a heap of size $k$, not a full sort |
+| Top k, k closest, k most frequent | Heap of size $k$ in $O(n\log k)$, or buckets by frequency |
+| Values in a small range, or only lowercase letters | Counting sort or a count array |
+| Sort in place, only three distinct values | Dutch national flag with three pointers in one pass |
+| Move all items with a property to the front | Two-pointer partition in $O(n)$ time and $O(1)$ space |
+| Relative order of equal items must be kept | Stable sort, or the original index as the last key |
+| Sort by frequency, then by value | Key tuple with the tie-breaker written out |
+| Order defined by another string or array | Rank dictionary as the key, or counting in that order |
+| Arrange numbers to form the largest number | Custom comparator on a + b against b + a |
+| Anagrams, or the same letters in a different order | Sorted string or 26-count tuple as the key |
+| Count pairs i < j where nums[i] is larger than c times nums[j] | Merge sort counting, or a Fenwick tree over compressed values |
+| For each element, count smaller elements to its right | Merge sort over (value, index) pairs, or a Fenwick tree |
+| Sort a linked list in $O(n\log n)$ | Merge sort, split with slow and fast pointers |
+| Merge into the first array, which has spare room at the end | Fill from the back with three pointers |
+| Linear time even though values are large | Bucket (pigeonhole) or radix sort |
+| n up to $10^5$ or $10^6$ | $O(n\log n)$ sorting fits comfortably |
+| Triplets summing to a target without duplicates | Sort, then two pointers, skipping equal neighbors |
