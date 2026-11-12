@@ -30,7 +30,9 @@ Mathematical Representation:
 
 Consider a problem where we want to find the optimal value $V(n)$ for a given parameter $n$. If there exists a function $f$ such that:
 
-$ V(n) = \min_{1 \le k < n} f(V(k), V(n-k)), \qquad n \ge 2 $
+$$
+V(n) = \min_{1 \le k < n} f(V(k), V(n-k)), \qquad n \ge 2
+$$
 
 then this is one possible form of an optimal-substructure recurrence, provided the state is sufficient and the combination accounts for every valid choice and its cost. It is not a universal DP formula: many problems need several state parameters or different transitions. Base cases must be defined separately.
 

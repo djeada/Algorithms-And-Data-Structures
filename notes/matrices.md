@@ -517,7 +517,7 @@ Rotate each ring by cycling 4 positions.
 
 How it works:
 
-For layer $\ell$ with bounds $ [\ell..n-1-\ell]$, for each offset move:
+For layer $\ell$ with bounds $[\ell..n-1-\ell]$, for each offset move:
 
 ```
 top ← left, left ← bottom, bottom ← right, right ← top

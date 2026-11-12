@@ -388,7 +388,7 @@ Active range: indices 4..4
 FOUND at index 4
 
 - Requires a sorted array (assume ascending here).
-- Time: $O(log n)$; Space: $O(1)$ iterative.
+- Time: $O(\log n)$; Space: $O(1)$ iterative.
 - Returns any one matching index by default; “first/last occurrence” is a small, common refinement.
 - Robust, cache-friendly, and a building block for many higher-level searches.
 - Beware of off-by-one errors when shrinking bounds.
@@ -463,7 +463,7 @@ Since `4 < 9 < 12`, continue in indices `2..3`. The next midpoints are 2 and 3; 
 - Also assumes a sorted array.
 - For discrete sorted arrays, it does not beat binary search asymptotically; it performs more comparisons per step.
 - Most valuable for searching the extremum of a unimodal function on a continuous domain; for arrays, prefer binary search.
-- Complexity: $O(log n)$ steps but with larger constant factors than binary search.
+- Complexity: $O(\log n)$ steps but with larger constant factors than binary search.
 
 ### Jump Search
 
@@ -531,7 +531,7 @@ Block [16 ][25 ]
 The element $25$ is found at index 4.
 
 - Works on sorted arrays; pick jump ≈ √n for good balance.
-- Time: $O(√n)$ comparisons on average; Space: $O(1)$.
+- Time: $O(\sqrt{n})$ comparisons on average; Space: $O(1)$.
 - Useful when binary search isn’t desirable: binary search has poor locality (random jumps); jump search scans a block sequentially, which is more cache-friendly and has better branch prediction.
 - Degrades gracefully to “scan block then stop.”
 
@@ -713,7 +713,7 @@ A = [ 10 ][ 20 ][ 30 ][ 40 ][ 50 ][ 60 ][ 70 ]
 
 At this point, an early-stop check already tells us `target (45) < A[low] (50)` → cannot exist in `A[4..6]` → not found.
 
-- Best on uniformly distributed sorted data; expected time $O(log log n)$.
+- Best on uniformly distributed sorted data; expected time $O(\log \log n)$.
 - Worst case can degrade to $O(n)$, especially on skewed or clustered values.
 - Space: $O(1)$.
 - Very fast when value-to-index mapping is close to linear (e.g., near-uniform numeric keys).
@@ -1041,7 +1041,7 @@ Example 1
 
 $$
 \text{Table size: } m = 7,
-\quad \text{Keys stored: } {10, 24, 31},
+\quad \text{Keys stored: } \{10, 24, 31\},
 \quad \text{Target: } 24
 $$
 
@@ -1053,7 +1053,7 @@ Example 2
 
 $$
 \text{Table size: } m = 7,
-\quad \text{Keys stored: } {10, 24, 31},
+\quad \text{Keys stored: } \{10, 24, 31\},
 \quad \text{Target: } 18
 $$
 
@@ -1151,7 +1151,7 @@ Example 1
 
 $$
 m = 10,
-\quad \text{Stored keys: } {12, 22, 32},
+\quad \text{Stored keys: } \{12, 22, 32\},
 \quad \text{Target: } 22
 $$
 
@@ -1163,7 +1163,7 @@ Example 2
 
 $$
 m = 10,
-\quad \text{Stored keys: } {12, 22, 32},
+\quad \text{Stored keys: } \{12, 22, 32\},
 \quad \text{Target: } 42
 $$
 
@@ -1234,7 +1234,7 @@ Example 1
 
 $$
 m = 11  (\text{prime}),
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 33
 $$
 
@@ -1250,7 +1250,7 @@ Example 2
 
 $$
 m = 11  (\text{prime}),
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 55
 $$
 
@@ -1348,7 +1348,7 @@ Example 1
 
 $$
 m = 11,
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 33
 $$
 
@@ -1377,7 +1377,7 @@ Example 2
 
 $$
 m = 11,
-\quad \text{Stored keys: } {22, 33, 44},
+\quad \text{Stored keys: } \{22, 33, 44\},
 \quad \text{Target: } 55
 $$
 
@@ -1487,7 +1487,7 @@ $$
 Keys stored:
 
 $$
-{12, 22, 7, 3, 14}
+\{12, 22, 7, 3, 14\}
 $$
 
 Bucket contents after hashing:
@@ -1830,7 +1830,7 @@ $$
 Inserted set:
 
 $$
-{"cat", "dog"}
+\{\text{"cat"}, \text{"dog"}\}
 $$
 
 Example 1
